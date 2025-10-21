@@ -1,0 +1,90 @@
+package com.daw.celiblog.service.impl;
+
+import com.daw.celiblog.db.entity.Restaurante;
+import com.daw.celiblog.db.repository.ComentarioRestauranteRepository;
+import com.daw.celiblog.db.repository.RestauranteRepository;
+import com.daw.celiblog.db.repository.TagRestauranteRepository;
+import com.daw.celiblog.dto.ComentarioRestauranteDTO;
+import com.daw.celiblog.dto.RestauranteDTO;
+import com.daw.celiblog.dto.TagRestauranteDTO;
+import com.daw.celiblog.service.RestauranteService;
+import com.daw.celiblog.service.mapper.ComentarioRestauranteMapper;
+import com.daw.celiblog.service.mapper.RestauranteMapper;
+import com.daw.celiblog.service.mapper.TagRestauranteMapper;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+public class RestauranteServiceImpl implements RestauranteService {
+
+    private final RestauranteRepository restauranteRepository;
+
+    private final TagRestauranteRepository tagRestauranteRepository;
+
+    private final ComentarioRestauranteRepository comentarioRestauranteRepository;
+
+    public RestauranteServiceImpl(RestauranteRepository restauranteRepository, TagRestauranteRepository tagRestauranteRepository, ComentarioRestauranteRepository comentarioRestauranteRepository) {
+        this.restauranteRepository = restauranteRepository;
+        this.tagRestauranteRepository = tagRestauranteRepository;
+        this.comentarioRestauranteRepository = comentarioRestauranteRepository;
+    }
+
+
+    @Override
+    public List<RestauranteDTO> obtenerTodos() {
+        return restauranteRepository.findAll().stream()
+                .map(RestauranteMapper::entityToDto)
+                .collect(Collectors.toList());
+   }
+
+    @Override
+    public RestauranteDTO obtenerPorId(Long id) {
+        return restauranteRepository
+                .findById(id)
+                .map(RestauranteMapper::entityToDto)
+                .orElse(null);
+    }
+
+    @Override
+    public RestauranteDTO crear(RestauranteDTO dto) {
+        return RestauranteMapper.entityToDto(this.restauranteRepository.save(RestauranteMapper.dtoToEntity(dto)));
+    }
+
+    @Override
+    public RestauranteDTO actualizar(Long id, RestauranteDTO dto) {
+        Optional<Restaurante> rest = this.restauranteRepository.findById(id);
+        if(rest.isPresent()){
+            Restaurante restaurante = rest.get();
+            restaurante.setDireccion(dto.getDireccion());
+            restaurante.setDescripcion(dto.getDescripcion());
+            restaurante.setUbicacion(dto.getUbicacion());
+            restaurante.setImagenUrl(dto.getImagenUrl());
+            restaurante.setNombre(dto.getNombre());
+            restaurante.setUrlWeb(dto.getUrlWeb());
+            return RestauranteMapper.entityToDto(this.restauranteRepository.save(restaurante));
+        }
+        return null;
+
+    }
+
+    @Override
+    public void eliminar(Long id) {
+        restauranteRepository.deleteById(id);
+    }
+
+    @Override
+    public List<TagRestauranteDTO> obtenerTagsRestaurantePorId(Long idRestaurante) {
+        return TagRestauranteMapper.entityToDtoList(tagRestauranteRepository.findByIdRestaurante(idRestaurante));
+
+    }
+
+    @Override
+    public List<ComentarioRestauranteDTO> obtenerComentariosByIdRestaurante(Long idRestaurante) {
+        return ComentarioRestauranteMapper.entityToDtoList(this.comentarioRestauranteRepository.getComentariosByIdRestaurante(idRestaurante));
+    }
+
+
+}

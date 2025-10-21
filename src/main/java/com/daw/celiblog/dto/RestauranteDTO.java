@@ -1,0 +1,133 @@
+package com.daw.celiblog.dto;
+
+import com.daw.celiblog.db.entity.ComentarioRestaurante;
+import com.daw.celiblog.db.entity.Rol;
+import com.daw.celiblog.db.entity.TagRestaurante;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class RestauranteDTO {
+
+    private Long idRestaurante;
+    private String descripcion;
+    private String direccion;
+    private String imagenUrl;
+    private String nombre;
+    private String ubicacion;
+    private String urlWeb;
+    private List<ComentarioRestaurante> comentarioRestaurantes;
+    private List<TagRestaurante> tagRestaurantes;
+
+    public RestauranteDTO(Long idRestaurante, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb) {
+        this.idRestaurante = idRestaurante;
+        this.descripcion = descripcion;
+        this.direccion = direccion;
+        this.imagenUrl = imagenUrl;
+        this.nombre = nombre;
+        this.ubicacion = ubicacion;
+        this.urlWeb = urlWeb;
+    }
+
+    public Long getIdRestaurante() {
+        return idRestaurante;
+    }
+
+    public void setIdRestaurante(Long idRestaurante) {
+        this.idRestaurante = idRestaurante;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public String getUrlWeb() {
+        return urlWeb;
+    }
+
+    public void setUrlWeb(String urlWeb) {
+        this.urlWeb = urlWeb;
+    }
+
+    public List<ComentarioRestaurante> getComentarioRestaurantes() {
+        return comentarioRestaurantes;
+    }
+
+    public void setComentarioRestaurantes(List<ComentarioRestaurante> comentarioRestaurantes) {
+        this.comentarioRestaurantes = comentarioRestaurantes;
+    }
+
+    public List<TagRestaurante> getTagRestaurantes() {
+        return tagRestaurantes;
+    }
+
+    public void setTagRestaurantes(List<TagRestaurante> tagRestaurantes) {
+        this.tagRestaurantes = tagRestaurantes;
+    }
+
+    public static class RolMapper {
+        private RolDTO dto;
+        private Rol entity;
+        public RolMapper(Rol entity, RolDTO dto){
+            this.entity = entity;
+            this.dto = dto;
+        }
+
+        public static RolDTO entityToDto(Rol source){
+            return new RolDTO(source.getIdRol(), source.getNombre());
+        }
+
+        public static Rol dtoToEntity(RolDTO source){
+            return new Rol(source.getIdRol(), source.getNombre());
+        }
+
+        public static List<Rol> dtoToEntityList(List<RolDTO> source){
+            return source.stream().map(s -> {
+                return dtoToEntity(s);
+            }).collect(Collectors.toList());
+        }
+
+        public static List<RolDTO> entityToDtoList(List<Rol> source){
+            return source.stream().map(s -> {
+                return entityToDto(s);
+            }).collect(Collectors.toList());
+        }
+
+    }
+}
