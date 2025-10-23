@@ -18,8 +18,10 @@ public class RestauranteDTO {
     private String urlWeb;
     private List<ComentarioRestaurante> comentarioRestaurantes;
     private List<TagRestaurante> tagRestaurantes;
+    private String email;
+    private int telefono;
 
-    public RestauranteDTO(Long idRestaurante, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb) {
+    public RestauranteDTO(Long idRestaurante, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb, int telefono, String email ) {
         this.idRestaurante = idRestaurante;
         this.descripcion = descripcion;
         this.direccion = direccion;
@@ -27,6 +29,8 @@ public class RestauranteDTO {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.urlWeb = urlWeb;
+        this.telefono = telefono;
+        this.email = email;
     }
 
     public Long getIdRestaurante() {
@@ -83,6 +87,22 @@ public class RestauranteDTO {
 
     public void setUrlWeb(String urlWeb) {
         this.urlWeb = urlWeb;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
     }
 
     public List<ComentarioRestaurante> getComentarioRestaurantes() {

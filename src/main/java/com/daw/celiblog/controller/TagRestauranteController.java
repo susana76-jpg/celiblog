@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tagRestaurante")
+@RequestMapping("/api/tag-restaurante")
 public class TagRestauranteController {
     @Autowired
     TagRestauranteService tagRestauranteService;

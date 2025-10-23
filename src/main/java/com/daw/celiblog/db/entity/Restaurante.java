@@ -31,6 +31,9 @@ public class Restaurante implements Serializable {
 
 	@Column(name="url_web")
 	private String urlWeb;
+	private int telefono;
+	private String email;
+
 
 	//bi-directional many-to-one association to ComentarioRestaurante
 	/*@OneToMany(mappedBy="restaurante")
@@ -43,7 +46,7 @@ public class Restaurante implements Serializable {
 	public Restaurante() {
 	}
 
-	public Restaurante(Long idRestaurante, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb) {
+	public Restaurante(Long idRestaurante, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb, int telefono, String email) {
 		this.idRestaurante = idRestaurante;
 		this.descripcion = descripcion;
 		this.direccion = direccion;
@@ -51,6 +54,8 @@ public class Restaurante implements Serializable {
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
 		this.urlWeb = urlWeb;
+		this.email = email;
+		this.telefono = telefono;
 	}
 
 	public Long getIdRestaurante() {
@@ -109,9 +114,19 @@ public class Restaurante implements Serializable {
 		this.urlWeb = urlWeb;
 	}
 
+	public int getTelefono() {
+		return telefono;
+	}
 
+	public void setTelefono(int telefono) {
+		this.telefono = telefono;
+	}
 
+	public String getEmail() {
+		return email;
+	}
 
-
-
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }
