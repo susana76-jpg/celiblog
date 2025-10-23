@@ -14,7 +14,9 @@ import java.io.Serializable;
 public class TagReceta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_tag")
 	private Long idTag;
 

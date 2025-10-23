@@ -1,10 +1,7 @@
 package com.daw.celiblog.service.mapper;
 
 import com.daw.celiblog.db.entity.Comentario;
-import com.daw.celiblog.db.entity.TipoComentario;
-import com.daw.celiblog.db.entity.Usuario;
 import com.daw.celiblog.dto.ComentarioDTO;
-import com.daw.celiblog.dto.TagComentarioDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;

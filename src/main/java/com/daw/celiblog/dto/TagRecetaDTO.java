@@ -21,6 +21,10 @@ public class TagRecetaDTO {
         this.nombre = nombre;
         this.idReceta = idReceta;
     }
+    public TagRecetaDTO(String nombre, Long idReceta){
+        this.nombre = nombre;
+        this.idReceta = idReceta;
+    }
 
     public Long getIdTag() {
         return idTag;

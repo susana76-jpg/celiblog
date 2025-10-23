@@ -17,4 +17,6 @@ public interface RecetaService {
     List<TagRecetaDTO> obtenerTagsRecetaPorId(Long idReceta);
     List<PasoRecetaDTO> obtenerPasosRecetaPorId(Long idReceta);
 
+    RecetaDTO crearReceta(RecetaDTO recetaDTO);
+
 }

@@ -3,15 +3,13 @@ package com.daw.celiblog.controller;
 import com.daw.celiblog.dto.PasoRecetaDTO;
 import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.TagRecetaDTO;
+import com.daw.celiblog.dto.TagRecetaView;
 import com.daw.celiblog.service.RecetaService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
@@ -49,6 +47,13 @@ public class RecetaController {
     @GetMapping("/pasos")
     public ResponseEntity<List<PasoRecetaDTO>> obtenerPasosRecetaPorIdReceta(@RequestParam(name="idReceta") Long idReceta) {
         return ResponseEntity.ok(recetaService.obtenerPasosRecetaPorId(idReceta));
+    }
+
+    @Operation(summary = "Añade una receta.")
+    @PostMapping("/add")
+    public ResponseEntity<RecetaDTO> crearReceta(@RequestBody RecetaDTO recetaDTO){
+        RecetaDTO nuevaReceta = this.recetaService.crearReceta(recetaDTO);
+        return ResponseEntity.status(201).body(nuevaReceta);
     }
 
 

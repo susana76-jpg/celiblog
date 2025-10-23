@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public class RecetaMapper {
     private Receta entity;
     private RecetaDTO dto;
+
     public RecetaMapper(Receta entity, RecetaDTO dto){
         this.entity = entity;
         this.dto = dto;

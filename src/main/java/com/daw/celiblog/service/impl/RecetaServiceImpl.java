@@ -82,4 +82,9 @@ public class RecetaServiceImpl implements RecetaService {
     public List<PasoRecetaDTO> obtenerPasosRecetaPorId(Long idReceta) {
         return PasoRecetaMapper.entityToDtoList(this.pasoRecetaRepository.findByIdReceta(idReceta));
     }
+
+    @Override
+    public RecetaDTO crearReceta(RecetaDTO recetaDTO) {
+        return RecetaMapper.entityToDto(this.recetaRepository.save(RecetaMapper.dtoToEntity(recetaDTO)));
+    }
 }

@@ -1,6 +1,7 @@
 package com.daw.celiblog.dto;
 
 public class TagRestauranteDTO {
+
     private Long idTag;
 
     private String nombre;
@@ -16,6 +17,10 @@ public class TagRestauranteDTO {
     }
     public TagRestauranteDTO(Long idTag, String nombre,Long idRestaurante) {
         this.idTag = idTag;
+        this.nombre = nombre;
+        this.idRestaurante = idRestaurante;
+    }
+    public TagRestauranteDTO(String nombre,Long idRestaurante) {
         this.nombre = nombre;
         this.idRestaurante = idRestaurante;
     }

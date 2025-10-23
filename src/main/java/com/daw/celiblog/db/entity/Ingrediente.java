@@ -1,9 +1,6 @@
 package com.daw.celiblog.db.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.NamedQuery;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 /**
@@ -16,6 +13,7 @@ public class Ingrediente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_ingrediente")
 	private Long id_Ingrediente;
 

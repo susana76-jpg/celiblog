@@ -1,8 +1,5 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.db.entity.TipoComentario;
-import com.daw.celiblog.db.entity.Usuario;
-
 public class ComentarioDTO {
 
     private Long idComentario;
