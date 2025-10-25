@@ -10,6 +10,7 @@ public class UsuarioDTO {
     private String nombre;
     private String password;
     private RolDTO rol;
+    private Long idRol;
 
     public UsuarioDTO() {
     }
@@ -21,6 +22,14 @@ public class UsuarioDTO {
         this.password = password;
         this.rol = RolMapper.entityToDto(rol);
     }
+
+    public UsuarioDTO(String email, String nombre, String password, Long idRol) {
+        this.email = email;
+        this.nombre = nombre;
+        this.password = password;
+        this.idRol = idRol;
+    }
+
 
     public Long getIdUsuario() {
         return idUsuario;

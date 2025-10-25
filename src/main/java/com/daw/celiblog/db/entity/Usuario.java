@@ -42,6 +42,12 @@ public class Usuario implements Serializable {
 		this.password = password;
 		this.rol = rol;
 	}
+	public Usuario(String email, String nombre, String password, Rol rol) {
+		this.email = email;
+		this.nombre = nombre;
+		this.password = password;
+		this.rol = rol;
+	}
 
 	public Long getIdUsuario() {
 		return this.idUsuario;

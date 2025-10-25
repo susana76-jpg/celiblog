@@ -67,3 +67,4 @@ com\daw\celiblog\dto\RestauranteDTO.class
 com\daw\celiblog\db\repository\UsuarioRepository.class
 com\daw\celiblog\db\entity\ComentarioRestaurante.class
 com\daw\celiblog\service\mapper\TagRestauranteMapper.class
+com\daw\celiblog\dto\UsuarioView.class

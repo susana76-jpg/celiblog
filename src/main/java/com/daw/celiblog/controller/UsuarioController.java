@@ -1,9 +1,6 @@
 package com.daw.celiblog.controller;
 
-import com.daw.celiblog.dto.PasoRecetaDTO;
-import com.daw.celiblog.dto.RecetaDTO;
-import com.daw.celiblog.dto.TagRecetaDTO;
-import com.daw.celiblog.dto.UsuarioDTO;
+import com.daw.celiblog.dto.*;
 import com.daw.celiblog.service.RecetaService;
 import com.daw.celiblog.service.TagRecetaService;
 import com.daw.celiblog.service.UsuarioService;
@@ -25,13 +22,19 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
 
+    @Operation(summary = "Usuario por id.")
+    @GetMapping("/byId")
+    public ResponseEntity<UsuarioDTO> obtenerUsuarioPorId(@RequestParam(value="idUsuario")Long idUsuario) {
+        return ResponseEntity.ok(this.usuarioService.obtenerUsuarioPorId(idUsuario));
+    }
+
     @Operation(summary = "Todos los usuarios.")
     @GetMapping("/all")
     public ResponseEntity<List<UsuarioDTO>> obtenerTodos() {
         return ResponseEntity.ok(usuarioService.obtenerTodos());
     }
 
-    @Operation(summary = "Actualizar rol de usuario.")
+    @Operation(summary = "Actualizar rol de usuario por su id.")
     @PutMapping("/update-rol")
     public ResponseEntity<UsuarioDTO> updateRol(@RequestParam(value="idUsuario")Long idUsuario, @RequestParam(value="idNuevoRol")Long idNuevoRol) {
         return ResponseEntity.ok(usuarioService.actualizarRol(idUsuario, idNuevoRol));
@@ -39,15 +42,15 @@ public class UsuarioController {
 
     @Operation(summary = "Añadir nuevo usuario")
     @PostMapping("/add")
-    public ResponseEntity<UsuarioDTO> crearUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-        return ResponseEntity.ok(usuarioService.crear(usuarioDTO));
+    public ResponseEntity<UsuarioDTO> crearUsuario(@RequestBody UsuarioView usuarioView) {
+        return ResponseEntity.ok(usuarioService.crear(usuarioView));
     }
 
-    @Operation(summary = "Eliminar usuario por su id.")
+    @Operation(summary = "Eliminar usuario por su id. * IMPORTANTE: Este end-point hará que todos los comentarios hechos por el usuario se eliminen también.")
     @DeleteMapping("/idUsuario")
     public ResponseEntity<String> eliminarById(@RequestParam(value="idUsuario")Long idUsuario) {
         if(usuarioService.eliminar(idUsuario)){
-            return ResponseEntity.ok("Usuario eliminado correctamente");
+            return ResponseEntity.ok("Usuario eliminado correctamente. IMPORTANTE: Todos los elementos relacionados con este usuario también han sido eliminados");
         }else{
             return ResponseEntity.ok("Usuario no eliminado. No se ha encontrado el usuario por el id "+idUsuario);
         }

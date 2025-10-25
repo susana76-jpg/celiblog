@@ -5,7 +5,9 @@ import com.daw.celiblog.db.entity.Usuario;
 import com.daw.celiblog.db.repository.RolRepository;
 import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.UsuarioDTO;
+import com.daw.celiblog.dto.UsuarioView;
 import com.daw.celiblog.service.UsuarioService;
+import com.daw.celiblog.service.mapper.RestauranteMapper;
 import com.daw.celiblog.service.mapper.RolMapper;
 import com.daw.celiblog.service.mapper.UsuarioMapper;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public UsuarioDTO obtenerUsuarioPorId(Long idUsuario) {
+         return this.usuarioRepository.findById(idUsuario)
+                .map(UsuarioMapper::entityToDto)
+                .orElse(null);
+    }
+
+    @Override
     public List<UsuarioDTO> obtenerTodos() {
         return UsuarioMapper.entityToDtoList(this.usuarioRepository.findAll());
     }
@@ -37,8 +46,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioDTO crear(UsuarioDTO dto) {
-        return UsuarioMapper.entityToDto(this.usuarioRepository.save(UsuarioMapper.dtoToEntity(dto)));
+    public UsuarioDTO crear(UsuarioView view) {
+        Optional<Rol> rol = rolRepository.findById(view.getIdRol());
+        if(rol.isPresent()){
+            Usuario nuevoUsuario = new Usuario(view.getEmail(), view.getNombre(), view.getPassword(), rol.get());
+            return UsuarioMapper.entityToDto(this.usuarioRepository.save(nuevoUsuario));
+        }
+       return null;
     }
 
     @Override
