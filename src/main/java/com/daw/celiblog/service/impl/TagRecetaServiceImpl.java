@@ -36,7 +36,7 @@ public class TagRecetaServiceImpl implements TagRecetaService {
         TagReceta nuevaTagReceta = new TagReceta();
         if(receta.isPresent()){
             nuevaTagReceta.setReceta(receta.get());
-            nuevaTagReceta.setNombre(tagRecetaView.getNombre());
+            nuevaTagReceta.setNombre(tagRecetaView.getDescripcionTag());
         }
         return TagRecetaMapper.entityToDto(this.tagRecetaRepository.save(nuevaTagReceta));
     }

@@ -22,20 +22,20 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
 
-    @Operation(summary = "Usuario por id.")
+    @Operation(summary = "Obtener usuario por id.")
     @GetMapping("/byId")
     public ResponseEntity<UsuarioDTO> obtenerUsuarioPorId(@RequestParam(value="idUsuario")Long idUsuario) {
         return ResponseEntity.ok(this.usuarioService.obtenerUsuarioPorId(idUsuario));
     }
 
-    @Operation(summary = "Todos los usuarios.")
+    @Operation(summary = "Obtener todos los usuarios.")
     @GetMapping("/all")
     public ResponseEntity<List<UsuarioDTO>> obtenerTodos() {
         return ResponseEntity.ok(usuarioService.obtenerTodos());
     }
 
     @Operation(summary = "Actualizar rol de usuario por su id.")
-    @PutMapping("/update-rol")
+    @PutMapping("/update-rol-usuario")
     public ResponseEntity<UsuarioDTO> updateRol(@RequestParam(value="idUsuario")Long idUsuario, @RequestParam(value="idNuevoRol")Long idNuevoRol) {
         return ResponseEntity.ok(usuarioService.actualizarRol(idUsuario, idNuevoRol));
     }
@@ -47,7 +47,7 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Eliminar usuario por su id. * IMPORTANTE: Este end-point hará que todos los comentarios hechos por el usuario se eliminen también.")
-    @DeleteMapping("/idUsuario")
+    @DeleteMapping("/delete")
     public ResponseEntity<String> eliminarById(@RequestParam(value="idUsuario")Long idUsuario) {
         if(usuarioService.eliminar(idUsuario)){
             return ResponseEntity.ok("Usuario eliminado correctamente. IMPORTANTE: Todos los elementos relacionados con este usuario también han sido eliminados");

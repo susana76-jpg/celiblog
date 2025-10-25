@@ -22,35 +22,38 @@ public class RestauranteController {
     @Autowired
     private RestauranteService restauranteService;
 
+    @Operation(summary = "Obtiene todos los restaurantes.")
     @GetMapping("/all")
-    public ResponseEntity<List<RestauranteDTO>> obtenerPorId() {
+    public ResponseEntity<List<RestauranteDTO>> obtenerTodosRestaurantes() {
         return ResponseEntity.ok(restauranteService.obtenerTodos());
     }
 
-    @Operation(summary = "Restaurante por su id.")
+    @Operation(summary = "Obtiene un restaurante por su id.")
     @GetMapping("/byId")
     public ResponseEntity<RestauranteDTO> getRestauranteById(@RequestParam(name="id") Long id) {
         return ResponseEntity.ok(restauranteService.obtenerPorId(id));
     }
 
+    @Operation(summary = "Obtiene los tags de un restaurante por su id.")
     @GetMapping("/tags")
     public ResponseEntity<List<TagRestauranteDTO>> obtenerTagsPorIdRestaurante(@RequestParam(name="idRestaurante") Long idRestaurante) {
         return ResponseEntity.ok(restauranteService.obtenerTagsRestaurantePorId(idRestaurante));
     }
 
-    @Operation(summary = "Comentarios realizados al restaurante ordenados por fecha.")
+
+    @Operation(summary = "Obtiene los comentarios realizados al restaurante, ordenados por fecha de comentario.")
     @GetMapping("/comentarios")
     public ResponseEntity<List<ComentarioRestauranteDTO>> obtenerComentariosPorIdRestaurante(@RequestParam(name="idRestaurante") Long idRestaurante) {
         return ResponseEntity.ok(restauranteService.obtenerComentariosByIdRestaurante(idRestaurante));
     }
 
-    @Operation(summary = "Lista de restaurantes por nombre de tag.")
+    @Operation(summary = "Obtiene la lista de restaurantes por nombre de tag.")
     @GetMapping("/restaurantesByTag")
     public ResponseEntity<List<RestauranteDTO>> obtenerRecetasPorNombreTag(@RequestParam(name="nombreTag") String nombreTag) {
         return ResponseEntity.ok(this.restauranteService.buscarRestaurantesPorNombreDeTag(nombreTag));
     }
 
-    @Operation(summary = "Lista de restaurantes por varios nombre de tag.")
+    @Operation(summary = "Obtiene la lista de restaurantes por varios nombre de tag.")
     @GetMapping("/restaurantesByTags")
     public ResponseEntity<List<RestauranteDTO>> obtenerRestaurantesPorNombresTag(@RequestParam(name="tag") List<String> tags) {
         return ResponseEntity.ok(this.restauranteService.buscarRestaurantesPorNombresDeTag(tags));

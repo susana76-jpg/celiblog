@@ -17,13 +17,13 @@ public class TagRecetaController {
     @Autowired
     TagRecetaService tagRecetaService;
 
-    @Operation(summary = "Todos los tags de receta  sin duplicados.")
+    @Operation(summary = "Obtiene un listado de los nombres de todos los tags de recetas existentes.")
     @GetMapping("/all")
     public ResponseEntity<List<String>> obtenerPorId() {
         return ResponseEntity.ok(tagRecetaService.obtenerTodosNombresTags());
     }
 
-    @Operation(summary = "Añade tag a una receta por su nombre y el id de la receta.")
+    @Operation(summary = "Añade tag a una receta..")
     @PostMapping("/add")
     public ResponseEntity<TagRecetaDTO> crearTagReceta(@RequestBody TagRecetaView tagRecetaView){
         TagRecetaDTO nuevoTagReceta = this.tagRecetaService.crearTagReceta(tagRecetaView);

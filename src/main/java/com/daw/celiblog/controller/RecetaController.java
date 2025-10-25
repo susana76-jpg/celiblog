@@ -26,25 +26,25 @@ public class RecetaController {
     @Autowired
     TagRecetaService tagRecetaService;
 
-    @Operation(summary = "Todas las recetas registradas.")
+    @Operation(summary = "Obtiene todas las recetas registradas.")
     @GetMapping("/all")
     public ResponseEntity<List<RecetaDTO>> obtenerTodos() {
         return ResponseEntity.ok(recetaService.obtenerTodos());
     }
 
-    @Operation(summary = "Receta por su id.")
+    @Operation(summary = "Obtiene la receta por su id.")
     @GetMapping("/byId")
     public ResponseEntity<RecetaDTO> getRecetaById(@RequestParam(name="id") Long id) {
         return ResponseEntity.ok(recetaService.obtenerPorId(id));
     }
 
-    @Operation(summary = "Lista de tags de una receta por su id.")
+    @Operation(summary = "Obtiene la lista de tags de una receta por su id.")
     @GetMapping("/tags")
     public ResponseEntity<List<TagRecetaDTO>> obtenerTagsPorIdReceta(@RequestParam(name="idReceta") Long idReceta) {
         return ResponseEntity.ok(recetaService.obtenerTagsRecetaPorId(idReceta));
     }
 
-      @Operation(summary = "Pasos para hacer la receta, por id de receta y en orden de paso.")
+      @Operation(summary = "Obtiene los pasos para hacer la receta, por id de receta y en orden de paso.")
     @GetMapping("/pasos")
     public ResponseEntity<List<PasoRecetaDTO>> obtenerPasosRecetaPorIdReceta(@RequestParam(name="idReceta") Long idReceta) {
         return ResponseEntity.ok(recetaService.obtenerPasosRecetaPorId(idReceta));
@@ -57,13 +57,13 @@ public class RecetaController {
         return ResponseEntity.status(201).body(nuevaReceta);
     }
 
-    @Operation(summary = "Lista de recetas por nombre de tag.")
+    @Operation(summary = "Obtiene la lista de recetas por nombre de un tag.")
     @GetMapping("/recetasByTag")
     public ResponseEntity<List<RecetaDTO>> obtenerRecetasPorNombreTag(@RequestParam(name="nombreTag") String nombreTag) {
         return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTag(nombreTag));
     }
 
-    @Operation(summary = "Lista de recetas por varios nombre de tag.")
+    @Operation(summary = "Obtiene la lista de recetas por varios nombres de tag.")
     @GetMapping("/recetasByTags")
     public ResponseEntity<List<RecetaDTO>> buscarRecetasPorNombreDeTags(@RequestParam(name="tag") List<String> tags) {
         return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTags(tags));

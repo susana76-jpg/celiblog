@@ -1,23 +1,23 @@
 package com.daw.celiblog.dto;
 
 public class TagRecetaView {
-    private String nombre;
+    private String descripcionTag;
     private Long idReceta;
 
     public TagRecetaView() {
     }
 
-    public TagRecetaView(String nombre, Long idReceta) {
-        this.nombre = nombre;
+    public TagRecetaView(String descripcionTag, Long idReceta) {
+        this.descripcionTag = descripcionTag;
         this.idReceta = idReceta;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getDescripcionTag() {
+        return descripcionTag;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setDescripcionTag(String descripcionTag) {
+        this.descripcionTag = descripcionTag;
     }
 
     public Long getIdReceta() {
