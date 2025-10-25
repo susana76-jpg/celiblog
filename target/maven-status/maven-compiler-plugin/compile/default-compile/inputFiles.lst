@@ -1,10 +1,12 @@
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\service\mapper\ComentarioMapper.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\entity\ComentarioReceta.java
+C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\repository\RolRepository.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\service\impl\TagRecetaServiceImpl.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\service\mapper\UsuarioMapper.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\service\TagRestauranteService.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\dto\TagRecetaView.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\dto\TagRecetaDTO.java
+C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\service\impl\UsuarioServiceImpl.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\entity\Receta.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\entity\TagReceta.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\repository\TagRestauranteRepository.java
@@ -42,6 +44,7 @@ C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\d
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\service\impl\TagRestauranteServiceImpl.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\dto\RecetaDTO.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\repository\ComentarioRestauranteRepository.java
+C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\controller\UsuarioController.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\CeliblogApplication.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\dto\ComentarioDTO.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\service\mapper\ComentarioRestauranteMapper.java
@@ -52,8 +55,10 @@ C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\d
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\entity\Restaurante.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\repository\TagComentarioRepository.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\util\Constantes.java
+C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\repository\UsuarioRepository.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\service\impl\RestauranteServiceImpl.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\entity\ComentarioRestaurante.java
+C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\service\UsuarioService.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\entity\RecetaIngrediente.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\error\NotFoundException.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\controller\TagRecetaController.java

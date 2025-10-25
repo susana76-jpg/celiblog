@@ -27,7 +27,8 @@ public class RestauranteController {
         return ResponseEntity.ok(restauranteService.obtenerTodos());
     }
 
-    @GetMapping("/id")
+    @Operation(summary = "Restaurante por su id.")
+    @GetMapping("/byId")
     public ResponseEntity<RestauranteDTO> getRestauranteById(@RequestParam(name="id") Long id) {
         return ResponseEntity.ok(restauranteService.obtenerPorId(id));
     }

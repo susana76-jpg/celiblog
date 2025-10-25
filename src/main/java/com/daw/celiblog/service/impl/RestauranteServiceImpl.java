@@ -5,12 +5,10 @@ import com.daw.celiblog.db.repository.ComentarioRestauranteRepository;
 import com.daw.celiblog.db.repository.RestauranteRepository;
 import com.daw.celiblog.db.repository.TagRestauranteRepository;
 import com.daw.celiblog.dto.ComentarioRestauranteDTO;
-import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.RestauranteDTO;
 import com.daw.celiblog.dto.TagRestauranteDTO;
 import com.daw.celiblog.service.RestauranteService;
 import com.daw.celiblog.service.mapper.ComentarioRestauranteMapper;
-import com.daw.celiblog.service.mapper.RecetaMapper;
 import com.daw.celiblog.service.mapper.RestauranteMapper;
 import com.daw.celiblog.service.mapper.TagRestauranteMapper;
 import org.springframework.stereotype.Service;
@@ -76,7 +74,9 @@ public class RestauranteServiceImpl implements RestauranteService {
 
     @Override
     public void eliminar(Long id) {
-        restauranteRepository.deleteById(id);
+        if(this.restauranteRepository.findById(id).isPresent()){
+            restauranteRepository.deleteById(id);
+        }
     }
 
     @Override

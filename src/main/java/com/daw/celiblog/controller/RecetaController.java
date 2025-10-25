@@ -33,7 +33,7 @@ public class RecetaController {
     }
 
     @Operation(summary = "Receta por su id.")
-    @GetMapping("/id")
+    @GetMapping("/byId")
     public ResponseEntity<RecetaDTO> getRecetaById(@RequestParam(name="id") Long id) {
         return ResponseEntity.ok(recetaService.obtenerPorId(id));
     }
