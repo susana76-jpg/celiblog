@@ -28,12 +28,7 @@ public class TagRecetaServiceImpl implements TagRecetaService {
 
     @Override
     public List<String> obtenerTodosNombresTags() {
-        Set<String> tagsUnicos = new HashSet<>();
-        List<TagReceta> sinDuplicadosPorNombre = this.tagRecetaRepository.findAll().stream()
-                .filter(tag -> tagsUnicos.add(tag.getNombre()))
-                .toList();
-
-        return tagsUnicos.stream().toList();
+       return this.tagRecetaRepository.findAllTagsOrder();
     }
     public TagRecetaDTO crearTagReceta(TagRecetaView tagRecetaView){
         Optional<Receta> receta = this.recetaRepository.findById(tagRecetaView.getIdReceta());

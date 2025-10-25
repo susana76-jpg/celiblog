@@ -16,4 +16,7 @@ public interface TagRestauranteRepository extends JpaRepository<TagRestaurante, 
     @Query(value = "SELECT * FROM tag_restaurante WHERE id_Restaurante = 1", nativeQuery = true)
     List<TagRestaurante> findByIdRestaurante(Long idRestaurante);
 
+    @Query(value = "SELECT DISTINCT nombre FROM tag_restaurante ORDER BY nombre ASC", nativeQuery = true)
+    List<String> findAllTagsOrder();
+
 }

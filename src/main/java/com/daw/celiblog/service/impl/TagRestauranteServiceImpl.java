@@ -29,12 +29,7 @@ public class TagRestauranteServiceImpl implements TagRestauranteService {
 
     @Override
     public List<String> obtenerTodosNombresTags() {
-        Set<String> tagsUnicos = new HashSet<>();
-        List<TagRestaurante> sinDuplicadosPorNombre = this.tagRestauranteRepository.findAll().stream()
-                .filter(tag -> tagsUnicos.add(tag.getNombre()))
-                .toList();
-
-        return tagsUnicos.stream().toList();
+        return this.tagRestauranteRepository.findAllTagsOrder();
     }
 
     @Override
