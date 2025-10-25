@@ -1,6 +1,7 @@
 package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.ComentarioRestauranteDTO;
+import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.RestauranteDTO;
 import com.daw.celiblog.dto.TagRestauranteDTO;
 import com.daw.celiblog.service.RestauranteService;
@@ -40,6 +41,18 @@ public class RestauranteController {
     @GetMapping("/comentarios")
     public ResponseEntity<List<ComentarioRestauranteDTO>> obtenerComentariosPorIdRestaurante(@RequestParam(name="idRestaurante") Long idRestaurante) {
         return ResponseEntity.ok(restauranteService.obtenerComentariosByIdRestaurante(idRestaurante));
+    }
+
+    @Operation(summary = "Lista de restaurantes por nombre de tag.")
+    @GetMapping("/restaurantesByTag")
+    public ResponseEntity<List<RestauranteDTO>> obtenerRecetasPorNombreTag(@RequestParam(name="nombreTag") String nombreTag) {
+        return ResponseEntity.ok(this.restauranteService.buscarRestaurantesPorNombreDeTag(nombreTag));
+    }
+
+    @Operation(summary = "Lista de restaurantes por varios nombre de tag.")
+    @GetMapping("/restaurantesByTags")
+    public ResponseEntity<List<RestauranteDTO>> obtenerRestaurantesPorNombresTag(@RequestParam(name="tag") List<String> tags) {
+        return ResponseEntity.ok(this.restauranteService.buscarRestaurantesPorNombresDeTag(tags));
     }
 
 

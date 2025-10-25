@@ -1,6 +1,7 @@
 package com.daw.celiblog.db.repository;
 
 import com.daw.celiblog.db.entity.TagReceta;
+import com.daw.celiblog.db.entity.Receta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,5 +17,6 @@ public interface TagRecetaRepository extends JpaRepository<TagReceta, Long> {
 
     @Query(value = "SELECT DISTINCT nombre FROM TAG_RECETA ORDER BY nombre ASC", nativeQuery = true)
     List<String> findAllTagsOrder();
+
 
 }

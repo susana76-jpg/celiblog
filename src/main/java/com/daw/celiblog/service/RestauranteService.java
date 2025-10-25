@@ -1,6 +1,7 @@
 package com.daw.celiblog.service;
 
 import com.daw.celiblog.dto.ComentarioRestauranteDTO;
+import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.RestauranteDTO;
 import com.daw.celiblog.dto.TagRestauranteDTO;
 
@@ -15,4 +16,7 @@ public interface RestauranteService {
 
     List<TagRestauranteDTO> obtenerTagsRestaurantePorId(Long idRestaurante);
     List<ComentarioRestauranteDTO> obtenerComentariosByIdRestaurante(Long idRestaurante);
+    List<RestauranteDTO> buscarRestaurantesPorNombreDeTag(String nombreTag);
+
+    List<RestauranteDTO> buscarRestaurantesPorNombresDeTag(List<String> tags);
 }

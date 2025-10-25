@@ -5,6 +5,7 @@ import com.daw.celiblog.db.entity.Rol;
 import com.daw.celiblog.db.entity.TagRestaurante;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RestauranteDTO {
@@ -121,33 +122,16 @@ public class RestauranteDTO {
         this.tagRestaurantes = tagRestaurantes;
     }
 
-    public static class RolMapper {
-        private RolDTO dto;
-        private Rol entity;
-        public RolMapper(Rol entity, RolDTO dto){
-            this.entity = entity;
-            this.dto = dto;
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RestauranteDTO that = (RestauranteDTO) o;
+        return Objects.equals(idRestaurante, that.idRestaurante);
+    }
 
-        public static RolDTO entityToDto(Rol source){
-            return new RolDTO(source.getIdRol(), source.getNombre());
-        }
-
-        public static Rol dtoToEntity(RolDTO source){
-            return new Rol(source.getIdRol(), source.getNombre());
-        }
-
-        public static List<Rol> dtoToEntityList(List<RolDTO> source){
-            return source.stream().map(s -> {
-                return dtoToEntity(s);
-            }).collect(Collectors.toList());
-        }
-
-        public static List<RolDTO> entityToDtoList(List<Rol> source){
-            return source.stream().map(s -> {
-                return entityToDto(s);
-            }).collect(Collectors.toList());
-        }
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(idRestaurante);
     }
 }

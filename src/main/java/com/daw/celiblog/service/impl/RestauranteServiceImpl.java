@@ -5,14 +5,18 @@ import com.daw.celiblog.db.repository.ComentarioRestauranteRepository;
 import com.daw.celiblog.db.repository.RestauranteRepository;
 import com.daw.celiblog.db.repository.TagRestauranteRepository;
 import com.daw.celiblog.dto.ComentarioRestauranteDTO;
+import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.RestauranteDTO;
 import com.daw.celiblog.dto.TagRestauranteDTO;
 import com.daw.celiblog.service.RestauranteService;
 import com.daw.celiblog.service.mapper.ComentarioRestauranteMapper;
+import com.daw.celiblog.service.mapper.RecetaMapper;
 import com.daw.celiblog.service.mapper.RestauranteMapper;
 import com.daw.celiblog.service.mapper.TagRestauranteMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -84,6 +88,20 @@ public class RestauranteServiceImpl implements RestauranteService {
     @Override
     public List<ComentarioRestauranteDTO> obtenerComentariosByIdRestaurante(Long idRestaurante) {
         return ComentarioRestauranteMapper.entityToDtoList(this.comentarioRestauranteRepository.getComentariosByIdRestaurante(idRestaurante));
+    }
+
+    @Override
+    public List<RestauranteDTO> buscarRestaurantesPorNombreDeTag(String nombreTag) {
+        return RestauranteMapper.entityToDtoList(this.restauranteRepository.buscarRestaurantesPorNombreDeTag(nombreTag.toUpperCase()));
+    }
+
+    @Override
+    public List<RestauranteDTO> buscarRestaurantesPorNombresDeTag(List<String> tags) {
+        Set<RestauranteDTO> restaurantes = new HashSet<>();
+       for(String tag:tags){
+           restaurantes.addAll(new HashSet<>(this.buscarRestaurantesPorNombreDeTag(tag)));
+       }
+       return restaurantes.stream().toList();
     }
 
 

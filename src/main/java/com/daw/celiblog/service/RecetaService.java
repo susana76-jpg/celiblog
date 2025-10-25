@@ -1,9 +1,8 @@
 package com.daw.celiblog.service;
 
-import com.daw.celiblog.dto.ComentarioDTO;
-import com.daw.celiblog.dto.PasoRecetaDTO;
-import com.daw.celiblog.dto.RecetaDTO;
-import com.daw.celiblog.dto.TagRecetaDTO;
+import com.daw.celiblog.db.entity.Receta;
+import com.daw.celiblog.dto.*;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -18,5 +17,9 @@ public interface RecetaService {
     List<PasoRecetaDTO> obtenerPasosRecetaPorId(Long idReceta);
 
     RecetaDTO crearReceta(RecetaDTO recetaDTO);
+
+    List<RecetaDTO> buscarRecetasPorNombreDeTag(String nombreTag);
+
+    List<RecetaDTO> buscarRecetasPorNombreDeTags(List<String> tags);
 
 }

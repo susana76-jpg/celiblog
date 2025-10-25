@@ -1,6 +1,7 @@
 package com.daw.celiblog.dto;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class RecetaDTO {
 
@@ -74,5 +75,18 @@ public class RecetaDTO {
 
     public void setDificultad(String dificultad) {
         this.dificultad = dificultad;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RecetaDTO that = (RecetaDTO) o;
+        return Objects.equals(idReceta, that.idReceta);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idReceta);
     }
 }

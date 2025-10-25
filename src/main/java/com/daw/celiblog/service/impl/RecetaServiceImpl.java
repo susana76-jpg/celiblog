@@ -4,18 +4,14 @@ import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.db.repository.PasoRecetaRepository;
 import com.daw.celiblog.db.repository.RecetaRepository;
 import com.daw.celiblog.db.repository.TagRecetaRepository;
-import com.daw.celiblog.dto.ComentarioDTO;
-import com.daw.celiblog.dto.PasoRecetaDTO;
-import com.daw.celiblog.dto.RecetaDTO;
-import com.daw.celiblog.dto.TagRecetaDTO;
+import com.daw.celiblog.dto.*;
 import com.daw.celiblog.service.RecetaService;
 import com.daw.celiblog.service.mapper.PasoRecetaMapper;
 import com.daw.celiblog.service.mapper.RecetaMapper;
 import com.daw.celiblog.service.mapper.TagRecetaMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RecetaServiceImpl implements RecetaService {
@@ -86,5 +82,19 @@ public class RecetaServiceImpl implements RecetaService {
     @Override
     public RecetaDTO crearReceta(RecetaDTO recetaDTO) {
         return RecetaMapper.entityToDto(this.recetaRepository.save(RecetaMapper.dtoToEntity(recetaDTO)));
+    }
+
+    @Override
+    public List<RecetaDTO> buscarRecetasPorNombreDeTag(String nombreTag) {
+        return RecetaMapper.entityToDtoList(this.recetaRepository.buscarRecetasPorNombreDeTag(nombreTag.toUpperCase()));
+    }
+
+    @Override
+    public List<RecetaDTO> buscarRecetasPorNombreDeTags(List<String> tags) {
+        Set<RecetaDTO> recetas = new HashSet<>();
+        for(String tag:tags){
+            recetas.addAll(new HashSet<>(this.buscarRecetasPorNombreDeTag(tag)));
+        }
+        return recetas.stream().toList();
     }
 }
