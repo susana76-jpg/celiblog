@@ -11,4 +11,7 @@ public interface PasoRecetaRepository extends JpaRepository<PasoReceta, Long> {
 
     @Query(value = "SELECT * FROM paso_receta where id_receta = ? ORDER BY orden asc", nativeQuery = true)
     List<PasoReceta> findByIdReceta(Long idReceta);
+
+    @Query(value = "SELECT * FROM paso_receta where id_receta = ? AND ORDEN = ?", nativeQuery = true)
+    PasoReceta findPasoByIdRecetaAndOrden(Long idReceta, int orden);
 }

@@ -16,13 +16,13 @@ public class TagRestauranteController {
     @Autowired
     TagRestauranteService tagRestauranteService;
 
-    @Operation(summary = "Todos los tags de restaurantes sin duplicados.")
+    @Operation(summary = "Obtiene el listado de todos los nombres de tag de restaurantes, sin duplicados y ordenados alfabéticamente.")
     @GetMapping("/all")
     public ResponseEntity<List<String>> obtenerPorId() {
         return ResponseEntity.ok(tagRestauranteService.obtenerTodosNombresTags());
     }
 
-    @Operation(summary = "Añade tag a un restaurante por su nombre y el id del restaurante.")
+    @Operation(summary = "Añade tag a un restaurante por el id del restaurante.")
     @PostMapping("/add")
     public ResponseEntity<TagRestauranteDTO> crearTagRestaurante(@RequestBody TagRestauranteView tagRestauranteView){
         TagRestauranteDTO nuevoTagRestaurante = this.tagRestauranteService.crearTagRestaurante(tagRestauranteView);

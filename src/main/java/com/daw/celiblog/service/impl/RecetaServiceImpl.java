@@ -1,5 +1,6 @@
 package com.daw.celiblog.service.impl;
 
+import com.daw.celiblog.db.entity.PasoReceta;
 import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.db.repository.PasoRecetaRepository;
 import com.daw.celiblog.db.repository.RecetaRepository;
@@ -45,6 +46,17 @@ public class RecetaServiceImpl implements RecetaService {
     }
 
     @Override
+    public boolean deleteReceta(Long id) {
+        Optional<Receta> receta = this.recetaRepository.findById(id);
+        if( receta.isPresent()){
+            this.recetaRepository.deleteById(id);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
     public RecetaDTO actualizar(Long id, RecetaDTO dto) {
         Optional<Receta> rec = this.recetaRepository.findById(id);
         if(rec.isPresent()){
@@ -74,10 +86,8 @@ public class RecetaServiceImpl implements RecetaService {
         return  TagRecetaMapper.entityToDtoList(this.tagRecetaRepository.getTagsByIdReceta(idReceta));
     }
 
-    @Override
-    public List<PasoRecetaDTO> obtenerPasosRecetaPorId(Long idReceta) {
-        return PasoRecetaMapper.entityToDtoList(this.pasoRecetaRepository.findByIdReceta(idReceta));
-    }
+
+
 
     @Override
     public RecetaDTO crearReceta(RecetaDTO recetaDTO) {
@@ -97,4 +107,8 @@ public class RecetaServiceImpl implements RecetaService {
         }
         return recetas.stream().toList();
     }
+
+
+
+
 }

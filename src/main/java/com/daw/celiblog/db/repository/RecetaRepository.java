@@ -21,4 +21,7 @@ public interface RecetaRepository extends JpaRepository<Receta, Long> {
     WHERE UPPER(t.nombre) LIKE %:nombreTag%
     """, nativeQuery = true)
     List<Receta> buscarRecetasPorNombreDeTag(@Param("nombreTag") String nombreTag);
+
+
+
 }

@@ -37,6 +37,11 @@ public class PasoReceta implements Serializable {
 		this.orden = orden;
 		this.receta = receta;
 	}
+	public PasoReceta(String descripcion, int orden, Receta receta) {
+		this.descripcion = descripcion;
+		this.orden = orden;
+		this.receta = receta;
+	}
 
 	public Long getIdPaso() {
 		return idPaso;

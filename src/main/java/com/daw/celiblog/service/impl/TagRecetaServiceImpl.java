@@ -41,5 +41,26 @@ public class TagRecetaServiceImpl implements TagRecetaService {
         return TagRecetaMapper.entityToDto(this.tagRecetaRepository.save(nuevaTagReceta));
     }
 
+    @Override
+    public boolean eliminarByIdTag(Long idTag) {
+        if(this.tagRecetaRepository.findById(idTag).isPresent()){
+            this.tagRecetaRepository.deleteById(idTag);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean eliminarByIdRecetaAndNombreTag(Long idReceta, String nombreTag) {
+        TagReceta tag = this.tagRecetaRepository.buscarTagByIdRecetaAndNombreTag(idReceta, nombreTag.toUpperCase());
+        if(this.recetaRepository.findById(idReceta).isPresent() && tag != null){
+            this.tagRecetaRepository.deleteById(tag.getIdTag());
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }

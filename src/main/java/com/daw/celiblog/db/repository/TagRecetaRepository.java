@@ -18,5 +18,13 @@ public interface TagRecetaRepository extends JpaRepository<TagReceta, Long> {
     @Query(value = "SELECT DISTINCT nombre FROM TAG_RECETA ORDER BY nombre ASC", nativeQuery = true)
     List<String> findAllTagsOrder();
 
+    @Query(value = """
+    SELECT t.*
+    FROM TAG_RECETA t
+    WHERE ID_RECETA = ?
+    AND UPPER(t.nombre) LIKE %?%
+    """, nativeQuery = true)
+    TagReceta buscarTagByIdRecetaAndNombreTag(Long idReceta, String nombreTag);
+
 
 }

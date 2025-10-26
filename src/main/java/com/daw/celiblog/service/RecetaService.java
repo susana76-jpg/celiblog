@@ -1,5 +1,6 @@
 package com.daw.celiblog.service;
 
+import com.daw.celiblog.db.entity.PasoReceta;
 import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.dto.*;
 import org.springframework.data.repository.query.Param;
@@ -14,12 +15,11 @@ public interface RecetaService {
     void eliminar(Long id);
     List<ComentarioDTO> obtenerComentariosDeRecetaPorIdReceta(Long idReceta);
     List<TagRecetaDTO> obtenerTagsRecetaPorId(Long idReceta);
-    List<PasoRecetaDTO> obtenerPasosRecetaPorId(Long idReceta);
-
     RecetaDTO crearReceta(RecetaDTO recetaDTO);
-
     List<RecetaDTO> buscarRecetasPorNombreDeTag(String nombreTag);
-
     List<RecetaDTO> buscarRecetasPorNombreDeTags(List<String> tags);
+    boolean deleteReceta(Long id);
+
+
 
 }

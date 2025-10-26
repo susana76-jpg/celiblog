@@ -11,6 +11,9 @@ public interface TagRecetaService {
 
     TagRecetaDTO crearTagReceta(TagRecetaView tagRecetaView);
 
+    boolean eliminarByIdTag(Long idTag);
+    boolean eliminarByIdRecetaAndNombreTag(Long idReceta, String nombreTag);
+
 
 
 

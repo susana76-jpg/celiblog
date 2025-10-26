@@ -30,6 +30,25 @@ public class TagRecetaController {
         return ResponseEntity.status(201).body(nuevoTagReceta);
     }
 
+    @Operation(summary = "Elimina un tag de una receta por el id del tag.")
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> eliminarPorIdTag(@RequestParam(value="idTag")Long idTag) {
+        if (this.tagRecetaService.eliminarByIdTag(idTag)) {
+            return ResponseEntity.ok("Tag eliminado correctamente.");
+        } else {
+            return ResponseEntity.ok("Tag no eliminado. No se ha encontrado el tag por el id " + idTag);
+        }
+    }
+
+    @Operation(summary = "Elimina el tag de una receta por el id de la receta y la descripción del tag.")
+    @DeleteMapping("/delete-byIdReceta")
+    public ResponseEntity<String> eliminarPorIdRecetaAndTagNombre(@RequestParam(value="idReceta")Long idReceta, @RequestParam(value="nombreTag")String nombreTag) {
+        if (this.tagRecetaService.eliminarByIdRecetaAndNombreTag(idReceta, nombreTag)) {
+            return ResponseEntity.ok("Tag eliminado correctamente.");
+        } else {
+            return ResponseEntity.ok("Tag no eliminado. No se ha encontrado, en la receta con id "+idReceta+ " o el tag con nombre  " + nombreTag+ " en la receta");
+        }
+    }
 
 
 }
