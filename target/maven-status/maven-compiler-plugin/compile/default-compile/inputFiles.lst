@@ -8,6 +8,7 @@ C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\d
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\dto\TagRecetaDTO.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\service\impl\UsuarioServiceImpl.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\entity\Receta.java
+C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\entity\Favorito.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\entity\TagReceta.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\repository\TagRestauranteRepository.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\src\main\java\com\daw\celiblog\db\entity\ComentarioPost.java
