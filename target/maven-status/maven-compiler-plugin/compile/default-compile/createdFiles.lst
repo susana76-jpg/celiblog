@@ -20,6 +20,7 @@ com\daw\celiblog\controller\FavoritoController.class
 com\daw\celiblog\db\entity\Restaurante.class
 com\daw\celiblog\service\TagRestauranteService.class
 com\daw\celiblog\dto\ErrorDTO.class
+com\daw\celiblog\dto\PostDTO.class
 com\daw\celiblog\controller\TagRestauranteController.class
 com\daw\celiblog\service\FavoritoService.class
 com\daw\celiblog\db\repository\RecetaRepository.class
@@ -59,6 +60,7 @@ com\daw\celiblog\service\impl\TagRecetaServiceImpl.class
 com\daw\celiblog\db\entity\Usuario.class
 com\daw\celiblog\db\repository\ComentarioRepository.class
 com\daw\celiblog\db\repository\TagComentarioRepository.class
+com\daw\celiblog\util\TemaComentario.class
 com\daw\celiblog\db\repository\TagRecetaRepository.class
 com\daw\celiblog\service\mapper\TipoComentarioMapper.class
 com\daw\celiblog\controller\RecetaController.class
@@ -76,4 +78,3 @@ com\daw\celiblog\db\entity\Favorito.class
 com\daw\celiblog\db\repository\UsuarioRepository.class
 com\daw\celiblog\service\mapper\TagRestauranteMapper.class
 com\daw\celiblog\dto\UsuarioView.class
-com\daw\celiblog\util\ObjetoComentado.class
