@@ -4,6 +4,7 @@ import com.daw.celiblog.dto.TagRestauranteDTO;
 import com.daw.celiblog.dto.TagRestauranteView;
 import com.daw.celiblog.service.TagRestauranteService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag(name = "Restaurantes", description = "Operaciones relacionadas con los tags de restaurantes.")
 @RequestMapping("/api/tag-restaurante")
 public class TagRestauranteController {
     @Autowired

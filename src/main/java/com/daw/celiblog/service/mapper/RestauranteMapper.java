@@ -16,11 +16,38 @@ public class RestauranteMapper{
     }
 
     public static RestauranteDTO entityToDto(Restaurante source){
-        return new RestauranteDTO(source.getIdRestaurante(), source.getDescripcion(), source.getDireccion(), source.getImagenUrl(), source.getNombre(),source.getUbicacion(), source.getUrlWeb(), source.getTelefono(), source.getEmail());
+        return new RestauranteDTO(
+                source.getIdRestaurante(),
+                source.getFechaPublicacion(),
+                UsuarioMapper.entityToDto(source.getUsuario()) ,
+                source.getDescripcion(),
+                source.getDireccion(),
+                source.getImagenUrl(),
+                source.getNombre(),
+                source.getUbicacion(),
+                source.getUrlWeb(),
+                source.getTelefono(),
+                source.getEmail(),
+                source.getValoracion(),
+                source.getEstado(),
+                source.getFechaValidacion());
     }
 
     public static Restaurante dtoToEntity(RestauranteDTO source){
-        return new Restaurante(source.getIdRestaurante(), source.getDescripcion(), source.getDireccion(), source.getImagenUrl(), source.getNombre(),source.getUbicacion(), source.getUrlWeb(),  source.getTelefono(), source.getEmail());
+        return new Restaurante(  source.getIdRestaurante(),
+                source.getFechaPublicacion(),
+                UsuarioMapper.dtoToEntity(source.getUsuarioDTO()) ,
+                source.getDescripcion(),
+                source.getDireccion(),
+                source.getImagenUrl(),
+                source.getNombre(),
+                source.getUbicacion(),
+                source.getUrlWeb(),
+                source.getTelefono(),
+                source.getEmail(),
+                source.getValoracion(),
+                source.getEstado(),
+                source.getFechaValidacion());
     }
 
     public static List<Restaurante> dtoToEntityList(List<RestauranteDTO> source){

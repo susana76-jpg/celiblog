@@ -1,22 +1,40 @@
 package com.daw.celiblog.dto;
 
-public class ComentarioDTO {
+import com.daw.celiblog.db.entity.TipoComentario;
+import com.daw.celiblog.db.entity.Usuario;
+import com.daw.celiblog.util.EstadoValidacion;
+import jakarta.persistence.*;
 
+import java.util.Date;
+
+public class ComentarioDTO {
     private Long idComentario;
-    private String comentarioUrl;
+    private Date fechaPublicacion;
     private String contenido;
-    private UsuarioDTO usuario;
-    private TipoComentarioDTO tipoComentario;
+    private String comentarioUrl;
+    //bi-directional many-to-one association to Usuario
+    private UsuarioDTO usuarioDTO;
+    //bi-directional many-to-one association to TipoComentario
+    private TipoComentarioDTO tipoComentarioDTO;
+    private Long idObjetoComentado;
+    private Date fechaValidacion;
+    private int  valoracion;
+    private EstadoValidacion estado = EstadoValidacion.APROBADO;
 
     public ComentarioDTO() {
     }
 
-    public ComentarioDTO(Long idComentario, String comentarioUrl, String contenido, UsuarioDTO usuario, TipoComentarioDTO tipoComentario) {
+    public ComentarioDTO(Long idComentario, Date fechaPublicacion, String contenido, String comentarioUrl, UsuarioDTO usuarioDTO, TipoComentarioDTO tipoComentarioDTO, Long idObjetoComentado, Date fechaValidacion, int valoracion, EstadoValidacion estado) {
         this.idComentario = idComentario;
-        this.comentarioUrl = comentarioUrl;
+        this.fechaPublicacion = fechaPublicacion;
         this.contenido = contenido;
-        this.usuario = usuario;
-        this.tipoComentario = tipoComentario;
+        this.comentarioUrl = comentarioUrl;
+        this.usuarioDTO = usuarioDTO;
+        this.tipoComentarioDTO = tipoComentarioDTO;
+        this.idObjetoComentado = idObjetoComentado;
+        this.fechaValidacion = fechaValidacion;
+        this.valoracion = valoracion;
+        this.estado = estado;
     }
 
     public Long getIdComentario() {
@@ -27,12 +45,12 @@ public class ComentarioDTO {
         this.idComentario = idComentario;
     }
 
-    public String getComentarioUrl() {
-        return comentarioUrl;
+    public Date getFechaPublicacion() {
+        return fechaPublicacion;
     }
 
-    public void setComentarioUrl(String comentarioUrl) {
-        this.comentarioUrl = comentarioUrl;
+    public void setFechaPublicacion(Date fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
     }
 
     public String getContenido() {
@@ -43,19 +61,59 @@ public class ComentarioDTO {
         this.contenido = contenido;
     }
 
-    public UsuarioDTO getUsuario() {
-        return usuario;
+    public String getComentarioUrl() {
+        return comentarioUrl;
     }
 
-    public void setUsuario(UsuarioDTO usuario) {
-        this.usuario = usuario;
+    public void setComentarioUrl(String comentarioUrl) {
+        this.comentarioUrl = comentarioUrl;
     }
 
-    public TipoComentarioDTO getTipoComentario() {
-        return tipoComentario;
+    public UsuarioDTO getUsuarioDTO() {
+        return usuarioDTO;
+    }
+
+    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+        this.usuarioDTO = usuarioDTO;
+    }
+
+    public TipoComentarioDTO getTipoComentarioDTO() {
+        return tipoComentarioDTO;
     }
 
     public void setTipoComentario(TipoComentarioDTO tipoComentario) {
-        this.tipoComentario = tipoComentario;
+        this.tipoComentarioDTO = tipoComentario;
+    }
+
+    public Long getIdObjetoComentado() {
+        return idObjetoComentado;
+    }
+
+    public void setIdObjetoComentado(Long idObjetoComentado) {
+        this.idObjetoComentado = idObjetoComentado;
+    }
+
+    public Date getFechaValidacion() {
+        return fechaValidacion;
+    }
+
+    public void setFechaValidacion(Date fechaValidacion) {
+        this.fechaValidacion = fechaValidacion;
+    }
+
+    public int getValoracion() {
+        return valoracion;
+    }
+
+    public void setValoracion(int valoracion) {
+        this.valoracion = valoracion;
+    }
+
+    public EstadoValidacion getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoValidacion estado) {
+        this.estado = estado;
     }
 }

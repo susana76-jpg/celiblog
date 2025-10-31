@@ -1,14 +1,11 @@
 package com.daw.celiblog.service.impl;
 
 import com.daw.celiblog.db.entity.Restaurante;
-import com.daw.celiblog.db.repository.ComentarioRestauranteRepository;
 import com.daw.celiblog.db.repository.RestauranteRepository;
 import com.daw.celiblog.db.repository.TagRestauranteRepository;
-import com.daw.celiblog.dto.ComentarioRestauranteDTO;
 import com.daw.celiblog.dto.RestauranteDTO;
 import com.daw.celiblog.dto.TagRestauranteDTO;
 import com.daw.celiblog.service.RestauranteService;
-import com.daw.celiblog.service.mapper.ComentarioRestauranteMapper;
 import com.daw.celiblog.service.mapper.RestauranteMapper;
 import com.daw.celiblog.service.mapper.TagRestauranteMapper;
 import org.springframework.stereotype.Service;
@@ -26,12 +23,10 @@ public class RestauranteServiceImpl implements RestauranteService {
 
     private final TagRestauranteRepository tagRestauranteRepository;
 
-    private final ComentarioRestauranteRepository comentarioRestauranteRepository;
 
-    public RestauranteServiceImpl(RestauranteRepository restauranteRepository, TagRestauranteRepository tagRestauranteRepository, ComentarioRestauranteRepository comentarioRestauranteRepository) {
+    public RestauranteServiceImpl(RestauranteRepository restauranteRepository, TagRestauranteRepository tagRestauranteRepository) {
         this.restauranteRepository = restauranteRepository;
         this.tagRestauranteRepository = tagRestauranteRepository;
-        this.comentarioRestauranteRepository = comentarioRestauranteRepository;
     }
 
 
@@ -85,10 +80,6 @@ public class RestauranteServiceImpl implements RestauranteService {
 
     }
 
-    @Override
-    public List<ComentarioRestauranteDTO> obtenerComentariosByIdRestaurante(Long idRestaurante) {
-        return ComentarioRestauranteMapper.entityToDtoList(this.comentarioRestauranteRepository.getComentariosByIdRestaurante(idRestaurante));
-    }
 
     @Override
     public List<RestauranteDTO> buscarRestaurantesPorNombreDeTag(String nombreTag) {

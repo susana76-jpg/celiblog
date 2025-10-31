@@ -1,8 +1,10 @@
 package com.daw.celiblog.db.entity;
 
+import com.daw.celiblog.util.EstadoValidacion;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * The persistent class for the comentario database table.
@@ -18,44 +20,68 @@ public class Comentario implements Serializable {
 	@Column(name="id_comentario")
 	private Long idComentario;
 
-	@Column(name="comentario_url")
-	private String comentarioUrl;
-
+	@Column(name="fecha_publicacion")
+	private Date fechaPublicacion;
 	private String contenido;
 
+	@Column(name="comentario_url")
+	private String comentarioUrl;
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
-
 	//bi-directional many-to-one association to TipoComentario
 	@ManyToOne
 	@JoinColumn(name="id_tipo_comentario")
 	private TipoComentario tipoComentario;
+
+	@Column(name="id_objeto_comentado")
+	private Long idObjetoComentado;
+	@Column(name = "fecha_validacion")
+	private Date fechaValidacion;
+
+	private int  valoracion;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "estado", nullable = false)
+	private EstadoValidacion estado = EstadoValidacion.APROBADO;
 
 
 
 	public Comentario() {
 	}
 
-	public Comentario(Long idComentario, String comentarioUrl, String contenido, Usuario usuario, TipoComentario tipoComentario) {
+	public Comentario(Long idComentario, Date fechaPublicacion, String contenido, String comentarioUrl, Usuario usuario, TipoComentario tipoComentario, Long idObjetoComentado, Date fechaValidacion, int valoracion, EstadoValidacion estado) {
 		this.idComentario = idComentario;
+		this.fechaPublicacion = fechaPublicacion;
 		this.comentarioUrl = comentarioUrl;
 		this.contenido = contenido;
 		this.usuario = usuario;
 		this.tipoComentario = tipoComentario;
+		this.idObjetoComentado = idObjetoComentado;
+		this.valoracion = valoracion;
+		this.estado = estado;
+		this.fechaValidacion = fechaValidacion;
 	}
 
 	public Long getIdComentario() {
-		return this.idComentario;
+		return idComentario;
 	}
 
 	public void setIdComentario(Long idComentario) {
 		this.idComentario = idComentario;
 	}
 
+	public Date getFechaPublicacion() {
+		return fechaPublicacion;
+	}
+
+	public void setFechaPublicacion(Date fechaPublicacion) {
+		this.fechaPublicacion = fechaPublicacion;
+	}
+
 	public String getComentarioUrl() {
-		return this.comentarioUrl;
+		return comentarioUrl;
 	}
 
 	public void setComentarioUrl(String comentarioUrl) {
@@ -63,7 +89,7 @@ public class Comentario implements Serializable {
 	}
 
 	public String getContenido() {
-		return this.contenido;
+		return contenido;
 	}
 
 	public void setContenido(String contenido) {
@@ -71,7 +97,7 @@ public class Comentario implements Serializable {
 	}
 
 	public Usuario getUsuario() {
-		return this.usuario;
+		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
@@ -79,20 +105,42 @@ public class Comentario implements Serializable {
 	}
 
 	public TipoComentario getTipoComentario() {
-		return this.tipoComentario;
+		return tipoComentario;
 	}
 
 	public void setTipoComentario(TipoComentario tipoComentario) {
 		this.tipoComentario = tipoComentario;
 	}
 
+	public Long getIdObjetoComentado() {
+		return idObjetoComentado;
+	}
 
+	public void setIdObjetoComentado(Long idObjetoComentado) {
+		this.idObjetoComentado = idObjetoComentado;
+	}
 
+	public int getValoracion() {
+		return valoracion;
+	}
 
+	public void setValoracion(int valoracion) {
+		this.valoracion = valoracion;
+	}
 
+	public EstadoValidacion getEstado() {
+		return estado;
+	}
 
+	public void setEstado(EstadoValidacion estado) {
+		this.estado = estado;
+	}
 
+	public Date getFechaValidacion() {
+		return fechaValidacion;
+	}
 
-
-
+	public void setFechaValidacion(Date fechaValidacion) {
+		this.fechaValidacion = fechaValidacion;
+	}
 }

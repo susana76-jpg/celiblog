@@ -62,8 +62,7 @@ public class FavoritoServiceImpl implements FavoritoService {
             nuevoFavorito.setIdReferencia(favoritoView.getIdReferencia());
             nuevoFavorito.setTipoReferencia(favoritoView.getTipoReferencia());
             nuevoFavorito.setUsuario(usuario.get());
-            this.favoritoRepository.save(nuevoFavorito);
-            return FavoritoMapper.entityToDto(nuevoFavorito);
+            return FavoritoMapper.entityToDto(this.favoritoRepository.save(nuevoFavorito));
         }else{
             return null;
         }

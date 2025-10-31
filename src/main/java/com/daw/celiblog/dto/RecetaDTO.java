@@ -1,32 +1,44 @@
 package com.daw.celiblog.dto;
 
+import com.daw.celiblog.db.entity.Usuario;
+import com.daw.celiblog.util.EstadoValidacion;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 import java.util.Date;
 import java.util.Objects;
 
 public class RecetaDTO {
 
     private Long idReceta;
+
+    private UsuarioDTO usuario;
     private String descripcion;
     private Date fechaCreacion;
     private String imagenUrl;
     private String dificultad;
 
     private String titulo;
-   /* private List<ComentarioReceta> comentarioRecetas;
-    private List<PasoReceta> pasoRecetas;
-    private List<RecetaIngrediente> recetaIngredientes;
-    private List<TagReceta> tagRecetas;*/
+
+    @Enumerated(EnumType.STRING)
+    private EstadoValidacion estado = EstadoValidacion.APROBADO;
+
+    private Date fechaValidacion;
 
     public RecetaDTO() {
     }
 
-    public RecetaDTO(Long idReceta, String descripcion, Date fechaCreacion, String imagenUrl, String titulo, String dificultad) {
+    public RecetaDTO(Long idReceta, UsuarioDTO usuario, String descripcion, Date fechaCreacion, String imagenUrl, String dificultad, String titulo, EstadoValidacion estado, Date fechaValidacion) {
         this.idReceta = idReceta;
+        this.usuario = usuario;
         this.descripcion = descripcion;
         this.fechaCreacion = fechaCreacion;
         this.imagenUrl = imagenUrl;
-        this.titulo = titulo;
         this.dificultad = dificultad;
+        this.titulo = titulo;
+        this.estado = estado;
+        this.fechaValidacion = fechaValidacion;
     }
 
     public Long getIdReceta() {
@@ -35,6 +47,14 @@ public class RecetaDTO {
 
     public void setIdReceta(Long idReceta) {
         this.idReceta = idReceta;
+    }
+
+    public UsuarioDTO getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioDTO usuario) {
+        this.usuario = usuario;
     }
 
     public String getDescripcion() {
@@ -75,6 +95,22 @@ public class RecetaDTO {
 
     public void setDificultad(String dificultad) {
         this.dificultad = dificultad;
+    }
+
+    public EstadoValidacion getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoValidacion estado) {
+        this.estado = estado;
+    }
+
+    public Date getFechaValidacion() {
+        return fechaValidacion;
+    }
+
+    public void setFechaValidacion(Date fechaValidacion) {
+        this.fechaValidacion = fechaValidacion;
     }
 
     @Override

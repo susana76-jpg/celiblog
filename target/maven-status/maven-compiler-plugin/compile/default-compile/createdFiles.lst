@@ -4,7 +4,6 @@ com\daw\celiblog\db\repository\RestauranteRepository.class
 com\daw\celiblog\dto\TagRestauranteView.class
 com\daw\celiblog\db\entity\RecetaIngrediente.class
 com\daw\celiblog\db\entity\Post.class
-com\daw\celiblog\db\repository\ComentarioRestauranteRepository.class
 com\daw\celiblog\dto\ComentarioDTO.class
 com\daw\celiblog\dto\PasoRecetaDTO.class
 com\daw\celiblog\error\NotFoundException.class
@@ -13,7 +12,6 @@ com\daw\celiblog\db\repository\FavoritoRepository.class
 com\daw\celiblog\db\repository\TagRestauranteRepository.class
 com\daw\celiblog\db\entity\Comentario.class
 com\daw\celiblog\db\repository\RolRepository.class
-com\daw\celiblog\service\mapper\ComentarioRestauranteMapper.class
 com\daw\celiblog\CeliblogApplication.class
 com\daw\celiblog\dto\TagRecetaView.class
 com\daw\celiblog\dto\RolDTO.class
@@ -34,12 +32,12 @@ com\daw\celiblog\service\impl\PasoRecetaServiceImpl.class
 com\daw\celiblog\dto\PasoRecetaView.class
 com\daw\celiblog\service\impl\TagRestauranteServiceImpl.class
 com\daw\celiblog\service\mapper\RolMapper.class
+com\daw\celiblog\util\EstadoValidacion.class
 com\daw\celiblog\db\entity\Ingrediente.class
 com\daw\celiblog\service\mapper\RecetaMapper.class
 com\daw\celiblog\util\Constantes.class
 com\daw\celiblog\dto\TagRestauranteDTO.class
 com\daw\celiblog\service\mapper\FavoritoMapper.class
-com\daw\celiblog\db\entity\ComentarioPost.class
 com\daw\celiblog\controller\TagRecetaController.class
 com\daw\celiblog\db\entity\TipoComentario.class
 com\daw\celiblog\dto\TagComentarioDTO.class
@@ -56,7 +54,6 @@ com\daw\celiblog\service\TagRecetaService.class
 com\daw\celiblog\db\entity\TagReceta.class
 com\daw\celiblog\db\entity\TagRestaurante.class
 com\daw\celiblog\db\entity\Rol.class
-com\daw\celiblog\dto\ComentarioRestauranteDTO.class
 com\daw\celiblog\service\impl\FavoritoServiceImpl.class
 com\daw\celiblog\service\impl\TagRecetaServiceImpl.class
 com\daw\celiblog\db\entity\Usuario.class
@@ -64,7 +61,6 @@ com\daw\celiblog\db\repository\ComentarioRepository.class
 com\daw\celiblog\db\repository\TagComentarioRepository.class
 com\daw\celiblog\db\repository\TagRecetaRepository.class
 com\daw\celiblog\service\mapper\TipoComentarioMapper.class
-com\daw\celiblog\db\entity\ComentarioReceta.class
 com\daw\celiblog\controller\RecetaController.class
 com\daw\celiblog\service\PasoRecetaService.class
 com\daw\celiblog\service\UsuarioService.class
@@ -78,6 +74,6 @@ com\daw\celiblog\service\RecetaService.class
 com\daw\celiblog\dto\RestauranteDTO.class
 com\daw\celiblog\db\entity\Favorito.class
 com\daw\celiblog\db\repository\UsuarioRepository.class
-com\daw\celiblog\db\entity\ComentarioRestaurante.class
 com\daw\celiblog\service\mapper\TagRestauranteMapper.class
 com\daw\celiblog\dto\UsuarioView.class
+com\daw\celiblog\util\ObjetoComentado.class

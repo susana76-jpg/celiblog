@@ -16,11 +16,31 @@ public class ComentarioMapper {
     }
 
     public static ComentarioDTO entityToDto(Comentario source){
-        return new ComentarioDTO(source.getIdComentario(), source.getComentarioUrl(), source.getContenido(), UsuarioMapper.entityToDto(source.getUsuario()) ,TipoComentarioMapper.entityToDto(source.getTipoComentario()) );
+        return new ComentarioDTO(
+                source.getIdComentario(),
+                source.getFechaPublicacion(),
+                source.getContenido(),
+                source.getComentarioUrl(),
+                UsuarioMapper.entityToDto(source.getUsuario()) ,
+                TipoComentarioMapper.entityToDto(source.getTipoComentario()),
+                source.getIdObjetoComentado(),
+                source.getFechaValidacion(),
+                source.getValoracion(),
+                source.getEstado());
     }
 
     public static Comentario dtoToEntity(ComentarioDTO source){
-        return new Comentario(source.getIdComentario(), source.getComentarioUrl(), source.getContenido(), UsuarioMapper.dtoToEntity(source.getUsuario()) ,TipoComentarioMapper.dtoToEntity(source.getTipoComentario()) );
+        return new Comentario(
+                source.getIdComentario(),
+                source.getFechaPublicacion(),
+                source.getContenido(),
+                source.getComentarioUrl(),
+                UsuarioMapper.dtoToEntity(source.getUsuarioDTO()) ,
+                TipoComentarioMapper.dtoToEntity(source.getTipoComentarioDTO()),
+                source.getIdObjetoComentado(),
+                source.getFechaValidacion(),
+                source.getValoracion(),
+                source.getEstado());
     }
 
 

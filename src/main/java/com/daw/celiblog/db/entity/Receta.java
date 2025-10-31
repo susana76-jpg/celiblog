@@ -1,5 +1,6 @@
 package com.daw.celiblog.db.entity;
 
+import com.daw.celiblog.util.EstadoValidacion;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -19,6 +20,10 @@ public class Receta implements Serializable {
 	@Column(name="id_receta")
 	private Long idReceta;
 
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
+	private Usuario usuario;
+
 	private String descripcion;
 
 	@Temporal(TemporalType.DATE)
@@ -31,20 +36,28 @@ public class Receta implements Serializable {
 	private String titulo;
 
 	private String dificultad;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "estado", nullable = false)
+	private EstadoValidacion estado = EstadoValidacion.APROBADO;
+
+	@Column(name = "fecha_validacion")
+	private Date fechaValidacion;
+
 
 	public Receta() {
 	}
 
-	public Receta(Long idReceta, String descripcion, Date fechaCreacion, String imagenUrl, String titulo, String dificultad) {
+	public Receta(Long idReceta, Usuario usuario, String descripcion, Date fechaCreacion, String imagenUrl, String titulo, String dificultad, EstadoValidacion estado, Date fechaValidacion) {
 		this.idReceta = idReceta;
+		this.usuario = usuario;
 		this.descripcion = descripcion;
 		this.fechaCreacion = fechaCreacion;
 		this.imagenUrl = imagenUrl;
 		this.titulo = titulo;
 		this.dificultad = dificultad;
+		this.estado = estado;
+		this.fechaValidacion = fechaValidacion;
 	}
-
-
 
 	public Long getIdReceta() {
 		return idReceta;
@@ -53,6 +66,8 @@ public class Receta implements Serializable {
 	public void setIdReceta(Long idReceta) {
 		this.idReceta = idReceta;
 	}
+
+
 
 	public String getDescripcion() {
 		return descripcion;
@@ -92,5 +107,29 @@ public class Receta implements Serializable {
 
 	public void setDificultad(String dificultad) {
 		this.dificultad = dificultad;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public EstadoValidacion getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoValidacion estado) {
+		this.estado = estado;
+	}
+
+	public Date getFechaValidacion() {
+		return fechaValidacion;
+	}
+
+	public void setFechaValidacion(Date fechaValidacion) {
+		this.fechaValidacion = fechaValidacion;
 	}
 }

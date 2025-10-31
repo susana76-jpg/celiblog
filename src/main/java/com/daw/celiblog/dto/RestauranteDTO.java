@@ -1,29 +1,38 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.db.entity.ComentarioRestaurante;
-import com.daw.celiblog.db.entity.Rol;
-import com.daw.celiblog.db.entity.TagRestaurante;
+import com.daw.celiblog.util.EstadoValidacion;
+import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.Date;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
 
 public class RestauranteDTO {
 
     private Long idRestaurante;
+    private Date fechaPublicacion;
+    private UsuarioDTO usuarioDTO;
     private String descripcion;
     private String direccion;
     private String imagenUrl;
     private String nombre;
     private String ubicacion;
     private String urlWeb;
-    private List<ComentarioRestaurante> comentarioRestaurantes;
-    private List<TagRestaurante> tagRestaurantes;
-    private String email;
     private int telefono;
+    private String email;
+    private int valoracion;
+    @Enumerated(EnumType.STRING)
+    private EstadoValidacion estado = EstadoValidacion.APROBADO;
 
-    public RestauranteDTO(Long idRestaurante, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb, int telefono, String email ) {
+    private Date fechaValidacion;
+
+    public RestauranteDTO() {
+    }
+
+    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioDTO usuarioDTO, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb, int telefono, String email, int valoracion, EstadoValidacion estado, Date fechaValidacion) {
         this.idRestaurante = idRestaurante;
+        this.fechaPublicacion = fechaPublicacion;
+        this.usuarioDTO = usuarioDTO;
         this.descripcion = descripcion;
         this.direccion = direccion;
         this.imagenUrl = imagenUrl;
@@ -32,6 +41,9 @@ public class RestauranteDTO {
         this.urlWeb = urlWeb;
         this.telefono = telefono;
         this.email = email;
+        this.valoracion = valoracion;
+        this.estado = estado;
+        this.fechaValidacion = fechaValidacion;
     }
 
     public Long getIdRestaurante() {
@@ -40,6 +52,22 @@ public class RestauranteDTO {
 
     public void setIdRestaurante(Long idRestaurante) {
         this.idRestaurante = idRestaurante;
+    }
+
+    public Date getFechaPublicacion() {
+        return fechaPublicacion;
+    }
+
+    public void setFechaPublicacion(Date fecha) {
+        this.fechaPublicacion = fecha;
+    }
+
+    public UsuarioDTO getUsuarioDTO() {
+        return usuarioDTO;
+    }
+
+    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+        this.usuarioDTO = usuarioDTO;
     }
 
     public String getDescripcion() {
@@ -90,14 +118,6 @@ public class RestauranteDTO {
         this.urlWeb = urlWeb;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public int getTelefono() {
         return telefono;
     }
@@ -106,20 +126,36 @@ public class RestauranteDTO {
         this.telefono = telefono;
     }
 
-    public List<ComentarioRestaurante> getComentarioRestaurantes() {
-        return comentarioRestaurantes;
+    public String getEmail() {
+        return email;
     }
 
-    public void setComentarioRestaurantes(List<ComentarioRestaurante> comentarioRestaurantes) {
-        this.comentarioRestaurantes = comentarioRestaurantes;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public List<TagRestaurante> getTagRestaurantes() {
-        return tagRestaurantes;
+    public int getValoracion() {
+        return valoracion;
     }
 
-    public void setTagRestaurantes(List<TagRestaurante> tagRestaurantes) {
-        this.tagRestaurantes = tagRestaurantes;
+    public void setValoracion(int valoracion) {
+        this.valoracion = valoracion;
+    }
+
+    public EstadoValidacion getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoValidacion estado) {
+        this.estado = estado;
+    }
+
+    public Date getFechaValidacion() {
+        return fechaValidacion;
+    }
+
+    public void setFechaValidacion(Date fechaValidacion) {
+        this.fechaValidacion = fechaValidacion;
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.daw.celiblog.db.entity;
 
+import com.daw.celiblog.util.EstadoValidacion;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * The persistent class for the restaurante database table.
@@ -17,45 +19,49 @@ public class Restaurante implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_restaurante")
 	private Long idRestaurante;
-
-	private String descripcion;
-
-	private String direccion;
-
-	@Column(name="imagen_url")
-	private String imagenUrl;
-
+	@Column(name="fecha_publicacion")
+	private Date fechaPublicacion;
 	private String nombre;
-
-	private String ubicacion;
-
+	private String direccion;
+	private String descripcion;
 	@Column(name="url_web")
 	private String urlWeb;
+	@Column(name="imagen_url")
+	private String imagenUrl;
+	private String ubicacion;
 	private int telefono;
 	private String email;
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
+	private Usuario usuario;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "estado", nullable = false)
+	private EstadoValidacion estado = EstadoValidacion.PENDIENTE;
+	@Column(name = "fecha_validacion")
+	private Date fechaValidacion;
+	private int valoracion;
 
 
-	//bi-directional many-to-one association to ComentarioRestaurante
-	/*@OneToMany(mappedBy="restaurante")
-	private List<ComentarioRestaurante> comentarioRestaurantes;
 
-	//bi-directional many-to-one association to TagRestaurante
-	@OneToMany(mappedBy="restaurante")
-	private List<TagRestaurante> tagRestaurantes;*/
 
 	public Restaurante() {
 	}
 
-	public Restaurante(Long idRestaurante, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb, int telefono, String email) {
+	public Restaurante(Long idRestaurante, Date fecha, Usuario usuario, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb, int telefono, String email, int valoracion, EstadoValidacion estado, Date fechaValidacion) {
 		this.idRestaurante = idRestaurante;
+		this.fechaPublicacion = fecha;
+		this.usuario = usuario;
 		this.descripcion = descripcion;
 		this.direccion = direccion;
 		this.imagenUrl = imagenUrl;
 		this.nombre = nombre;
 		this.ubicacion = ubicacion;
 		this.urlWeb = urlWeb;
-		this.email = email;
 		this.telefono = telefono;
+		this.email = email;
+		this.valoracion = valoracion;
+		this.estado = estado;
+		this.fechaValidacion = fechaValidacion;
 	}
 
 	public Long getIdRestaurante() {
@@ -64,6 +70,14 @@ public class Restaurante implements Serializable {
 
 	public void setIdRestaurante(Long idRestaurante) {
 		this.idRestaurante = idRestaurante;
+	}
+
+	public Date getFechaPublicacion() {
+		return fechaPublicacion;
+	}
+
+	public void setFechaPublicacion(Date fechaPublicacion) {
+		this.fechaPublicacion = fechaPublicacion;
 	}
 
 	public String getDescripcion() {
@@ -128,5 +142,37 @@ public class Restaurante implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public int getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(int valoracion) {
+		this.valoracion = valoracion;
+	}
+
+	public EstadoValidacion getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoValidacion estado) {
+		this.estado = estado;
+	}
+
+	public Date getFechaValidacion() {
+		return fechaValidacion;
+	}
+
+	public void setFechaValidacion(Date fechaValidacion) {
+		this.fechaValidacion = fechaValidacion;
 	}
 }

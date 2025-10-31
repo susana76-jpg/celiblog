@@ -23,7 +23,7 @@ public class FavoritoController {
     private FavoritoService favoritoService;
 
 
-    @Operation(summary = "Obtiene el listado de favoritos de restaurantes favoritos del usuario, por id de usuario.")
+    @Operation(summary = "Obtiene el listado de favoritos de restaurantes del usuario, por id de usuario.")
     @GetMapping("/restaurantes")
     public ResponseEntity<List<FavoritoDTO>> obtenerFavoritosRestaurante(@RequestParam(name="idUsuario") Long idUsuario) {
         return ResponseEntity.ok(this.favoritoService.getFavoritosRestaurantesByIdUsuario(idUsuario));

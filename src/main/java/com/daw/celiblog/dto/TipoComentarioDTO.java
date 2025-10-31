@@ -1,15 +1,21 @@
 package com.daw.celiblog.dto;
 
+import com.daw.celiblog.util.TemaComentario;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 public class TipoComentarioDTO {
 
     private Long idTipoComentario;
     private String nombre;
-    private String tema;
+    @Enumerated(EnumType.STRING)
+    private TemaComentario tema = TemaComentario.PENDIENTE;
 
     public TipoComentarioDTO() {
     }
 
-    public TipoComentarioDTO(Long idTipoComentario, String nombre, String tema) {
+    public TipoComentarioDTO(Long idTipoComentario, String nombre, TemaComentario tema) {
         this.idTipoComentario = idTipoComentario;
         this.nombre = nombre;
         this.tema = tema;
@@ -31,11 +37,11 @@ public class TipoComentarioDTO {
         this.nombre = nombre;
     }
 
-    public String getTema() {
+    public TemaComentario getTema() {
         return tema;
     }
 
-    public void setTema(String tema) {
+    public void setTema(TemaComentario tema) {
         this.tema = tema;
     }
 }

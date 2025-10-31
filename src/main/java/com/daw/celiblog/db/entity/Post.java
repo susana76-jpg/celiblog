@@ -1,8 +1,10 @@
 package com.daw.celiblog.db.entity;
 
+import com.daw.celiblog.util.EstadoValidacion;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,103 +19,98 @@ public class Post implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_post")
-	private int idPost;
-
-	private String contenido;
-
-	@Column(name="url_post")
-	private String urlPost;
-
-	//bi-directional many-to-one association to ComentarioPost
-	@OneToMany(mappedBy="post")
-	private List<ComentarioPost> comentarioPosts;
-
+	private Long idPost;
+	@Column(name="fecha_publicacion")
+	private Date fechaPublicacion;
 	//bi-directional many-to-one association to Usuario
+	private String contenido;
 	@ManyToOne
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
-
-	//bi-directional many-to-one association to TagPost
-	@OneToMany(mappedBy="post")
-	private List<TagPost> tagPosts;
+	@Column(name="url_post")
+	private String urlPost;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "estado", nullable = false)
+	private EstadoValidacion estado = EstadoValidacion.PENDIENTE;
+	@Column(name = "fecha_validacion")
+	private Date fechaValidacion;
+	private int valoracion;
 
 	public Post() {
 	}
 
-	public int getIdPost() {
-		return this.idPost;
+	public Post(Long idPost, Date fechaPublicacion, String contenido, Usuario usuario, String urlPost, EstadoValidacion estado, Date fechaValidacion, int valoracion) {
+		this.idPost = idPost;
+		this.fechaPublicacion = fechaPublicacion;
+		this.contenido = contenido;
+		this.usuario = usuario;
+		this.urlPost = urlPost;
+		this.estado = estado;
+		this.fechaValidacion = fechaValidacion;
+		this.valoracion = valoracion;
 	}
 
-	public void setIdPost(int idPost) {
+	public Long getIdPost() {
+		return idPost;
+	}
+
+	public void setIdPost(Long idPost) {
 		this.idPost = idPost;
 	}
 
+	public Date getFechaPublicacion() {
+		return fechaPublicacion;
+	}
+
+	public void setFechaPublicacion(Date fechaPublicacion) {
+		this.fechaPublicacion = fechaPublicacion;
+	}
+
 	public String getContenido() {
-		return this.contenido;
+		return contenido;
 	}
 
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
 	}
 
-	public String getUrlPost() {
-		return this.urlPost;
-	}
-
-	public void setUrlPost(String urlPost) {
-		this.urlPost = urlPost;
-	}
-
-	public List<ComentarioPost> getComentarioPosts() {
-		return this.comentarioPosts;
-	}
-
-	public void setComentarioPosts(List<ComentarioPost> comentarioPosts) {
-		this.comentarioPosts = comentarioPosts;
-	}
-
-	public ComentarioPost addComentarioPost(ComentarioPost comentarioPost) {
-		getComentarioPosts().add(comentarioPost);
-		comentarioPost.setPost(this);
-
-		return comentarioPost;
-	}
-
-	public ComentarioPost removeComentarioPost(ComentarioPost comentarioPost) {
-		getComentarioPosts().remove(comentarioPost);
-		comentarioPost.setPost(null);
-
-		return comentarioPost;
-	}
-
 	public Usuario getUsuario() {
-		return this.usuario;
+		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
 
-	public List<TagPost> getTagPosts() {
-		return this.tagPosts;
+	public String getUrlPost() {
+		return urlPost;
 	}
 
-	public void setTagPosts(List<TagPost> tagPosts) {
-		this.tagPosts = tagPosts;
+	public void setUrlPost(String urlPost) {
+		this.urlPost = urlPost;
 	}
 
-	public TagPost addTagPost(TagPost tagPost) {
-		getTagPosts().add(tagPost);
-		tagPost.setPost(this);
-
-		return tagPost;
+	public EstadoValidacion getEstado() {
+		return estado;
 	}
 
-	public TagPost removeTagPost(TagPost tagPost) {
-		getTagPosts().remove(tagPost);
-		tagPost.setPost(null);
-
-		return tagPost;
+	public void setEstado(EstadoValidacion estado) {
+		this.estado = estado;
 	}
 
+	public Date getFechaValidacion() {
+		return fechaValidacion;
+	}
+
+	public void setFechaValidacion(Date fechaValidacion) {
+		this.fechaValidacion = fechaValidacion;
+	}
+
+	public int getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(int valoracion) {
+		this.valoracion = valoracion;
+	}
 }

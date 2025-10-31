@@ -2,7 +2,10 @@ package com.daw.celiblog.service.mapper;
 
 import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.dto.RecetaDTO;
+import com.daw.celiblog.dto.UsuarioDTO;
+import com.daw.celiblog.util.EstadoValidacion;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,15 +18,28 @@ public class RecetaMapper {
         this.entity = entity;
         this.dto = dto;
     }
-
     public static RecetaDTO entityToDto(Receta source){
-        return new RecetaDTO(source.getIdReceta(), source.getDescripcion(), source.getFechaCreacion(), source.getImagenUrl(), source.getTitulo(), source.getDificultad());
+        return new RecetaDTO(source.getIdReceta(),
+                UsuarioMapper.entityToDto(source.getUsuario()),
+                source.getDescripcion(),
+                source.getFechaCreacion(),
+                source.getImagenUrl(),
+                source.getDificultad(),
+                source.getTitulo(),
+                source.getEstado(),
+                source.getFechaValidacion());
     }
-
     public static Receta dtoToEntity(RecetaDTO source){
-        return new Receta(source.getIdReceta(), source.getDescripcion(), source.getFechaCreacion(), source.getImagenUrl(), source.getTitulo(), source.getDificultad());
+        return new Receta(source.getIdReceta(),
+                UsuarioMapper.dtoToEntity(source.getUsuario()),
+                source.getDescripcion(),
+                source.getFechaCreacion(),
+                source.getImagenUrl(),
+                source.getDificultad(),
+                source.getTitulo(),
+                source.getEstado(),
+                source.getFechaValidacion());
     }
-
     public static List<Receta> dtoToEntityList(List<RecetaDTO> source){
         return source.stream().map(s -> {
             return dtoToEntity(s);

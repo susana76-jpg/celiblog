@@ -1,11 +1,10 @@
 package com.daw.celiblog.controller;
 
-import com.daw.celiblog.dto.ComentarioRestauranteDTO;
-import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.RestauranteDTO;
 import com.daw.celiblog.dto.TagRestauranteDTO;
 import com.daw.celiblog.service.RestauranteService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Tag(name = "Restaurantes", description = "Operaciones relacionadas con restaurantes.")
 @RequestMapping("/api/restaurante")
 public class RestauranteController {
 
@@ -40,12 +40,6 @@ public class RestauranteController {
         return ResponseEntity.ok(restauranteService.obtenerTagsRestaurantePorId(idRestaurante));
     }
 
-
-    @Operation(summary = "Obtiene los comentarios realizados al restaurante, ordenados por fecha de comentario.")
-    @GetMapping("/comentarios")
-    public ResponseEntity<List<ComentarioRestauranteDTO>> obtenerComentariosPorIdRestaurante(@RequestParam(name="idRestaurante") Long idRestaurante) {
-        return ResponseEntity.ok(restauranteService.obtenerComentariosByIdRestaurante(idRestaurante));
-    }
 
     @Operation(summary = "Obtiene la lista de restaurantes por nombre de tag.")
     @GetMapping("/restaurantesByTag")
