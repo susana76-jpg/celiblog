@@ -1,7 +1,6 @@
 package com.daw.celiblog.db.entity;
 
-import com.daw.celiblog.util.EstadoValidacion;
-import com.daw.celiblog.util.TemaComentario;
+import com.daw.celiblog.enums.TemaComentario;
 import jakarta.persistence.*;
 
 import java.io.Serializable;

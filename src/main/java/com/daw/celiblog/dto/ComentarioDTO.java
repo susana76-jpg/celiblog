@@ -1,9 +1,6 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.db.entity.TipoComentario;
-import com.daw.celiblog.db.entity.Usuario;
-import com.daw.celiblog.util.EstadoValidacion;
-import jakarta.persistence.*;
+import com.daw.celiblog.enums.EstadoValidacion;
 
 import java.util.Date;
 

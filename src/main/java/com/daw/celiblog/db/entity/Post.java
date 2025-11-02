@@ -1,11 +1,10 @@
 package com.daw.celiblog.db.entity;
 
-import com.daw.celiblog.util.EstadoValidacion;
+import com.daw.celiblog.enums.EstadoValidacion;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * The persistent class for the post database table.

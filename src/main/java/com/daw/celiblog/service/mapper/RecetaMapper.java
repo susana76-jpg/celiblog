@@ -2,10 +2,7 @@ package com.daw.celiblog.service.mapper;
 
 import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.dto.RecetaDTO;
-import com.daw.celiblog.dto.UsuarioDTO;
-import com.daw.celiblog.util.EstadoValidacion;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

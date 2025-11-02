@@ -1,8 +1,6 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.db.entity.Usuario;
-import com.daw.celiblog.util.EstadoValidacion;
-import jakarta.persistence.Column;
+import com.daw.celiblog.enums.EstadoValidacion;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 

@@ -1,7 +1,6 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.util.TemaComentario;
-import jakarta.persistence.Column;
+import com.daw.celiblog.enums.TemaComentario;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
