@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TagComentarioRepository extends JpaRepository<Restaurante, Long> {
 
-    @Query(value = "SELECT * FROM TAG_COMENTARIO", nativeQuery = true)
+    @Query(value = "SELECT * FROM tag_comentario", nativeQuery = true)
     List<Restaurante> findAll();
 
 }

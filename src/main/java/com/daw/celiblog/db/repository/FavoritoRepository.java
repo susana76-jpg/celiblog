@@ -9,7 +9,7 @@ import java.util.List;
 public interface FavoritoRepository extends JpaRepository<Favorito, Long> {
 
     //favoritos restaurantes
-    @Query(value = "SELECT * FROM favoritos WHERE id_usuario = ? AND tipo_referencia = 'restaurante'", nativeQuery = true)
+        @Query(value = "SELECT * FROM favoritos WHERE id_usuario = ? AND tipo_referencia = 'restaurante'", nativeQuery = true)
     List<Favorito> getFavoritosRestaurantesByIdUsuario(Long idUsuario);
 
     @Query(value = "SELECT id_referencia FROM favoritos WHERE id_usuario = ? AND tipo_referencia = 'restaurante'", nativeQuery = true)
