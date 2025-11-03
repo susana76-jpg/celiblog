@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "types": ["@types/node"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["./**/*"]
+}
