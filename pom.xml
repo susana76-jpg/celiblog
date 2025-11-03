@@ -6,7 +6,10 @@
 	<artifactId>celiblog</artifactId>
 	<version>0.0.1</version>
 	<name>celiblog</name>
-	<packaging>jar</packaging>
+	<modules>
+		<module>celiblog-api</module>
+	</modules>
+	<packaging>pom</packaging>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
