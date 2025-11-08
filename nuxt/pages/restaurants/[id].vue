@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Tip single Page</h1>
+    <h1>Restaurant single Page</h1>
     <!-- Content for the restaurants page goes here -->
   </div>
 </template>
