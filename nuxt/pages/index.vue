@@ -1,31 +1,5 @@
 <template>
   <div class="index-page">
-    <header class="main-menu">
-      <div class="logo">
-        <img :src="imgRectangle29" alt="Celiblog logo" />
-      </div>
-      <nav class="text-menu">
-        <div class="menu-icon-active">
-          <img :src="imgVector" alt="" />
-        </div>
-        <NuxtLink to="/recetas" class="menu-item">RECETAS</NuxtLink>
-        <NuxtLink to="/restaurantes" class="menu-item">RESTAURANTES</NuxtLink>
-        <NuxtLink to="/consejos" class="menu-item">CONSEJOS</NuxtLink>
-        <NuxtLink to="/equipo" class="menu-item">SOBRE</NuxtLink>
-        <NuxtLink to="/contacto" class="menu-item">CONTACTO</NuxtLink>
-      </nav>
-      <div class="account-buttons">
-        <NuxtLink to="/signin" class="sign-in-button">
-          <PersonIcon />
-          <span>Iniciar Sesión</span>
-        </NuxtLink>
-        <NuxtLink to="/signup" class="sign-up-button">
-          <AddCircleIcon />
-          <span>Crear Usuario</span>
-        </NuxtLink>
-      </div>
-    </header>
-
     <section class="hero-header">
       <div class="hero-image">
         <img :src="imgHeroImage" alt="Hero background" />
@@ -122,8 +96,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import PersonIcon from '../components/icons/PersonIcon.vue'
-import AddCircleIcon from '../components/icons/AddCircleIcon.vue'
 
 // Image assets
 const imgRectangle29 = "https://www.figma.com/api/mcp/asset/0c85f634-de85-43b7-9d63-923fd5d7323f"
