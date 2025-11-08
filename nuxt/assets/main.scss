@@ -1,5 +1,8 @@
-@import 'variables';
+@use 'variables';
+@use 'index';
 
 body {
   font-family: var(--font-family-main);
+  margin: 0;
+  padding: 0;
 }
