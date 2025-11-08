@@ -1,4 +1,5 @@
-/* You can add global app styles here. Vuetify styles are imported in the plugin. */
+@import 'variables';
+
 body {
-  font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-family-main);
 }
