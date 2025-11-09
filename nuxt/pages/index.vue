@@ -84,13 +84,6 @@
         </button>
       </div>
     </section>
-
-    <footer class="main-footer">
-      <div class="footer-content">
-        <img :src="imgRectangle29" alt="Footer logo" />
-        <p>@2025Celiblog. Todos los derechos reservados.</p>
-      </div>
-    </footer>
   </div>
 </template>
 
