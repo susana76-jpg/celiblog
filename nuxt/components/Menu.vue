@@ -68,10 +68,9 @@
 </template>
 
 <script setup lang="ts">
+import type { Variant } from '../types/vuetify';
 const isUserLoggedIn = ref<boolean>(true);
 const userName = ref<string>('John Doe');
-
-type Variant = "plain" | "text" | "flat" | "elevated" | "outlined" | "tonal";
 
 // List of menu items
 const menuItems = [
