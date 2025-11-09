@@ -1,8 +1,8 @@
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-import 'vuetify/styles'
-import { defineNuxtPlugin } from 'nuxt/app'
+import { createVuetify } from 'vuetify';
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
+import 'vuetify/styles';
+import { defineNuxtPlugin } from 'nuxt/app';
 
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
@@ -10,7 +10,27 @@ export default defineNuxtPlugin((nuxtApp) => {
     directives,
     icons: {
       defaultSet: 'mdi'
+    },
+    theme: {
+      defaultTheme: 'light',
+      themes: {
+        light: {
+          colors: {
+            primary: '#836A02',
+            secondary: '#2E5635',
+            tertiary: '#A3C9A8',
+            darkgray: '#333333',
+            lightgray: '#5c5c5c',
+            background: '#F4F1EA',
+            accent: '#FF4081',
+            error: '#FF5252',
+            info: '#2196F3',
+            success: '#4CAF50',
+            warning: '#FFC107',
+          }
+        },
+      }
     }
-  })
-  nuxtApp.vueApp.use(vuetify)
+  });
+  nuxtApp.vueApp.use(vuetify);
 })

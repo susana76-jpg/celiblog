@@ -2,7 +2,7 @@
 @use 'index';
 
 body {
-  font-family: var(--font-family-main);
+  font-family: variables.$font-family-main;
   margin: 0;
   padding: 0;
 }

@@ -1,45 +1,44 @@
-:root {
-  // Colors
-  $primary-color: #836A02;
-  $secondary-color: #2E5635;
-  $terciary-color: #A3C9A8;
-  $text-color: #333333;
-  $text-light: rgba(0, 0, 0, 0.8);
-  $background-color: #F4F1EA;
-  $background-light: rgba(244, 241, 234, 0.9);
-  $white: #FFFFFF;
-  $logo-color: #836A02;
-  $dark-gray: #333333;
-  $dark-green: #2E5635;
-  
-  // Typography
-  $font-family-title: 'Arial', sans-serif;
-  $font-family-main: 'Poppins', sans-serif;
-  $font-family-button: 'Roboto', sans-serif;
-  $font-size-xs: 12px;
-  $font-size-sm: 14px;
-  $font-size-base: 16px;
-  $font-size-lg: 24px;
-  $font-size-xl: 36px;
-  $font-size-2xl: 64px;
-  
-  // Spacing
-  $spacing-xs: 8px;
-  $spacing-sm: 16px;
-  $spacing-md: 24px;
-  $spacing-lg: 32px;
-  $spacing-xl: 48px;
-  $spacing-2xl: 90px;
-  
-  // Layout
-  $header-height: 82px;
-  $footer-height: 85px;
-  $container-max-width: 1620px;
-  
-  // Border Radius
-  $border-radius-full: 100px;
-  $border-radius-md: 6px;
-  
-  // Z-index
-  $z-header: 10;
-}
+// SCSS Variables
+// Colors
+$primary-color: #836A02;
+$secondary-color: #2E5635;
+$tertiary-color: #A3C9A8;
+$text-color: #333333;
+$text-light: #5c5c5c;
+$background-color: #F4F1EA;
+$background-light: rgba(244, 241, 234, 0.9);
+$white: #FFFFFF;
+$logo-color: #836A02;
+$dark-gray: #333333;
+$dark-green: #2E5635;
+
+// Typography
+$font-family-title: 'Arial', sans-serif;
+$font-family-main: 'Poppins', sans-serif;
+$font-family-button: 'Roboto', sans-serif;
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-base: 16px;
+$font-size-lg: 24px;
+$font-size-xl: 36px;
+$font-size-2xl: 64px;
+
+// Spacing
+$spacing-xs: 8px;
+$spacing-sm: 16px;
+$spacing-md: 24px;
+$spacing-lg: 32px;
+$spacing-xl: 48px;
+$spacing-2xl: 90px;
+
+// Layout
+$header-height: 82px;
+$footer-height: 85px;
+$container-max-width: 1620px;
+
+// Border Radius
+$border-radius-full: 100px;
+$border-radius-md: 6px;
+
+// Z-index
+$z-header: 10;

@@ -1,8 +1,13 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  ssr: true,
+  ssr: false,
   css: ['vuetify/styles', '@/assets/main.scss'],
+  nitro: {
+    compatibility: {
+      date: '2025-11-09'
+    }
+  },
   app: {
     head: {
       title: 'CeliBlog',
@@ -31,5 +36,8 @@ export default defineNuxtConfig({
     define: {
       'process.env.DEBUG': false
     }
+  },
+  experimental: {
+    payloadExtraction: false
   }
 })

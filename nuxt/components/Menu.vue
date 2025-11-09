@@ -1,41 +1,116 @@
 <template>
   <v-app-bar 
-    flat
     class="main-menu"
     scroll-behavior="elevate"
     scroll-threshold="300"
   >
-    <div class="logo">
-      <img src="/assets/img/celiblog_logo.png" alt="Celiblog logo" />
-    </div>
 
-    <nav class="text-menu">
-      <v-icon icon="mdi-home-outline" color="green"></v-icon>
-      <NuxtLink to="/recetas" class="menu-item">RECETAS</NuxtLink>
-      <NuxtLink to="/restaurantes" class="menu-item">RESTAURANTES</NuxtLink>
-      <NuxtLink to="/consejos" class="menu-item">CONSEJOS</NuxtLink>
-      <NuxtLink to="/equipo" class="menu-item">SOBRE</NuxtLink>
-      <NuxtLink to="/contacto" class="menu-item">CONTACTO</NuxtLink>
+    <v-img 
+      inline
+      height="46px"
+      :width="130"
+      :min-width="130"
+      src="/img/celiblog_logo.png" 
+      alt="Celiblog logo" 
+    />
+
+    <nav>
+      <v-btn
+        v-for="item in menuItems"
+        :key="item.path"
+        :to="item.path"
+        :icon="item.icon"
+        :text="item.text"
+        :variant="item.variant"
+        rounded="0"
+        exact
+      />
     </nav>
 
     <div class="account-buttons">
-      <NuxtLink to="/inicio" class="sign-in-button">
-        <span>Iniciar Sesión</span>
-      </NuxtLink>
-      <NuxtLink to="/registro" class="sign-up-button">
-        <span>Crear Usuario</span>
-      </NuxtLink>
+      <template v-if="!isUserLoggedIn">
+        <v-btn
+          v-for="button in accountButtons"
+          :key="button.path"
+          :to="button.path"
+          :prepend-icon="button.icon"
+          :text="button.text"
+          :variant="button.variant"
+          :class="button.class"
+          :color="button.color"
+          :rounded="button.rounded"
+        />
+      </template>
+      <template v-else>
+        <v-btn
+          text
+          slim
+          size="large"
+          color="primary"
+          variant="outlined"
+          rounded="xl"
+          class="user-button text-capitalize text-body-1 px-2"
+        >
+          <p>Hola, {{ userName }}</p>
+          <v-avatar 
+            size="34px"
+            class="ml-2"
+          >
+            <v-img
+              alt="John"
+              src="https://cdn.vuetifyjs.com/images/john.jpg"
+            ></v-img>
+          </v-avatar>
+        </v-btn>
+      </template>
     </div>
   </v-app-bar>
 </template>
 
+<script setup lang="ts">
+const isUserLoggedIn = ref<boolean>(true);
+const userName = ref<string>('John Doe');
+
+type Variant = "plain" | "text" | "flat" | "elevated" | "outlined" | "tonal";
+
+// List of menu items
+const menuItems = [
+  { path: '/', icon: 'mdi-home-outline', variant: 'flat' as Variant },
+  { path: '/recetas', text: 'recetas' },
+  { path: '/restaurantes', text: 'restaurantes' },
+  { path: '/consejos', text: 'consejos' },
+  { path: '/equipo', text: 'equipo' },
+  { path: '/contacto', text: 'contacto' }
+]
+
+// List of account buttons
+const accountButtons = [
+  {
+    path: '/inicio',
+    text: 'Iniciar Sesión',
+    icon: 'mdi-account-outline',
+    variant: 'flat' as Variant,
+    class: 'mr-2',
+    color: 'primary',
+    rounded: 'xl'
+  },
+  {
+    path: '/registro',
+    text: 'Crear Usuario',
+    icon: 'mdi-plus-circle-outline',
+    variant: 'outlined' as Variant,
+    color: 'primary',
+    rounded: 'xl'
+  }
+]
+</script>
+
+
 <style lang="scss">
 .v-app-bar.main-menu {
-  position: fixed !important;
-  top: 0;
-  width: 100vw;
-  padding: 20px;
+  padding: 18px 80px;
 
+  // Adjust toolbar content alignment
   .v-toolbar__content {
     height: auto !important;
     display: flex;
@@ -43,65 +118,24 @@
     justify-content: space-between;
   }
 
-  .logo {
-    width: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    img {
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-    }
-  }
-
-  .text-menu {
-    display: flex;
-    gap: 30px;
-
-    .menu-item {
-      font-family: var(--font-family-main);
-      font-weight: bold;
-      color: var(--color-text-primary);
-      text-decoration: none;
-      transition: color 0.3s;
-
-      &:hover {
-        color: var(--color-primary);
+  // Set styles for active menu item
+  nav {
+    a[aria-current="page"] {
+      background-color: #FFF;
+      color: #836A02;
+      border-bottom: 2px solid #836A02;    
+      
+      .v-btn__overlay {
+        background-color: transparent !important;
       }
     }
   }
 
   .account-buttons {
-    display: flex;
-    gap: 15px;
-
-    .sign-in-button,
-    .sign-up-button {
-      font-family: var(--font-family-main);
-      font-weight: bold;
-      text-decoration: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .sign-in-button {
-      color: var(--color-text-primary);
-
-      &:hover {
-        background-color: var(--color-primary-light);
-        color: #fff;
-      }
-    }
-
-    .sign-up-button {
-      background-color: var(--color-primary);
-      color: #fff;
-
-      &:hover {
-        background-color: var(--color-primary-dark);
+    .user-button {
+      p {
+        letter-spacing: 0em;
+        font-weight: 600;
       }
     }
   }
