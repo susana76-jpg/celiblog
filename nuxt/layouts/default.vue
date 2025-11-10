@@ -13,4 +13,8 @@
 </script>
 
 <style lang="scss" scoped>
+.v-main {
+  background-color: #FFF;
+  min-height: calc(100% - 146px); 
+}
 </style>
