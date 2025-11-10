@@ -61,6 +61,18 @@
               src="https://cdn.vuetifyjs.com/images/john.jpg"
             ></v-img>
           </v-avatar>
+          <v-menu activator="parent">
+            <v-list>
+              <v-list-item
+                v-for="(item, index) in items"
+                :key="index"
+                :value="index"
+                @click="item.event"
+              >
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </v-btn>
       </template>
     </div>
@@ -68,7 +80,9 @@
 </template>
 
 <script setup lang="ts">
+import { navigateTo } from 'nuxt/app';
 import type { Variant } from '../types/vuetify';
+
 const isUserLoggedIn = ref<boolean>(true);
 const userName = ref<string>('John Doe');
 
@@ -101,7 +115,18 @@ const accountButtons = [
     color: 'primary',
     rounded: 'xl'
   }
-]
+];
+
+const items = [
+  { 
+    title: 'Perfil Usuario',
+    event: async () => await navigateTo('/usuario') 
+  },
+  { 
+    title: 'Cerrar Sesión' ,
+    event: async () => await navigateTo('/')
+  },
+];  
 </script>
 
 

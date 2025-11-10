@@ -66,7 +66,7 @@ const infoButtons = [
 // Hero section
 .hero-header {
   position: relative;
-  height: 600px;
+  height: 560px;
 
   .v-img {
     position: absolute;

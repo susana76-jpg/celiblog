@@ -3,11 +3,6 @@ import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   ssr: false,
   css: ['vuetify/styles', '@/assets/main.scss'],
-  nitro: {
-    compatibility: {
-      date: '2025-11-09'
-    }
-  },
   app: {
     head: {
       title: 'CeliBlog',
