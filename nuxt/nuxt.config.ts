@@ -14,6 +14,12 @@ export default defineNuxtConfig({
         {
           rel: 'stylesheet',
           href: 'https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css'
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/img/celiblog-favicon.png',
+          sizes: '32x32'
         }
       ]
     }
