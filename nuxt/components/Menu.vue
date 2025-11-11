@@ -80,9 +80,6 @@
 </template>
 
 <script setup lang="ts">
-import { navigateTo } from 'nuxt/app';
-import type { Variant } from '../types/vuetify';
-
 const isUserLoggedIn = ref<boolean>(true);
 const userName = ref<string>('John Doe');
 
@@ -117,6 +114,7 @@ const accountButtons = [
   }
 ];
 
+// User menu items
 const items = [
   { 
     title: 'Perfil Usuario',

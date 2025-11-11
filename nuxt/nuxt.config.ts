@@ -33,10 +33,18 @@ export default defineNuxtConfig({
     }
   },
 
+  imports: {
+    dirs: [
+      'stores', 
+      'types',
+      'constants'
+    ]
+  },
+  
   vite: {
     define: {
       'process.env.DEBUG': false
-    }
+    },
   },
   experimental: {
     payloadExtraction: false
