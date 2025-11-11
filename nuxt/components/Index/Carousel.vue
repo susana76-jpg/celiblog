@@ -62,6 +62,7 @@ const props = defineProps<{
     image: string;
     link: string;
     rating: number;
+    favorite?: boolean;
   }>;
 }>();
 </script>
