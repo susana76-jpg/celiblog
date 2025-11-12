@@ -1,11 +1,13 @@
 package com.daw.celiblog.dto;
 
 import com.daw.celiblog.enums.EstadoValidacion;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
 public class ComentarioDTO {
     private Long idComentario;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaPublicacion;
     private String contenido;
     private String comentarioUrl;
@@ -14,6 +16,7 @@ public class ComentarioDTO {
     //bi-directional many-to-one association to TipoComentario
     private TipoComentarioDTO tipoComentarioDTO;
     private Long idObjetoComentado;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaValidacion;
     private int  valoracion;
     private EstadoValidacion estado = EstadoValidacion.APROBADO;

@@ -1,6 +1,7 @@
 package com.daw.celiblog.dto;
 
 import com.daw.celiblog.enums.EstadoValidacion;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
@@ -13,6 +14,7 @@ public class RecetaDTO {
 
     private UsuarioDTO usuario;
     private String descripcion;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaCreacion;
     private String imagenUrl;
     private String dificultad;
@@ -21,7 +23,7 @@ public class RecetaDTO {
 
     @Enumerated(EnumType.STRING)
     private EstadoValidacion estado = EstadoValidacion.APROBADO;
-
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaValidacion;
 
     public RecetaDTO() {

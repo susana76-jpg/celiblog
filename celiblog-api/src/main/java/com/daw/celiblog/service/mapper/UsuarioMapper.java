@@ -16,7 +16,7 @@ public class UsuarioMapper {
     }
 
     public static UsuarioDTO entityToDto(Usuario source){
-        return new UsuarioDTO(source.getIdUsuario(), source.getEmail(), source.getNombre(), source.getPassword(), source.getRol());
+        return new UsuarioDTO(source.getIdUsuario(), source.getEmail(), source.getNombre(), source.getPassword(), source.getRol(), source.getFechaAta());
     }
 
     public static Usuario dtoToEntity(UsuarioDTO source){

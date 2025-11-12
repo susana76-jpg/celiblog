@@ -1,6 +1,7 @@
 package com.daw.celiblog.dto;
 
 import com.daw.celiblog.enums.EstadoValidacion;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Objects;
 public class RestauranteDTO {
 
     private Long idRestaurante;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaPublicacion;
     private UsuarioDTO usuarioDTO;
     private String descripcion;
@@ -23,7 +25,7 @@ public class RestauranteDTO {
     private int valoracion;
     @Enumerated(EnumType.STRING)
     private EstadoValidacion estado = EstadoValidacion.APROBADO;
-
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaValidacion;
 
     public RestauranteDTO() {

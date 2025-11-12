@@ -2,6 +2,10 @@ package com.daw.celiblog.dto;
 
 import com.daw.celiblog.db.entity.Rol;
 import com.daw.celiblog.service.mapper.RolMapper;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Column;
+
+import java.util.Date;
 
 public class UsuarioDTO {
 
@@ -11,16 +15,19 @@ public class UsuarioDTO {
     private String password;
     private RolDTO rol;
     private Long idRol;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    private Date fechaAta;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long idUsuario, String email, String nombre, String password, Rol rol) {
+    public UsuarioDTO(Long idUsuario, String email, String nombre, String password, Rol rol, Date fechaAta) {
         this.idUsuario = idUsuario;
         this.email = email;
         this.nombre = nombre;
         this.password = password;
         this.rol = RolMapper.entityToDto(rol);
+        this.fechaAta = fechaAta;
     }
 
     public UsuarioDTO(String email, String nombre, String password, Long idRol) {
@@ -69,5 +76,13 @@ public class UsuarioDTO {
 
     public void setRol(RolDTO rol) {
         this.rol = rol;
+    }
+
+    public Date getFechaAta() {
+        return fechaAta;
+    }
+
+    public void setFechaAta(Date fechaAta) {
+        this.fechaAta = fechaAta;
     }
 }
