@@ -16,17 +16,16 @@
         color="white"
         variant="outlined"
       >
-        {{ item.difficulty || 'easy' }}
+        <span>{{ item.difficulty || 'easy' }}</span>
         <v-rating
           readonly
-          size="small"
-          color="primary"
+          color="white"
           length="3"
           :model-value="item.difficulty === 'easy' ? 1 : item.difficulty === 'medium' ? 2 : 3"
         ></v-rating>
       </v-chip>
       <v-btn
-        :color="item.favorite ? 'red lighten-2' : 'grey lighten-1'"
+        :color="item.favorite ? 'error' : 'darkgray'"
         variant="outlined"
         icon="mdi-heart"
         class="card-image__favourite"
@@ -84,28 +83,36 @@ const props = defineProps<{
       line-height: 16px;
       font-weight: 500;
       text-transform: capitalize;
+
+      &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
 
     &__favourite {
       position: absolute;
       bottom: 20px;
       right: 20px;
+      background-color: #ffffffb2;
     }
   } 
   
   .v-card-title {
     font-family: 'Arial', sans-serif;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 20px;
     font-weight: 600;
     color: #333333;
+    margin-top: 6px;
     padding-bottom: 6px;
   }
 
   .v-card-text {
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
-    line-height: 12px;
+    line-height: 16px;
     color: #555555;
     padding-bottom: 8px;
   }

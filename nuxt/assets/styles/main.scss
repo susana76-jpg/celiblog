@@ -7,6 +7,12 @@ body {
   padding: 0;
 }
 
+// Increase icon size in buttons
 .v-btn .v-icon {
   --v-icon-size-multiplier: 1;
+}
+
+// Set border radius in images inside cards
+.v-card .v-img {
+  border-radius: 4px;
 }

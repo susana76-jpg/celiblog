@@ -2,7 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   ssr: false,
-  css: ['vuetify/styles', '@/assets/main.scss'],
+  css: ['vuetify/styles', '@/assets/styles/main.scss'],
   app: {
     head: {
       title: 'CeliBlog',
@@ -45,6 +45,29 @@ export default defineNuxtConfig({
     define: {
       'process.env.DEBUG': false
     },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://46.183.113.124:8081',
+          changeOrigin: true,
+        },
+      },
+    }
+    // vue: { 
+    //   template: {
+    //     transformAssetUrls: {
+    //       base: null,
+    //       includeAbsolute: false,
+    //     }
+    //   }
+    // },
+    // css: {
+    //   preprocessorOptions: {
+    //     scss: {
+    //       additionalData: '@use "@/assets/styles/_variables.scss" as *;'
+    //     }
+    //   } 
+    // }
   },
   experimental: {
     payloadExtraction: false
