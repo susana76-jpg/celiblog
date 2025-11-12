@@ -1,0 +1,18 @@
+@use 'variables';
+@use 'index';
+
+body {
+  font-family: variables.$font-family-main;
+  margin: 0;
+  padding: 0;
+}
+
+// Increase icon size in buttons
+.v-btn .v-icon {
+  --v-icon-size-multiplier: 1;
+}
+
+// Set border radius in images inside cards
+.v-card .v-img {
+  border-radius: 4px;
+}

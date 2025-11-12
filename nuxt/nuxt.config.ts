@@ -1,11 +1,27 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  ssr: true,
-  css: ['vuetify/styles', '@/assets/main.scss'],
+  ssr: false,
+  css: ['vuetify/styles', '@/assets/styles/main.scss'],
   app: {
     head: {
-      title: 'CeliBlog'
+      title: 'CeliBlog',
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'
+        },
+        {
+          rel: 'stylesheet',
+          href: 'https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css'
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/img/celiblog-favicon.png',
+          sizes: '32x32'
+        }
+      ]
     }
   },
   build: {
@@ -16,9 +32,44 @@ export default defineNuxtConfig({
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://46.183.113.124:8081'
     }
   },
+
+  imports: {
+    dirs: [
+      'stores', 
+      'types',
+      'constants'
+    ]
+  },
+  
   vite: {
     define: {
       'process.env.DEBUG': false
+    },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://46.183.113.124:8081',
+          changeOrigin: true,
+        },
+      },
     }
+    // vue: { 
+    //   template: {
+    //     transformAssetUrls: {
+    //       base: null,
+    //       includeAbsolute: false,
+    //     }
+    //   }
+    // },
+    // css: {
+    //   preprocessorOptions: {
+    //     scss: {
+    //       additionalData: '@use "@/assets/styles/_variables.scss" as *;'
+    //     }
+    //   } 
+    // }
+  },
+  experimental: {
+    payloadExtraction: false
   }
 })

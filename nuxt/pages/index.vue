@@ -1,13 +1,18 @@
 <template>
-  <main>
-    <Header />
-    <section>
-      <h1>Bienvenid@ a CeliBlog (Nuxt)</h1>
-      <p>Frontend placeholder. Conecta con la API en la carpeta principal del proyecto.</p>
-    </section>
-  </main>
+  <div class="index-page">
+    <IndexHeroHeader />
+    <IndexCarousel :items="receipes" />
+    <IndexCarousel :items="tips" />
+  </div>
 </template>
 
 <script setup lang="ts">
-// placeholder
+import { receipes, tips } from '../utils/dummy';
+const getReceipes = async () => {
+  const { data, pending, error } = await useApiFetch(API.RECETAS.BASE);
+  console.log('pending', pending.value);
+  console.log('error', error.value);
+  console.log('data', data.value);
+};
+getReceipes();
 </script>

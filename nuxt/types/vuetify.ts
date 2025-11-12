@@ -1,0 +1,1 @@
+export type Variant = "plain" | "text" | "flat" | "elevated" | "outlined" | "tonal";
