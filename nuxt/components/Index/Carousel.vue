@@ -40,7 +40,6 @@
               <v-rating
                 readonly
                 half-increments
-                size="small"
                 color="primary"
                 density="compact"
                 :model-value="item.rating"

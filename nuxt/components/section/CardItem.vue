@@ -11,9 +11,8 @@
         :src="item.image"
       />
       <v-chip
-        border="sm"
-        class="card-image__chip bg-success"
-        color="white"
+        class="card-image__chip"
+        :class="setChipClass(item.difficulty)"
         variant="outlined"
       >
         <span>{{ item.difficulty || 'easy' }}</span>
@@ -41,7 +40,6 @@
     <v-rating
       readonly
       half-increments
-      size="small"
       color="primary"
       density="compact"
       :model-value="item.rating"
@@ -62,6 +60,19 @@ const props = defineProps<{
     difficulty?: string;
   };
 }>(); 
+
+const setChipClass = (difficulty: string | undefined) => {
+  switch (difficulty) {
+    case 'easy':
+      return 'bg-success';
+    case 'medium':
+      return 'bg-warning';
+    case 'hard':
+      return 'bg-error';
+    default:
+      return 'bg-success';
+  }
+};
 </script>
 
 <style lang="scss">
@@ -77,17 +88,27 @@ const props = defineProps<{
       position: absolute;
       top: 20px;
       right: 20px;
-      width: 200px;
+      width: 180px;
       font-family: 'Poppins', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       line-height: 16px;
       font-weight: 500;
       text-transform: capitalize;
+      color: #FFF !important;
+      border: 3px solid #FFFFFF;
 
-      &__content {
+      .v-chip__content {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 100%;
+
+        .v-rating__item {
+          button.v-btn {
+            height: 25px !important;
+            width: 25px !important;
+          }
+        }
       }
     }
 

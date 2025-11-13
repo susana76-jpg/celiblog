@@ -1,17 +1,23 @@
 <template>
   <section class="section-page"> 
+
+    <!-- HERO IMAGE ----------------------------->
     <SectionHeroImage
       image-alt="Delicious food"
       title="Recetas"
       subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas neque nec fringilla finibus. Quisque fringilla odio turpis. Nam eget tincidunt metus."
       :image-src="img"
     />
+    <!------------------------------------------->
+
+    <!-- MAIN CONTENT --------------------------->
     <div class="section-main">
       <div class="section-main__title">
         <h2>Lorem ipsum dolor sit amet</h2>
         <p>Cras risus risus, accumsan lacinia imperdiet id, varius sed mi. Fusce accumsan nec odio nec consequat.</p>
       </div>
-      <v-row class="section-main__content">
+      <SectionFilterBar />
+      <v-row no-gutters class="section-main__content">
         <v-col
           v-for="item in receipes"
           :key="item.id"
@@ -23,6 +29,8 @@
         </v-col>
       </v-row>
     </div>
+    <!------------------------------------------->
+
   </section>
 </template>
 
