@@ -3,6 +3,7 @@ package com.daw.celiblog.controller;
 import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.TagRecetaDTO;
 import com.daw.celiblog.dto.TagRecetaView;
+import com.daw.celiblog.service.RecetaService;
 import com.daw.celiblog.service.TagRecetaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Tag(name = "TagRecetas", description = "Operaciones relacionadas con los tags de recetas.")
+@Tag(name = "Tag Recetas", description = "Operaciones relacionadas con los tags de recetas.")
 @RequestMapping("/api/tag-receta")
 public class TagRecetaController {
     @Autowired
     TagRecetaService tagRecetaService;
+    @Autowired
+    RecetaService recetaService;
 
     @Operation(summary = "Obtiene un listado de los nombres de todos los tags de recetas existentes.")
     @GetMapping("/all")
@@ -51,6 +54,24 @@ public class TagRecetaController {
             return ResponseEntity.ok("Tag no eliminado. No se ha encontrado, en la receta con id "+idReceta+ " o el tag con nombre  " + nombreTag+ " en la receta");
         }
     }
+
+    @Operation(summary = "Obtiene la lista de recetas por nombre de un tag.")
+    @GetMapping("/recetasByTag")
+    public ResponseEntity<List<RecetaDTO>> obtenerRecetasPorNombreTag(@RequestParam(name="nombreTag") String nombreTag) {
+        return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTag(nombreTag));
+    }
+
+    @Operation(summary = "Obtiene la lista de recetas por varios nombres de tag.")
+    @GetMapping("/recetasByTags")
+    public ResponseEntity<List<RecetaDTO>> buscarRecetasPorNombreDeTags(@RequestParam(name="tag") List<String> tags) {
+        return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTags(tags));
+    }
+    @Operation(summary = "Obtiene la lista de tags de una receta por su id.")
+    @GetMapping("/tags")
+    public ResponseEntity<List<TagRecetaDTO>> obtenerTagsPorIdReceta(@RequestParam(name="idReceta") Long idReceta) {
+        return ResponseEntity.ok(this.recetaService.obtenerTagsRecetaPorId(idReceta));
+    }
+
 
 
 }

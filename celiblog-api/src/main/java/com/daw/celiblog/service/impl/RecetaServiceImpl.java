@@ -6,6 +6,7 @@ import com.daw.celiblog.db.repository.PasoRecetaRepository;
 import com.daw.celiblog.db.repository.RecetaRepository;
 import com.daw.celiblog.db.repository.TagRecetaRepository;
 import com.daw.celiblog.dto.*;
+import com.daw.celiblog.enums.EstadoValidacion;
 import com.daw.celiblog.service.RecetaService;
 import com.daw.celiblog.service.mapper.PasoRecetaMapper;
 import com.daw.celiblog.service.mapper.RecetaMapper;
@@ -108,7 +109,32 @@ public class RecetaServiceImpl implements RecetaService {
         return recetas.stream().toList();
     }
 
+    @Override
+    public List<RecetaDTO> getRecetasEstadoPendiente() {
+        return RecetaMapper.entityToDtoList(this.recetaRepository.getRecetasEstadoPendiente());
+    }
 
+    @Override
+    public List<RecetaDTO> getRecetasEstadoAprobado() {
+        return RecetaMapper.entityToDtoList(this.recetaRepository.getRecetasEstadoAprobado());
+    }
+
+    @Override
+    public List<RecetaDTO> getRecetasEstadoRechazado() {
+        return RecetaMapper.entityToDtoList(this.recetaRepository.getRecetasEstadoRechazado());
+    }
+
+
+    @Override
+    public RecetaDTO updateEstadoPublicacionReceta(Long idReceta, EstadoValidacion estado) {
+        Optional<Receta> rec = this.recetaRepository.findById(idReceta);
+        if(rec.isPresent()){
+            Receta receta = rec.get();
+            receta.setEstado(estado);
+            return RecetaMapper.entityToDto(this.recetaRepository.save(receta));
+        }
+        return null;
+    }
 
 
 }

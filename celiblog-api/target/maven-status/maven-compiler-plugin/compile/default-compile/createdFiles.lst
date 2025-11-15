@@ -34,6 +34,7 @@ com\daw\celiblog\dto\PasoRecetaView.class
 com\daw\celiblog\service\impl\TagRestauranteServiceImpl.class
 com\daw\celiblog\service\mapper\RolMapper.class
 com\daw\celiblog\db\entity\Ingrediente.class
+com\daw\celiblog\controller\PasoRecetaController.class
 com\daw\celiblog\service\mapper\RecetaMapper.class
 com\daw\celiblog\util\Constantes.class
 com\daw\celiblog\dto\TagRestauranteDTO.class

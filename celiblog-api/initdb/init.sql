@@ -37,7 +37,7 @@ CREATE TABLE `comentario` (
   `id_objeto_comentado` int(255) NOT NULL,
   `fecha_validacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `valoracion` int(30) NOT NULL,
-  `estado` enum('PENDIENTE','APROVADO','RECHAZADO') DEFAULT 'PENDIENTE'
+  `estado` enum('PENDIENTE','APROBADO','RECHAZADO') DEFAULT 'PENDIENTE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -271,7 +271,7 @@ CREATE TABLE `post` (
   `url_post` varchar(255) DEFAULT NULL,
   `fecha_validacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `valoracion` int(30) NOT NULL,
-  `estado` enum('PENDIENTE','APROVADO','RECHAZADO') DEFAULT 'PENDIENTE'
+  `estado` enum('PENDIENTE','APROBADO','RECHAZADO') DEFAULT 'PENDIENTE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -290,7 +290,7 @@ CREATE TABLE `receta` (
   `id_usuario` int(255) NOT NULL,
   `fecha_validacion` timestamp NULL DEFAULT NULL,
   `valoracion` int(30) NOT NULL,
-  `estado` enum('PENDIENTE','APROVADO','RECHAZADO') DEFAULT 'PENDIENTE'
+  `estado` enum('PENDIENTE','APROBADO','RECHAZADO') DEFAULT 'PENDIENTE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
