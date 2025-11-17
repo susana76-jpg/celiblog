@@ -1,5 +1,6 @@
 <template>
   <v-app-bar 
+    height="84"
     class="main-menu"
     scroll-behavior="elevate"
     scroll-threshold="300"

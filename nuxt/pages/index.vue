@@ -10,8 +10,6 @@
 import { receipes, tips } from '../utils/dummy';
 const getReceipes = async () => {
   const { data, pending, error } = await useApiFetch(API.RECETAS.BASE);
-  console.log('pending', pending.value);
-  console.log('error', error.value);
   console.log('data', data.value);
 };
 getReceipes();
