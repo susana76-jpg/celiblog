@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2025 a las 18:33:32
+-- Tiempo de generación: 16-11-2025 a las 09:37:20
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -298,12 +298,12 @@ CREATE TABLE `receta` (
 --
 
 INSERT INTO `receta` (`id_receta`, `titulo`, `descripcion`, `imagen_url`, `fecha_creacion`, `dificultad`, `id_usuario`, `fecha_validacion`, `valoracion`, `estado`) VALUES
-(1, 'Pan de trigo sarraceno', 'Pan sin gluten elaborado con trigo sarraceno y semillas.', 'img/pan_trigo_sarraceno.jpg', '2025-10-30 17:01:24', 'media', 1, NULL, 0, 'PENDIENTE'),
-(2, 'Bizcocho de almendra', 'Bizcocho esponjoso sin gluten con harina de almendra.', 'img/bizcocho_almendra.jpg', '2025-10-30 17:01:48', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(1, 'Pan de trigo sarraceno', 'Pan sin gluten elaborado con trigo sarraceno y semillas.', 'img/pan_trigo_sarraceno.jpg', '2025-11-14 23:00:00', 'media', 1, NULL, 0, 'APROBADO'),
+(2, 'Bizcocho de almendra', 'Bizcocho esponjoso sin gluten con harina de almendra.', 'img/bizcocho_almendra.jpg', '2025-11-15 08:03:36', 'fácil', 13, NULL, 0, 'RECHAZADO'),
 (3, 'Pizza de coliflor', 'Base de pizza hecha con coliflor, sin harinas.', 'img/pizza_coliflor.jpg', '2025-10-30 17:01:56', 'fácil', 13, NULL, 0, 'PENDIENTE'),
 (4, 'Tortitas de avena sin gluten', 'Tortitas saludables con avena certificada sin gluten.', 'img/tortitas_avena.jpg', '2025-10-30 17:02:08', 'fácil', 13, NULL, 0, 'PENDIENTE'),
 (5, 'Crepes de harina de arroz', 'Crepes ligeros y sin gluten con harina de arroz.', 'img/crepes_arroz.jpg', '2025-10-30 17:02:15', 'fácil', 13, NULL, 0, 'PENDIENTE'),
-(6, 'Galletas de coco', 'Galletas crujientes sin gluten con coco rallado.', 'img/galletas_coco.jpg', '2025-10-30 17:02:31', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(6, 'Galletas de coco', 'Galletas crujientes sin gluten con coco rallado.', 'img/galletas_coco.jpg', '2025-10-29 23:00:00', 'fácil', 13, NULL, 0, 'PENDIENTE'),
 (7, 'Brownie de garbanzos', 'Brownie sin gluten con base de garbanzos cocidos.', 'img/brownie_garbanzos.jpg', '2025-10-30 17:02:22', 'media', 13, NULL, 0, 'PENDIENTE'),
 (8, 'Pan de maíz', 'Pan tradicional sin gluten con harina de maíz.', 'img/pan_maiz.jpg', '2025-10-30 17:02:38', 'media', 13, NULL, 0, 'PENDIENTE'),
 (9, 'Tarta de zanahoria', 'Tarta sin gluten con zanahoria y nueces.', 'img/tarta_zanahoria.jpg', '2025-10-30 17:02:48', 'media', 13, NULL, 0, 'PENDIENTE'),
@@ -434,7 +434,7 @@ CREATE TABLE `restaurante` (
   `url_web` varchar(255) DEFAULT NULL,
   `imagen_url` varchar(255) DEFAULT NULL,
   `ubicacion` varchar(255) DEFAULT NULL,
-  `telefono` int(9) NOT NULL,
+  `telefono` varchar(15) NOT NULL,
   `email` varchar(100) NOT NULL,
   `id_usuario` int(255) NOT NULL,
   `estado` enum('PENDIENTE','APROBADO','RECHAZADO') DEFAULT 'PENDIENTE',
@@ -447,27 +447,27 @@ CREATE TABLE `restaurante` (
 --
 
 INSERT INTO `restaurante` (`id_restaurante`, `fecha_publicacion`, `nombre`, `direccion`, `descripcion`, `url_web`, `imagen_url`, `ubicacion`, `telefono`, `email`, `id_usuario`, `estado`, `fecha_validacion`, `valoracion`) VALUES
-(1, '2025-10-31 06:07:18', 'Vega', 'Calle de la Luna 9, 28004 Madrid', 'Restaurante vegano con cocina de autor y productos ecológicos.', 'https://restaurantevega.com', 'https://restaurantevega.com/wp-content/uploads/2023/vega-plato.jpg', 'Madrid', 0, '', 13, 'PENDIENTE', NULL, 0),
-(2, '2025-10-31 06:07:18', 'La Encomienda', 'Calle Encomienda 19, 28012 Madrid', 'Cocina vegana creativa con ingredientes de temporada.', 'https://laencomienda.es', 'https://laencomienda.es/wp-content/uploads/2023/ensalada.jpg', 'Madrid', 0, '', 13, 'PENDIENTE', NULL, 0),
-(3, '2025-10-31 06:07:18', 'B13 Bar', 'Calle Ballesta 13, 28004 Madrid', 'Bar vegano con tapas clásicas y ambiente alternativo.', 'https://b13bar.com', 'https://b13bar.com/wp-content/uploads/2023/burger.jpg', 'Madrid', 0, '', 13, 'PENDIENTE', NULL, 0),
-(4, '2025-10-31 06:07:18', 'Vegan Rock', 'Calle San Juan de la Cruz 9, 50006 Zaragoza', 'Comida rápida vegana con hamburguesas y bocadillos.', 'https://veganrock.es', 'https://veganrock.es/wp-content/uploads/2023/vegan-burger.jpg', 'Zaragoza', 0, '', 13, 'PENDIENTE', NULL, 0),
-(5, '2025-10-31 06:07:18', 'The Green Spot', 'Carrer de la Reina Cristina 12, 08003 Barcelona', 'Cocina vegetal internacional en un espacio elegante.', 'https://www.encompaniadelobos.com/restaurantes/the-green-spot/', 'https://www.encompaniadelobos.com/wp-content/uploads/2023/greenspot.jpg', 'Barcelona', 0, '', 13, 'PENDIENTE', NULL, 0),
-(6, '2025-10-31 06:07:18', 'Teresa Carles', 'Carrer de Jovellanos 2, 08001 Barcelona', 'Restaurante vegetariano con opciones veganas y sin gluten.', 'https://www.teresacarles.com', 'https://www.teresacarles.com/images/ensalada.jpg', 'Barcelona', 0, '', 13, 'PENDIENTE', NULL, 0),
-(7, '2025-10-31 06:07:18', 'Flax & Kale', 'Carrer dels Tallers 74B, 08001 Barcelona', 'Healthy flexitarian food con muchas opciones veganas.', 'https://flaxandkale.com', 'https://flaxandkale.com/images/bowls.jpg', 'Barcelona', 0, '', 13, 'PENDIENTE', NULL, 0),
-(8, '2025-10-31 06:07:18', 'El Vergel', 'Calle Mayor 10, 50001 Zaragoza', 'Restaurante vegano y ecológico con menú diario.', 'https://elvergelrestaurante.com', 'https://elvergelrestaurante.com/wp-content/uploads/2023/paella.jpg', 'Zaragoza', 0, '', 13, 'PENDIENTE', NULL, 0),
-(9, '2025-10-31 06:07:18', 'La Tía Carlota', 'Calle Pintor López Mezquita 9, 18002 Granada', 'Cocina vegana tradicional con productos locales.', 'https://latiacarlota.com', 'https://latiacarlota.com/wp-content/uploads/2023/tapas.jpg', 'Granada', 0, '', 13, 'PENDIENTE', NULL, 0),
-(10, '2025-10-31 06:07:18', 'El Berenjenal', 'Calle Rosario 15, 41001 Sevilla', 'Restaurante vegano con platos creativos y sin gluten.', 'https://elberenjenal.com', 'https://elberenjenal.com/images/berenjena.jpg', 'Sevilla', 0, '', 13, 'PENDIENTE', NULL, 0),
-(11, '2025-10-31 06:07:18', 'Habanera Vegan', 'Calle de la Palma 63, 28015 Madrid', 'Cocina vegana con sabores latinos y caribeños.', 'https://habaneravegan.com', 'https://habaneravegan.com/wp-content/uploads/2023/tacos.jpg', 'Madrid', 0, '', 13, 'PENDIENTE', NULL, 0),
-(12, '2025-10-31 06:07:18', 'La Oveja Negra Vegana', 'Calle Buenavista 42, 28012 Madrid', 'Comida vegana urbana y ambiente alternativo.', 'https://ovejanegrarestaurante.com', 'https://ovejanegrarestaurante.com/img/ramen.jpg', 'Madrid', 0, '', 13, 'PENDIENTE', NULL, 0),
-(13, '2025-10-31 06:07:18', 'Viva Burger', 'Costanilla de San Andrés 16, 28005 Madrid', 'Hamburguesas veganas gourmet con vistas a La Latina.', 'https://vivaburger.es', 'https://vivaburger.es/wp-content/uploads/2023/burger-vegan.jpg', 'Madrid', 0, '', 13, 'PENDIENTE', NULL, 0),
-(14, '2025-10-31 06:07:18', 'La Vegana Vallekas', 'Calle Sierra Carbonera 32, 28053 Madrid', 'Cocina vegana casera y sin gluten en Vallecas.', 'https://laveganavallekas.com', 'https://laveganavallekas.com/images/croquetas.jpg', 'Madrid', 0, '', 13, 'PENDIENTE', NULL, 0),
-(15, '2025-10-31 06:07:18', 'Veganoteca', 'Calle Poeta Quintana 20, 03004 Alicante', 'Restaurante y tienda vegana con productos ecológicos.', 'https://veganoteca.es', 'https://veganoteca.es/img/ensalada.jpg', 'Alicante', 0, '', 13, 'PENDIENTE', NULL, 0),
-(16, '2025-10-31 06:07:18', 'La Mandrágora', 'Calle San Vicente 45, Valencia', 'Restaurante vegano con opciones sin gluten y sin azúcar.', 'https://lamandragoravalencia.com', 'https://lamandragoravalencia.com/wp-content/uploads/2023/crepes.jpg', 'Valencia', 0, '', 13, 'PENDIENTE', NULL, 0),
-(17, '2025-10-31 06:07:18', 'La Vegana de la Cerveza', 'Calle San Andrés 38, 15003 A Coruña', 'Tapas veganas y cervezas artesanas.', 'https://laveganadelacerveza.com', 'https://laveganadelacerveza.com/img/tapas.jpg', 'A Coruña', 0, '', 13, 'PENDIENTE', NULL, 0),
-(18, '2025-10-31 06:07:18', 'El Fogón Verde', 'Calle Alameda 4, 28014 Madrid', 'Cocina vegana ecológica con productos de proximidad.', 'https://elfogonverde.es', 'https://elfogonverde.es/wp-content/uploads/2023/ensalada.jpg', 'Madrid', 0, '', 13, 'PENDIENTE', NULL, 0),
-(19, '2025-10-31 06:07:18', 'Choose Ristorante Naturale', 'Calle de la Luna 3, 28004 Madrid', 'Restaurante italiano 100% vegano con platos sicilianos.', 'https://chooseristorante.com', 'https://chooseristorante.com/wp-content/uploads/2023/pasta.jpg', 'Madrid', 0, '', 13, 'PENDIENTE', NULL, 0),
-(20, '2025-10-31 06:07:18', 'Mahalo Poké', 'Calle Ancha 10, 11001 Cádiz', 'Poké bowls veganos con ingredientes frescos.', 'https://mahalopoke.com', 'https://mahalopoke.com/images/bowl.jpg', 'Cádiz', 0, '', 13, 'PENDIENTE', NULL, 0),
-(21, '2025-10-31 06:07:18', 'ECOrigen', 'Calle Ayala 27, Planta 2, 28001 Madrid', 'Restaurante ecológico y vegano con cocina de autor.', 'https://ecorigen.com', 'https://ecorigen.com/wp-content/uploads/2023/plato.jpg', 'Madrid', 0, '', 13, 'PENDIENTE', NULL, 0);
+(1, '2025-10-31 06:07:18', 'Vega', 'Calle de la Luna 9, 28004 Madrid', 'Restaurante vegano con cocina de autor y productos ecológicos.', 'https://restaurantevega.com', 'https://restaurantevega.com/wp-content/uploads/2023/vega-plato.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
+(2, '2025-10-31 06:07:18', 'La Encomienda', 'Calle Encomienda 19, 28012 Madrid', 'Cocina vegana creativa con ingredientes de temporada.', 'https://laencomienda.es', 'https://laencomienda.es/wp-content/uploads/2023/ensalada.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
+(3, '2025-10-31 06:07:18', 'B13 Bar', 'Calle Ballesta 13, 28004 Madrid', 'Bar vegano con tapas clásicas y ambiente alternativo.', 'https://b13bar.com', 'https://b13bar.com/wp-content/uploads/2023/burger.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
+(4, '2025-10-31 06:07:18', 'Vegan Rock', 'Calle San Juan de la Cruz 9, 50006 Zaragoza', 'Comida rápida vegana con hamburguesas y bocadillos.', 'https://veganrock.es', 'https://veganrock.es/wp-content/uploads/2023/vegan-burger.jpg', 'Zaragoza', '0', '', 13, 'PENDIENTE', NULL, 0),
+(5, '2025-10-31 06:07:18', 'The Green Spot', 'Carrer de la Reina Cristina 12, 08003 Barcelona', 'Cocina vegetal internacional en un espacio elegante.', 'https://www.encompaniadelobos.com/restaurantes/the-green-spot/', 'https://www.encompaniadelobos.com/wp-content/uploads/2023/greenspot.jpg', 'Barcelona', '0', '', 13, 'PENDIENTE', NULL, 0),
+(6, '2025-10-31 06:07:18', 'Teresa Carles', 'Carrer de Jovellanos 2, 08001 Barcelona', 'Restaurante vegetariano con opciones veganas y sin gluten.', 'https://www.teresacarles.com', 'https://www.teresacarles.com/images/ensalada.jpg', 'Barcelona', '0', '', 13, 'PENDIENTE', NULL, 0),
+(7, '2025-10-31 06:07:18', 'Flax & Kale', 'Carrer dels Tallers 74B, 08001 Barcelona', 'Healthy flexitarian food con muchas opciones veganas.', 'https://flaxandkale.com', 'https://flaxandkale.com/images/bowls.jpg', 'Barcelona', '0', '', 13, 'PENDIENTE', NULL, 0),
+(8, '2025-10-31 06:07:18', 'El Vergel', 'Calle Mayor 10, 50001 Zaragoza', 'Restaurante vegano y ecológico con menú diario.', 'https://elvergelrestaurante.com', 'https://elvergelrestaurante.com/wp-content/uploads/2023/paella.jpg', 'Zaragoza', '0', '', 13, 'PENDIENTE', NULL, 0),
+(9, '2025-10-31 06:07:18', 'La Tía Carlota', 'Calle Pintor López Mezquita 9, 18002 Granada', 'Cocina vegana tradicional con productos locales.', 'https://latiacarlota.com', 'https://latiacarlota.com/wp-content/uploads/2023/tapas.jpg', 'Granada', '0', '', 13, 'PENDIENTE', NULL, 0),
+(10, '2025-10-31 06:07:18', 'El Berenjenal', 'Calle Rosario 15, 41001 Sevilla', 'Restaurante vegano con platos creativos y sin gluten.', 'https://elberenjenal.com', 'https://elberenjenal.com/images/berenjena.jpg', 'Sevilla', '0', '', 13, 'PENDIENTE', NULL, 0),
+(11, '2025-10-31 06:07:18', 'Habanera Vegan', 'Calle de la Palma 63, 28015 Madrid', 'Cocina vegana con sabores latinos y caribeños.', 'https://habaneravegan.com', 'https://habaneravegan.com/wp-content/uploads/2023/tacos.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
+(12, '2025-10-31 06:07:18', 'La Oveja Negra Vegana', 'Calle Buenavista 42, 28012 Madrid', 'Comida vegana urbana y ambiente alternativo.', 'https://ovejanegrarestaurante.com', 'https://ovejanegrarestaurante.com/img/ramen.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
+(13, '2025-10-31 06:07:18', 'Viva Burger', 'Costanilla de San Andrés 16, 28005 Madrid', 'Hamburguesas veganas gourmet con vistas a La Latina.', 'https://vivaburger.es', 'https://vivaburger.es/wp-content/uploads/2023/burger-vegan.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
+(14, '2025-10-31 06:07:18', 'La Vegana Vallekas', 'Calle Sierra Carbonera 32, 28053 Madrid', 'Cocina vegana casera y sin gluten en Vallecas.', 'https://laveganavallekas.com', 'https://laveganavallekas.com/images/croquetas.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
+(15, '2025-10-31 06:07:18', 'Veganoteca', 'Calle Poeta Quintana 20, 03004 Alicante', 'Restaurante y tienda vegana con productos ecológicos.', 'https://veganoteca.es', 'https://veganoteca.es/img/ensalada.jpg', 'Alicante', '0', '', 13, 'PENDIENTE', NULL, 0),
+(16, '2025-10-31 06:07:18', 'La Mandrágora', 'Calle San Vicente 45, Valencia', 'Restaurante vegano con opciones sin gluten y sin azúcar.', 'https://lamandragoravalencia.com', 'https://lamandragoravalencia.com/wp-content/uploads/2023/crepes.jpg', 'Valencia', '0', '', 13, 'PENDIENTE', NULL, 0),
+(17, '2025-10-31 06:07:18', 'La Vegana de la Cerveza', 'Calle San Andrés 38, 15003 A Coruña', 'Tapas veganas y cervezas artesanas.', 'https://laveganadelacerveza.com', 'https://laveganadelacerveza.com/img/tapas.jpg', 'A Coruña', '0', '', 13, 'PENDIENTE', NULL, 0),
+(18, '2025-10-31 06:07:18', 'El Fogón Verde', 'Calle Alameda 4, 28014 Madrid', 'Cocina vegana ecológica con productos de proximidad.', 'https://elfogonverde.es', 'https://elfogonverde.es/wp-content/uploads/2023/ensalada.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
+(19, '2025-10-31 06:07:18', 'Choose Ristorante Naturale', 'Calle de la Luna 3, 28004 Madrid', 'Restaurante italiano 100% vegano con platos sicilianos.', 'https://chooseristorante.com', 'https://chooseristorante.com/wp-content/uploads/2023/pasta.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
+(20, '2025-10-31 06:07:18', 'Mahalo Poké', 'Calle Ancha 10, 11001 Cádiz', 'Poké bowls veganos con ingredientes frescos.', 'https://mahalopoke.com', 'https://mahalopoke.com/images/bowl.jpg', 'Cádiz', '0', '', 13, 'PENDIENTE', NULL, 0),
+(21, '2025-10-31 06:07:18', 'ECOrigen', 'Calle Ayala 27, Planta 2, 28001 Madrid', 'Restaurante ecológico y vegano con cocina de autor.', 'https://ecorigen.com', 'https://ecorigen.com/wp-content/uploads/2023/plato.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0);
 
 -- --------------------------------------------------------
 

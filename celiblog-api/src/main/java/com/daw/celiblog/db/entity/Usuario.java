@@ -35,9 +35,8 @@ public class Usuario implements Serializable {
 	@JoinColumn(name="id_rol")
 	private Rol rol;
 
-
 	@Column(name="fecha_alta")
-	private Date fechaAta;
+	private Date fechaAlta;
 
 	public Usuario() {
 	}
@@ -48,7 +47,7 @@ public class Usuario implements Serializable {
 		this.nombre = nombre;
 		this.password = password;
 		this.rol = rol;
-		this.fechaAta = fechaAta;
+		this.fechaAlta = fechaAta;
 	}
 	public Usuario(String email, String nombre, String password, Rol rol) {
 		this.email = email;
@@ -98,10 +97,10 @@ public class Usuario implements Serializable {
 	}
 
 	public Date getFechaAta() {
-		return fechaAta;
+		return fechaAlta;
 	}
 
 	public void setFechaAta(Date fechaAta) {
-		this.fechaAta = fechaAta;
+		this.fechaAlta = fechaAta;
 	}
 }

@@ -28,8 +28,6 @@ public class RecetaController {
 
     @Autowired
     RecetaService recetaService;
-    @Autowired
-    PasoRecetaService pasoRecetaService;
 
 
     @Operation(summary = "Obtiene todas las recetas registradas.")
@@ -38,13 +36,12 @@ public class RecetaController {
         return ResponseEntity.ok(recetaService.obtenerTodos());
     }
 
-
-
     @Operation(summary = "Obtiene la receta por su id.")
     @GetMapping("/byId")
     public ResponseEntity<RecetaDTO> getRecetaById(@RequestParam(name="id") Long id) {
         return ResponseEntity.ok(this.recetaService.obtenerPorId(id));
     }
+
     @Operation(summary = "Añade una receta.")
     @PostMapping("/add")
     public ResponseEntity<RecetaDTO> crearReceta(@RequestBody RecetaDTO recetaDTO){
@@ -60,7 +57,6 @@ public class RecetaController {
         }else{
             return ResponseEntity.status(300).body("No existe la receta a eliminar.");
         }
-
     }
 
 
@@ -89,12 +85,5 @@ public class RecetaController {
     ResponseEntity<RecetaDTO> updateEstadoPublicacionReceta(@RequestParam(name="idReceta") Long idReceta, @RequestParam(name="estado")EstadoValidacion estado) {
         return ResponseEntity.ok(recetaService.updateEstadoPublicacionReceta(idReceta, estado));
     }
-    ;
-
-
-
-
-
-
 
 }

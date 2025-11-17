@@ -22,4 +22,14 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     WHERE UPPER(t.nombre) LIKE %:nombreTag%
     """, nativeQuery = true)
     List<Restaurante> buscarRestaurantesPorNombreDeTag(@Param("nombreTag") String nombreTag);
+
+    @Query(value = "SELECT * FROM restaurante WHERE estado = 'PENDIENTE'", nativeQuery = true)
+    List<Restaurante> getRestaurantesEstadoPendiente();
+
+    @Query(value = "SELECT * FROM restaurante WHERE estado = 'APROBADO'", nativeQuery = true)
+    List<Restaurante> getRestaurantesEstadoAprobado();
+
+    @Query(value = "SELECT * FROM restaurante WHERE estado = 'RECHAZADO'", nativeQuery = true)
+    List<Restaurante> getRestaurantesEstadoRechazado();
+
 }

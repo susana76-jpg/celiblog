@@ -29,7 +29,7 @@ public class Restaurante implements Serializable {
 	@Column(name="imagen_url")
 	private String imagenUrl;
 	private String ubicacion;
-	private int telefono;
+	private String telefono;
 	private String email;
 	@ManyToOne
 	@JoinColumn(name = "id_usuario")
@@ -47,7 +47,7 @@ public class Restaurante implements Serializable {
 	public Restaurante() {
 	}
 
-	public Restaurante(Long idRestaurante, Date fecha, Usuario usuario, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb, int telefono, String email, int valoracion, EstadoValidacion estado, Date fechaValidacion) {
+	public Restaurante(Long idRestaurante, Date fecha, Usuario usuario, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb, String telefono, String email, int valoracion, EstadoValidacion estado, Date fechaValidacion) {
 		this.idRestaurante = idRestaurante;
 		this.fechaPublicacion = fecha;
 		this.usuario = usuario;
@@ -128,11 +128,11 @@ public class Restaurante implements Serializable {
 		this.urlWeb = urlWeb;
 	}
 
-	public int getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(int telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 

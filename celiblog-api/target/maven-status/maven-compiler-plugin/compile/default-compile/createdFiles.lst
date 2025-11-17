@@ -76,6 +76,7 @@ com\daw\celiblog\service\RecetaService.class
 com\daw\celiblog\dto\RestauranteDTO.class
 com\daw\celiblog\db\entity\Favorito.class
 com\daw\celiblog\db\repository\UsuarioRepository.class
+com\daw\celiblog\dto\RestauranteView.class
 com\daw\celiblog\service\mapper\TagRestauranteMapper.class
 com\daw\celiblog\dto\UsuarioView.class
 com\daw\celiblog\enums\EstadoValidacion.class

@@ -1,13 +1,16 @@
 package com.daw.celiblog.service.impl;
 
 import com.daw.celiblog.db.entity.Restaurante;
+import com.daw.celiblog.db.entity.Usuario;
 import com.daw.celiblog.db.repository.RestauranteRepository;
 import com.daw.celiblog.db.repository.TagRestauranteRepository;
-import com.daw.celiblog.dto.RestauranteDTO;
-import com.daw.celiblog.dto.TagRestauranteDTO;
+import com.daw.celiblog.db.repository.UsuarioRepository;
+import com.daw.celiblog.dto.*;
+import com.daw.celiblog.enums.EstadoValidacion;
 import com.daw.celiblog.service.RestauranteService;
 import com.daw.celiblog.service.mapper.RestauranteMapper;
 import com.daw.celiblog.service.mapper.TagRestauranteMapper;
+import com.daw.celiblog.service.mapper.UsuarioMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -22,11 +25,13 @@ public class RestauranteServiceImpl implements RestauranteService {
     private final RestauranteRepository restauranteRepository;
 
     private final TagRestauranteRepository tagRestauranteRepository;
+    private final UsuarioRepository usuarioRepository;
 
 
-    public RestauranteServiceImpl(RestauranteRepository restauranteRepository, TagRestauranteRepository tagRestauranteRepository) {
+    public RestauranteServiceImpl(RestauranteRepository restauranteRepository, TagRestauranteRepository tagRestauranteRepository, UsuarioRepository usuarioRepository) {
         this.restauranteRepository = restauranteRepository;
         this.tagRestauranteRepository = tagRestauranteRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
 
@@ -68,9 +73,12 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
     @Override
-    public void eliminar(Long id) {
+    public boolean eliminar(Long id) {
         if(this.restauranteRepository.findById(id).isPresent()){
             restauranteRepository.deleteById(id);
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -96,4 +104,75 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
 
+    @Override
+    public RestauranteDTO crearRestaurante(RestauranteView restauranteView) {
+        Optional<Usuario> usuario = this.usuarioRepository.findById(restauranteView.getIdUsuario());
+        if(usuario.isPresent()){
+            Restaurante nuevoRestaurante = new Restaurante();
+            nuevoRestaurante.setNombre(restauranteView.getNombre());
+            nuevoRestaurante.setDireccion(restauranteView.getDireccion());
+            nuevoRestaurante.setDescripcion(restauranteView.getDescripcion());
+            nuevoRestaurante.setUrlWeb(restauranteView.getUrlWeb());
+            nuevoRestaurante.setImagenUrl(restauranteView.getImagen_url());
+            nuevoRestaurante.setUbicacion(restauranteView.getUbicacion());
+            nuevoRestaurante.setTelefono(restauranteView.getTelefono());
+            nuevoRestaurante.setEmail(restauranteView.getEmail());
+            nuevoRestaurante.setTelefono(restauranteView.getTelefono());
+            nuevoRestaurante.setUsuario(usuario.get());
+            nuevoRestaurante.setValoracion(restauranteView.getValoracion());
+            return RestauranteMapper.entityToDto(this.restauranteRepository.save(nuevoRestaurante));
+        }
+        return null;
+    }
+
+    @Override
+    public RestauranteDTO update(RestauranteView restauranteView, Long idRestaurante) {
+        Optional<Restaurante> restaurante = this.restauranteRepository.findById(idRestaurante);
+        if(restaurante.isPresent()){
+            Restaurante nuevoRestaurante = restaurante.get();
+            nuevoRestaurante.setNombre(restauranteView.getNombre());
+            nuevoRestaurante.setDireccion(restauranteView.getDireccion());
+            nuevoRestaurante.setDescripcion(restauranteView.getDescripcion());
+            nuevoRestaurante.setUrlWeb(restauranteView.getUrlWeb());
+            nuevoRestaurante.setUbicacion(restauranteView.getUbicacion());
+            nuevoRestaurante.setTelefono(restauranteView.getTelefono());
+            nuevoRestaurante.setEmail(restauranteView.getEmail());
+            nuevoRestaurante.setValoracion(restauranteView.getValoracion());
+            return RestauranteMapper.entityToDto(this.restauranteRepository.save(nuevoRestaurante));
+        }else{
+            return null;
+        }
+
+    }
+
+    @Override
+    public List<RestauranteDTO> getRestaurantesEstadoPendiente() {
+        return RestauranteMapper.entityToDtoList(this.restauranteRepository.getRestaurantesEstadoPendiente());
+    }
+
+    @Override
+    public List<RestauranteDTO> getRestaurantesEstadoAprobado() {
+        return RestauranteMapper.entityToDtoList(this.restauranteRepository.getRestaurantesEstadoAprobado());
+    }
+
+    @Override
+    public List<RestauranteDTO> getRestaurantesEstadoRechazado() {
+        return RestauranteMapper.entityToDtoList(this.restauranteRepository.getRestaurantesEstadoRechazado());
+    }
+
+    @Override
+    public RestauranteDTO updateEstadoPublicacionRestaurante(Long idRestaurante, EstadoValidacion estado) {
+        Optional<Restaurante> rest = this.restauranteRepository.findById(idRestaurante);
+        if(rest.isPresent()){
+            Restaurante restaurante = rest.get();
+            restaurante.setEstado(estado);
+            return RestauranteMapper.entityToDto(this.restauranteRepository.save(restaurante));
+        }
+        return null;
+    }
+
+
 }
+
+
+

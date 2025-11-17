@@ -16,7 +16,7 @@ public class UsuarioDTO {
     private RolDTO rol;
     private Long idRol;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date fechaAta;
+    private Date fechaAlta;
 
     public UsuarioDTO() {
     }
@@ -27,7 +27,7 @@ public class UsuarioDTO {
         this.nombre = nombre;
         this.password = password;
         this.rol = RolMapper.entityToDto(rol);
-        this.fechaAta = fechaAta;
+        this.fechaAlta = fechaAta;
     }
 
     public UsuarioDTO(String email, String nombre, String password, Long idRol) {
@@ -79,10 +79,10 @@ public class UsuarioDTO {
     }
 
     public Date getFechaAta() {
-        return fechaAta;
+        return fechaAlta;
     }
 
     public void setFechaAta(Date fechaAta) {
-        this.fechaAta = fechaAta;
+        this.fechaAlta = fechaAta;
     }
 }
