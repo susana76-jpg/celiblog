@@ -36,12 +36,13 @@
 
 <script setup lang="ts">
 const img = 'https://www.figma.com/api/mcp/asset/26902a0d-e471-4f93-a9fe-7c195740016c';
-import { receipes } from '../utils/dummy';
+import { receipes } from '../../utils/dummy';
 </script>
 
 <style lang="scss" scoped>
 .section-main {
   padding: 0 80px;
+  margin-bottom: 60px;
 
   &__title {
     width: 80%;

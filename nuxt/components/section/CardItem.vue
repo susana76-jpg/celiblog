@@ -1,6 +1,6 @@
 <template>
   <v-card 
-    :to="item.link" 
+    :to="`/recetas/${item.id}`" 
     variant="text"
     class="card-item mx-2 pa-2" 
   >
@@ -77,6 +77,8 @@ const setChipClass = (difficulty: string | undefined) => {
 
 <style lang="scss">
 .card-item {
+  margin-bottom: 24px;
+
   .card-image {
     position: relative;
 

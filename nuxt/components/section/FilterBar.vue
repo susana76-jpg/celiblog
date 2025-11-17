@@ -1,5 +1,5 @@
 <template>
-  <div class="filter-bar px-4 mb-10">
+  <div class="filter-bar px-4 mb-12">
 
     <!-- TITLE ------------------------->
     <div class="filter-bar__title">
