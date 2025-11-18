@@ -53,7 +53,7 @@ const props = defineProps<{
 <style lang="scss">
 .details-page {
   &__hero-header {
-    height: 460px;
+    height: 480px;
     width: 100%;
     border-top: 3px solid #836A02;
     border-bottom: 3px solid #836A02;
@@ -61,7 +61,7 @@ const props = defineProps<{
 
   &__hero-info {
     width: 50%;
-    padding: 50px 50px 50px 80px;
+    padding: 50px 50px 50px 120px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

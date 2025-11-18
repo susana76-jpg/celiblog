@@ -21,6 +21,8 @@
         </v-chip>
       </v-chip-group>
     </div>
+
+    <CommentsMainContent class="mt-8 mb-15" :comentarios="receta.comentarios" />
   </section>
 </template>
 
@@ -65,9 +67,14 @@ onMounted(() => {
 <style scoped lang="scss">
 .recipe-page {
   font-family: 'Poppins', sans-serif;
+  padding-bottom: 60px;
   
   .recipe-description {
-    padding: 60px 80px;
-  }
+    padding: 60px 120px;
+
+    .v-chip__content {
+      font-size: 1rem;
+    }
+  } 
 }
 </style>

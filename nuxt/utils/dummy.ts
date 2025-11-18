@@ -218,6 +218,44 @@ export const recetas = [
       "100 ml de crema vegetal sin gluten",
       "Semillas para decorar",
     ],
+    comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: '/img/user.jpg',
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: '/img/user.jpg',
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: '/img/user.jpg',
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: '/img/user.jpg',
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     idReceta: 2,
