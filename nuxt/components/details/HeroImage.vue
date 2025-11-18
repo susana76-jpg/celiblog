@@ -16,7 +16,7 @@
           :model-value="setLevelChip(receipe.dificultad).rating"
         ></v-rating>
       </v-chip>
-      <div>
+      <div class="details-page__hero-info__text">
         <v-rating
           readonly
           half-increments
@@ -25,7 +25,7 @@
           :model-value="4"
         ></v-rating>
         <h1>{{ receipe.titulo }}</h1>
-        <p>{{ receipe.descripcion }}</p>
+        <p>{{ receipe.subtitulo }}</p>
       </div>
     </div>
     <div class="details-page__hero-image">
@@ -47,7 +47,7 @@
 </template>
 <script setup lang="ts">
 const props = defineProps<{
-  receipe: object;
+  receipe: any;
 }>();
 </script>
 <style lang="scss">
@@ -61,7 +61,7 @@ const props = defineProps<{
 
   &__hero-info {
     width: 50%;
-    padding: 30px 30px 30px 80px;
+    padding: 50px 50px 50px 80px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -92,13 +92,39 @@ const props = defineProps<{
       }
     }
 
-    h1 {
-      font-family: 'Arial', sans-serif;
-      font-size: 3rem;
-      line-height: 36px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #836A02;
+    &__text {
+      
+      .v-rating {
+        width: 190px;
+        display: flex;
+        justify-content: space-between;
+
+        > label {
+          display: none;
+        }
+
+        .v-btn--icon.v-btn--size-default {
+          --v-btn-size: 1.5rem;
+        }
+      }
+
+      h1 {
+        font-family: 'Arial', sans-serif;
+        font-size: 3rem;
+        line-height: 40px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        margin-top: 30px;
+        color: #836A02;
+      }
+
+      p {
+        font-family: 'Poppins', sans-serif;
+        font-size: 18px;
+        line-height: 22px;
+        font-weight: 400;
+        color: #242424;
+      }
     }
   }
 
@@ -109,10 +135,10 @@ const props = defineProps<{
     &__favourite {
       position: absolute;
       top: 2rem;
-      right: 2rem;
+      right: 80px;
       height: 80px !important;
       width: 80px !important;
-      background-color: #ffffffad;
+      background-color: #ffffffd3;
 
       .v-icon {
         --v-icon-size-multiplier: 2 !important;

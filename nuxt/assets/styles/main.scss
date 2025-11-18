@@ -7,6 +7,10 @@ body {
   padding: 0;
 }
 
+p {
+  line-height: 1.2rem;
+}
+
 // Increase icon size in buttons
 .v-btn .v-icon {
   --v-icon-size-multiplier: 1;
