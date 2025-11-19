@@ -61,6 +61,7 @@ com\daw\celiblog\service\impl\TagRecetaServiceImpl.class
 com\daw\celiblog\db\entity\Usuario.class
 com\daw\celiblog\db\repository\ComentarioRepository.class
 com\daw\celiblog\db\repository\TagComentarioRepository.class
+com\daw\celiblog\db\entity\VistaRecetaIngredientes.class
 com\daw\celiblog\db\repository\TagRecetaRepository.class
 com\daw\celiblog\controller\RecetaController.class
 com\daw\celiblog\service\PasoRecetaService.class

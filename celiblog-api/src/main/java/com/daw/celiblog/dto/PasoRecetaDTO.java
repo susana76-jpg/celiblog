@@ -5,24 +5,24 @@ public class PasoRecetaDTO {
     private String descripcion;
     private int orden;
     private RecetaDTO recetaDTO;
-    private Long idRecta;
+    private Long idReceta;
 
     public PasoRecetaDTO() {
     }
 
-    public PasoRecetaDTO(Long idPaso, String descripcion, int orden, RecetaDTO receta, Long idRecta) {
+    public PasoRecetaDTO(Long idPaso, String descripcion, int orden, RecetaDTO receta, Long idReceta) {
         this.idPaso = idPaso;
         this.descripcion = descripcion;
         this.orden = orden;
         this.recetaDTO = receta;
-        this.idRecta = idRecta;
+        this.idReceta = idReceta;
     }
 
-    public PasoRecetaDTO(Long idPaso, String descripcion, int orden, Long idRecta) {
+    public PasoRecetaDTO(Long idPaso, String descripcion, int orden, Long idReceta) {
         this.idPaso = idPaso;
         this.descripcion = descripcion;
         this.orden = orden;
-        this.idRecta = idRecta;
+        this.idReceta = idReceta;
     }
 
     public Long getIdPaso() {
@@ -57,11 +57,11 @@ public class PasoRecetaDTO {
         this.recetaDTO = receta;
     }
 
-    public Long getIdRecta() {
-        return idRecta;
+    public Long getIdReceta() {
+        return idReceta;
     }
 
-    public void setIdRecta(Long idRecta) {
-        this.idRecta = idRecta;
+    public void setIdReceta(Long idReceta) {
+        this.idReceta = idReceta;
     }
 }

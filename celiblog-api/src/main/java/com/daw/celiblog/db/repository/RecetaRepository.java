@@ -1,6 +1,7 @@
 package com.daw.celiblog.db.repository;
 
 import com.daw.celiblog.db.entity.Receta;
+import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
 import com.daw.celiblog.dto.RecetaDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,5 +33,8 @@ public interface RecetaRepository extends JpaRepository<Receta, Long> {
 
     @Query(value = "SELECT * FROM receta WHERE estado = 'RECHAZADO'", nativeQuery = true)
     List<Receta> getRecetasEstadoRechazado();
+
+    @Query(value = "SELECT * FROM vista_receta_ingredientes WHERE id_receta =:idReceta", nativeQuery = true)
+    List<VistaRecetaIngredientes> getIngredientesByIdReceta(@Param("idReceta") Long idReceta);
 
 }

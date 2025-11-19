@@ -2,6 +2,7 @@ package com.daw.celiblog.service.impl;
 
 import com.daw.celiblog.db.entity.PasoReceta;
 import com.daw.celiblog.db.entity.Receta;
+import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
 import com.daw.celiblog.db.repository.PasoRecetaRepository;
 import com.daw.celiblog.db.repository.RecetaRepository;
 import com.daw.celiblog.db.repository.TagRecetaRepository;
@@ -134,6 +135,12 @@ public class RecetaServiceImpl implements RecetaService {
             return RecetaMapper.entityToDto(this.recetaRepository.save(receta));
         }
         return null;
+    }
+
+    @Override
+    public List<VistaRecetaIngredientes> getIngredientesByIdReceta(Long idReceta) {
+        List<VistaRecetaIngredientes> ingredientes = this.recetaRepository.getIngredientesByIdReceta(idReceta);
+        return ingredientes;
     }
 
 
