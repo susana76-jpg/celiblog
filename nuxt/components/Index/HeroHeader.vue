@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import type { Variant } from '../../types/vuetify';
 
-const imgHeroImage = "https://www.figma.com/api/mcp/asset/eb1361d2-f157-4c17-98c4-0f58bca1686b";
+const imgHeroImage = "/img/hero-image-index.png";
 
 // List of account buttons
 const infoButtons = [
