@@ -8,6 +8,7 @@
         variant="flat"
         prepend-icon="mdi-plus"
         text="Añadir comentario"
+        @click="openCommentForm = true"
       />
     </div>
     <v-divider :thickness="3"></v-divider>
@@ -18,6 +19,11 @@
         :comentario="comentario" 
       />
     </v-container>
+
+    <CommentsReviewForm 
+      :show="openCommentForm"
+      @close="openCommentForm = false"
+    />
   </section>
 </template>
 
@@ -25,6 +31,8 @@
 const props = defineProps<{
   comentarios: any[];
 }>();
+
+const openCommentForm = ref<boolean>(false);
 </script>
 
 <style scoped lang="scss">

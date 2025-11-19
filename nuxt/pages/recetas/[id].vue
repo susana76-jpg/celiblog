@@ -29,9 +29,9 @@
 <script setup lang="ts">
 const route = useRoute();
 const id = parseInt(route.params.id as string);
-const receta = recetas[0]; // Example usage of the recetas array
+const receta = recetas[0]; 
 const receipe = ref<Receta | null>(null);
-const steps = ref<RecetaPaso[] | null>(null); // Initialize as null to avoid undefined issues
+const steps = ref<RecetaPaso[] | null>(null); 
 
 const getReceipeById = async () => {
   try {
@@ -59,8 +59,8 @@ const getReceipeStepsById = async () => {
 
 // Fetch the receipe data when the component is mounted
 onMounted(() => {
-  // getReceipeById();
-  // getReceipeStepsById();
+  getReceipeById();
+  getReceipeStepsById();
 });
 </script>
 
