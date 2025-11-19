@@ -22,8 +22,8 @@ public class ComentarioMapper {
                 source.getContenido(),
                 source.getComentarioUrl(),
                 UsuarioMapper.entityToDto(source.getUsuario()) ,
-                TipoComentarioMapper.entityToDto(source.getTipoComentario()),
                 source.getIdObjetoComentado(),
+                source.getObjeto_comentado(),
                 source.getFechaValidacion(),
                 source.getValoracion(),
                 source.getEstado());
@@ -36,8 +36,8 @@ public class ComentarioMapper {
                 source.getContenido(),
                 source.getComentarioUrl(),
                 UsuarioMapper.dtoToEntity(source.getUsuarioDTO()) ,
-                TipoComentarioMapper.dtoToEntity(source.getTipoComentarioDTO()),
                 source.getIdObjetoComentado(),
+                source.getObjetoComentado(),
                 source.getFechaValidacion(),
                 source.getValoracion(),
                 source.getEstado());

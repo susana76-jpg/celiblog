@@ -1,7 +1,9 @@
 package com.daw.celiblog.dto;
 
 import com.daw.celiblog.enums.EstadoValidacion;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.Date;
 import java.util.Objects;
@@ -10,6 +12,7 @@ import java.util.Objects;
 public class RestauranteDTO {
 
     private Long idRestaurante;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaPublicacion;
     private UsuarioDTO usuarioDTO;
     private String descripcion;
@@ -18,18 +21,27 @@ public class RestauranteDTO {
     private String nombre;
     private String ubicacion;
     private String urlWeb;
-    private int telefono;
+    //@NotBlank(message = "El teléfono no puede estar vacío")
+    @Pattern(
+            regexp = "^(?:\\+34|0034)?d{9}$",
+            message = "El teléfono debe ser válido en España"
+    )
+    private String telefono;
+    @Pattern(
+            regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+            message = "Formato de email inválido"
+    )
     private String email;
     private int valoracion;
     @Enumerated(EnumType.STRING)
     private EstadoValidacion estado = EstadoValidacion.APROBADO;
-
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaValidacion;
 
     public RestauranteDTO() {
     }
 
-    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioDTO usuarioDTO, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb, int telefono, String email, int valoracion, EstadoValidacion estado, Date fechaValidacion) {
+    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioDTO usuarioDTO, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb, String telefono, String email, int valoracion, EstadoValidacion estado, Date fechaValidacion) {
         this.idRestaurante = idRestaurante;
         this.fechaPublicacion = fechaPublicacion;
         this.usuarioDTO = usuarioDTO;
@@ -118,11 +130,11 @@ public class RestauranteDTO {
         this.urlWeb = urlWeb;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 

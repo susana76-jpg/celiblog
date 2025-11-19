@@ -1,8 +1,11 @@
 package com.daw.celiblog.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 /**
@@ -32,15 +35,19 @@ public class Usuario implements Serializable {
 	@JoinColumn(name="id_rol")
 	private Rol rol;
 
+	@Column(name="fecha_alta")
+	private Date fechaAlta;
+
 	public Usuario() {
 	}
 
-	public Usuario(Long idUsuario, String email, String nombre, String password, Rol rol) {
+	public Usuario(Long idUsuario, String email, String nombre, String password, Rol rol, Date fechaAta) {
 		this.idUsuario = idUsuario;
 		this.email = email;
 		this.nombre = nombre;
 		this.password = password;
 		this.rol = rol;
+		this.fechaAlta = fechaAta;
 	}
 	public Usuario(String email, String nombre, String password, Rol rol) {
 		this.email = email;
@@ -89,4 +96,11 @@ public class Usuario implements Serializable {
 		this.rol = rol;
 	}
 
+	public Date getFechaAta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAta(Date fechaAta) {
+		this.fechaAlta = fechaAta;
+	}
 }

@@ -1,6 +1,7 @@
 package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.*;
+import com.daw.celiblog.enums.EstadoValidacion;
 import com.daw.celiblog.service.PasoRecetaService;
 import com.daw.celiblog.service.RecetaService;
 import com.daw.celiblog.service.TagRecetaService;
@@ -27,8 +28,6 @@ public class RecetaController {
 
     @Autowired
     RecetaService recetaService;
-    @Autowired
-    PasoRecetaService pasoRecetaService;
 
 
     @Operation(summary = "Obtiene todas las recetas registradas.")
@@ -42,6 +41,7 @@ public class RecetaController {
     public ResponseEntity<RecetaDTO> getRecetaById(@RequestParam(name="id") Long id) {
         return ResponseEntity.ok(this.recetaService.obtenerPorId(id));
     }
+
     @Operation(summary = "Añade una receta.")
     @PostMapping("/add")
     public ResponseEntity<RecetaDTO> crearReceta(@RequestBody RecetaDTO recetaDTO){
@@ -57,64 +57,33 @@ public class RecetaController {
         }else{
             return ResponseEntity.status(300).body("No existe la receta a eliminar.");
         }
-
-    }
-
-//TAG_RECETA
-    @Operation(summary = "Obtiene la lista de recetas por nombre de un tag.")
-    @GetMapping("/recetasByTag")
-    public ResponseEntity<List<RecetaDTO>> obtenerRecetasPorNombreTag(@RequestParam(name="nombreTag") String nombreTag) {
-        return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTag(nombreTag));
-    }
-
-    @Operation(summary = "Obtiene la lista de recetas por varios nombres de tag.")
-    @GetMapping("/recetasByTags")
-    public ResponseEntity<List<RecetaDTO>> buscarRecetasPorNombreDeTags(@RequestParam(name="tag") List<String> tags) {
-        return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTags(tags));
-    }
-    @Operation(summary = "Obtiene la lista de tags de una receta por su id.")
-    @GetMapping("/tags")
-    public ResponseEntity<List<TagRecetaDTO>> obtenerTagsPorIdReceta(@RequestParam(name="idReceta") Long idReceta) {
-        return ResponseEntity.ok(this.recetaService.obtenerTagsRecetaPorId(idReceta));
-    }
-
-//PASOS_RECETA
-    @Operation(summary = "Añade el paso de elaboración de una receta por orden.")
-    @PostMapping("/add-paso")
-    public ResponseEntity<PasoRecetaDTO> crearPasoDeReceta(@RequestBody PasoRecetaView recetaView){
-        PasoRecetaDTO nuevaReceta = this.pasoRecetaService.addPasoReceta(recetaView);
-        return ResponseEntity.status(201).body(nuevaReceta);
-    }
-
-    @Operation(summary = "Obtiene los pasos para hacer la receta, por id de receta y en orden de paso.")
-    @GetMapping("/pasos")
-    public ResponseEntity<List<PasoRecetaDTO>> obtenerPasosRecetaPorIdReceta(@RequestParam(name="idReceta") Long idReceta) {
-        return ResponseEntity.ok(this.pasoRecetaService.obtenerPasosRecetaPorId(idReceta));
-    }
-
-    @Operation(summary = "Actualiza el paso de una receta por id de receta y número de orden del paso.")
-    @PutMapping("/update-paso")
-    public ResponseEntity<PasoRecetaDTO> updatePasoReceta(@RequestBody PasoRecetaView pasoRecetaView) {
-        return ResponseEntity.ok(this.pasoRecetaService.updatePasoReceta(pasoRecetaView));
-    }
-
-    @Operation(summary = "Elimina el paso de una receta por id de receta y número de orden del paso.")
-    @DeleteMapping("/delete-paso")
-    public ResponseEntity<String> deletePasoReceta(@RequestBody PasoRecetaView pasoRecetaView) {
-        if(this.pasoRecetaService.deletePasoReceta(pasoRecetaView)){
-            return ResponseEntity.ok("Paso de la receta eliminado correctamente");
-        }else{
-            return ResponseEntity.ok("Paso de la receta no eliminado. No se ha encontrado este paso");
-        }
     }
 
 
+    //GESTIÓN ESTADO DE PUBLICACIÓN
+    @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todas las recetas publicadas por los usuarios y pendientes de validar para su publicación por un administrador.")
+    @GetMapping("/estado-pendiente")
+    public ResponseEntity<List<RecetaDTO>> getRecetasEstadoPendiente() {
+        return ResponseEntity.ok(recetaService.getRecetasEstadoPendiente());
+    }
+
+    @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todas las recetas publicadas por los usuarios y aprobadas para su publicación por un administrador.")
+    @GetMapping("/estado-aprobada")
+    public ResponseEntity<List<RecetaDTO>> getRecetasEstadoAprobado() {
+        return ResponseEntity.ok(recetaService.getRecetasEstadoAprobado());
+    }
+
+    @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todas las recetas publicadas por los usuarios y rechazadas para su publicación por un administrador.")
+    @GetMapping("/estado-rechazado")
+    public ResponseEntity<List<RecetaDTO>> getRecetasEstadoRechazado() {
+        return ResponseEntity.ok(recetaService.getRecetasEstadoRechazado());
+    }
 
 
-
-
-
-
-
+    @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Actualiza el estado de publicación de una receta (PENDIENTE, APROBADO, RECHAZADO")
+    @PutMapping("/update-estado-publicacion")
+    ResponseEntity<RecetaDTO> updateEstadoPublicacionReceta(@RequestParam(name="idReceta") Long idReceta, @RequestParam(name="estado")EstadoValidacion estado) {
+        return ResponseEntity.ok(recetaService.updateEstadoPublicacionReceta(idReceta, estado));
+    }
 
 }

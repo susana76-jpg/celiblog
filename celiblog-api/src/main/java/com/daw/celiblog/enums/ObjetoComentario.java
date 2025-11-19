@@ -1,6 +1,6 @@
 package com.daw.celiblog.enums;
 
-public enum TemaComentario {
+public enum ObjetoComentario {
     RECETA,
     POST,
     RESTAURANTE,
