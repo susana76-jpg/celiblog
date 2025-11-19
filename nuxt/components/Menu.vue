@@ -23,8 +23,8 @@
         :icon="item.icon"
         :text="item.text"
         :variant="item.variant"
+        :class="{ 'active-menu-item': isActiveRoute(item.path) }"
         rounded="0"
-        exact
       />
     </nav>
 
@@ -81,8 +81,15 @@
 </template>
 
 <script setup lang="ts">
+const route = useRoute();
 const isUserLoggedIn = ref<boolean>(true);
 const userName = ref<string>('John Doe');
+
+// Check if route is active
+const isActiveRoute = (path: string) => {
+  if (path === '/') return route.path === '/';
+  return route.path.includes(path);
+};
 
 // List of menu items
 const menuItems = [
@@ -143,7 +150,8 @@ const items = [
 
   // Set styles for active menu item
   nav {
-    a[aria-current="page"] {
+    a[aria-current="page"],
+    .active-menu-item {
       background-color: #FFF;
       color: #836A02;
       border-bottom: 2px solid #836A02;    
