@@ -25,3 +25,45 @@ li {
 .v-card .v-img {
   border-radius: 4px;
 }
+
+
+/***********************************/
+/* Main Section Styles */
+/**********************************/
+.section-main {
+  padding: 0 80px;
+  margin-bottom: 60px;
+
+  &__title {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 22px;
+      line-height: 22px;
+      font-weight: 600;
+      color: #242424;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-family: 'Arial', sans-serif;
+      font-size: 32px;
+      line-height: 26px;
+      letter-spacing: -1px;
+      color: #836a02;
+      max-width: 70%;
+      margin: 0 auto;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .section-main {
+    padding: 0 30px;
+  }
+}

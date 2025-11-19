@@ -1,5 +1,5 @@
 <template>
-  <section class="section-page"> 
+  <section class="section-page recetas-page"> 
 
     <!-- HERO IMAGE ----------------------------->
     <SectionHeroImage
@@ -19,8 +19,8 @@
       <SectionFilterBar />
       <v-row no-gutters class="section-main__content">
         <v-col
-          v-for="item in receipes"
-          :key="item.id"
+          v-for="item in recetas"
+          :key="item.idReceta"
           cols="12"
           md="4"
           xl="3"
@@ -36,39 +36,8 @@
 
 <script setup lang="ts">
 const img = 'https://www.figma.com/api/mcp/asset/26902a0d-e471-4f93-a9fe-7c195740016c';
-import { receipes } from '../../utils/dummy';
+import { recetas } from '../../utils/dummy';
 </script>
 
 <style lang="scss" scoped>
-.section-main {
-  padding: 0 80px;
-  margin-bottom: 60px;
-
-  &__title {
-    width: 80%;
-    text-align: center;
-    margin: 0 auto;
-    padding-top: 50px;
-    padding-bottom: 50px;
-
-    h2 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 22px;
-      line-height: 22px;
-      font-weight: 600;
-      color: #242424;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-family: 'Arial', sans-serif;
-      font-size: 32px;
-      line-height: 26px;
-      letter-spacing: -1px;
-      color: #836a02;
-      max-width: 70%;
-      margin: 0 auto;
-    }
-  }
-}
 </style>

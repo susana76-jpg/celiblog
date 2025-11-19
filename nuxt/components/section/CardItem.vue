@@ -1,6 +1,6 @@
 <template>
   <v-card 
-    :to="`/recetas/${item.id}`" 
+    :to="`/recetas/${item.idReceta}`" 
     variant="text"
     class="card-item mx-2 pa-2" 
   >
@@ -8,19 +8,19 @@
       <v-img 
         cover 
         height="400" 
-        :src="item.image"
+        :src="item.imagenUrl"
       />
       <v-chip
         class="card-image__chip"
-        :class="setChipClass(item.difficulty)"
+        :class="setChipClass(item.dificultad)"
         variant="outlined"
       >
-        <span>{{ item.difficulty || 'easy' }}</span>
+        <span>{{ item.dificultad || 'easy' }}</span>
         <v-rating
           readonly
           color="white"
           length="3"
-          :model-value="item.difficulty === 'easy' ? 1 : item.difficulty === 'medium' ? 2 : 3"
+          :model-value="item.dificultad === 'easy' ? 1 : item.dificultad === 'medium' ? 2 : 3"
         ></v-rating>
       </v-chip>
       <v-btn
@@ -32,34 +32,37 @@
       />
     </div>
     <v-card-title class="px-0">
-      {{ item.title }}
+      {{ item.titulo }}
     </v-card-title>
     <v-card-text class="px-0">
-      {{ item.description }}
+      {{ item.subtitulo }}
     </v-card-text>
     <v-rating
       readonly
       half-increments
       color="primary"
       density="compact"
-      :model-value="item.rating"
+      :model-value="item.valoracion"
     ></v-rating>
   </v-card>
 </template>
 
 <script setup lang="ts">
+// const props = defineProps<{
+//   item: {
+//     id: number;
+//     title: string;
+//     description: string;
+//     image: string;
+//     link: string;
+//     rating: number;
+//     favorite?: boolean;
+//     difficulty?: string;
+//   };
+// }>(); 
 const props = defineProps<{
-  item: {
-    id: number;
-    title: string;
-    description: string;
-    image: string;
-    link: string;
-    rating: number;
-    favorite?: boolean;
-    difficulty?: string;
-  };
-}>(); 
+  item: any;
+}>();
 
 const setChipClass = (difficulty: string | undefined) => {
   switch (difficulty) {

@@ -183,7 +183,7 @@ export const recetas = [
     descripcion:
       "Este desayuno sin gluten combina avena certificada con frutas frescas, creando un plato nutritivo y equilibrado. Su elaboración es sencilla y no requiere técnicas avanzadas, por lo que resulta perfecta para principiantes. La base cremosa se obtiene mediante una cocción suave que resalta el sabor natural de la avena. Las frutas aportan color, dulzor y vitaminas esenciales, convirtiendo la receta en una opción ideal para comenzar el día con energía. Además, puede personalizarse fácilmente con semillas o frutos secos aptos, ofreciendo variedad sin comprometer la seguridad alimentaria.",
     fechaCreacion: "2025-01-10",
-    imagenUrl: "https://example.com/receta1.jpg",
+    imagenUrl: "/img/recetas/receta1.jpg",
     dificultad: "facil",
     titulo: "Tazón nutritivo de avena certificada con frutas frescas variadas",
     subtitulo:
@@ -194,6 +194,7 @@ export const recetas = [
     tiempoPreparacion: 15,
     calorias: 320,
     tipo: "desayuno",
+    valoracion: 4.5,
     pasos: [
       "Organiza todos los ingredientes en una superficie limpia para garantizar que no exista contaminación cruzada con productos que pudieran contener gluten.",
       "Calienta la leche o bebida vegetal en una olla a fuego medio hasta que comience a desprender vapor suave sin llegar a hervir completamente.",
@@ -262,7 +263,7 @@ export const recetas = [
     descripcion:
       "Esta ensalada sin gluten es perfecta como almuerzo ligero y equilibrado. Combina pollo grillado, hojas verdes frescas y un aderezo cítrico casero preparado con ingredientes seguros. La mezcla de sabores refrescantes y texturas crujientes la convierte en una opción versátil para cualquier época del año. El pollo aporta proteínas de calidad, mientras que los vegetales suministran vitaminas esenciales. Además, la receta se prepara rápidamente, siendo ideal para quienes tienen poco tiempo pero desean comer saludable. Su elaboración es sencilla y permite agregar otros ingredientes aptos según preferencias personales.",
     fechaCreacion: "2025-01-11",
-    imagenUrl: "https://example.com/receta2.jpg",
+    imagenUrl: "/img/recetas/receta2.jpg",
     dificultad: "facil",
     titulo:
       "Ensalada fresca de pollo grillado con hojas verdes y aderezo cítrico",
@@ -274,6 +275,7 @@ export const recetas = [
     tiempoPreparacion: 25,
     calorias: 410,
     tipo: "almuerzo",
+    valoracion: 4.5,
     pasos: [
       "Lava y seca cuidadosamente todas las hojas verdes para eliminar impurezas y garantizar que la textura final sea fresca y crujiente al momento de servir.",
       "Corta las pechugas de pollo en tiras uniformes para asegurar una cocción pareja y evitar partes crudas que puedan alterar la calidad del plato.",
@@ -292,7 +294,7 @@ export const recetas = [
     descripcion:
       "Estas galletas crujientes sin gluten son una excelente opción para una merienda rápida y saludable. Elaboradas con arroz inflado, semillas y especias aptas, ofrecen una textura ligera y un sabor equilibrado. Son ideales para acompañar con salsas suaves o disfrutar solas como snack energético. La receta es sencilla y no requiere horno, lo que la convierte en una alternativa práctica para cualquier ocasión. Además, pueden almacenarse durante varios días sin perder su crocancia, siempre que se conserven en un recipiente hermético. Su preparación es perfecta para quienes buscan opciones seguras y fáciles.",
     fechaCreacion: "2025-01-12",
-    imagenUrl: "https://example.com/receta3.jpg",
+    imagenUrl: "/img/recetas/receta3.jpg",
     dificultad: "facil",
     titulo:
       "Galletas crujientes de arroz inflado con semillas y especias suaves",
@@ -304,6 +306,7 @@ export const recetas = [
     tiempoPreparacion: 15,
     calorias: 180,
     tipo: "merienda",
+    valoracion: 3.,
     pasos: [
       "Coloca el arroz inflado en un tazón grande limpio y asegúrate de que esté completamente libre de restos que puedan generar contaminación cruzada con gluten.",
       "Mezcla las semillas seleccionadas con el arroz inflado, distribuyéndolas de manera uniforme para obtener una textura equilibrada en cada galleta preparada.",
@@ -322,7 +325,7 @@ export const recetas = [
     descripcion:
       "Este estofado de ternera sin gluten es una opción reconfortante y nutritiva para la cena. Preparado lentamente, combina carne tierna con verduras frescas y un caldo seguro para celíacos. La cocción prolongada concentra los sabores y crea una textura suave en cada bocado. Es ideal para noches frías o reuniones familiares, ya que se sirve caliente y rinde varias porciones. Su preparación no es complicada, pero requiere paciencia para obtener un resultado perfecto. Además, puede acompañarse con arroz, puré o pan sin gluten para completar el plato.",
     fechaCreacion: "2025-01-12",
-    imagenUrl: "https://example.com/receta4.jpg",
+    imagenUrl: "/img/recetas/receta4.jpg",
     dificultad: "media",
     titulo:
       "Estofado de ternera con verduras tiernas y caldo seguro sin gluten",
@@ -334,6 +337,7 @@ export const recetas = [
     tiempoPreparacion: 60,
     calorias: 550,
     tipo: "cena",
+    valoracion: 4,
     pasos: [
       "Corta la ternera en cubos medianos y sécalos con papel de cocina para favorecer un dorado uniforme al comenzar la preparación del estofado.",
       "Calienta una olla grande con aceite apto y dora la carne por todos los lados para desarrollar profundidad de sabor en el fondo de cocción.",
@@ -352,7 +356,7 @@ export const recetas = [
     descripcion:
       "Estas tostadas sin gluten combinan pan apto para celíacos con aguacate fresco y tomates cherry. Son ideales como desayuno rápido, nutritivo y lleno de sabor. La cremosidad del aguacate se complementa con la frescura de los tomates, creando una mezcla equilibrada. Este plato aporta grasas saludables, vitaminas y minerales esenciales. Su preparación requiere pocos minutos y no necesita técnicas culinarias complejas, por lo que es perfecto para quienes buscan una comida práctica pero completa. Además, puede personalizarse fácilmente con semillas o especias aptas para intensificar el sabor.",
     fechaCreacion: "2025-01-13",
-    imagenUrl: "https://example.com/receta5.jpg",
+    imagenUrl: "/img/recetas/receta5.jpg",
     dificultad: "facil",
     titulo: "Tostadas de pan sin gluten con aguacate fresco y tomates cherry",
     subtitulo:
@@ -363,6 +367,7 @@ export const recetas = [
     tiempoPreparacion: 10,
     calorias: 290,
     tipo: "desayuno",
+    valoracion: 4.8,
     pasos: [
       "Tuesta ligeramente las rebanadas de pan sin gluten para lograr una base firme y crujiente que soporte adecuadamente los ingredientes posteriores.",
       "Abre el aguacate maduro y tritura la pulpa en un tazón hasta obtener una crema suave manteniendo una textura que sea fácilmente untuosa.",
@@ -381,7 +386,7 @@ export const recetas = [
     descripcion:
       "Esta crema de zanahoria sin gluten combina ingredientes frescos y un sabor suave que resulta ideal para una cena ligera. Su textura aterciopelada se logra gracias a una cocción lenta que permite que las verduras liberen su dulzor natural. Es fácil de preparar y perfecta para quienes buscan un plato reconfortante, nutritivo y totalmente seguro para personas celíacas. Puede servirse sola o acompañada con semillas o crutones sin gluten. Además, es apta para preparar en grandes cantidades y conservar refrigerada varios días sin perder calidad ni sabor.",
     fechaCreacion: "2025-01-12",
-    imagenUrl: "https://example.com/receta6.jpg",
+    imagenUrl: "/img/recetas/receta6.jpg",
     dificultad: "facil",
     titulo:
       "Crema suave de zanahoria con especias aptas para personas celíacas",
@@ -393,6 +398,7 @@ export const recetas = [
     tiempoPreparacion: 25,
     calorias: 210,
     tipo: "cena",
+    valoracion: 5,
     pasos: [
       "Lava y pela las zanahorias cuidadosamente, asegurándote de eliminar cualquier residuo y dejando las piezas listas para ser cortadas en rodajas medianas.",
       "Corta cebolla y puerro en trozos pequeños para crear una base aromática que aporte suavidad y sabor a la crema final.",
@@ -411,7 +417,7 @@ export const recetas = [
     descripcion:
       "Estos muffins de manzana sin gluten son perfectos para un desayuno dulce y nutritivo. Su textura esponjosa se obtiene gracias a harinas aptas especialmente seleccionadas, mientras que la manzana aporta humedad natural sin necesidad de agregar exceso de grasa. Son ideales para preparar con anticipación, ya que se mantienen frescos durante varios días. Además, pueden servirse solos o acompañados con miel o yogur sin gluten. Su sabor equilibrado y su aroma cálido los hacen una opción deliciosa para toda la familia, incluso para quienes no siguen una dieta libre de gluten.",
     fechaCreacion: "2025-01-13",
-    imagenUrl: "https://example.com/receta7.jpg",
+    imagenUrl: "/img/recetas/receta7.jpg",
     dificultad: "media",
     titulo:
       "Muffins esponjosos de manzana con mezcla de harinas aptas sin gluten",
@@ -423,6 +429,7 @@ export const recetas = [
     tiempoPreparacion: 30,
     calorias: 320,
     tipo: "desayuno",
+    valoracion: 3.5,
     pasos: [
       "Mezcla en un tazón grande las harinas sin gluten con polvo de hornear apto, logrando una base seca uniforme para los muffins.",
       "Bate huevos con azúcar hasta obtener una mezcla espumosa que permita incorporar aire y mejorar la textura final de la preparación.",
@@ -441,7 +448,7 @@ export const recetas = [
     descripcion:
       "Esta ensalada mediterránea sin gluten combina ingredientes frescos y coloridos que aportan nutrientes esenciales. El equilibrio entre vegetales crujientes, aceitunas y queso apto crea un sabor vibrante y refrescante. Es perfecta como almuerzo ligero o como guarnición para platos más elaborados. Su preparación es sencilla y no requiere cocción, por lo que resulta una opción ideal para días calurosos o momentos en los que se busca algo rápido y saludable. Además, puede personalizarse fácilmente modificando las verduras o el tipo de aderezo, siempre garantizando productos libres de gluten.",
     fechaCreacion: "2025-01-12",
-    imagenUrl: "https://example.com/receta8.jpg",
+    imagenUrl: "/img/recetas/receta8.jpg",
     dificultad: "facil",
     titulo:
       "Ensalada mediterránea fresca con vegetales crujientes y queso apto sin gluten",
@@ -453,6 +460,7 @@ export const recetas = [
     tiempoPreparacion: 15,
     calorias: 240,
     tipo: "almuerzo",
+    valoracion: 4.5,
     pasos: [
       "Lava bien todas las verduras bajo agua fría eliminando residuos y garantizando una base limpia para la ensalada.",
       "Corta tomates y pepinos en trozos medianos buscando un tamaño uniforme que facilite la mezcla equilibrada de los ingredientes.",
@@ -471,7 +479,7 @@ export const recetas = [
     descripcion:
       "Este arroz con pollo sin gluten es un plato completo, reconfortante y fácil de preparar. La combinación de arroz suelto, pollo tierno y verduras aptas crea una receta llena de sabor y perfecta para cualquier almuerzo familiar. Su elaboración no requiere técnicas complejas y puede adaptarse incorporando otros vegetales o variando los condimentos, siempre cuidando que sean libres de gluten. Es una excelente opción para quienes buscan una comida práctica, nutritiva y abundante, ideal para servir caliente y recién hecho, proporcionando energía y saciedad por varias horas.",
     fechaCreacion: "2025-01-13",
-    imagenUrl: "https://example.com/receta9.jpg",
+    imagenUrl: "/img/recetas/receta9.jpg",
     dificultad: "media",
     titulo: "Arroz suelto con pollo tierno y verduras frescas aptas sin gluten",
     subtitulo:
@@ -482,6 +490,7 @@ export const recetas = [
     tiempoPreparacion: 40,
     calorias: 480,
     tipo: "almuerzo",
+    valoracion: 4,
     pasos: [
       "Corta el pollo en trozos medianos y sazónalo con sal apta para realzar su sabor antes de comenzar la cocción.",
       "Calienta aceite apto en una sartén grande y dora el pollo hasta que adquiera un color ligeramente dorado en toda su superficie.",
@@ -500,7 +509,7 @@ export const recetas = [
     descripcion:
       "Estos panqueques sin gluten son ideales para una merienda dulce o un desayuno energético. Su textura suave y ligeramente esponjosa se logra con una mezcla equilibrada de harinas aptas. Se preparan rápidamente y pueden acompañarse con frutas, miel o sirope sin gluten. Son perfectos para quienes desean una opción versátil que pueda personalizarse fácilmente. Además, su sabor neutro permite combinarlos con ingredientes dulces o salados según las preferencias. Esta receta es adecuada tanto para niños como para adultos, proporcionando una alternativa segura y deliciosa para quienes siguen una dieta libre de gluten.",
     fechaCreacion: "2025-01-12",
-    imagenUrl: "https://example.com/receta10.jpg",
+    imagenUrl: "/img/recetas/receta10.jpg",
     dificultad: "facil",
     titulo: "Panqueques suaves sin gluten con mezcla de harinas aptas y frutas",
     subtitulo:
@@ -511,6 +520,7 @@ export const recetas = [
     tiempoPreparacion: 20,
     calorias: 310,
     tipo: "merienda",
+    valoracion: 4.2,
     pasos: [
       "Mezcla las harinas sin gluten con polvo de hornear apto para formar una base seca uniforme que garantice panqueques esponjosos.",
       "Bate huevos con leche vegetal apta hasta obtener una mezcla ligera que permita integrar los ingredientes secos sin esfuerzo.",
