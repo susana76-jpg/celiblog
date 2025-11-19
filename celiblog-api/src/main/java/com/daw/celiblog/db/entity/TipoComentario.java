@@ -1,6 +1,6 @@
 package com.daw.celiblog.db.entity;
 
-import com.daw.celiblog.enums.TemaComentario;
+import com.daw.celiblog.enums.ObjetoComentario;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -24,12 +24,12 @@ public class TipoComentario implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tema", nullable = false)
-	private TemaComentario tema = TemaComentario.PENDIENTE;
+	private ObjetoComentario tema = ObjetoComentario.PENDIENTE;
 
 	public TipoComentario() {
 	}
 
-	public TipoComentario(Long idTipoComentario, String nombre, TemaComentario tema) {
+	public TipoComentario(Long idTipoComentario, String nombre, ObjetoComentario tema) {
 		this.idTipoComentario = idTipoComentario;
 		this.nombre = nombre;
 		this.tema = tema;
@@ -51,11 +51,11 @@ public class TipoComentario implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public TemaComentario getTema() {
+	public ObjetoComentario getTema() {
 		return this.tema;
 	}
 
-	public void setTema(TemaComentario tema) {
+	public void setTema(ObjetoComentario tema) {
 		this.tema = tema;
 	}
 

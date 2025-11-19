@@ -8,7 +8,6 @@
 	<name>celiblog</name>
 	<modules>
 		<module>celiblog-api</module>
-		<!--<module>celiblog-web</module>-->
 	</modules>
 	<packaging>pom</packaging>
 	<description>Demo project for Spring Boot</description>

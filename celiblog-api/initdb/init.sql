@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 16-11-2025 a las 09:37:20
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Servidor: celiblog_db:3306
+-- Tiempo de generación: 18-11-2025 a las 20:46:39
+-- Versión del servidor: 8.3.0
+-- Versión de PHP: 8.3.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,17 +28,83 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `comentario` (
-  `id_comentario` int(255) NOT NULL,
-  `fecha_publicacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `contenido` varchar(255) DEFAULT NULL,
-  `comentario_url` varchar(255) DEFAULT NULL,
-  `id_usuario` int(255) NOT NULL,
-  `id_tipo_comentario` int(255) NOT NULL,
-  `id_objeto_comentado` int(255) NOT NULL,
-  `fecha_validacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `valoracion` int(30) NOT NULL,
-  `estado` enum('PENDIENTE','APROBADO','RECHAZADO') DEFAULT 'PENDIENTE'
+  `id_comentario` int NOT NULL,
+  `fecha_publicacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `contenido` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comentario_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_usuario` int NOT NULL,
+  `id_objeto_comentado` int NOT NULL,
+  `objeto_comentado` enum('RECETA','RESTAURANTE','POST','PENDIENTE') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PENDIENTE',
+  `fecha_validacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `valoracion` int NOT NULL,
+  `estado` enum('PENDIENTE','APROBADO','RECHAZADO') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'PENDIENTE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `comentario`
+--
+
+INSERT INTO `comentario` (`id_comentario`, `fecha_publicacion`, `contenido`, `comentario_url`, `id_usuario`, `id_objeto_comentado`, `objeto_comentado`, `fecha_validacion`, `valoracion`, `estado`) VALUES
+(32, '2025-11-18 20:43:04', '¡El Pan de trigo sarraceno (Receta 1) me quedó con un sabor a campo delicioso! Muy satisfecho.', NULL, 13, 1, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(33, '2025-11-18 20:43:04', 'El Bizcocho de almendra (Receta 2) es suave y no tiene ese sabor a \"harina rara\". Un 10 en sabor.', NULL, 3, 2, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(34, '2025-11-18 20:43:04', 'Sabor final excelente en la Tarta de zanahoria (Receta 9). No se nota que es sin gluten.', NULL, 5, 9, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(35, '2025-11-18 20:43:04', 'La Tarta de limón (Receta 14) tiene un sabor cítrico muy vibrante. ¡Perfecto equilibrio!', NULL, 8, 14, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(36, '2025-11-18 20:43:04', 'El sabor del Pollo al curry (Receta 18) quedó muy auténtico. Lo hice un poco más picante.', NULL, 1, 18, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(37, '2025-11-18 20:43:04', 'La Dificultad de las Arepas (Receta 11) es media, no \"complicada\", si tienes práctica con masas.', NULL, 11, 11, 'RECETA', '2025-11-18 20:43:04', 3, 'PENDIENTE'),
+(38, '2025-11-18 20:43:04', 'La Pizza de coliflor (Receta 3) es fácil, pero la preparación de la base toma su tiempo. Cuidado con el paso a paso.', NULL, 13, 3, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(39, '2025-11-18 20:43:04', 'La Tarta de queso (Receta 32) es sorprendentemente fácil, incluso para principiantes. ¡El horneado fue clave!', NULL, 3, 32, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(40, '2025-11-18 20:43:04', 'El Pan de arroz integral (Receta 22) sí es complicado. Me costó mucho conseguir la consistencia de la masa.', NULL, 5, 22, 'RECETA', '2025-11-18 20:43:04', 2, 'RECHAZADO'),
+(41, '2025-11-18 20:43:04', 'Las Tortitas de avena (Receta 4) son las más rápidas que he hecho. Perfectas si no tienes tiempo.', NULL, 8, 4, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(42, '2025-11-18 20:43:04', 'Sustituí el coco rallado por nueces en las Galletas de coco (Receta 6). Quedaron muy ricas, pero más densas.', NULL, 1, 6, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(43, '2025-11-18 20:43:04', 'Recomiendo usar harina de garbanzos en lugar de arroz para los Crepes (Receta 5) si buscas un sabor más proteico.', NULL, 11, 5, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(44, '2025-11-18 20:43:04', 'He usado edulcorante en vez de azúcar en los Muffins de plátano (Receta 10) y el resultado fue excelente.', NULL, 13, 10, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(45, '2025-11-18 20:43:04', 'Para el Brownie de garbanzos (Receta 7), la gente puede usar judías negras si no tiene garbanzos cocidos. ¡Funciona!', NULL, 3, 7, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(46, '2025-11-18 20:43:04', 'Sustituí las pasas por trocitos de manzana en las Galletas de avena y pasas (Receta 37). ¡Un acierto!', NULL, 5, 37, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(47, '2025-11-18 20:43:04', 'La Presentación de las Croquetas de arroz (Receta 12) es buena, quedan muy bonitas si las rebozas bien.', NULL, 8, 12, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(48, '2025-11-18 20:43:04', 'La Tarta de manzana (Receta 21) se ve muy rústica y casera, ideal para una reunión familiar.', NULL, 1, 21, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(49, '2025-11-18 20:43:04', 'Las Berenjenas rellenas (Receta 25) quedan muy bien en el plato. Un toque de perejil fresco las realza.', NULL, 11, 25, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(50, '2025-11-18 20:43:04', 'El Pan de semillas (Receta 28) tiene una presentación espectacular por el aspecto rústico de las semillas.', NULL, 13, 28, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(51, '2025-11-18 20:43:04', 'Me gustó mucho cómo quedan los Tacos de maíz (Receta 24), muy coloridos con los toppings.', NULL, 3, 24, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(52, '2025-11-18 20:43:04', 'El tiempo de cocinado de la Crema de calabaza (Receta 19) es menor si se usa olla a presión.', NULL, 5, 19, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(53, '2025-11-18 20:43:04', 'El tiempo de reposo del Pan de plátano (Receta 15) es demasiado largo. Me llevó 20 minutos más.', NULL, 8, 15, 'RECETA', '2025-11-18 20:43:04', 3, 'PENDIENTE'),
+(54, '2025-11-18 20:43:04', 'El Pollo al curry (Receta 18) se hace en 25 minutos, no en 45. Receta muy rápida.', NULL, 1, 18, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(55, '2025-11-18 20:43:04', 'Las Empanadillas de boniato (Receta 23) tardaron un poco más en dorarse de lo que indica la receta.', NULL, 11, 23, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(56, '2025-11-18 20:43:04', 'El Bizcocho de yogur (Receta 31) estuvo listo en el tiempo justo. Muy preciso el tiempo de horneado.', NULL, 13, 31, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(57, '2025-11-18 20:43:04', 'El Valor nutricional de la Ensalada de quinoa (Receta 13) es muy alto. Una comida súper completa.', NULL, 3, 13, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(58, '2025-11-18 20:43:04', 'Las Albóndigas de lentejas (Receta 26) son Aptas para niños y una forma genial de introducir legumbres.', NULL, 5, 26, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(59, '2025-11-18 20:43:04', 'La Tarta de chocolate (Receta 27) no es muy apta para niños pequeños por el amargor del cacao puro.', NULL, 8, 27, 'RECETA', '2025-11-18 20:43:04', 3, 'PENDIENTE'),
+(60, '2025-11-18 20:43:04', 'Apto para niños: el Pan de maíz (Receta 8) es ideal para sándwiches escolares.', NULL, 1, 8, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(61, '2025-11-18 20:43:04', 'El Valor nutricional de las Tortitas de plátano (Receta 34) es excelente para antes de hacer deporte.', NULL, 11, 34, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(62, '2025-11-18 20:43:04', '¡El Pan de trigo sarraceno (Receta 1) me quedó con un sabor a campo delicioso! Muy satisfecho.', NULL, 13, 1, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(63, '2025-11-18 20:43:04', 'El Bizcocho de almendra (Receta 2) es suave y no tiene ese sabor a \"harina rara\". Un 10 en sabor.', NULL, 3, 2, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(64, '2025-11-18 20:43:04', 'Sabor final excelente en la Tarta de zanahoria (Receta 9). No se nota que es sin gluten.', NULL, 5, 9, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(65, '2025-11-18 20:43:04', 'La Tarta de limón (Receta 14) tiene un sabor cítrico muy vibrante. ¡Perfecto equilibrio!', NULL, 8, 14, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(66, '2025-11-18 20:43:04', 'El sabor del Pollo al curry (Receta 18) quedó muy auténtico. Lo hice un poco más picante.', NULL, 1, 18, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(67, '2025-11-18 20:43:04', 'La Dificultad de las Arepas (Receta 11) es media, no \"complicada\", si tienes práctica con masas.', NULL, 11, 11, 'RECETA', '2025-11-18 20:43:04', 3, 'PENDIENTE'),
+(68, '2025-11-18 20:43:04', 'La Pizza de coliflor (Receta 3) es fácil, pero la preparación de la base toma su tiempo. Cuidado con el paso a paso.', NULL, 13, 3, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(69, '2025-11-18 20:43:04', 'La Tarta de queso (Receta 32) es sorprendentemente fácil, incluso para principiantes. ¡El horneado fue clave!', NULL, 3, 32, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(70, '2025-11-18 20:43:04', 'El Pan de arroz integral (Receta 22) sí es complicado. Me costó mucho conseguir la consistencia de la masa.', NULL, 5, 22, 'RECETA', '2025-11-18 20:43:04', 2, 'RECHAZADO'),
+(71, '2025-11-18 20:43:04', 'Las Tortitas de avena (Receta 4) son las más rápidas que he hecho. Perfectas si no tienes tiempo.', NULL, 8, 4, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(72, '2025-11-18 20:43:04', 'Sustituí el coco rallado por nueces en las Galletas de coco (Receta 6). Quedaron muy ricas, pero más densas.', NULL, 1, 6, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(73, '2025-11-18 20:43:04', 'Recomiendo usar harina de garbanzos en lugar de arroz para los Crepes (Receta 5) si buscas un sabor más proteico.', NULL, 11, 5, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(74, '2025-11-18 20:43:04', 'He usado edulcorante en vez de azúcar en los Muffins de plátano (Receta 10) y el resultado fue excelente.', NULL, 13, 10, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(75, '2025-11-18 20:43:04', 'Para el Brownie de garbanzos (Receta 7), la gente puede usar judías negras si no tiene garbanzos cocidos. ¡Funciona!', NULL, 3, 7, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(76, '2025-11-18 20:43:04', 'Sustituí las pasas por trocitos de manzana en las Galletas de avena y pasas (Receta 37). ¡Un acierto!', NULL, 5, 37, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(77, '2025-11-18 20:43:04', 'La Presentación de las Croquetas de arroz (Receta 12) es buena, quedan muy bonitas si las rebozas bien.', NULL, 8, 12, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(78, '2025-11-18 20:43:04', 'La Tarta de manzana (Receta 21) se ve muy rústica y casera, ideal para una reunión familiar.', NULL, 1, 21, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(79, '2025-11-18 20:43:04', 'Las Berenjenas rellenas (Receta 25) quedan muy bien en el plato. Un toque de perejil fresco las realza.', NULL, 11, 25, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(80, '2025-11-18 20:43:04', 'El Pan de semillas (Receta 28) tiene una presentación espectacular por el aspecto rústico de las semillas.', NULL, 13, 28, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(81, '2025-11-18 20:43:04', 'Me gustó mucho cómo quedan los Tacos de maíz (Receta 24), muy coloridos con los toppings.', NULL, 3, 24, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(82, '2025-11-18 20:43:04', 'El tiempo de cocinado de la Crema de calabaza (Receta 19) es menor si se usa olla a presión.', NULL, 5, 19, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(83, '2025-11-18 20:43:04', 'El tiempo de reposo del Pan de plátano (Receta 15) es demasiado largo. Me llevó 20 minutos más.', NULL, 8, 15, 'RECETA', '2025-11-18 20:43:04', 3, 'PENDIENTE'),
+(84, '2025-11-18 20:43:04', 'El Pollo al curry (Receta 18) se hace en 25 minutos, no en 45. Receta muy rápida.', NULL, 1, 18, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(85, '2025-11-18 20:43:04', 'Las Empanadillas de boniato (Receta 23) tardaron un poco más en dorarse de lo que indica la receta.', NULL, 11, 23, 'RECETA', '2025-11-18 20:43:04', 4, 'PENDIENTE'),
+(86, '2025-11-18 20:43:04', 'El Bizcocho de yogur (Receta 31) estuvo listo en el tiempo justo. Muy preciso el tiempo de horneado.', NULL, 13, 31, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(87, '2025-11-18 20:43:04', 'El Valor nutricional de la Ensalada de quinoa (Receta 13) es muy alto. Una comida súper completa.', NULL, 3, 13, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(88, '2025-11-18 20:43:04', 'Las Albóndigas de lentejas (Receta 26) son Aptas para niños y una forma genial de introducir legumbres.', NULL, 5, 26, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(89, '2025-11-18 20:43:04', 'La Tarta de chocolate (Receta 27) no es muy apta para niños pequeños por el amargor del cacao puro.', NULL, 8, 27, 'RECETA', '2025-11-18 20:43:04', 3, 'PENDIENTE'),
+(90, '2025-11-18 20:43:04', 'Apto para niños: el Pan de maíz (Receta 8) es ideal para sándwiches escolares.', NULL, 1, 8, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE'),
+(91, '2025-11-18 20:43:04', 'El Valor nutricional de las Tortitas de plátano (Receta 34) es excelente para antes de hacer deporte.', NULL, 11, 34, 'RECETA', '2025-11-18 20:43:04', 5, 'PENDIENTE');
 
 -- --------------------------------------------------------
 
@@ -47,11 +113,11 @@ CREATE TABLE `comentario` (
 --
 
 CREATE TABLE `favoritos` (
-  `id_favorito` int(255) NOT NULL,
-  `id_usuario` int(255) NOT NULL,
-  `tipo_referencia` varchar(500) NOT NULL COMMENT 'restaurante, receta, post',
-  `id_referencia` int(255) NOT NULL COMMENT ' ID del restaurante, receta o post',
-  `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `id_favorito` int NOT NULL,
+  `id_usuario` int NOT NULL,
+  `tipo_referencia` varchar(500) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'restaurante, receta, post',
+  `id_referencia` int NOT NULL COMMENT ' ID del restaurante, receta o post',
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -64,7 +130,27 @@ INSERT INTO `favoritos` (`id_favorito`, `id_usuario`, `tipo_referencia`, `id_ref
 (5, 1, 'receta', 2, '2025-10-29 08:46:53'),
 (6, 1, 'receta', 3, '2025-10-29 08:50:11'),
 (7, 1, 'receta', 4, '2025-10-29 08:51:55'),
-(8, 1, 'receta', 3, '2025-10-29 08:59:20');
+(8, 1, 'receta', 3, '2025-10-29 08:59:20'),
+(9, 13, 'post', 1, '2025-11-17 17:13:47'),
+(10, 11, 'post', 4, '2025-11-17 17:13:47'),
+(11, 12, 'post', 2, '2025-11-17 17:13:47'),
+(12, 5, 'post', 15, '2025-11-17 17:13:47'),
+(13, 8, 'post', 11, '2025-11-17 17:13:47'),
+(14, 1, 'post', 22, '2025-11-17 17:13:47'),
+(15, 4, 'post', 20, '2025-11-17 17:13:47'),
+(16, 13, 'receta', 3, '2025-11-17 17:13:47'),
+(17, 11, 'receta', 5, '2025-11-17 17:13:47'),
+(18, 3, 'receta', 14, '2025-11-17 17:13:47'),
+(19, 6, 'receta', 25, '2025-11-17 17:13:47'),
+(20, 10, 'receta', 19, '2025-11-17 17:13:47'),
+(21, 15, 'receta', 8, '2025-11-17 17:13:47'),
+(22, 16, 'receta', 37, '2025-11-17 17:13:47'),
+(23, 13, 'restaurante', 1, '2025-11-17 17:13:47'),
+(24, 11, 'restaurante', 6, '2025-11-17 17:13:47'),
+(25, 3, 'restaurante', 13, '2025-11-17 17:13:47'),
+(26, 5, 'restaurante', 40, '2025-11-17 17:13:47'),
+(27, 8, 'restaurante', 31, '2025-11-17 17:13:47'),
+(28, 1, 'restaurante', 22, '2025-11-17 17:13:47');
 
 -- --------------------------------------------------------
 
@@ -73,9 +159,9 @@ INSERT INTO `favoritos` (`id_favorito`, `id_usuario`, `tipo_referencia`, `id_ref
 --
 
 CREATE TABLE `ingrediente` (
-  `id_ingrediente` int(255) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL,
-  `unidad` varchar(255) DEFAULT NULL
+  `id_ingrediente` int NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `unidad` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -107,7 +193,38 @@ INSERT INTO `ingrediente` (`id_ingrediente`, `nombre`, `unidad`) VALUES
 (22, 'Harina sin gluten', 'gramos'),
 (23, 'Azúcar', 'gramos'),
 (24, 'Huevo', 'unidad'),
-(25, 'Canela', 'cucharadita');
+(25, 'Canela', 'cucharadita'),
+(26, 'Harina de garbanzo', 'gramos'),
+(27, 'Levadura nutricional', 'gramos'),
+(28, 'Bebida de arroz', 'mililitros'),
+(29, 'Semillas de sésamo', 'gramos'),
+(30, 'Pimentón dulce', 'gramos'),
+(31, 'Cúrcuma', 'gramos'),
+(32, 'Jengibre fresco', 'gramos'),
+(33, 'Leche de coco en lata', 'mililitros'),
+(34, 'Tofu firme', 'gramos'),
+(35, 'Seitán', 'gramos'),
+(36, 'Caldo de verduras', 'mililitros'),
+(37, 'Vinagre de manzana', 'mililitros'),
+(38, 'Miel de maple', 'mililitros'),
+(39, 'Salsa de soja sin gluten', 'mililitros'),
+(40, 'Alga nori', 'unidad'),
+(41, 'Champiñones', 'gramos'),
+(42, 'Espinacas frescas', 'gramos'),
+(43, 'Tomates secos', 'gramos'),
+(44, 'Pistachos', 'gramos'),
+(45, 'Vainilla en polvo', 'gramos'),
+(46, 'Aceite de coco', 'mililitros'),
+(47, 'Crema de cacahuete natural', 'gramos'),
+(48, 'Dátiles', 'gramos'),
+(49, 'Remolacha', 'gramos'),
+(50, 'Puerro', 'unidad'),
+(51, 'Guisantes', 'gramos'),
+(52, 'Brócoli', 'gramos'),
+(53, 'Huevo de lino', 'unidad'),
+(54, 'Harina de tapioca', 'gramos'),
+(55, 'Goma xantana', 'gramos'),
+(56, 'Psyllium husk', 'gramos');
 
 -- --------------------------------------------------------
 
@@ -116,10 +233,10 @@ INSERT INTO `ingrediente` (`id_ingrediente`, `nombre`, `unidad`) VALUES
 --
 
 CREATE TABLE `paso_receta` (
-  `id_paso` bigint(20) NOT NULL,
-  `id_receta` int(255) NOT NULL,
-  `orden` int(255) NOT NULL,
-  `descripcion` varchar(500) NOT NULL
+  `id_paso` bigint NOT NULL,
+  `id_receta` int NOT NULL,
+  `orden` int NOT NULL,
+  `descripcion` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -264,15 +381,43 @@ INSERT INTO `paso_receta` (`id_paso`, `id_receta`, `orden`, `descripcion`) VALUE
 --
 
 CREATE TABLE `post` (
-  `id_post` int(255) NOT NULL,
-  `fecha_publicacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `contenido` varchar(255) DEFAULT NULL,
-  `id_usuario` int(255) NOT NULL,
-  `url_post` varchar(255) DEFAULT NULL,
-  `fecha_validacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `valoracion` int(30) NOT NULL,
-  `estado` enum('PENDIENTE','APROBADO','RECHAZADO') DEFAULT 'PENDIENTE'
+  `id_post` int NOT NULL,
+  `fecha_publicacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `contenido` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_usuario` int NOT NULL,
+  `url_post` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha_validacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `valoracion` int NOT NULL,
+  `estado` enum('PENDIENTE','APROBADO','RECHAZADO') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'PENDIENTE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `post`
+--
+
+INSERT INTO `post` (`id_post`, `fecha_publicacion`, `contenido`, `id_usuario`, `url_post`, `fecha_validacion`, `valoracion`, `estado`) VALUES
+(1, '2025-11-17 17:27:32', 'Guía completa para empezar una dieta sin gluten: Consejos y errores comunes.', 13, 'blog/guia-sin-gluten', '2025-11-17 17:27:32', 150, 'PENDIENTE'),
+(2, '2025-11-17 17:27:32', 'Beneficios de la harina de almendra frente a la de arroz en repostería.', 12, 'blog/harina-almendra-vs-arroz', '2025-11-17 17:27:32', 95, 'PENDIENTE'),
+(3, '2025-11-17 17:27:32', 'Los 5 mejores restaurantes veganos y sin gluten de Barcelona.', 13, 'blog/veganos-barcelona', '2025-11-17 17:27:32', 210, 'PENDIENTE'),
+(4, '2025-11-17 17:27:32', 'Mitos y verdades sobre el trigo sarraceno (no es trigo!).', 11, 'blog/mitos-trigo-sarraceno', '2025-11-17 17:27:32', 88, 'PENDIENTE'),
+(5, '2025-11-17 17:27:32', 'Cómo detectar la contaminación cruzada en tu cocina.', 11, 'blog/contaminacion-cruzada', '2025-11-17 17:27:32', 130, 'PENDIENTE'),
+(6, '2025-11-17 17:27:32', 'Recetas rápidas sin gluten para la vuelta al trabajo.', 12, 'blog/recetas-rapidas-trabajo', '2025-11-17 17:27:32', 75, 'PENDIENTE'),
+(7, '2025-11-17 17:27:32', 'Análisis: El impacto de la goma xantana en el pan casero.', 13, 'blog/goma-xantana-pan', '2025-11-17 17:27:32', 50, 'PENDIENTE'),
+(8, '2025-11-17 17:27:32', 'Review de los 10 mejores panes de molde sin gluten de supermercado.', 15, 'blog/mejores-panes-molde', '2025-11-17 17:27:32', 190, 'PENDIENTE'),
+(9, '2025-11-17 17:27:32', 'La importancia de la fibra en una dieta celíaca.', 16, 'blog/fibra-celiaca', '2025-11-17 17:27:32', 65, 'PENDIENTE'),
+(10, '2025-11-17 17:27:32', 'Ideas creativas para desayunos sin gluten y altos en proteína.', 17, 'blog/desayunos-proteina', '2025-11-17 17:27:32', 112, 'PENDIENTE'),
+(11, '2025-11-17 17:27:32', 'Qué es el Psyl	lium Husk y cómo usarlo en masas.', 18, 'blog/que-es-psyllium', '2025-11-17 17:27:32', 78, 'PENDIENTE'),
+(12, '2025-11-17 17:27:32', 'Postres sin horno: Delicias rápidas y frescas.', 19, 'blog/postres-sin-horno', '2025-11-17 17:27:32', 145, 'PENDIENTE'),
+(13, '2025-11-17 17:27:32', 'Entrevista: Vivir con celiaquía y viajar por el mundo.', 20, 'blog/entrevista-viajes', '2025-11-17 17:27:32', 35, 'PENDIENTE'),
+(14, '2025-11-17 17:27:32', 'El secreto para hacer croquetas sin gluten que no se rompan.', 21, 'blog/croquetas-sin-romper', '2025-11-17 17:27:32', 99, 'PENDIENTE'),
+(15, '2025-11-17 17:27:32', 'Recursos y apps útiles para encontrar restaurantes seguros.', 22, 'blog/apps-restaurantes', '2025-11-17 17:27:32', 180, 'PENDIENTE'),
+(16, '2025-11-17 17:27:32', 'Por qué me siento hinchado? Intolerancias y alimentos a evitar.', 23, 'blog/hinchazon-alimentos', '2025-11-17 17:27:32', 45, 'PENDIENTE'),
+(17, '2025-11-17 17:27:32', 'Cómo sustituir el huevo en recetas sin gluten.', 24, 'blog/sustituir-huevo', '2025-11-17 17:27:32', 60, 'PENDIENTE'),
+(18, '2025-11-17 17:27:32', 'Aprende a hacer tu propia harina de arroz en casa.', 1, 'blog/harina-arroz-casera', '2025-11-17 17:27:32', 82, 'PENDIENTE'),
+(19, '2025-11-17 17:27:32', 'Recetas con calabaza: Más allá del puré.', 3, 'blog/recetas-calabaza', '2025-11-17 17:27:32', 55, 'PENDIENTE'),
+(20, '2025-11-17 17:27:32', 'Claves para elegir la mejor marca de chocolate sin gluten.', 4, 'blog/chocolate-sin-gluten', '2025-11-17 17:27:32', 105, 'PENDIENTE'),
+(21, '2025-11-17 17:27:32', 'El uso de la levadura nutricional como sustituto del queso.', 5, 'blog/levadura-nutricional', '2025-11-17 17:27:32', 90, 'PENDIENTE'),
+(22, '2025-11-17 17:27:32', 'Mi experiencia de un año comiendo 100% sin gluten.', 6, 'blog/experiencia-un-año', '2025-11-17 17:27:32', 4, 'PENDIENTE');
 
 -- --------------------------------------------------------
 
@@ -281,16 +426,16 @@ CREATE TABLE `post` (
 --
 
 CREATE TABLE `receta` (
-  `id_receta` int(255) NOT NULL,
-  `titulo` varchar(255) DEFAULT NULL,
-  `descripcion` varchar(255) DEFAULT NULL,
-  `imagen_url` varchar(255) DEFAULT NULL,
-  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `dificultad` varchar(255) DEFAULT NULL,
-  `id_usuario` int(255) NOT NULL,
+  `id_receta` int NOT NULL,
+  `titulo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imagen_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dificultad` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_usuario` int NOT NULL,
   `fecha_validacion` timestamp NULL DEFAULT NULL,
-  `valoracion` int(30) NOT NULL,
-  `estado` enum('PENDIENTE','APROBADO','RECHAZADO') DEFAULT 'PENDIENTE'
+  `valoracion` int NOT NULL,
+  `estado` enum('PENDIENTE','APROBADO','RECHAZADO') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'PENDIENTE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -298,12 +443,12 @@ CREATE TABLE `receta` (
 --
 
 INSERT INTO `receta` (`id_receta`, `titulo`, `descripcion`, `imagen_url`, `fecha_creacion`, `dificultad`, `id_usuario`, `fecha_validacion`, `valoracion`, `estado`) VALUES
-(1, 'Pan de trigo sarraceno', 'Pan sin gluten elaborado con trigo sarraceno y semillas.', 'img/pan_trigo_sarraceno.jpg', '2025-11-14 23:00:00', 'media', 1, NULL, 0, 'APROBADO'),
-(2, 'Bizcocho de almendra', 'Bizcocho esponjoso sin gluten con harina de almendra.', 'img/bizcocho_almendra.jpg', '2025-11-15 08:03:36', 'fácil', 13, NULL, 0, 'RECHAZADO'),
+(1, 'Pan de trigo sarraceno', 'Pan sin gluten elaborado con trigo sarraceno y semillas.', 'img/pan_trigo_sarraceno.jpg', '2025-10-30 00:00:00', 'media', 1, NULL, 0, 'RECHAZADO'),
+(2, 'Bizcocho de almendra', 'Bizcocho esponjoso sin gluten con harina de almendra.', 'img/bizcocho_almendra.jpg', '2025-10-30 17:01:48', 'fácil', 13, NULL, 0, 'PENDIENTE'),
 (3, 'Pizza de coliflor', 'Base de pizza hecha con coliflor, sin harinas.', 'img/pizza_coliflor.jpg', '2025-10-30 17:01:56', 'fácil', 13, NULL, 0, 'PENDIENTE'),
 (4, 'Tortitas de avena sin gluten', 'Tortitas saludables con avena certificada sin gluten.', 'img/tortitas_avena.jpg', '2025-10-30 17:02:08', 'fácil', 13, NULL, 0, 'PENDIENTE'),
 (5, 'Crepes de harina de arroz', 'Crepes ligeros y sin gluten con harina de arroz.', 'img/crepes_arroz.jpg', '2025-10-30 17:02:15', 'fácil', 13, NULL, 0, 'PENDIENTE'),
-(6, 'Galletas de coco', 'Galletas crujientes sin gluten con coco rallado.', 'img/galletas_coco.jpg', '2025-10-29 23:00:00', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(6, 'Galletas de coco', 'Galletas crujientes sin gluten con coco rallado.', 'img/galletas_coco.jpg', '2025-10-30 17:02:31', 'fácil', 13, NULL, 0, 'PENDIENTE'),
 (7, 'Brownie de garbanzos', 'Brownie sin gluten con base de garbanzos cocidos.', 'img/brownie_garbanzos.jpg', '2025-10-30 17:02:22', 'media', 13, NULL, 0, 'PENDIENTE'),
 (8, 'Pan de maíz', 'Pan tradicional sin gluten con harina de maíz.', 'img/pan_maiz.jpg', '2025-10-30 17:02:38', 'media', 13, NULL, 0, 'PENDIENTE'),
 (9, 'Tarta de zanahoria', 'Tarta sin gluten con zanahoria y nueces.', 'img/tarta_zanahoria.jpg', '2025-10-30 17:02:48', 'media', 13, NULL, 0, 'PENDIENTE'),
@@ -337,7 +482,37 @@ INSERT INTO `receta` (`id_receta`, `titulo`, `descripcion`, `imagen_url`, `fecha
 (37, 'Galletas de avena y pasas', 'Galletas sin gluten con pasas y canela.', 'img/galletas_pasas.jpg', '2025-10-30 17:06:22', 'media', 13, NULL, 0, 'PENDIENTE'),
 (38, 'Pan de trigo sarraceno y nueces', 'Pan sin gluten con nueces troceadas.', 'img/pan_sarraceno_nueces.jpg', '2025-10-30 17:06:28', 'complicada', 13, NULL, 0, 'PENDIENTE'),
 (39, 'Bizcocho de calabaza', 'Bizcocho sin gluten con puré de calabaza.', 'img/bizcocho_calabaza.jpg', '2025-10-30 17:06:36', 'fácil', 13, NULL, 0, 'PENDIENTE'),
-(40, 'Tarta de manzana sin gluten', 'Deliciosa tarta apta para celiacos, con manzanas caramelizadas.', 'https://ejemplo.com/imagenes/tarta.jpg', '2025-10-30 17:06:44', 'media', 13, NULL, 0, 'PENDIENTE');
+(40, 'Tarta de manzana sin gluten', 'Deliciosa tarta apta para celiacos, con manzanas caramelizadas.', 'https://ejemplo.com/imagenes/tarta.jpg', '2025-10-30 17:06:44', 'media', 13, NULL, 0, 'PENDIENTE'),
+(41, 'Albóndigas de lentejas', 'Albóndigas veganas sin gluten con lentejas.', 'img/albondigas_lentejas.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(42, 'Tarta de chocolate sin gluten', 'Tarta intensa de chocolate sin harinas.', 'img/tarta_chocolate.jpg', '2025-11-17 17:07:47', 'complicada', 13, NULL, 0, 'PENDIENTE'),
+(43, 'Pan de semillas', 'Pan sin gluten con mezcla de semillas.', 'img/pan_semillas.jpg', '2025-11-17 17:07:47', 'complicada', 13, NULL, 0, 'PENDIENTE'),
+(44, 'Crepes de trigo sarraceno', 'Crepes salados sin gluten.', 'img/crepes_sarraceno.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(45, 'Galletas de almendra', 'Galletas sin gluten con almendra molida.', 'img/galletas_almendra.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(46, 'Bizcocho de yogur sin gluten', 'Bizcocho clásico sin gluten con yogur natural.', 'img/bizcocho_yogur.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(47, 'Tarta de queso sin gluten', 'Tarta cremosa sin base de galleta.', 'img/tarta_queso.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(48, 'Pan de lino y chía', 'Pan sin gluten con semillas de lino y chía.', 'img/pan_lino_chia.jpg', '2025-11-17 17:07:47', 'complicada', 13, NULL, 0, 'PENDIENTE'),
+(49, 'Tortitas de plátano', 'Tortitas sin gluten con plátano y huevo.', 'img/tortitas_platano.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(50, 'Crema de zanahoria', 'Crema suave sin gluten con zanahoria y jengibre.', 'img/crema_zanahoria.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(51, 'Pizza sin gluten', 'Pizza con base de harina sin gluten.', 'img/pizza_singluten.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(52, 'Galletas de avena y pasas', 'Galletas sin gluten con pasas y canela.', 'img/galletas_pasas.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(53, 'Pan de trigo sarraceno y nueces', 'Pan sin gluten con nueces troceadas.', 'img/pan_sarraceno_nueces.jpg', '2025-11-17 17:07:47', 'complicada', 13, NULL, 0, 'PENDIENTE'),
+(54, 'Bizcocho de calabaza', 'Bizcocho sin gluten con puré de calabaza.', 'img/bizcocho_calabaza.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(55, 'Magdalenas de limón y semillas', 'Magdalenas esponjosas con ralladura de limón y semillas de amapola.', 'img/magdalenas_limon.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(56, 'Gnocchis de patata sin gluten', 'Pasta de patata casera, apta para celíacos.', 'img/gnocchis_patata.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(57, 'Pan de molde con psyllium', 'Pan suave, ideal para sándwiches, con cáscara de psyllium.', 'img/pan_psyllium.jpg', '2025-11-17 17:07:47', 'complicada', 13, NULL, 0, 'PENDIENTE'),
+(58, 'Muffins de arándanos y avena', 'Postre rápido y saludable, con avena certificada sin gluten.', 'img/muffins_arandanos.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(59, 'Lasagna de verduras sin pasta', 'Capas de verduras asadas en lugar de láminas de pasta.', 'img/lasagna_verduras.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(60, 'Falafel al horno', 'Bolitas de garbanzo especiadas, cocinadas sin freír.', 'img/falafel_horno.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(61, 'Pimientos rellenos de quinoa', 'Plato principal completo con pimientos rojos y mezcla de quinoa.', 'img/pimientos_quinoa.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(62, 'Crema de brócoli y queso', 'Crema suave y nutritiva, sin espesantes con gluten.', 'img/crema_brocoli.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(63, 'Buñuelos de viento sin gluten', 'Postre tradicional frito, con harina especial para celíacos.', 'img/bunuelos_viento.jpg', '2025-11-17 17:07:47', 'complicada', 13, NULL, 0, 'PENDIENTE'),
+(64, 'Tarta de calabacín y queso', 'Quiche sin base de masa (opcional) o con masa de arroz.', 'img/tarta_calabacin.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(65, 'Sopa de pescado sin gluten', 'Caldo claro con pescado y marisco, sin potenciadores con gluten.', 'img/sopa_pescado.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(66, 'Tostadas francesas sin gluten', 'Desayuno dulce usando pan de molde sin gluten.', 'img/tostadas_francesas.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(67, 'Pollo a la cerveza sin gluten', 'Plato de carne cocinado con cerveza sin gluten.', 'img/pollo_cerveza.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(68, 'Mousse de chocolate y aguacate', 'Postre cremoso sin lácteos y sin harinas.', 'img/mousse_aguacate.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE'),
+(69, 'Pan pita de lentejas rojas', 'Pan plano de legumbres, ideal para rellenar.', 'img/pan_pita.jpg', '2025-11-17 17:07:47', 'media', 13, NULL, 0, 'PENDIENTE'),
+(70, 'Bowl de desayuno con chía', 'Bowl de chía y fruta, perfecto para empezar el día.', 'img/bowl_chia.jpg', '2025-11-17 17:07:47', 'fácil', 13, NULL, 0, 'PENDIENTE');
 
 -- --------------------------------------------------------
 
@@ -346,10 +521,10 @@ INSERT INTO `receta` (`id_receta`, `titulo`, `descripcion`, `imagen_url`, `fecha
 --
 
 CREATE TABLE `receta_ingrediente` (
-  `id_receta_ingrediente` int(11) NOT NULL,
-  `id_receta` int(255) NOT NULL,
-  `id_ingrediente` int(255) NOT NULL,
-  `cantidad` int(255) NOT NULL
+  `id_receta_ingrediente` int NOT NULL,
+  `id_receta` int NOT NULL,
+  `id_ingrediente` int NOT NULL,
+  `cantidad` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -417,7 +592,37 @@ INSERT INTO `receta_ingrediente` (`id_receta_ingrediente`, `id_receta`, `id_ingr
 (67, 40, 2, 200),
 (68, 40, 3, 100),
 (69, 40, 4, 2),
-(70, 40, 5, 1);
+(70, 40, 5, 1),
+(71, 21, 21, 3),
+(72, 21, 22, 150),
+(73, 22, 1, 250),
+(74, 22, 6, 30),
+(75, 23, 20, 200),
+(76, 23, 4, 1),
+(77, 24, 12, 300),
+(78, 24, 16, 150),
+(79, 25, 16, 100),
+(80, 25, 6, 40),
+(81, 26, 15, 150),
+(82, 26, 8, 50),
+(83, 27, 9, 150),
+(84, 27, 2, 100),
+(85, 28, 3, 200),
+(86, 28, 6, 30),
+(87, 29, 3, 120),
+(88, 29, 4, 2),
+(89, 30, 2, 200),
+(90, 30, 23, 100),
+(91, 31, 22, 200),
+(92, 31, 5, 150),
+(93, 32, 5, 200),
+(94, 32, 4, 3),
+(95, 33, 1, 200),
+(96, 33, 6, 20),
+(97, 34, 7, 2),
+(98, 34, 24, 1),
+(99, 35, 8, 200),
+(100, 35, 5, 100);
 
 -- --------------------------------------------------------
 
@@ -426,20 +631,20 @@ INSERT INTO `receta_ingrediente` (`id_receta_ingrediente`, `id_receta`, `id_ingr
 --
 
 CREATE TABLE `restaurante` (
-  `id_restaurante` int(255) NOT NULL,
-  `fecha_publicacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `nombre` varchar(255) DEFAULT NULL,
-  `direccion` varchar(255) DEFAULT NULL,
-  `descripcion` varchar(255) DEFAULT NULL,
-  `url_web` varchar(255) DEFAULT NULL,
-  `imagen_url` varchar(255) DEFAULT NULL,
-  `ubicacion` varchar(255) DEFAULT NULL,
-  `telefono` varchar(15) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `id_usuario` int(255) NOT NULL,
-  `estado` enum('PENDIENTE','APROBADO','RECHAZADO') DEFAULT 'PENDIENTE',
+  `id_restaurante` int NOT NULL,
+  `fecha_publicacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `direccion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url_web` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imagen_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ubicacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_usuario` int NOT NULL,
+  `estado` enum('PENDIENTE','APROBADO','RECHAZADO') COLLATE utf8mb4_unicode_ci DEFAULT 'PENDIENTE',
   `fecha_validacion` timestamp NULL DEFAULT NULL,
-  `valoracion` int(30) NOT NULL
+  `valoracion` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -447,7 +652,7 @@ CREATE TABLE `restaurante` (
 --
 
 INSERT INTO `restaurante` (`id_restaurante`, `fecha_publicacion`, `nombre`, `direccion`, `descripcion`, `url_web`, `imagen_url`, `ubicacion`, `telefono`, `email`, `id_usuario`, `estado`, `fecha_validacion`, `valoracion`) VALUES
-(1, '2025-10-31 06:07:18', 'Vega', 'Calle de la Luna 9, 28004 Madrid', 'Restaurante vegano con cocina de autor y productos ecológicos.', 'https://restaurantevega.com', 'https://restaurantevega.com/wp-content/uploads/2023/vega-plato.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
+(1, '2025-10-31 06:07:18', 'Vega', 'Calle de la Luna 9, 28004 Madrid', 'Restaurante vegano con cocina de autor y productos ecológicos.', 'https://restaurantevega.com', 'https://restaurantevega.com/wp-content/uploads/2023/vega-plato.jpg', 'Madrid', '0', '', 13, 'APROBADO', NULL, 0),
 (2, '2025-10-31 06:07:18', 'La Encomienda', 'Calle Encomienda 19, 28012 Madrid', 'Cocina vegana creativa con ingredientes de temporada.', 'https://laencomienda.es', 'https://laencomienda.es/wp-content/uploads/2023/ensalada.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
 (3, '2025-10-31 06:07:18', 'B13 Bar', 'Calle Ballesta 13, 28004 Madrid', 'Bar vegano con tapas clásicas y ambiente alternativo.', 'https://b13bar.com', 'https://b13bar.com/wp-content/uploads/2023/burger.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
 (4, '2025-10-31 06:07:18', 'Vegan Rock', 'Calle San Juan de la Cruz 9, 50006 Zaragoza', 'Comida rápida vegana con hamburguesas y bocadillos.', 'https://veganrock.es', 'https://veganrock.es/wp-content/uploads/2023/vegan-burger.jpg', 'Zaragoza', '0', '', 13, 'PENDIENTE', NULL, 0),
@@ -467,7 +672,27 @@ INSERT INTO `restaurante` (`id_restaurante`, `fecha_publicacion`, `nombre`, `dir
 (18, '2025-10-31 06:07:18', 'El Fogón Verde', 'Calle Alameda 4, 28014 Madrid', 'Cocina vegana ecológica con productos de proximidad.', 'https://elfogonverde.es', 'https://elfogonverde.es/wp-content/uploads/2023/ensalada.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
 (19, '2025-10-31 06:07:18', 'Choose Ristorante Naturale', 'Calle de la Luna 3, 28004 Madrid', 'Restaurante italiano 100% vegano con platos sicilianos.', 'https://chooseristorante.com', 'https://chooseristorante.com/wp-content/uploads/2023/pasta.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
 (20, '2025-10-31 06:07:18', 'Mahalo Poké', 'Calle Ancha 10, 11001 Cádiz', 'Poké bowls veganos con ingredientes frescos.', 'https://mahalopoke.com', 'https://mahalopoke.com/images/bowl.jpg', 'Cádiz', '0', '', 13, 'PENDIENTE', NULL, 0),
-(21, '2025-10-31 06:07:18', 'ECOrigen', 'Calle Ayala 27, Planta 2, 28001 Madrid', 'Restaurante ecológico y vegano con cocina de autor.', 'https://ecorigen.com', 'https://ecorigen.com/wp-content/uploads/2023/plato.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0);
+(21, '2025-10-31 06:07:18', 'ECOrigen', 'Calle Ayala 27, Planta 2, 28001 Madrid', 'Restaurante ecológico y vegano con cocina de autor.', 'https://ecorigen.com', 'https://ecorigen.com/wp-content/uploads/2023/plato.jpg', 'Madrid', '0', '', 13, 'PENDIENTE', NULL, 0),
+(22, '2025-11-17 17:02:43', 'Pura Vida Bio', 'Avenida de la Gran Vía, 5, 48001 Bilbao', 'Cocina saludable, flexitariana con muchas opciones sin gluten.', 'https://puravidabio.es', 'img/puravida_bilbao.jpg', 'Bilbao', '944123456', 'contacto@puravidabio.es', 13, 'PENDIENTE', NULL, 0),
+(23, '2025-11-17 17:02:43', 'The Juice House', 'Carrer del Parlament, 8, 08015 Barcelona', 'Brunch, zumos naturales y bowls saludables con opciones GF.', 'https://thejuicehouse.es', 'img/juicehouse_bcn.jpg', 'Barcelona', '931234567', 'info@thejuicehouse.es', 13, 'PENDIENTE', NULL, 0),
+(24, '2025-11-17 17:02:43', 'Restaurante Pleno', 'Calle Jardines, 10, 48005 Bilbao', 'Restaurante ecológico con enfoque en la alimentación consciente.', 'https://plenobilbao.com', 'img/plenobilbao.jpg', 'Bilbao', '944654321', 'contacto@plenobilbao.com', 13, 'PENDIENTE', NULL, 0),
+(25, '2025-11-17 17:02:43', 'Gilda Tapas Veganas', 'Calle de San Vicente Ferrer, 28, 28004 Madrid', 'Tapas veganas y creativas en el corazón de Malasaña.', 'https://gildatapas.es', 'img/gilda_tapas.jpg', 'Madrid', '915432109', 'reservas@gildatapas.es', 13, 'PENDIENTE', NULL, 0),
+(26, '2025-11-17 17:02:43', 'AlmaZEN', 'Calle Fuenterrabía, 2, 20005 San Sebastián', 'Cocina vegetariana y macrobiótica, muchas opciones aptas para celíacos.', 'https://restaurantealmazen.com', 'img/almazen_ss.jpg', 'San Sebastián', '943123456', 'contacto@almazen.com', 13, 'PENDIENTE', NULL, 0),
+(27, '2025-11-17 17:02:43', 'El Jardín de las Delicias', 'Plaza de la Merced, 1, 29012 Málaga', 'Comida natural y vegetariana con terraza, ambiente tranquilo.', 'https://eljardindelicias.es', 'img/jardin_malaga.jpg', 'Málaga', '952123456', 'info@jardindelicias.es', 13, 'PENDIENTE', NULL, 0),
+(28, '2025-11-17 17:02:43', 'Gofre Canario Sin Gluten', 'C/ Triana 45, 35002 Las Palmas', 'Especialidad en gofres y crepes 100% sin gluten.', 'https://gofrecanario.com', 'img/gofre_canario.jpg', 'Las Palmas', '928765432', 'info@gofrecanario.com', 13, 'PENDIENTE', NULL, 0),
+(29, '2025-11-17 17:02:43', 'Bio Tapería', 'Calle Viana, 12, 38201 San Cristóbal de La Laguna', 'Tapas ecológicas y cervezas artesanales sin gluten.', 'https://biotaperia.com', 'img/bio_taperia.jpg', 'Tenerife', '922112233', 'contacto@biotaperia.com', 13, 'PENDIENTE', NULL, 0),
+(30, '2025-11-17 17:02:43', 'Vegetalia', 'Carrer dels Escudellers, 54, 08002 Barcelona', 'Gran variedad de platos veganos e internacionales.', 'https://vegetalia.es', 'img/vegetalia_bcn.jpg', 'Barcelona', '934567890', 'info@vegetalia.es', 13, 'PENDIENTE', NULL, 0),
+(31, '2025-11-17 17:02:43', 'Rayen', 'Calle de Lope de Vega, 8, 28014 Madrid', 'Cocina de mercado saludable, con foco en el producto local.', 'https://rayenmadrid.com', 'img/rayen_madrid.jpg', 'Madrid', '917654321', 'reservas@rayenmadrid.com', 13, 'PENDIENTE', NULL, 0),
+(32, '2025-11-17 17:02:43', 'La Huerta de Murcia', 'Plaza de las Flores, 5, 30001 Murcia', 'Platos tradicionales murcianos adaptados a dieta vegana/sin gluten.', 'https://lahuerta.es', 'img/huerta_murcia.jpg', 'Murcia', '968112233', 'info@lahuerta.es', 13, 'PENDIENTE', NULL, 0),
+(33, '2025-11-17 17:02:43', 'Eco-Gourmet', 'Avenida de Menéndez Pelayo, 18, 41004 Sevilla', 'Comida gourmet con ingredientes ecológicos y de comercio justo.', 'https://ecogourmet.es', 'img/ecogourmet_sevilla.jpg', 'Sevilla', '954234567', 'contacto@ecogourmet.es', 13, 'PENDIENTE', NULL, 0),
+(34, '2025-11-17 17:02:43', 'El Arbol de la Vida', 'Rúa de San Pedro, 30, 15703 Santiago de Compostela', 'Especialistas en cocina natural y opciones para intolerancias.', 'https://elarboldelavida.com', 'img/arbol_vida_santiago.jpg', 'Santiago de Compostela', '981765432', 'info@elarboldelavida.com', 13, 'PENDIENTE', NULL, 0),
+(35, '2025-11-17 17:02:43', 'Mandala', 'Calle San Agustín, 15, 30005 Oviedo', 'Cocina vegana con influencias asiáticas y mediterráneas.', 'https://mandalaoviedo.com', 'img/mandala_oviedo.jpg', 'Oviedo', '985123456', 'reservas@mandalaoviedo.com', 13, 'PENDIENTE', NULL, 0),
+(36, '2025-11-17 17:02:43', 'Go! Sushing', 'Calle Colón, 10, 46004 Valencia', 'Sushi con muchas opciones veganas y arroces sin gluten.', 'https://gosushing.com', 'img/gosushing_vlc.jpg', 'Valencia', '963123456', 'contacto@gosushing.com', 13, 'PENDIENTE', NULL, 0),
+(37, '2025-11-17 17:02:43', 'El Huerto de Juan Fernandez', 'Calle de San Francisco, 25, 09003 Burgos', 'Restaurante con productos de su propia huerta y menú celiaco.', 'https://elhuertojf.com', 'img/huerto_burgos.jpg', 'Burgos', '947123456', 'info@elhuertojf.com', 13, 'PENDIENTE', NULL, 0),
+(38, '2025-11-17 17:02:43', 'Green Life', 'Calle San Miguel, 1, 07001 Palma de Mallorca', 'Cafetería y restaurante vegano y sin gluten en el centro.', 'https://greenlifemallorca.com', 'img/greenlife_mallorca.jpg', 'Palma de Mallorca', '971123456', 'contacto@greenlife.com', 13, 'PENDIENTE', NULL, 0),
+(39, '2025-11-17 17:02:43', 'La Vida es Bella', 'Calle de las Damas, 3, 05001 Ávila', 'Comida casera con ingredientes frescos y menú especial.', 'https://lavidaesbella.es', 'img/vidaesbella_avila.jpg', 'Ávila', '920123456', 'info@lavidaesbella.es', 13, 'PENDIENTE', NULL, 0),
+(40, '2025-11-17 17:02:43', 'El Colmado de Vegueta', 'Calle Mendizábal 35, 35001 Las Palmas', 'Tienda y cafetería con productos canarios sin gluten.', 'https://elcolmadovegueta.com', 'img/colmado_vegueta.jpg', 'Las Palmas', '928123456', 'tienda@elcolmadovegueta.com', 13, 'PENDIENTE', NULL, 0),
+(41, '2025-11-17 17:02:43', 'Restaurante Vegano Tenerife', 'Av. de Colón, 5, 38660 Tenerife', 'Alta cocina vegana con vistas al mar.', 'https://veganotenerife.com', 'img/vegano_tenerife.jpg', 'Tenerife', '922987654', 'reservas@veganotenerife.com', 13, 'PENDIENTE', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -476,8 +701,8 @@ INSERT INTO `restaurante` (`id_restaurante`, `fecha_publicacion`, `nombre`, `dir
 --
 
 CREATE TABLE `rol` (
-  `id_rol` int(255) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL
+  `id_rol` int NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -496,9 +721,9 @@ INSERT INTO `rol` (`id_rol`, `nombre`) VALUES
 --
 
 CREATE TABLE `tag_post` (
-  `id_tag_post` int(255) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL,
-  `id_post` int(255) NOT NULL
+  `id_tag_post` int NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_post` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -508,9 +733,9 @@ CREATE TABLE `tag_post` (
 --
 
 CREATE TABLE `tag_receta` (
-  `id_tag` bigint(20) NOT NULL,
-  `id_receta` int(255) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL
+  `id_tag` bigint NOT NULL,
+  `id_receta` int NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -518,7 +743,6 @@ CREATE TABLE `tag_receta` (
 --
 
 INSERT INTO `tag_receta` (`id_tag`, `id_receta`, `nombre`) VALUES
-(1, 1, 'Pan'),
 (2, 1, 'Trigo sarraceno'),
 (3, 2, 'Postre'),
 (4, 2, 'Almendra'),
@@ -600,7 +824,57 @@ INSERT INTO `tag_receta` (`id_tag`, `id_receta`, `nombre`) VALUES
 (81, 1, 'Postre'),
 (82, 40, 'Postre'),
 (83, 18, 'pollo'),
-(84, 3, 'saludable');
+(84, 3, 'saludable'),
+(85, 1, 'Cereales'),
+(86, 2, 'Desayuno'),
+(87, 3, 'Bajo en carbohidratos'),
+(88, 4, 'Fitness'),
+(89, 5, 'Merienda'),
+(90, 6, 'Repostería'),
+(91, 7, 'Chocolate'),
+(92, 8, 'Amasado'),
+(93, 9, 'Especias'),
+(94, 10, 'Fruta'),
+(95, 11, 'Latino'),
+(96, 12, 'Fritura'),
+(97, 13, 'Verano'),
+(98, 14, 'Cítrico'),
+(99, 15, 'Dulce'),
+(100, 16, 'Merienda'),
+(101, 17, 'Cena'),
+(102, 18, 'Especias'),
+(103, 19, 'Invierno'),
+(104, 20, 'Olla'),
+(105, 21, 'Canela'),
+(106, 22, 'Integral'),
+(107, 23, 'Horneado'),
+(108, 24, 'Mexicano'),
+(109, 25, 'Relleno'),
+(110, 26, 'Vegano'),
+(111, 27, 'Sin azúcar'),
+(112, 28, 'Fibra'),
+(113, 29, 'Salado'),
+(114, 30, 'Horno'),
+(115, 31, 'Clásico'),
+(116, 32, 'Frío'),
+(117, 33, 'Keto'),
+(118, 34, 'Sin huevo'),
+(119, 35, 'Jengibre'),
+(120, 36, 'Cena rápida'),
+(121, 37, 'Navidad'),
+(122, 38, 'Gourmet'),
+(123, 39, 'Otoño'),
+(124, 40, 'Manzana caramelizada'),
+(125, 2, 'Merienda'),
+(126, 3, 'Fácil y rápido'),
+(127, 4, 'Dieta'),
+(128, 5, 'Sin lactosa'),
+(129, 6, 'Receta básica'),
+(130, 7, 'Sin lácteos'),
+(131, 8, 'Sin levadura'),
+(132, 9, 'Frutos secos'),
+(133, 10, 'Aprovechamiento'),
+(134, 11, 'Sin horno');
 
 -- --------------------------------------------------------
 
@@ -609,9 +883,9 @@ INSERT INTO `tag_receta` (`id_tag`, `id_receta`, `nombre`) VALUES
 --
 
 CREATE TABLE `tag_restaurante` (
-  `id_tag` bigint(20) NOT NULL,
-  `id_restaurante` int(255) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL
+  `id_tag` bigint NOT NULL,
+  `id_restaurante` int NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -647,64 +921,16 @@ INSERT INTO `tag_restaurante` (`id_tag`, `id_restaurante`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tipo_comentario`
---
-
-CREATE TABLE `tipo_comentario` (
-  `id_tipo_comentario` int(255) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL,
-  `tema` enum('RESTAURANTE','RECETA','POST','PENDIENTE') NOT NULL DEFAULT 'PENDIENTE'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `tipo_comentario`
---
-
-INSERT INTO `tipo_comentario` (`id_tipo_comentario`, `nombre`, `tema`) VALUES
-(1, 'Valoración general', 'RESTAURANTE'),
-(2, 'Opinión sobre el sabor', 'RECETA'),
-(3, 'Opinión sobre el servicio', 'RESTAURANTE'),
-(4, 'Opinión sobre el ambiente', 'RESTAURANTE'),
-(5, 'Comentario sobre opciones sin gluten', 'RESTAURANTE'),
-(6, 'Sugerencia de mejora', 'RESTAURANTE'),
-(7, 'Recomendación de plato', 'RESTAURANTE'),
-(8, 'Crítica constructiva', 'RESTAURANTE'),
-(9, 'Experiencia personal', 'RESTAURANTE'),
-(10, 'Comentario sobre precios', 'RESTAURANTE'),
-(11, 'Dificultad de preparación', 'RECETA'),
-(12, 'Tiempo real de cocinado', 'RECETA'),
-(13, 'Sabor final del plato', 'RECETA'),
-(14, 'Sustituciones recomendadas', 'RECETA'),
-(15, 'Presentación del plato', 'RECETA'),
-(16, 'Valor nutricional', 'RECETA'),
-(17, 'Opinión sobre ingredientes', 'RECETA'),
-(18, 'Resultado con variantes', 'RECETA'),
-(19, 'Apto para niños', 'RECETA'),
-(20, 'Comentario sobre alérgenos', 'POST'),
-(21, 'Opinión sobre el contenido', 'POST'),
-(22, 'Claridad del artículo', 'POST'),
-(23, 'Utilidad de la información', 'POST'),
-(24, 'Sugerencia de mejora', 'POST'),
-(25, 'Corrección de errores', 'POST'),
-(26, 'Aporte adicional', 'POST'),
-(27, 'Valoración del autor', 'POST'),
-(28, 'Interacción con otros lectores', 'POST'),
-(29, 'Relevancia del tema', 'POST'),
-(30, 'Estilo de redacción', 'POST');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `usuario`
 --
 
 CREATE TABLE `usuario` (
-  `id_usuario` int(255) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `id_rol` int(255) NOT NULL,
-  `fecha_alta` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `id_usuario` int NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_rol` int NOT NULL,
+  `fecha_alta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='tabla de usuarios';
 
 --
@@ -723,7 +949,17 @@ INSERT INTO `usuario` (`id_usuario`, `nombre`, `email`, `password`, `id_rol`, `f
 (10, 'Raúl Romero', 'raul.romero@example.com', 'pass123raul', 3, '2025-11-03 14:07:33'),
 (11, 'Nuria Martínez Rodrigo', 'nuria.martinezro@gmail.com', 'XXXX=', 1, '2025-11-03 14:07:33'),
 (12, 'Susana Rico Vara', 'susanaricovara@gmail.com', 'XXXX', 1, '2025-11-03 14:07:33'),
-(13, 'Maite Rodríguez Jurado', 'rodriguez.maite@gmail.com', 'XXXX=', 1, '2025-11-03 14:07:33');
+(13, 'Maite Rodríguez Jurado', 'rodriguez.maite@gmail.com', 'XXXX=', 1, '2025-11-03 14:07:33'),
+(15, 'Antonio Ruiz', 'antonio.ruiz@ejemplo.com', 'pass123antonio', 3, '2025-11-17 17:01:39'),
+(16, 'Carmen Gil', 'carmen.gil@ejemplo.com', 'pass123carmen', 3, '2025-11-17 17:01:39'),
+(17, 'Pedro López', 'pedro.lopez@ejemplo.com', 'pass123pedro', 3, '2025-11-17 17:01:39'),
+(18, 'Isabel Cano', 'isabel.cano@ejemplo.com', 'pass123isabel', 3, '2025-11-17 17:01:39'),
+(19, 'Carlos Rey', 'carlos.rey@ejemplo.com', 'pass123carlos', 3, '2025-11-17 17:01:39'),
+(20, 'Eva Sanz', 'eva.sanz@ejemplo.com', 'pass123eva', 3, '2025-11-17 17:01:39'),
+(21, 'Marcos Vidal', 'marcos.vidal@ejemplo.com', 'pass123marcos', 3, '2025-11-17 17:01:39'),
+(22, 'Ana Soto', 'ana.soto@ejemplo.com', 'pass123ana', 3, '2025-11-17 17:01:39'),
+(23, 'Félix Rueda', 'felix.rueda@ejemplo.com', 'pass123felix', 3, '2025-11-17 17:01:39'),
+(24, 'Gloria Vivas', 'gloria.vivas@ejemplo.com', 'pass123gloria', 3, '2025-11-17 17:01:39');
 
 --
 -- Índices para tablas volcadas
@@ -734,8 +970,7 @@ INSERT INTO `usuario` (`id_usuario`, `nombre`, `email`, `password`, `id_rol`, `f
 --
 ALTER TABLE `comentario`
   ADD PRIMARY KEY (`id_comentario`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_tipo_comentario` (`id_tipo_comentario`);
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `favoritos`
@@ -815,12 +1050,6 @@ ALTER TABLE `tag_restaurante`
   ADD KEY `id_restaurante` (`id_restaurante`);
 
 --
--- Indices de la tabla `tipo_comentario`
---
-ALTER TABLE `tipo_comentario`
-  ADD PRIMARY KEY (`id_tipo_comentario`);
-
---
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -836,85 +1065,79 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id_comentario` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_comentario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT de la tabla `favoritos`
 --
 ALTER TABLE `favoritos`
-  MODIFY `id_favorito` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_favorito` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `ingrediente`
 --
 ALTER TABLE `ingrediente`
-  MODIFY `id_ingrediente` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_ingrediente` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `paso_receta`
 --
 ALTER TABLE `paso_receta`
-  MODIFY `id_paso` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+  MODIFY `id_paso` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT de la tabla `post`
 --
 ALTER TABLE `post`
-  MODIFY `id_post` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_post` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `receta`
 --
 ALTER TABLE `receta`
-  MODIFY `id_receta` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_receta` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT de la tabla `receta_ingrediente`
 --
 ALTER TABLE `receta_ingrediente`
-  MODIFY `id_receta_ingrediente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id_receta_ingrediente` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT de la tabla `restaurante`
 --
 ALTER TABLE `restaurante`
-  MODIFY `id_restaurante` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_restaurante` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `id_rol` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_rol` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tag_post`
 --
 ALTER TABLE `tag_post`
-  MODIFY `id_tag_post` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tag_post` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tag_receta`
 --
 ALTER TABLE `tag_receta`
-  MODIFY `id_tag` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id_tag` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT de la tabla `tag_restaurante`
 --
 ALTER TABLE `tag_restaurante`
-  MODIFY `id_tag` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
---
--- AUTO_INCREMENT de la tabla `tipo_comentario`
---
-ALTER TABLE `tipo_comentario`
-  MODIFY `id_tipo_comentario` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_tag` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Restricciones para tablas volcadas
@@ -924,8 +1147,7 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  ADD CONSTRAINT `comentario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `comentario_ibfk_2` FOREIGN KEY (`id_tipo_comentario`) REFERENCES `tipo_comentario` (`id_tipo_comentario`);
+  ADD CONSTRAINT `comentario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `favoritos`

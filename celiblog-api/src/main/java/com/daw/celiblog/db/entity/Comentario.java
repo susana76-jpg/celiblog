@@ -1,6 +1,7 @@
 package com.daw.celiblog.db.entity;
 
 import com.daw.celiblog.enums.EstadoValidacion;
+import com.daw.celiblog.enums.ObjetoComentario;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -31,12 +32,14 @@ public class Comentario implements Serializable {
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
 	//bi-directional many-to-one association to TipoComentario
-	@ManyToOne
-	@JoinColumn(name="id_tipo_comentario")
-	private TipoComentario tipoComentario;
 
 	@Column(name="id_objeto_comentado")
 	private Long idObjetoComentado;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "objeto_comentado", nullable = false)
+	private ObjetoComentario objeto_comentado = ObjetoComentario.PENDIENTE;
+
 	@Column(name = "fecha_validacion")
 	private Date fechaValidacion;
 
@@ -44,21 +47,21 @@ public class Comentario implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado", nullable = false)
-	private EstadoValidacion estado = EstadoValidacion.APROBADO;
+	private EstadoValidacion estado = EstadoValidacion.PENDIENTE;
 
 
 
 	public Comentario() {
 	}
 
-	public Comentario(Long idComentario, Date fechaPublicacion, String contenido, String comentarioUrl, Usuario usuario, TipoComentario tipoComentario, Long idObjetoComentado, Date fechaValidacion, int valoracion, EstadoValidacion estado) {
+	public Comentario(Long idComentario, Date fechaPublicacion, String contenido, String comentarioUrl, Usuario usuario, Long idObjetoComentado, ObjetoComentario objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacion estado) {
 		this.idComentario = idComentario;
 		this.fechaPublicacion = fechaPublicacion;
 		this.comentarioUrl = comentarioUrl;
 		this.contenido = contenido;
 		this.usuario = usuario;
-		this.tipoComentario = tipoComentario;
 		this.idObjetoComentado = idObjetoComentado;
+		this.objeto_comentado = objetoComentado;
 		this.valoracion = valoracion;
 		this.estado = estado;
 		this.fechaValidacion = fechaValidacion;
@@ -104,20 +107,20 @@ public class Comentario implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public TipoComentario getTipoComentario() {
-		return tipoComentario;
-	}
-
-	public void setTipoComentario(TipoComentario tipoComentario) {
-		this.tipoComentario = tipoComentario;
-	}
-
 	public Long getIdObjetoComentado() {
 		return idObjetoComentado;
 	}
 
 	public void setIdObjetoComentado(Long idObjetoComentado) {
 		this.idObjetoComentado = idObjetoComentado;
+	}
+
+	public ObjetoComentario getObjeto_comentado() {
+		return objeto_comentado;
+	}
+
+	public void setObjeto_comentado(ObjetoComentario objeto_comentado) {
+		this.objeto_comentado = objeto_comentado;
 	}
 
 	public int getValoracion() {
