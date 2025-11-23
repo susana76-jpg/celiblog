@@ -10,6 +10,7 @@ com\daw\celiblog\error\NotFoundException.class
 com\daw\celiblog\db\entity\Receta.class
 com\daw\celiblog\db\repository\FavoritoRepository.class
 com\daw\celiblog\db\repository\TagRestauranteRepository.class
+com\daw\celiblog\dto\LoginRequestDTO.class
 com\daw\celiblog\db\entity\Comentario.class
 com\daw\celiblog\db\repository\RolRepository.class
 com\daw\celiblog\CeliblogApplication.class
@@ -23,10 +24,13 @@ com\daw\celiblog\dto\ErrorDTO.class
 com\daw\celiblog\dto\PostDTO.class
 com\daw\celiblog\controller\TagRestauranteController.class
 com\daw\celiblog\service\FavoritoService.class
+com\daw\celiblog\service\impl\JwtServiceImpl.class
 com\daw\celiblog\db\repository\RecetaRepository.class
+com\daw\celiblog\service\impl\GeolocalizacionServiceImpl.class
 com\daw\celiblog\dto\TagRecetaDTO.class
 com\daw\celiblog\service\impl\RestauranteServiceImpl.class
 com\daw\celiblog\service\impl\UsuarioServiceImpl.class
+com\daw\celiblog\service\GeolocalizacionService.class
 com\daw\celiblog\service\mapper\ComentarioMapper.class
 com\daw\celiblog\service\mapper\TagRecetaMapper.class
 com\daw\celiblog\service\impl\PasoRecetaServiceImpl.class
@@ -43,6 +47,7 @@ com\daw\celiblog\enums\ObjetoComentario.class
 com\daw\celiblog\controller\TagRecetaController.class
 com\daw\celiblog\db\entity\TipoComentario.class
 com\daw\celiblog\dto\TagComentarioDTO.class
+com\daw\celiblog\filter\JwtFilter.class
 com\daw\celiblog\service\RestauranteService.class
 com\daw\celiblog\service\mapper\RestauranteMapper.class
 com\daw\celiblog\dto\RecetaDTO.class
@@ -53,6 +58,7 @@ com\daw\celiblog\service\mapper\PasoRecetaMapper.class
 com\daw\celiblog\controller\RestauranteController.class
 com\daw\celiblog\service\impl\RecetaServiceImpl.class
 com\daw\celiblog\service\TagRecetaService.class
+com\daw\celiblog\service\JwtService.class
 com\daw\celiblog\db\entity\TagReceta.class
 com\daw\celiblog\db\entity\TagRestaurante.class
 com\daw\celiblog\db\entity\Rol.class
@@ -63,7 +69,9 @@ com\daw\celiblog\db\repository\ComentarioRepository.class
 com\daw\celiblog\db\repository\TagComentarioRepository.class
 com\daw\celiblog\db\entity\VistaRecetaIngredientes.class
 com\daw\celiblog\db\repository\TagRecetaRepository.class
+com\daw\celiblog\config\SecurityConfig.class
 com\daw\celiblog\controller\RecetaController.class
+com\daw\celiblog\dto\LoginResponseDTO.class
 com\daw\celiblog\service\PasoRecetaService.class
 com\daw\celiblog\service\UsuarioService.class
 com\daw\celiblog\db\repository\IngredienteRepository.class
@@ -74,6 +82,7 @@ com\daw\celiblog\db\entity\PasoReceta.class
 com\daw\celiblog\service\Ingrediente.class
 com\daw\celiblog\service\RecetaService.class
 com\daw\celiblog\dto\RestauranteDTO.class
+com\daw\celiblog\controller\AuthController.class
 com\daw\celiblog\db\entity\Favorito.class
 com\daw\celiblog\db\repository\UsuarioRepository.class
 com\daw\celiblog\dto\RestauranteView.class

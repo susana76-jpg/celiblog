@@ -9,7 +9,6 @@ import com.daw.celiblog.db.repository.TagRecetaRepository;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacion;
 import com.daw.celiblog.service.RecetaService;
-import com.daw.celiblog.service.mapper.PasoRecetaMapper;
 import com.daw.celiblog.service.mapper.RecetaMapper;
 import com.daw.celiblog.service.mapper.TagRecetaMapper;
 import org.springframework.stereotype.Service;
@@ -20,13 +19,11 @@ import java.util.*;
 public class RecetaServiceImpl implements RecetaService {
     private final RecetaRepository recetaRepository;
     private final TagRecetaRepository tagRecetaRepository;
-    private final PasoRecetaRepository pasoRecetaRepository;
 
 
     public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository) {
         this.recetaRepository = recetaRepository;
         this.tagRecetaRepository = tagRecetaRepository;
-        this.pasoRecetaRepository = pasoRecetaRepository;
     }
 
     @Override

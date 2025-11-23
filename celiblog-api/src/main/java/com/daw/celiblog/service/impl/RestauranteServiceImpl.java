@@ -7,10 +7,11 @@ import com.daw.celiblog.db.repository.TagRestauranteRepository;
 import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacion;
+import com.daw.celiblog.service.GeolocalizacionService;
 import com.daw.celiblog.service.RestauranteService;
 import com.daw.celiblog.service.mapper.RestauranteMapper;
 import com.daw.celiblog.service.mapper.TagRestauranteMapper;
-import com.daw.celiblog.service.mapper.UsuarioMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -26,12 +27,14 @@ public class RestauranteServiceImpl implements RestauranteService {
 
     private final TagRestauranteRepository tagRestauranteRepository;
     private final UsuarioRepository usuarioRepository;
+    private final GeolocalizacionService geolocalizacionService;
 
 
-    public RestauranteServiceImpl(RestauranteRepository restauranteRepository, TagRestauranteRepository tagRestauranteRepository, UsuarioRepository usuarioRepository) {
+    public RestauranteServiceImpl(RestauranteRepository restauranteRepository, TagRestauranteRepository tagRestauranteRepository, UsuarioRepository usuarioRepository, GeolocalizacionService geolocalizacionService) {
         this.restauranteRepository = restauranteRepository;
         this.tagRestauranteRepository = tagRestauranteRepository;
         this.usuarioRepository = usuarioRepository;
+        this.geolocalizacionService = geolocalizacionService;
     }
 
 
@@ -56,16 +59,21 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
     @Override
-    public RestauranteDTO actualizar(Long id, RestauranteDTO dto) {
+    public RestauranteDTO actualizar(Long id, RestauranteDTO dto) throws JsonProcessingException {
         Optional<Restaurante> rest = this.restauranteRepository.findById(id);
         if(rest.isPresent()){
             Restaurante restaurante = rest.get();
             restaurante.setDireccion(dto.getDireccion());
+            restaurante.setCodigoPostal(rest.get().getCodigoPostal());
             restaurante.setDescripcion(dto.getDescripcion());
             restaurante.setUbicacion(dto.getUbicacion());
             restaurante.setImagenUrl(dto.getImagenUrl());
             restaurante.setNombre(dto.getNombre());
             restaurante.setUrlWeb(dto.getUrlWeb());
+            //geolocalización del restaurante
+            double[] coords = this.geolocalizacionService.geolocalizar(dto.getDireccion());
+            restaurante.setLatitud(coords[0]);
+            restaurante.setLongitud(coords[1]);
             return RestauranteMapper.entityToDto(this.restauranteRepository.save(restaurante));
         }
         return null;
@@ -105,12 +113,13 @@ public class RestauranteServiceImpl implements RestauranteService {
 
 
     @Override
-    public RestauranteDTO crearRestaurante(RestauranteView restauranteView) {
+    public RestauranteDTO crearRestaurante(RestauranteView restauranteView) throws JsonProcessingException {
         Optional<Usuario> usuario = this.usuarioRepository.findById(restauranteView.getIdUsuario());
         if(usuario.isPresent()){
             Restaurante nuevoRestaurante = new Restaurante();
             nuevoRestaurante.setNombre(restauranteView.getNombre());
             nuevoRestaurante.setDireccion(restauranteView.getDireccion());
+            nuevoRestaurante.setCodigoPostal(restauranteView.getCodigoPostal());
             nuevoRestaurante.setDescripcion(restauranteView.getDescripcion());
             nuevoRestaurante.setUrlWeb(restauranteView.getUrlWeb());
             nuevoRestaurante.setImagenUrl(restauranteView.getImagen_url());
@@ -120,13 +129,19 @@ public class RestauranteServiceImpl implements RestauranteService {
             nuevoRestaurante.setTelefono(restauranteView.getTelefono());
             nuevoRestaurante.setUsuario(usuario.get());
             nuevoRestaurante.setValoracion(restauranteView.getValoracion());
+
+            //geolocalización del restaurante
+            double[] coords = this.geolocalizacionService.geolocalizar(nuevoRestaurante.getDireccion());
+            nuevoRestaurante.setLatitud(coords[0]);
+            nuevoRestaurante.setLongitud(coords[1]);
+
             return RestauranteMapper.entityToDto(this.restauranteRepository.save(nuevoRestaurante));
         }
         return null;
     }
 
     @Override
-    public RestauranteDTO update(RestauranteView restauranteView, Long idRestaurante) {
+    public RestauranteDTO update(RestauranteView restauranteView, Long idRestaurante) throws JsonProcessingException {
         Optional<Restaurante> restaurante = this.restauranteRepository.findById(idRestaurante);
         if(restaurante.isPresent()){
             Restaurante nuevoRestaurante = restaurante.get();
@@ -138,6 +153,11 @@ public class RestauranteServiceImpl implements RestauranteService {
             nuevoRestaurante.setTelefono(restauranteView.getTelefono());
             nuevoRestaurante.setEmail(restauranteView.getEmail());
             nuevoRestaurante.setValoracion(restauranteView.getValoracion());
+
+            //geolocalización del restaurante
+            double[] coords = this.geolocalizacionService.geolocalizar(nuevoRestaurante.getDireccion());
+            nuevoRestaurante.setLatitud(coords[0]);
+            nuevoRestaurante.setLongitud(coords[1]);
             return RestauranteMapper.entityToDto(this.restauranteRepository.save(nuevoRestaurante));
         }else{
             return null;
