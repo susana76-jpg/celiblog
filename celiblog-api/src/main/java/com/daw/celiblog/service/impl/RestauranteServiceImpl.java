@@ -81,6 +81,23 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
     @Override
+    public RestauranteDTO actualizarGeolocalización(Long id, RestauranteViewSummary dto) throws JsonProcessingException {
+        Optional<Restaurante> rest = this.restauranteRepository.findById(id);
+        if(rest.isPresent()){
+            Restaurante restaurante = rest.get();
+            restaurante.setDireccion(dto.getDireccion());
+            restaurante.setCodigoPostal(dto.getCodigoPostal());
+
+            //geolocalización del restaurante
+            double[] coords = this.geolocalizacionService.geolocalizar(dto.getDireccion());
+            restaurante.setLatitud(coords[0]);
+            restaurante.setLongitud(coords[1]);
+            return RestauranteMapper.entityToDto(this.restauranteRepository.save(restaurante));
+        }
+        return null;
+    }
+
+    @Override
     public boolean eliminar(Long id) {
         if(this.restauranteRepository.findById(id).isPresent()){
             restauranteRepository.deleteById(id);

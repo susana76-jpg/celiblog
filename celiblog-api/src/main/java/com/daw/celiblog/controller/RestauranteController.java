@@ -55,6 +55,12 @@ public class RestauranteController {
         return ResponseEntity.ok(this.restauranteService.update(restauranteView, idRestaurante));
     }
 
+    @Operation(summary = "Actualiza los datos de geolocalización de un restaurante, por su dirección completa.")
+    @PutMapping("/update-geolocalizacion")
+    public ResponseEntity<RestauranteDTO> updatePasoRecetaGeolocalizacion(@RequestBody RestauranteViewSummary restauranteViewSummary, @RequestParam(name="idRestaurante") Long idRestaurante) throws JsonProcessingException {
+        return ResponseEntity.ok(this.restauranteService.actualizarGeolocalización(idRestaurante, restauranteViewSummary));
+    }
+
     //GESTIÓN ESTADO DE PUBLICACIÓN
     @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todos los restaurantes publicados por los usuarios y pendientes de validar para su publicación por un administrador.")
     @GetMapping("/estado-pendiente")

@@ -1,9 +1,6 @@
 package com.daw.celiblog.service;
 
-import com.daw.celiblog.dto.RecetaDTO;
-import com.daw.celiblog.dto.RestauranteDTO;
-import com.daw.celiblog.dto.RestauranteView;
-import com.daw.celiblog.dto.TagRestauranteDTO;
+import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacion;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -14,6 +11,8 @@ public interface RestauranteService {
     RestauranteDTO obtenerPorId(Long id);
     RestauranteDTO crear(RestauranteDTO dto);
     RestauranteDTO actualizar(Long id, RestauranteDTO dto) throws JsonProcessingException;
+
+    RestauranteDTO actualizarGeolocalización(Long id, RestauranteViewSummary dto) throws JsonProcessingException;
     boolean eliminar(Long id);
 
     List<TagRestauranteDTO> obtenerTagsRestaurantePorId(Long idRestaurante);

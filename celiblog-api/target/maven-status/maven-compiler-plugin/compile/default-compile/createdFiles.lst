@@ -56,6 +56,7 @@ com\daw\celiblog\db\repository\PasoRecetaRepository.class
 com\daw\celiblog\db\entity\TagPost.class
 com\daw\celiblog\service\mapper\PasoRecetaMapper.class
 com\daw\celiblog\controller\RestauranteController.class
+com\daw\celiblog\dto\RestauranteViewSummary.class
 com\daw\celiblog\service\impl\RecetaServiceImpl.class
 com\daw\celiblog\service\TagRecetaService.class
 com\daw\celiblog\service\JwtService.class
