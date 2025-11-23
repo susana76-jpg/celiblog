@@ -96,7 +96,7 @@ const tags = [ 'Fácil', 'Comida', 'Cena', 'Dulce', 'Salado', 'Desayuno' ];// Th
 .filter-bar {
   &__title {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     margin-bottom: 15px;
 
     h3 {

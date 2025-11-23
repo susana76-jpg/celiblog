@@ -21,13 +21,26 @@
       
       <v-row no-gutters class="section-main__content">
         <v-col
-          v-for="item in receipes"
+          v-for="item in restaurants"
           :key="item.id"
           cols="12"
           md="4"
           xl="3"
         >
-          <SectionCardItem :item="item" />
+          <SectionCardItem 
+            :item="item" 
+            type="restaurantes"
+          >
+            <template #chip="{ item, setChipClass }">
+              <v-chip 
+                class="card-image__chip bg-success text-white"
+                variant="outlined"
+              >
+                <v-icon left>mdi-plus</v-icon>
+                Información
+              </v-chip>
+            </template>
+          </SectionCardItem>
         </v-col>
       </v-row>
     </div>
@@ -39,7 +52,7 @@
 <script setup lang="ts">
 const img = '/img/restaurant-hero-image.jpg';
 const restaurants = restaurantes;
-
+console.log(restaurants);
 
 </script>
 

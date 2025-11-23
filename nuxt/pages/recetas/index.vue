@@ -25,7 +25,10 @@
           md="4"
           xl="3"
         >
-          <SectionCardItem :item="item" />
+          <SectionCardItem 
+            :item="item" 
+            type="recetas"
+          />
         </v-col>
       </v-row>
     </div>

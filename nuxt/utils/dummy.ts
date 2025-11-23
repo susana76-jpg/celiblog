@@ -539,8 +539,8 @@ export const recetas = [
 export const restaurantes = [
   {
     id: 1,
-    nombre: "La Espiga Celíaca",
-    intro:
+    titulo: "La Espiga Celíaca",
+    subtitulo:
       "Restaurante acogedor en el corazón de Madrid que ofrece una amplia variedad de platos tradicionales españoles completamente libres de gluten, preparados con ingredientes frescos y de alta calidad.",
     descripcion:
       "La Espiga Celíaca se especializa en cocina tradicional española adaptada para personas con intolerancia al gluten. Su menú incluye desde tapas típicas hasta platos principales elaborados cuidadosamente para evitar cualquier contaminación cruzada. El restaurante cuenta con un equipo formado en manipulación segura de alimentos sin gluten y utiliza proveedores certificados. Además, ofrece opciones vegetarianas y veganas, menús infantiles y postres artesanales sin gluten. Su ambiente cálido lo convierte en un espacio ideal tanto para reuniones familiares como para una comida casual.",
@@ -554,11 +554,12 @@ export const restaurantes = [
     latitud: 40.4169,
     longitud: -3.7035,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante1.jpg",
   },
   {
     id: 2,
-    nombre: "Madrid Gluten Free Bistro",
-    intro:
+    titulo: "Madrid Gluten Free Bistro",
+    subtitulo:
       "Bistró moderno inspirado en la cocina europea contemporánea, especializado exclusivamente en platos sin gluten y opciones saludables para todos los gustos y necesidades alimentarias.",
     descripcion:
       "Madrid Gluten Free Bistro combina técnicas culinarias modernas con ingredientes nutritivos para ofrecer platos innovadores y libres de gluten. Su cocina apuesta por recetas europeas reinterpretadas, siempre priorizando productos frescos y de temporada. El bistró cuenta con panadería propia completamente libre de gluten, donde elaboran panes artesanales y repostería. También dispone de menú degustación, opciones veganas y una carta de vinos seleccionados cuidadosamente. El ambiente es relajado, con un diseño minimalista y un servicio atento que brinda asesoramiento para clientes con intolerancias.",
@@ -572,11 +573,12 @@ export const restaurantes = [
     latitud: 40.4381,
     longitud: -3.6766,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante2.jpg",
   },
   {
     id: 3,
-    nombre: "Casa Trigo Zero",
-    intro:
+    titulo: "Casa Trigo Zero",
+    subtitulo:
       "Restaurante rústico madrileño especializado en cocina de mercado sin gluten, con recetas tradicionales adaptadas y un ambiente familiar ideal para cualquier ocasión especial.",
     descripcion:
       "Casa Trigo Zero ofrece un menú variado basado en productos de mercado cuidadosamente seleccionados. Todos los platos se elaboran en una cocina completamente libre de gluten, evitando cualquier riesgo de contaminación. El restaurante destaca por sus guisos tradicionales, carnes a baja temperatura y pescados frescos, siempre con un toque casero. Además, dispone de carta de postres sin gluten preparados diariamente. Su equipo está formado en intolerancias y alergias alimentarias, garantizando una experiencia segura para los comensales. El ambiente es cálido y acogedor, evocando la estética de una casa de campo moderna.",
@@ -590,11 +592,12 @@ export const restaurantes = [
     latitud: 40.4178,
     longitud: -3.7073,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante3.jpg",
   },
   {
     id: 4,
-    nombre: "Gluto Lab Madrid",
-    intro:
+    titulo: "Gluto Lab Madrid",
+    subtitulo:
       "Laboratorio gastronómico innovador dedicado exclusivamente a la cocina sin gluten, fusionando técnicas modernas y sabores internacionales para crear experiencias culinarias únicas.",
     descripcion:
       "Gluto Lab Madrid destaca por su enfoque experimental, donde combina ingredientes libres de gluten con técnicas culinarias avanzadas. Su menú cambia cada temporada y ofrece platos inspirados en cocinas del mundo, desde Asia hasta América Latina. La cocina está certificada como 100% libre de gluten, lo que garantiza total seguridad para personas celíacas. También ofrece talleres gastronómicos, catas y eventos privados. El ambiente moderno y su equipo creativo convierten cada visita en una experiencia sorprendente y deliciosa.",
@@ -608,11 +611,12 @@ export const restaurantes = [
     latitud: 40.4234,
     longitud: -3.6769,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante4.jpg",
   },
   {
     id: 5,
-    nombre: "Panadería CeroGlut",
-    intro:
+    titulo: "Panadería CeroGlut",
+    subtitulo:
       "Panadería y cafetería artesana sin gluten que ofrece panes, bollería y platos ligeros elaborados con ingredientes naturales y procesos completamente seguros para celíacos.",
     descripcion:
       "CeroGlut es una panadería especializada en productos artesanales sin gluten. Elaboran diariamente panes de masa madre, bollería recién horneada y tartas caseras. Además de su oferta de panadería, disponen de un pequeño menú de brunch y comidas ligeras, ideal para desayunar o almorzar de forma saludable. Todas las elaboraciones se realizan en un espacio exclusivamente sin gluten, con una estricta selección de materias primas certificadas. El ambiente es acogedor y perfecto para trabajar, relajarse o disfrutar con amigos.",
@@ -626,11 +630,12 @@ export const restaurantes = [
     latitud: 40.4383,
     longitud: -3.6821,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante5.jpg",
   },
   {
     id: 6,
-    nombre: "El Rincón Sin Gluten",
-    intro:
+    titulo: "El Rincón Sin Gluten",
+    subtitulo:
       "Pequeño restaurante familiar especializado en comida casera sin gluten, con platos tradicionales preparados con cariño y un servicio cercano orientado a clientes con intolerancias.",
     descripcion:
       "El Rincón Sin Gluten ofrece un menú variado basado en cocina casera tradicional. Elaboran platos típicos españoles adaptados totalmente para personas celíacas, utilizando ingredientes frescos y respetando estrictas normas de seguridad alimentaria. Entre sus especialidades destacan las croquetas sin gluten, arroces y guisos. También cuentan con opciones para vegetarianos y una carta de postres elaborada en su obrador propio. El trato cercano del equipo y su ambiente familiar convierten cada visita en una experiencia agradable y segura.",
@@ -644,11 +649,12 @@ export const restaurantes = [
     latitud: 40.4104,
     longitud: -3.7081,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante6.jpg",
   },
   {
     id: 7,
-    nombre: "Zero Wheat Tapas",
-    intro:
+    titulo: "Zero Wheat Tapas",
+    subtitulo:
       "Bar de tapas madrileño con una carta completamente libre de gluten, perfecto para disfrutar de la gastronomía española sin preocupaciones y en un ambiente animado.",
     descripcion:
       "Zero Wheat Tapas reinventa las tapas tradicionales españolas adaptándolas al público celíaco sin perder autenticidad. Su cocina trabaja exclusivamente con ingredientes libres de gluten, empleando técnicas que evitan cualquier tipo de contaminación cruzada. Ofrecen una amplia selección de tapas, raciones y platos para compartir, acompañados de vinos nacionales y cerveza sin gluten. El ambiente es informal y animado, ideal para grupos y encuentros sociales. El servicio es rápido y cuenta con personal bien formado en intolerancias alimentarias.",
@@ -662,11 +668,12 @@ export const restaurantes = [
     latitud: 40.4231,
     longitud: -3.7123,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante7.jpg",
   },
   {
     id: 8,
-    nombre: "Pasta Libre Madrid",
-    intro:
+    titulo: "Pasta Libre Madrid",
+    subtitulo:
       "Restaurante especializado en pasta fresca sin gluten elaborada diariamente, con opciones creativas inspiradas en la cocina italiana tradicional y moderna.",
     descripcion:
       "Pasta Libre Madrid ofrece pasta fresca sin gluten elaborada en su propio obrador. Su menú incluye una amplia variedad de pastas artesanales, salsas caseras y platos inspirados en la tradición italiana pero adaptados a las necesidades celíacas. Utilizan harinas certificadas y mantienen un espacio de trabajo totalmente libre de gluten. Además, ofrecen pizzas, ensaladas y postres italianos sin gluten. El ambiente es cálido y elegante, perfecto para una cena especial o una comida en pareja.",
@@ -680,11 +687,12 @@ export const restaurantes = [
     latitud: 40.4273,
     longitud: -3.7037,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante8.jpg",
   },
   {
     id: 9,
-    nombre: "Green & Glutenless",
-    intro:
+    titulo: "Green & Glutenless",
+    subtitulo:
       "Restaurante saludable sin gluten que combina platos vegetarianos, veganos y opciones gourmet libres de alérgenos en un entorno moderno y luminoso.",
     descripcion:
       "Green & Glutenless se centra en ofrecer una propuesta gastronómica saludable y sin gluten, basada en ingredientes naturales y de origen vegetal. Su menú incluye ensaladas creativas, bowls nutritivos, tostadas especiales y platos elaborados con superalimentos. Además, cuentan con opciones veganas, sin lactosa y sin frutos secos para adaptarse a diversas necesidades alimentarias. La cocina está completamente certificada libre de gluten. Su ambiente, amplio y luminoso, es ideal para desayunos, almuerzos o comidas ligeras durante el día.",
@@ -698,11 +706,12 @@ export const restaurantes = [
     latitud: 40.4201,
     longitud: -3.6998,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante9.jpg",
   },
   {
     id: 10,
-    nombre: "Asador Libre de Gluten",
-    intro:
+    titulo: "Asador Libre de Gluten",
+    subtitulo:
       "Asador madrileño especializado en carnes a la brasa totalmente libres de gluten, con recetas tradicionales y un entorno elegante perfecto para reuniones y celebraciones.",
     descripcion:
       "Asador Libre de Gluten ofrece carnes selectas cocinadas a la brasa, preparadas en una cocina independiente y completamente libre de gluten. Sus especialidades incluyen cortes premium, parrilladas y guarniciones tradicionales adaptadas para personas celíacas. El restaurante mantiene estrictos protocolos de seguridad alimentaria y utiliza proveedores certificados. También ofrece una selección de vinos nacionales y postres caseros sin gluten. El ambiente es elegante y espacioso, ideal para cenas familiares o eventos especiales.",
@@ -716,11 +725,12 @@ export const restaurantes = [
     latitud: 40.4682,
     longitud: -3.6885,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante10.jpg",
   },
   {
     id: 11,
-    nombre: "Delicias Zero Gluten",
-    intro:
+    titulo: "Delicias Zero Gluten",
+    subtitulo:
       "Restaurante moderno con una carta amplia de platos internacionales sin gluten, perfecto para quienes buscan sabores variados con total seguridad alimentaria.",
     descripcion:
       "Delicias Zero Gluten combina recetas de diferentes partes del mundo: desde cocina mexicana hasta asiática, todas adaptadas para personas celíacas. Su cocina trabaja exclusivamente con ingredientes certificadamente sin gluten y mantiene protocolos rigurosos de manipulación. El menú incluye tacos, currys, wok, hamburguesas y postres artesanales. También cuentan con opciones veganas y sin lactosa. El local posee un ambiente moderno, con decoración colorida y un servicio atento dispuesto a asesorar a clientes con intolerancias.",
@@ -734,11 +744,12 @@ export const restaurantes = [
     latitud: 40.4196,
     longitud: -3.7034,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante11.jpg",
   },
   {
     id: 12,
-    nombre: "Sushi Gluten Zero",
-    intro:
+    titulo: "Sushi Gluten Zero",
+    subtitulo:
       "Restaurante de sushi sin gluten con pescado fresco y técnicas japonesas adaptadas para asegurar una experiencia segura y deliciosa para personas celíacas.",
     descripcion:
       "Sushi Gluten Zero ofrece cocina japonesa completamente adaptada para clientes con intolerancia al gluten. Utilizan salsa de soja sin gluten, arroces especiales y utensilios exclusivos para evitar contaminación cruzada. Su carta incluye sushi, sashimi, tartares y platos calientes tradicionales elaborados de forma segura. El restaurante destaca por la frescura de sus productos y la precisión en la preparación. Además, ofrece menús degustación y opciones vegetarianas. El ambiente es tranquilo y elegante, ideal para los amantes del sushi.",
@@ -752,5 +763,6 @@ export const restaurantes = [
     latitud: 40.4138,
     longitud: -3.6963,
     favorito: false,
+    imagenUrl: "/img/restaurantes/restaurante12.jpg",
   },
 ];

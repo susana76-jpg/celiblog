@@ -6,7 +6,7 @@
 const props = defineProps<{
   restaurantes: Array<{
     id: number;
-    nombre: string;
+    titulo: string;
     contacto: {
       direccion: string;
     };
@@ -45,7 +45,7 @@ onMounted(() => {
       .addTo(map)
       .bindPopup(`
         <div class="restaurant-popup" style="cursor: pointer;">
-          <b>${restaurant.nombre}</b><br>
+          <b>${restaurant.titulo}</b><br>
           ${restaurant.contacto.direccion}
         </div>
       `);

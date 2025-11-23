@@ -1,6 +1,6 @@
 <template>
   <v-card 
-    :to="`/recetas/${item.idReceta}`" 
+    :to="setLink" 
     variant="text"
     class="card-item mx-2 pa-2" 
   >
@@ -10,19 +10,22 @@
         height="400" 
         :src="item.imagenUrl"
       />
-      <v-chip
-        class="card-image__chip"
-        :class="setChipClass(item.dificultad)"
-        variant="outlined"
-      >
-        <span>{{ item.dificultad || 'easy' }}</span>
-        <v-rating
-          readonly
-          color="white"
-          length="3"
-          :model-value="item.dificultad === 'easy' ? 1 : item.dificultad === 'medium' ? 2 : 3"
-        ></v-rating>
-      </v-chip>
+      <slot name="chip" :item="item" :setChipClass="setChipClass">
+        <!-- Default chip content -->
+        <v-chip
+          class="card-image__chip"
+          :class="setChipClass(item.dificultad)"
+          variant="outlined"
+        >
+          <span>{{ item.dificultad || 'easy' }}</span>
+          <v-rating
+            readonly
+            color="white"
+            length="3"
+            :model-value="item.dificultad === 'easy' ? 1 : item.dificultad === 'medium' ? 2 : 3"
+          ></v-rating>
+        </v-chip>
+      </slot>
       <v-btn
         :color="item.favorite ? 'error' : 'darkgray'"
         variant="outlined"
@@ -62,6 +65,7 @@
 // }>(); 
 const props = defineProps<{
   item: any;
+  type: 'recetas' | 'restaurantes' | 'consejos';
 }>();
 
 const setChipClass = (difficulty: string | undefined) => {
@@ -76,6 +80,12 @@ const setChipClass = (difficulty: string | undefined) => {
       return 'bg-success';
   }
 };
+
+const setLink = computed(() => {
+  if (props.type === 'recetas') return `/recetas/${props.item.idReceta}`;
+  if (props.type === 'consejos') return `/consejos/${props.item.idConsejo}`;
+  if (props.type === 'restaurantes') return `/restaurantes/${props.item.id}`;
+});
 </script>
 
 <style lang="scss">
