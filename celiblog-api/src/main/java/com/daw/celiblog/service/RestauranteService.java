@@ -12,7 +12,7 @@ public interface RestauranteService {
     RestauranteDTO crear(RestauranteDTO dto);
     RestauranteDTO actualizar(Long id, RestauranteDTO dto) throws JsonProcessingException;
 
-    RestauranteDTO actualizarGeolocalización(Long id, RestauranteViewSummary dto) throws JsonProcessingException;
+    RestauranteDTO actualizarGeolocalizacion(Long id, RestauranteViewSummary dto) throws JsonProcessingException;
     boolean eliminar(Long id);
 
     List<TagRestauranteDTO> obtenerTagsRestaurantePorId(Long idRestaurante);

@@ -2,6 +2,7 @@ package com.daw.celiblog.service.mapper;
 
 import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.dto.RecetaDTO;
+import com.daw.celiblog.dto.UsuarioSummaryDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,27 +16,39 @@ public class RecetaMapper {
         this.entity = entity;
         this.dto = dto;
     }
-    public static RecetaDTO entityToDto(Receta source){
+    public static RecetaDTO     entityToDto(Receta source){
         return new RecetaDTO(source.getIdReceta(),
-                UsuarioMapper.entityToDto(source.getUsuario()),
-                source.getDescripcion(),
-                source.getFechaCreacion(),
-                source.getImagenUrl(),
-                source.getDificultad(),
-                source.getTitulo(),
-                source.getEstado(),
-                source.getFechaValidacion());
+            new UsuarioSummaryDTO(source.getUsuario().getEmail(), source.getUsuario().getNombre()),
+            source.getDescripcion(),
+            source.getFechaCreacion(),
+            source.getImagenUrl(),
+            source.getTitulo(),
+            source.getSubtitulo(),
+            source.getDificultad(),
+            source.getEstado(),
+            source.getFechaValidacion(),
+            source.getValoracion(),
+            source.getComensales(),
+            source.getTiempoPreparacion(),
+            source.getValorEnergetico(),
+            source.getTipoComida());
     }
     public static Receta dtoToEntity(RecetaDTO source){
         return new Receta(source.getIdReceta(),
-                UsuarioMapper.dtoToEntity(source.getUsuario()),
-                source.getDescripcion(),
-                source.getFechaCreacion(),
-                source.getImagenUrl(),
-                source.getDificultad(),
-                source.getTitulo(),
-                source.getEstado(),
-                source.getFechaValidacion());
+            UsuarioMapper.dtoToEntity(source.getUsuarioDTO()),
+            source.getDescripcion(),
+            source.getFechaCreacion(),
+            source.getImagenUrl(),
+            source.getTitulo(),
+            source.getSubtitulo(),
+            source.getDificultad(),
+            source.getEstado(),
+            source.getFechaValidacion(),
+            source.getValoracion(),
+            source.getComensales(),
+            source.getTiempoPreparacion(),
+            source.getValorEnergetico(),
+            source.getTipoComida());
     }
     public static List<Receta> dtoToEntityList(List<RecetaDTO> source){
         return source.stream().map(s -> {

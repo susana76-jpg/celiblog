@@ -1,9 +1,14 @@
 package com.daw.celiblog.dto;
 
+import com.daw.celiblog.db.entity.Usuario;
 import com.daw.celiblog.enums.EstadoValidacion;
+import com.daw.celiblog.enums.TipoComida;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 
 import java.util.Date;
 import java.util.Objects;
@@ -12,33 +17,48 @@ public class RecetaDTO {
 
     private Long idReceta;
 
-    private UsuarioDTO usuario;
+    private UsuarioSummaryDTO usuario;
+    @ManyToOne
+    @JsonIgnore
+    private UsuarioDTO usuarioDTO;
     private String descripcion;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaCreacion;
     private String imagenUrl;
     private String dificultad;
-
     private String titulo;
-
+    private String subtitulo;
     @Enumerated(EnumType.STRING)
     private EstadoValidacion estado = EstadoValidacion.APROBADO;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaValidacion;
+    private int valoracion;
+    private int comensales;
+    private int tiempoPreparacion;
+    private int valorEnergetico;
+    private TipoComida tipoComida;
+    private boolean esFavoritoUsuario;
+
 
     public RecetaDTO() {
     }
 
-    public RecetaDTO(Long idReceta, UsuarioDTO usuario, String descripcion, Date fechaCreacion, String imagenUrl, String dificultad, String titulo, EstadoValidacion estado, Date fechaValidacion) {
+    public RecetaDTO(Long idReceta, UsuarioSummaryDTO usuarioSummaryDTO, String descripcion, Date fechaCreacion, String imagenUrl, String titulo, String subtitulo, String dificultad, EstadoValidacion estado, Date fechaValidacion, int valoracion, int comensales, int tiempoPreparacion, int valorEnergetico, TipoComida tipoComida) {
         this.idReceta = idReceta;
-        this.usuario = usuario;
+        this.usuario = usuarioSummaryDTO;
         this.descripcion = descripcion;
         this.fechaCreacion = fechaCreacion;
         this.imagenUrl = imagenUrl;
-        this.dificultad = dificultad;
         this.titulo = titulo;
+        this.subtitulo = subtitulo;
+        this.dificultad = dificultad;
         this.estado = estado;
         this.fechaValidacion = fechaValidacion;
+        this.valoracion = valoracion;
+        this.comensales = comensales;
+        this.tiempoPreparacion = tiempoPreparacion;
+        this.valorEnergetico = valorEnergetico;
+        this.tipoComida = tipoComida;
     }
 
     public Long getIdReceta() {
@@ -49,11 +69,11 @@ public class RecetaDTO {
         this.idReceta = idReceta;
     }
 
-    public UsuarioDTO getUsuario() {
+    public UsuarioSummaryDTO getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(UsuarioDTO usuario) {
+    public void setUsuario(UsuarioSummaryDTO usuario) {
         this.usuario = usuario;
     }
 
@@ -113,6 +133,70 @@ public class RecetaDTO {
         this.fechaValidacion = fechaValidacion;
     }
 
+    public String getSubtitulo() {
+        return subtitulo;
+    }
+
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
+    }
+
+    public int getValoracion() {
+        return valoracion;
+    }
+
+    public void setValoracion(int valoracion) {
+        this.valoracion = valoracion;
+    }
+
+    public int getComensales() {
+        return comensales;
+    }
+
+    public void setComensales(int comensales) {
+        this.comensales = comensales;
+    }
+
+    public int getTiempoPreparacion() {
+        return tiempoPreparacion;
+    }
+
+    public void setTiempoPreparacion(int tiempoPreparacion) {
+        this.tiempoPreparacion = tiempoPreparacion;
+    }
+
+    public int getValorEnergetico() {
+        return valorEnergetico;
+    }
+
+    public void setValorEnergetico(int valorEnergetico) {
+        this.valorEnergetico = valorEnergetico;
+    }
+
+    public TipoComida getTipoComida() {
+        return tipoComida;
+    }
+
+    public void setTipoComida(TipoComida tipoComida) {
+        this.tipoComida = tipoComida;
+    }
+
+    public UsuarioDTO getUsuarioDTO() {
+        return usuarioDTO;
+    }
+
+    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+        this.usuarioDTO = usuarioDTO;
+    }
+
+    public boolean isEsFavoritoUsuario() {
+        return esFavoritoUsuario;
+    }
+
+    public void setEsFavoritoUsuario(boolean esFavoritoUsuario) {
+        this.esFavoritoUsuario = esFavoritoUsuario;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -125,4 +209,5 @@ public class RecetaDTO {
     public int hashCode() {
         return Objects.hash(idReceta);
     }
+
 }

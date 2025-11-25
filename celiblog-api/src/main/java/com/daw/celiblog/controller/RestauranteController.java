@@ -57,8 +57,8 @@ public class RestauranteController {
 
     @Operation(summary = "Actualiza los datos de geolocalización de un restaurante, por su dirección completa.")
     @PutMapping("/update-geolocalizacion")
-    public ResponseEntity<RestauranteDTO> updatePasoRecetaGeolocalizacion(@RequestBody RestauranteViewSummary restauranteViewSummary, @RequestParam(name="idRestaurante") Long idRestaurante) throws JsonProcessingException {
-        return ResponseEntity.ok(this.restauranteService.actualizarGeolocalización(idRestaurante, restauranteViewSummary));
+    public ResponseEntity<RestauranteDTO> updateRestauranteGeolocalizacion(@RequestBody RestauranteViewSummary restauranteViewSummary, @RequestParam(name="idRestaurante") Long idRestaurante) throws JsonProcessingException {
+        return ResponseEntity.ok(this.restauranteService.actualizarGeolocalizacion(idRestaurante, restauranteViewSummary));
     }
 
     //GESTIÓN ESTADO DE PUBLICACIÓN

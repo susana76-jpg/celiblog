@@ -81,7 +81,7 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
     @Override
-    public RestauranteDTO actualizarGeolocalización(Long id, RestauranteViewSummary dto) throws JsonProcessingException {
+    public RestauranteDTO actualizarGeolocalizacion(Long id, RestauranteViewSummary dto) throws JsonProcessingException {
         Optional<Restaurante> rest = this.restauranteRepository.findById(id);
         if(rest.isPresent()){
             Restaurante restaurante = rest.get();
