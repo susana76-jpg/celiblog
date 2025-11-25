@@ -55,10 +55,11 @@ public class RestauranteController {
         return ResponseEntity.ok(this.restauranteService.update(restauranteView, idRestaurante));
     }
 
-    @Operation(summary = "Actualiza los datos de geolocalización de un restaurante, por su dirección completa.")
+    @Operation(summary = "Actualiza todos los datos de geolocalización de todos restaurantes, por su dirección completa.")
     @PutMapping("/update-geolocalizacion")
-    public ResponseEntity<RestauranteDTO> updateRestauranteGeolocalizacion(@RequestBody RestauranteViewSummary restauranteViewSummary, @RequestParam(name="idRestaurante") Long idRestaurante) throws JsonProcessingException {
-        return ResponseEntity.ok(this.restauranteService.actualizarGeolocalizacion(idRestaurante, restauranteViewSummary));
+    public ResponseEntity<String> updateAllRestaurantesGeolocalizacion() throws JsonProcessingException {
+        this.restauranteService.actualizarGeolocalizacion();
+        return ResponseEntity.ok("Restaurantes actualizados en su longitud y latitud desde su dirección");
     }
 
     //GESTIÓN ESTADO DE PUBLICACIÓN
