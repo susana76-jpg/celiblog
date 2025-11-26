@@ -10,6 +10,8 @@ public class RestauranteView {
     public String urlWeb;
     public String imagen_url;
     public String ubicacion;
+    public int codigoPostal;
+
     @Pattern(
             regexp = "^(?:\\+34|0034)?d{9}$",
             message = "El teléfono debe ser válido en España"
@@ -26,13 +28,14 @@ public class RestauranteView {
     public RestauranteView() {
     }
 
-    public RestauranteView(String nombre, String direccion, String descripcion, String urlWeb, String imagen_url, String ubicacion, String telefono, String email, Long idUsuario, int valoracion) {
+    public RestauranteView(String nombre, String direccion, String descripcion, String urlWeb, String imagen_url, String ubicacion, int codigoPostal, String telefono, String email, Long idUsuario, int valoracion) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.descripcion = descripcion;
         this.urlWeb = urlWeb;
         this.imagen_url = imagen_url;
         this.ubicacion = ubicacion;
+        this.codigoPostal = codigoPostal;
         this.telefono = telefono;
         this.email = email;
         this.idUsuario = idUsuario;
@@ -85,6 +88,14 @@ public class RestauranteView {
 
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    public int getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(int codigoPostal) {
+        this.codigoPostal = codigoPostal;
     }
 
     public String getTelefono() {

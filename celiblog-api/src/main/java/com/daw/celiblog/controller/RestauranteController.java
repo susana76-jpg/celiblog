@@ -3,6 +3,7 @@ package com.daw.celiblog.controller;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacion;
 import com.daw.celiblog.service.RestauranteService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class RestauranteController {
 
     @Operation(summary = "Añade un restaurante.")
     @PostMapping("/add")
-    public ResponseEntity<RestauranteDTO> crearRestaurante(@RequestBody RestauranteView restauranteView){
+    public ResponseEntity<RestauranteDTO> crearRestaurante(@RequestBody RestauranteView restauranteView) throws JsonProcessingException {
         RestauranteDTO nuevoRestaurante = this.restauranteService.crearRestaurante(restauranteView);
         return ResponseEntity.status(201).body(nuevoRestaurante);
     }
@@ -50,8 +51,15 @@ public class RestauranteController {
 
     @Operation(summary = "Actualiza los datos de un restaurante.")
     @PutMapping("/update")
-    public ResponseEntity<RestauranteDTO> updatePasoReceta(@RequestBody RestauranteView restauranteView, @RequestBody Long idRestaurante) {
+    public ResponseEntity<RestauranteDTO> updatePasoReceta(@RequestBody RestauranteView restauranteView, @RequestParam(name="idRestaurante") Long idRestaurante) throws JsonProcessingException {
         return ResponseEntity.ok(this.restauranteService.update(restauranteView, idRestaurante));
+    }
+
+    @Operation(summary = "Actualiza todos los datos de geolocalización de todos restaurantes, por su dirección completa.")
+    @PutMapping("/update-geolocalizacion")
+    public ResponseEntity<String> updateAllRestaurantesGeolocalizacion() throws JsonProcessingException {
+        this.restauranteService.actualizarGeolocalizacion();
+        return ResponseEntity.ok("Restaurantes actualizados en su longitud y latitud desde su dirección");
     }
 
     //GESTIÓN ESTADO DE PUBLICACIÓN

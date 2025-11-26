@@ -2,6 +2,7 @@ package com.daw.celiblog.service;
 
 import com.daw.celiblog.db.entity.PasoReceta;
 import com.daw.celiblog.db.entity.Receta;
+import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacion;
 import org.springframework.data.repository.query.Param;
@@ -28,6 +29,7 @@ public interface RecetaService {
     List<RecetaDTO> getRecetasEstadoAprobado();
     List<RecetaDTO> getRecetasEstadoRechazado();
     RecetaDTO updateEstadoPublicacionReceta(Long idReceta, EstadoValidacion estado);
+    List<VistaRecetaIngredientes> getIngredientesByIdReceta(Long idReceta);
 
 
 

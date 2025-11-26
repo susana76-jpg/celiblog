@@ -20,6 +20,9 @@ public class RestauranteDTO {
     private String imagenUrl;
     private String nombre;
     private String ubicacion;
+    private int codigoPostal;
+    private Double latitud;
+    private Double longitud;
     private String urlWeb;
     //@NotBlank(message = "El teléfono no puede estar vacío")
     @Pattern(
@@ -41,7 +44,7 @@ public class RestauranteDTO {
     public RestauranteDTO() {
     }
 
-    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioDTO usuarioDTO, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, String urlWeb, String telefono, String email, int valoracion, EstadoValidacion estado, Date fechaValidacion) {
+    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioDTO usuarioDTO, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacion estado, Date fechaValidacion) {
         this.idRestaurante = idRestaurante;
         this.fechaPublicacion = fechaPublicacion;
         this.usuarioDTO = usuarioDTO;
@@ -50,6 +53,9 @@ public class RestauranteDTO {
         this.imagenUrl = imagenUrl;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
+        this.codigoPostal = codigoPostal;
+        this.latitud = latitud;
+        this.longitud = longitud;
         this.urlWeb = urlWeb;
         this.telefono = telefono;
         this.email = email;
@@ -120,6 +126,30 @@ public class RestauranteDTO {
 
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    public int getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(int codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
     }
 
     public String getUrlWeb() {

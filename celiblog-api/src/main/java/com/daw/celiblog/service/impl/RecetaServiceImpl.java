@@ -2,13 +2,13 @@ package com.daw.celiblog.service.impl;
 
 import com.daw.celiblog.db.entity.PasoReceta;
 import com.daw.celiblog.db.entity.Receta;
+import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
 import com.daw.celiblog.db.repository.PasoRecetaRepository;
 import com.daw.celiblog.db.repository.RecetaRepository;
 import com.daw.celiblog.db.repository.TagRecetaRepository;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacion;
 import com.daw.celiblog.service.RecetaService;
-import com.daw.celiblog.service.mapper.PasoRecetaMapper;
 import com.daw.celiblog.service.mapper.RecetaMapper;
 import com.daw.celiblog.service.mapper.TagRecetaMapper;
 import org.springframework.stereotype.Service;
@@ -19,13 +19,11 @@ import java.util.*;
 public class RecetaServiceImpl implements RecetaService {
     private final RecetaRepository recetaRepository;
     private final TagRecetaRepository tagRecetaRepository;
-    private final PasoRecetaRepository pasoRecetaRepository;
 
 
     public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository) {
         this.recetaRepository = recetaRepository;
         this.tagRecetaRepository = tagRecetaRepository;
-        this.pasoRecetaRepository = pasoRecetaRepository;
     }
 
     @Override
@@ -134,6 +132,12 @@ public class RecetaServiceImpl implements RecetaService {
             return RecetaMapper.entityToDto(this.recetaRepository.save(receta));
         }
         return null;
+    }
+
+    @Override
+    public List<VistaRecetaIngredientes> getIngredientesByIdReceta(Long idReceta) {
+        List<VistaRecetaIngredientes> ingredientes = this.recetaRepository.getIngredientesByIdReceta(idReceta);
+        return ingredientes;
     }
 
 

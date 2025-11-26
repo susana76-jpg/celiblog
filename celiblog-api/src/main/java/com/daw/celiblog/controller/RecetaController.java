@@ -1,5 +1,6 @@
 package com.daw.celiblog.controller;
 
+import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacion;
 import com.daw.celiblog.service.PasoRecetaService;
@@ -40,6 +41,12 @@ public class RecetaController {
     @GetMapping("/byId")
     public ResponseEntity<RecetaDTO> getRecetaById(@RequestParam(name="id") Long id) {
         return ResponseEntity.ok(this.recetaService.obtenerPorId(id));
+    }
+
+    @Operation(summary = "Obtiene los ingredientes, cantidad y unidades de los ingredientes de una receta, por el id de receta.")
+    @GetMapping("/ingredientes")
+    public ResponseEntity<List<VistaRecetaIngredientes>> getIngredientesByIdReceta(@RequestParam(name="idReceta") Long idReceta) {
+        return ResponseEntity.ok(this.recetaService.getIngredientesByIdReceta(idReceta));
     }
 
     @Operation(summary = "Añade una receta.")

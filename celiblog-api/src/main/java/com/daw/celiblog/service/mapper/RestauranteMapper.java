@@ -25,6 +25,9 @@ public class RestauranteMapper{
                 source.getImagenUrl(),
                 source.getNombre(),
                 source.getUbicacion(),
+                source.getCodigoPostal(),
+                source.getLatitud(),
+                source.getLongitud(),
                 source.getUrlWeb(),
                 source.getTelefono(),
                 source.getEmail(),
@@ -42,12 +45,16 @@ public class RestauranteMapper{
                 source.getImagenUrl(),
                 source.getNombre(),
                 source.getUbicacion(),
+                source.getCodigoPostal(),
+                source.getLatitud(),
+                source.getLongitud(),
                 source.getUrlWeb(),
                 source.getTelefono(),
                 source.getEmail(),
                 source.getValoracion(),
                 source.getEstado(),
                 source.getFechaValidacion());
+
     }
 
     public static List<Restaurante> dtoToEntityList(List<RestauranteDTO> source){
