@@ -20,6 +20,7 @@ export default defineNuxtPlugin((nuxtApp) => {
             secondary: '#2E5635',
             tertiary: '#A3C9A8',
             darkgray: '#333333',
+            darkbrown: '#5D4037',
             lightgray: '#5c5c5c',
             background: '#F4F1EA',
             accent: '#FF4081',

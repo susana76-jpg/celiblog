@@ -1,10 +1,12 @@
 <template>
   <v-app-bar 
+    height="84"
     class="main-menu"
     scroll-behavior="elevate"
     scroll-threshold="300"
   >
 
+    <!-- Logo -->
     <v-img 
       inline
       height="46px"
@@ -14,7 +16,8 @@
       alt="Celiblog logo" 
     />
 
-    <nav>
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
       <v-btn
         v-for="item in menuItems"
         :key="item.path"
@@ -22,12 +25,15 @@
         :icon="item.icon"
         :text="item.text"
         :variant="item.variant"
+        :class="{ 'active-menu-item': isActiveRoute(item.path) }"
         rounded="0"
-        exact
       />
     </nav>
 
-    <div class="account-buttons">
+    <v-spacer class="mobile-spacer" />
+
+    <!-- Desktop Account Buttons -->
+    <div class="account-buttons desktop-account">
       <template v-if="!isUserLoggedIn">
         <v-btn
           v-for="button in accountButtons"
@@ -76,12 +82,82 @@
         </v-btn>
       </template>
     </div>
+
+    <!-- Mobile Menu Button -->
+    <v-btn
+      icon="mdi-menu"
+      variant="text"
+      class="mobile-menu-btn"
+      @click="drawer = !drawer"
+    />
+
   </v-app-bar>
+
+  <!-- Mobile Navigation Drawer -->
+  <v-navigation-drawer
+    temporary
+    location="right"
+    class="mobile-drawer"
+    v-model="drawer"
+  >
+    <v-list>
+
+      <!-- Close button -->
+      <v-list-item class="drawer-header">
+        <v-btn
+          icon="mdi-close"
+          variant="text"
+          @click="drawer = false"
+        />
+      </v-list-item>
+
+      <!-- Menu items -->
+      <v-list-item
+        v-for="item in menuItems"
+        :key="item.path"
+        :to="item.path"
+        :prepend-icon="item.icon"
+        :title="item.text || ''"
+        :class="{ 'active-drawer-item': isActiveRoute(item.path) }"
+        @click="drawer = false"
+      />
+
+      <v-divider class="my-4" />
+
+      <!-- Account buttons in drawer -->
+      <template v-if="!isUserLoggedIn">
+        <v-list-item
+          v-for="button in accountButtons"
+          :key="button.path"
+          :to="button.path"
+          :prepend-icon="button.icon"
+          :title="button.text"
+          @click="drawer = false"
+        />
+      </template>
+      <template v-else>
+        <v-list-item
+          v-for="(item, index) in items"
+          :key="index"
+          :title="item.title"
+          @click="item.event(); drawer = false"
+        />
+      </template>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
+const route = useRoute();
 const isUserLoggedIn = ref<boolean>(true);
 const userName = ref<string>('John Doe');
+const drawer = ref<boolean>(false);
+
+// Check if route is active
+const isActiveRoute = (path: string) => {
+  if (path === '/') return route.path === '/';
+  return route.path.includes(path);
+};
 
 // List of menu items
 const menuItems = [
@@ -142,7 +218,8 @@ const items = [
 
   // Set styles for active menu item
   nav {
-    a[aria-current="page"] {
+    a[aria-current="page"],
+    .active-menu-item {
       background-color: #FFF;
       color: #836A02;
       border-bottom: 2px solid #836A02;    
@@ -160,6 +237,67 @@ const items = [
         font-weight: 600;
       }
     }
+  }
+
+  // Hide mobile elements on desktop
+  .mobile-menu-btn,
+  .mobile-spacer {
+    display: none;
+  }
+
+  // Responsive styles
+  @media (max-width: 1024px) {
+    padding: 18px 40px;
+  }
+
+  @media (max-width: 1200px) {
+    padding: 18px 20px;
+
+    // Hide desktop navigation
+    .desktop-nav,
+    .desktop-account {
+      display: none !important;
+    }
+
+    // Show mobile elements
+    .mobile-menu-btn,
+    .mobile-spacer {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 12px 16px;
+    height: 70px !important;
+
+    .v-img {
+      height: 36px !important;
+      width: 100px !important;
+      min-width: 100px !important;
+    }
+  }
+}
+
+// Mobile drawer styles
+.mobile-drawer {
+  .drawer-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px;
+  }
+
+  .active-drawer-item {
+    background-color: rgba(131, 106, 2, 0.1);
+    color: #836A02;
+    font-weight: 600;
+
+    .v-list-item__overlay {
+      background-color: transparent !important;
+    }
+  }
+
+  .v-list-item {
+    text-transform: capitalize;
   }
 }
 </style>

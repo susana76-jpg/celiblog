@@ -1,6 +1,6 @@
 <template>
   <v-card 
-    :to="item.link" 
+    :to="setLink" 
     variant="text"
     class="card-item mx-2 pa-2" 
   >
@@ -8,64 +8,71 @@
       <v-img 
         cover 
         height="400" 
-        :src="item.image"
+        :src="item.imagenUrl"
       />
       <v-chip
-        border="sm"
-        class="card-image__chip bg-success"
-        color="white"
+        class="card-image__chip"
+        :class="setChipClass(item.dificultad)"
         variant="outlined"
       >
-        <span>{{ item.difficulty || 'easy' }}</span>
+        <span>{{ item.dificultad || 'fácil' }}</span>
         <v-rating
           readonly
           color="white"
           length="3"
-          :model-value="item.difficulty === 'easy' ? 1 : item.difficulty === 'medium' ? 2 : 3"
+          :model-value="item.dificultad === 'fácil' ? 1 : item.dificultad === 'media' ? 2 : 3"
         ></v-rating>
       </v-chip>
       <v-btn
-        :color="item.favorite ? 'error' : 'darkgray'"
+        :color="item.esFavoritoUsuario ? 'error' : 'darkgray'"
         variant="outlined"
         icon="mdi-heart"
         class="card-image__favourite"
-        @click.stop="$emit('toggle-favorite', item.id)"
+        @click.stop="$emit('toggle-favorite', item.idReceta)"
       />
     </div>
     <v-card-title class="px-0">
-      {{ item.title }}
+      {{ item.titulo }}
     </v-card-title>
     <v-card-text class="px-0">
-      {{ item.description }}
+      {{ item.subtitulo }}
     </v-card-text>
     <v-rating
       readonly
       half-increments
-      size="small"
       color="primary"
       density="compact"
-      :model-value="item.rating"
+      :model-value="item.valoracion"
     ></v-rating>
   </v-card>
 </template>
 
 <script setup lang="ts">
+// }>(); 
 const props = defineProps<{
-  item: {
-    id: number;
-    title: string;
-    description: string;
-    image: string;
-    link: string;
-    rating: number;
-    favorite?: boolean;
-    difficulty?: string;
-  };
-}>(); 
+  item: Receta;
+}>();
+
+const setChipClass = (difficulty: Receta['dificultad'] | undefined) => {
+  switch (difficulty) {
+    case 'fácil':
+      return 'bg-success';
+    case 'media':
+      return 'bg-warning';
+    case 'difícil':
+      return 'bg-error';
+    default:
+      return 'bg-success';
+  }
+};
+
+const setLink = computed(() => `/recetas/${props.item.idReceta}`);
 </script>
 
 <style lang="scss">
 .card-item {
+  margin-bottom: 24px;
+
   .card-image {
     position: relative;
 
@@ -77,17 +84,27 @@ const props = defineProps<{
       position: absolute;
       top: 20px;
       right: 20px;
-      width: 200px;
+      width: 180px;
       font-family: 'Poppins', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       line-height: 16px;
       font-weight: 500;
       text-transform: capitalize;
+      color: #FFF !important;
+      border: 3px solid #FFFFFF;
 
-      &__content {
+      .v-chip__content {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 100%;
+
+        .v-rating__item {
+          button.v-btn {
+            height: 25px !important;
+            width: 25px !important;
+          }
+        }
       }
     }
 

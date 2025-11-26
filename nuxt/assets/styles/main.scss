@@ -7,6 +7,15 @@ body {
   padding: 0;
 }
 
+p {
+  line-height: 1.3rem;
+  font-size: 1.1rem;
+}
+
+li {
+  font-size: 1.1rem;
+}
+
 // Increase icon size in buttons
 .v-btn .v-icon {
   --v-icon-size-multiplier: 1;
@@ -15,4 +24,114 @@ body {
 // Set border radius in images inside cards
 .v-card .v-img {
   border-radius: 4px;
+}
+
+
+/***********************************/
+/* Main Section Styles */
+/**********************************/
+.section-main {
+  padding: 0 80px;
+  margin-bottom: 60px;
+
+  &__title {
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 22px;
+      line-height: 22px;
+      font-weight: 600;
+      color: #242424;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-family: 'Arial', sans-serif;
+      font-size: 32px;
+      line-height: 26px;
+      letter-spacing: -1px;
+      color: #836a02;
+      max-width: 70%;
+      margin: 0 auto;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .section-main {
+    padding: 0 30px;
+  }
+}
+
+/***********************************/
+/* Card Item Styles */
+/***********************************/
+.card-item {
+  margin-bottom: 24px;
+
+  .card-image {
+    position: relative;
+
+    img.v-img__img {
+      border-radius: 6px;
+    }
+
+    &__chip {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 180px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      line-height: 16px;
+      font-weight: 500;
+      text-transform: capitalize;
+      color: #FFF !important;
+      border: 3px solid #FFFFFF;
+
+      .v-chip__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        .v-rating__item {
+          button.v-btn {
+            height: 25px !important;
+            width: 25px !important;
+          }
+        }
+      }
+    }
+
+    &__favourite {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ffffffb2;
+    }
+  } 
+  
+  .v-card-title {
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 600;
+    color: #333333;
+    margin-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .v-card-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 16px;
+    color: #555555;
+    padding-bottom: 8px;
+  }
 }

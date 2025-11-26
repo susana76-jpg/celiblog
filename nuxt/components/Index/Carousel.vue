@@ -16,7 +16,7 @@
       >
         <v-row>
           <v-col
-            v-for="item in items.slice((n-1)*4, n*4)"
+            v-for="(item, i) in items.slice((n-1)*4, n*4)"
             :key="item.id"
             cols="12"
             md="3"
@@ -29,7 +29,7 @@
               <v-img  
                 cover
                 height="400"
-                :src="item.image"
+                :src="`/img/recetas/receta${i + 1}.jpg`"
               ></v-img>
               <v-card-title class="px-0">
                 {{ item.title }}
@@ -40,7 +40,6 @@
               <v-rating
                 readonly
                 half-increments
-                size="small"
                 color="primary"
                 density="compact"
                 :model-value="item.rating"
