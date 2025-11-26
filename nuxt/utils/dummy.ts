@@ -288,6 +288,56 @@ export const recetas = [
       "Vierte el aderezo cítrico justo antes de mezclar para evitar que las hojas se marchiten y mantengan una textura firme y agradable.",
       "Mezcla suavemente con movimientos circulares evitando presionar demasiado las hojas, garantizando así una ensalada aireada y visualmente atractiva.",
     ],
+    ingredientes: [
+      "3 zanahorias medianas peladas y cortadas",
+      "1 cebolla pequeña picada finamente",
+      "1 puerro limpio en rodajas",
+      "2 cucharadas de aceite de oliva",
+      "600 ml de caldo sin gluten",
+      "1 cucharadita de cúrcuma",
+      "1 pizca de pimienta",
+      "1 pizca de sal",
+      "100 ml de crema vegetal sin gluten",
+      "Semillas para decorar",
+    ],
+    comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     idReceta: 3,
@@ -555,6 +605,44 @@ export const restaurantes = [
     longitud: -3.7035,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante1.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     id: 2,
@@ -574,6 +662,44 @@ export const restaurantes = [
     longitud: -3.6766,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante2.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     id: 3,
@@ -593,6 +719,44 @@ export const restaurantes = [
     longitud: -3.7073,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante3.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     id: 4,
@@ -612,6 +776,44 @@ export const restaurantes = [
     longitud: -3.6769,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante4.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     id: 5,
@@ -631,6 +833,44 @@ export const restaurantes = [
     longitud: -3.6821,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante5.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     id: 6,
@@ -650,6 +890,44 @@ export const restaurantes = [
     longitud: -3.7081,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante6.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     id: 7,
@@ -669,6 +947,44 @@ export const restaurantes = [
     longitud: -3.7123,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante7.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     id: 8,
@@ -688,6 +1004,44 @@ export const restaurantes = [
     longitud: -3.7037,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante8.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     id: 9,
@@ -707,6 +1061,44 @@ export const restaurantes = [
     longitud: -3.6998,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante9.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     id: 10,
@@ -726,6 +1118,44 @@ export const restaurantes = [
     longitud: -3.6885,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante10.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     id: 11,
@@ -745,6 +1175,44 @@ export const restaurantes = [
     longitud: -3.7034,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante11.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
   {
     id: 12,
@@ -764,5 +1232,43 @@ export const restaurantes = [
     longitud: -3.6963,
     favorito: false,
     imagenUrl: "/img/restaurantes/restaurante12.jpg",
+        comentarios: [
+      {
+        usuario: "CeliacaFeliz",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-01",
+        titulo: "Excelente receta",
+        comentario:
+          "La receta me salió perfecta, fácil de seguir y muy sabrosa. Mis amigos celíacos quedaron encantados y la textura quedó muy suave, justo como esperaba.",
+        valoracion: 5,
+      },
+      {
+        usuario: "ChefNovato",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-03",
+        titulo: "Muy buena opción",
+        comentario:
+          "Me gustó mucho la receta, sencilla y con ingredientes fáciles de conseguir. Seguí todos los pasos y el resultado fue delicioso, ideal para desayunos rápidos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "GourmetSinGluten",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-05",
+        titulo: "Sabor equilibrado",
+        comentario:
+          "El sabor es muy equilibrado y la preparación no es complicada. Recomiendo agregar un toque extra de especias para intensificar el aroma y personalizar según gustos.",
+        valoracion: 4,
+      },
+      {
+        usuario: "MamaCeliaca",
+        img: "/img/user.jpg",
+        fechaPublicacion: "2025-11-07",
+        titulo: "Perfecto para niños",
+        comentario:
+          "Mis hijos lo disfrutaron mucho. La textura y el sabor son muy agradables, además de ser completamente seguro para celíacos. Definitivamente lo haré más veces.",
+        valoracion: 5,
+      },
+    ],
   },
 ];

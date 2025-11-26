@@ -1,5 +1,11 @@
+export interface Usuario {
+  email: string;
+  nombre: string;
+}
+
 export interface Receta {
   idReceta: number;
+  usuario: Usuario;
   descripcion: string;
   fechaCreacion: string;
   imagenUrl: string;
@@ -8,10 +14,12 @@ export interface Receta {
   subtitulo: string;
   estado: string;
   fechaValidacion: string | null;
+  valoracion: number;
   comensales: number;
   tiempoPreparacion: number;
-  calorias: number;
-  tipo: string;
+  valorEnergetico: number;
+  tipoComida: string;
+  esFavoritoUsuario: boolean;
 }
 
 export interface RecetaPaso {
@@ -20,4 +28,13 @@ export interface RecetaPaso {
   orden: number;
   idReceta: number;
   receta: Receta | null;
+}
+
+export interface RecetaIngrediente {
+  idRecetaIngrediente: number;
+  idIngrediente: number;
+  idReceta: number;
+  nombre: string;
+  cantidad: string;
+  unidad: string;
 }

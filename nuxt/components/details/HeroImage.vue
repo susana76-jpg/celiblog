@@ -1,54 +1,83 @@
 <template>
   <div class="details-page__hero-header d-flex">
     <div class="details-page__hero-info">
-      <v-chip
-        size="x-large"
-        elevation="7"
-        variant="outlined"
-        class="card-image__chip"
-        :class="setLevelChip(receipe.dificultad).color"
-      >
-        <span>{{ receipe.dificultad || 'fácil' }}</span>
-        <v-rating
-          readonly
-          color="white"
-          length="3"
-          :model-value="setLevelChip(receipe.dificultad).rating"
-        ></v-rating>
-      </v-chip>
+      <slot name="chip" :item="item" :setLevelChip="setLevelChip">
+        <!-- Default chip content for recetas -->
+        <v-chip
+          size="x-large"
+          elevation="7"
+          variant="outlined"
+          class="card-image__chip"
+          :class="setLevelChip(item.dificultad).color"
+        >
+          <span>{{ item.dificultad || 'fácil' }}</span>
+          <v-rating
+            readonly
+            color="white"
+            length="3"
+            :model-value="setLevelChip(item.dificultad).rating"
+          ></v-rating>
+        </v-chip>
+      </slot>
       <div class="details-page__hero-info__text">
         <v-rating
+          v-if="props.showRating"
           readonly
           half-increments
           color="#5D4037"
           density="compact"
-          :model-value="4"
+          :model-value="item.valoracion || 4"
         ></v-rating>
-        <h1>{{ receipe.titulo }}</h1>
-        <p>{{ receipe.subtitulo }}</p>
+        <h1>{{ item.titulo }}</h1>
+        <p>{{ item.subtitulo }}</p>
       </div>
     </div>
     <div class="details-page__hero-image">
       <v-img 
         cover
         height="500"
-        src="/img/receipe-hero-image.png" 
-        alt="Hero Image" 
+        :src="imageUrl || '/img/receipe-hero-image.png'" 
+        :alt="item.titulo || 'Hero Image'" 
       />
       <v-btn
-        :color="true ? 'error' : 'darkgray'"
+        v-if="props.showFavorite"
+        :color="item.esFavoritoUsuario ? 'error' : 'darkgray'"
         variant="outlined"
         icon="mdi-heart"
         class="details-page__hero-image__favourite"
-        @click.stop="null"
+        @click.stop="$emit('toggle-favorite')"
       />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-const props = defineProps<{
-  receipe: any;
-}>();
+const props = withDefaults(defineProps<{
+  item: any;
+  imageUrl?: string;
+  showRating?: boolean;
+  showFavorite?: boolean;
+  isFavorite?: boolean;
+}>(), {
+  showRating: true,
+  showFavorite: true,
+  isFavorite: false
+});
+
+const setLevelChip = (difficulty: string | undefined) => {
+  switch (difficulty?.toLowerCase()) {
+    case 'fácil':
+    case 'facil':
+      return { color: 'bg-success', rating: 1 };
+    case 'media':
+    case 'medium':
+      return { color: 'bg-warning', rating: 2 };
+    case 'difícil':
+    case 'dificil':
+      return { color: 'bg-error', rating: 3 };
+    default:
+      return { color: 'bg-success', rating: 1 };
+  }
+};
 </script>
 <style lang="scss">
 .details-page {

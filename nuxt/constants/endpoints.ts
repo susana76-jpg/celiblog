@@ -6,6 +6,7 @@ export const API = {
   RECETAS: {
     BASE: '/api/receta/all',
     BY_ID: '/api/receta/byId',
-    STEPS: '/api/receta/pasos'
+    STEPS: '/api/paso-receta/pasos',
+    INGREDIENTS: '/api/receta/ingredientes'
   }
 };

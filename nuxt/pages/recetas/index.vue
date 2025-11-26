@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-const img = 'https://www.figma.com/api/mcp/asset/26902a0d-e471-4f93-a9fe-7c195740016c';
+const img = '/img/recetas-hero-image.png';
 import { recetas } from '../../utils/dummy';
 </script>
 

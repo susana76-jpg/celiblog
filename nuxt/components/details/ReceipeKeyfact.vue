@@ -10,11 +10,11 @@
     </div>
     <div class="keyfact-item">
       <v-icon>mdi-alert-circle-outline</v-icon>
-      <p>{{ receipe.calorias }} kcal</p>
+      <p>{{ receipe.valorEnergetico }} kcal</p>
     </div>
     <div class="keyfact-item">
       <v-icon>mdi-food-outline</v-icon>
-      <p>{{ receipe.tipo }}</p>
+      <p class="text-capitalize">{{ receipe.tipoComida }}</p>
     </div>
   </div>
 </template>

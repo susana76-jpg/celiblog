@@ -20,7 +20,7 @@ onMounted(() => {
   // @ts-ignore - Leaflet is loaded via CDN
   const L = window.L;
   
-  const map = L.map('map').setView([40.4168, -3.7038], 13);
+  const map = L.map('map', { scrollWheelZoom: false }).setView([40.4168, -3.7038], 13);
   
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
