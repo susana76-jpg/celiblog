@@ -4,29 +4,46 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  restaurantes: Array<{
-    id: number;
-    titulo: string;
-    contacto: {
-      direccion: string;
-    };
-    latitud: number;
-    longitud: number;
-  }>;
+  restaurants: Restaurante[];
 }>();
 
+let map: any = null;
+let markersLayer: any = null;
 
 onMounted(() => {
   // @ts-ignore - Leaflet is loaded via CDN
   const L = window.L;
   
-  const map = L.map('map', { scrollWheelZoom: false }).setView([40.4168, -3.7038], 13);
+  map = L.map('map', { scrollWheelZoom: false }).setView([40.4168, -3.7038], 13);
   
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 
+  // Create layer group for markers
+  markersLayer = L.layerGroup().addTo(map);
+  
+  // Add initial markers if restaurants already loaded
+  if (props.restaurants.length > 0) {
+    addMarkers();
+  }
+});
+
+// Watch for restaurants data changes
+watch(() => props.restaurants, (newRestaurants) => {
+  if (newRestaurants.length > 0 && map && markersLayer) {
+    addMarkers();
+  }
+}, { deep: true });
+
+function addMarkers() {
+  // @ts-ignore - Leaflet is loaded via CDN
+  const L = window.L;
+  
+  // Clear existing markers
+  markersLayer.clearLayers();
+  
   // Create custom icon with primary color
   const customIcon = L.divIcon({
     className: 'custom-marker',
@@ -40,13 +57,13 @@ onMounted(() => {
   });
 
   // Add markers for each restaurant
-  props.restaurantes.forEach(restaurant => {
+  props.restaurants.forEach(restaurant => {
     const marker = L.marker([restaurant.latitud, restaurant.longitud], { icon: customIcon })
-      .addTo(map)
+      .addTo(markersLayer)
       .bindPopup(`
         <div class="restaurant-popup" style="cursor: pointer;">
-          <b>${restaurant.titulo}</b><br>
-          ${restaurant.contacto.direccion}
+          <b>${restaurant.nombre}</b><br>
+          ${restaurant.direccion}
         </div>
       `);
     
@@ -54,14 +71,19 @@ onMounted(() => {
       const popup = document.querySelector('.restaurant-popup');
       if (popup) {
         popup.addEventListener('click', () => {
-          navigateTo(`/restaurantes/${restaurant.id}`);
+          navigateTo(`/restaurantes/${restaurant.idRestaurante}`);
         });
       }
     });
   });
-});
+}
 </script>
 
 <style scoped lang="scss">
-
+#map { 
+  height: 400px;
+  margin-left: 16px;
+  margin-right: 16px;
+  border-radius: 6px;
+}
 </style>

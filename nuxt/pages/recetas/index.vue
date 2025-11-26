@@ -5,7 +5,7 @@
     <SectionHeroImage
       image-alt="Delicious food"
       title="Recetas"
-      subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas neque nec fringilla finibus. Quisque fringilla odio turpis. Nam eget tincidunt metus."
+      subtitle="Descubre una variedad de platos sin gluten, fáciles de preparar y llenos de sabor. Aquí encontrarás ideas para cada ocasión, desde comidas rápidas hasta recetas más elaboradas, todas aptas para personas con intolerancia o sensibilidad al gluten."
       :image-src="img"
     />
     <!------------------------------------------->
@@ -13,19 +13,19 @@
     <!-- MAIN CONTENT --------------------------->
     <div class="section-main">
       <div class="section-main__title">
-        <h2>Lorem ipsum dolor sit amet</h2>
-        <p>Cras risus risus, accumsan lacinia imperdiet id, varius sed mi. Fusce accumsan nec odio nec consequat.</p>
+        <h2>Un vistazo a nuestra cocina sin gluten</h2>
+        <p>Te presentamos propuestas variadas que combinan creatividad y tradición, todas libres de gluten. Perfectas para cocinar con confianza y descubrir nuevos sabores.</p>
       </div>
       <SectionFilterBar />
       <v-row no-gutters class="section-main__content">
         <v-col
-          v-for="item in recetas"
+          v-for="item in recipes"
           :key="item.idReceta"
           cols="12"
           md="4"
           xl="3"
         >
-          <SectionCardItem 
+          <SectionRecipeCardItem 
             :item="item" 
             type="recetas"
           />
@@ -38,8 +38,24 @@
 </template>
 
 <script setup lang="ts">
-const img = '/img/recetas-hero-image.png';
-import { recetas } from '../../utils/dummy';
+const img = '/img/recetas/hero-image.png';
+const recipes = ref<Receta[]>([]);
+
+// Get receta by ID from API
+const getAllRecipes = async () => {
+  try {
+    const { data } = await useApiFetch(API.RECIPES.BASE);
+    recipes.value = data.value as Receta[];
+    recipes.value.forEach((recipe, i) => recipe.imagenUrl = '/img/recetas/receta' + (i + 1) + '.jpg');
+  } catch (error) {
+    console.error('Error fetching receipe:', error);
+  }
+};
+
+onMounted(() => {
+  getAllRecipes();
+});
+
 </script>
 
 <style lang="scss" scoped>

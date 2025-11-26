@@ -1,12 +1,22 @@
 <template>
   <section class="details-page recipe-page">
+
+    <!-- HERO IMAGE ----------------------------->
     <DetailsHeroImage 
       v-if="receta" 
       :item="receta" 
       :imageUrl="receta.imagenUrl"
     />
+    <!------------------------------------------->
+
+    <!-- MAIN CONTENT --------------------------->
     <div class="recipe-description">
-      <DetailsReceipeKeyfact v-if="receta" :receipe="receta" />
+
+      <DetailsReceipeKeyfact 
+        v-if="receta" 
+        :receipe="receta" 
+      />
+      
       <h2 class="mt-10 mb-4">Descripción de la receta</h2>
       <p>{{ receta?.descripcion || '' }}</p>
       <h2 class="mt-10 mb-4">Pasos de la receta</h2>
@@ -25,8 +35,15 @@
         </v-chip>
       </v-chip-group>
     </div>
+    <!------------------------------------------->
 
-    <CommentsMainContent class="mt-8 mb-15" :comentarios="comentarios" />
+    <!-- COMMENTS CONTENT ----------------------->
+    <CommentsMainContent 
+      class="mt-8 mb-15" 
+      :comentarios="comentarios" 
+    />
+    <!------------------------------------------->
+
   </section>
 </template>
 
@@ -41,7 +58,7 @@ const pasos = ref<string[]>([]);
 // Get receta by ID from API
 const getReceipeById = async () => {
   try {
-    const { data } = await useApiFetch(API.RECETAS.BY_ID, {
+    const { data } = await useApiFetch(API.RECIPES.BY_ID, {
       params: { id },
     });
     receta.value = data.value as Receta; 
@@ -54,7 +71,7 @@ const getReceipeById = async () => {
 // Get receta steps by ID from API
 const getReceipeStepsById = async () => {
   try {
-    const { data } = await useApiFetch(API.RECETAS.STEPS, {
+    const { data } = await useApiFetch(API.RECIPES.STEPS, {
       params: { idReceta: id },
     }) as { data: Ref<RecetaPaso[]> };
 
@@ -69,7 +86,7 @@ const getReceipeStepsById = async () => {
 // Get receta ingredients by ID from API
 const getReceipeIngredientsById = async () => {
   try {
-    const { data } = await useApiFetch(API.RECETAS.INGREDIENTS, {
+    const { data } = await useApiFetch(API.RECIPES.INGREDIENTS, {
       params: { idReceta: id },
     }) as { data: Ref<RecetaIngrediente[]> };
 

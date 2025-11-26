@@ -10,28 +10,25 @@
         height="400" 
         :src="item.imagenUrl"
       />
-      <slot name="chip" :item="item" :setChipClass="setChipClass">
-        <!-- Default chip content -->
-        <v-chip
-          class="card-image__chip"
-          :class="setChipClass(item.dificultad)"
-          variant="outlined"
-        >
-          <span>{{ item.dificultad || 'easy' }}</span>
-          <v-rating
-            readonly
-            color="white"
-            length="3"
-            :model-value="item.dificultad === 'easy' ? 1 : item.dificultad === 'medium' ? 2 : 3"
-          ></v-rating>
-        </v-chip>
-      </slot>
+      <v-chip
+        class="card-image__chip"
+        :class="setChipClass(item.dificultad)"
+        variant="outlined"
+      >
+        <span>{{ item.dificultad || 'fácil' }}</span>
+        <v-rating
+          readonly
+          color="white"
+          length="3"
+          :model-value="item.dificultad === 'fácil' ? 1 : item.dificultad === 'media' ? 2 : 3"
+        ></v-rating>
+      </v-chip>
       <v-btn
-        :color="item.favorite ? 'error' : 'darkgray'"
+        :color="item.esFavoritoUsuario ? 'error' : 'darkgray'"
         variant="outlined"
         icon="mdi-heart"
         class="card-image__favourite"
-        @click.stop="$emit('toggle-favorite', item.id)"
+        @click.stop="$emit('toggle-favorite', item.idReceta)"
       />
     </div>
     <v-card-title class="px-0">
@@ -51,41 +48,25 @@
 </template>
 
 <script setup lang="ts">
-// const props = defineProps<{
-//   item: {
-//     id: number;
-//     title: string;
-//     description: string;
-//     image: string;
-//     link: string;
-//     rating: number;
-//     favorite?: boolean;
-//     difficulty?: string;
-//   };
 // }>(); 
 const props = defineProps<{
-  item: any;
-  type: 'recetas' | 'restaurantes' | 'consejos';
+  item: Receta;
 }>();
 
-const setChipClass = (difficulty: string | undefined) => {
+const setChipClass = (difficulty: Receta['dificultad'] | undefined) => {
   switch (difficulty) {
-    case 'easy':
+    case 'fácil':
       return 'bg-success';
-    case 'medium':
+    case 'media':
       return 'bg-warning';
-    case 'hard':
+    case 'difícil':
       return 'bg-error';
     default:
       return 'bg-success';
   }
 };
 
-const setLink = computed(() => {
-  if (props.type === 'recetas') return `/recetas/${props.item.idReceta}`;
-  if (props.type === 'consejos') return `/consejos/${props.item.idConsejo}`;
-  if (props.type === 'restaurantes') return `/restaurantes/${props.item.id}`;
-});
+const setLink = computed(() => `/recetas/${props.item.idReceta}`);
 </script>
 
 <style lang="scss">

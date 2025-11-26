@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { receipes, tips } from '../utils/dummy';
 const getReceipes = async () => {
-  const { data, pending, error } = await useApiFetch(API.RECETAS.BASE);
+  const { data, pending, error } = await useApiFetch(API.RECIPES.BASE);
   console.log('data', data.value);
 };
 getReceipes();

@@ -1,76 +1,56 @@
-@use 'variables';
-@use 'index';
+<template>
+  <v-card 
+    :to="setLink" 
+    variant="text"
+    class="card-item mx-2 pa-2" 
+  >
+    <div class="card-image">
+      <v-img 
+        cover 
+        height="400" 
+        :src="item.imagenUrl"
+      />
+      <v-chip 
+        class="card-image__chip bg-success text-white"
+        variant="outlined"
+      >
+        <v-icon left>mdi-plus</v-icon>
+        Información
+      </v-chip>
+      <v-btn
+        :color="true ? 'error' : 'darkgray'"
+        variant="outlined"
+        icon="mdi-heart"
+        class="card-image__favourite"
+        @click.stop="$emit('toggle-favorite', item.idRestaurante)"
+      />
+    </div>
+    <v-card-title class="px-0">
+      {{ item.nombre }}
+    </v-card-title>
+    <v-card-text class="px-0">
+      {{ item.descripcion }}
+    </v-card-text>
+    <v-rating
+      readonly
+      half-increments
+      color="primary"
+      density="compact"
+      :model-value="item.valoracion"
+    ></v-rating>
+  </v-card>
+</template>
 
-body {
-  font-family: variables.$font-family-main;
-  margin: 0;
-  padding: 0;
-}
-
-p {
-  line-height: 1.3rem;
-  font-size: 1.1rem;
-}
-
-li {
-  font-size: 1.1rem;
-}
-
-// Increase icon size in buttons
-.v-btn .v-icon {
-  --v-icon-size-multiplier: 1;
-}
-
-// Set border radius in images inside cards
-.v-card .v-img {
-  border-radius: 4px;
-}
+<script setup lang="ts">
+const props = defineProps<{
+  item: Restaurante;
+}>();
 
 
-/***********************************/
-/* Main Section Styles */
-/**********************************/
-.section-main {
-  padding: 0 80px;
-  margin-bottom: 60px;
+const setLink = computed(() => `/restaurantes/${props.item.idRestaurante}`);
+</script>
 
-  &__title {
-    width: 90%;
-    text-align: center;
-    margin: 0 auto;
-    padding-top: 50px;
-    padding-bottom: 50px;
-
-    h2 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 22px;
-      line-height: 22px;
-      font-weight: 600;
-      color: #242424;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-family: 'Arial', sans-serif;
-      font-size: 32px;
-      line-height: 26px;
-      letter-spacing: -1px;
-      color: #836a02;
-      max-width: 70%;
-      margin: 0 auto;
-    }
-  }
-}
-
-@media (max-width: 1200px) {
-  .section-main {
-    padding: 0 30px;
-  }
-}
-
-/***********************************/
-/* Card Item Styles */
-/***********************************/
+<style lang="scss">
 .card-item {
   margin-bottom: 24px;
 
@@ -135,3 +115,4 @@ li {
     padding-bottom: 8px;
   }
 }
+</style>

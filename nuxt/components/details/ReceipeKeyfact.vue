@@ -13,8 +13,8 @@
       <p>{{ receipe.valorEnergetico }} kcal</p>
     </div>
     <div class="keyfact-item">
-      <v-icon>mdi-food-outline</v-icon>
-      <p class="text-capitalize">{{ receipe.tipoComida }}</p>
+      <v-icon>mdi-silverware</v-icon>
+      <p>{{ formatTipoComida(receipe.tipoComida) }}</p>
     </div>
   </div>
 </template>
@@ -23,6 +23,11 @@
 const props = defineProps<{
   receipe: any;
 }>();
+
+// Format tipoComida string to capitalize first letter and lowercase the rest
+const formatTipoComida = (tipo: string) => {
+  return tipo.charAt(0) + tipo.slice(1).toLowerCase();
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,7 @@
 <template>
   <div class="details-page__hero-header d-flex">
     <div class="details-page__hero-info">
+
       <slot name="chip" :item="item" :setLevelChip="setLevelChip">
         <!-- Default chip content for recetas -->
         <v-chip
@@ -19,6 +20,7 @@
           ></v-rating>
         </v-chip>
       </slot>
+      
       <div class="details-page__hero-info__text">
         <v-rating
           v-if="props.showRating"

@@ -9,7 +9,7 @@ export interface Receta {
   descripcion: string;
   fechaCreacion: string;
   imagenUrl: string;
-  dificultad: string;
+  dificultad: 'fácil' | 'media' | 'difícil';
   titulo: string;
   subtitulo: string;
   estado: string;
