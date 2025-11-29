@@ -149,9 +149,12 @@
 
 <script setup lang="ts">
 const route = useRoute();
-const isUserLoggedIn = ref<boolean>(true);
-const userName = ref<string>('John Doe');
+const { user, isAuthenticated, logout } = useAuthStore();
 const drawer = ref<boolean>(false);
+
+// Computed properties for authentication
+const isUserLoggedIn = computed(() => isAuthenticated.value);
+const userName = computed(() => user.value?.nombre || 'Usuario');
 
 // Check if route is active
 const isActiveRoute = (path: string) => {
@@ -172,7 +175,7 @@ const menuItems = [
 // List of account buttons
 const accountButtons = [
   {
-    path: '/inicio',
+    path: '/login',
     text: 'Iniciar Sesión',
     icon: 'mdi-account-outline',
     variant: 'flat' as Variant,
@@ -197,8 +200,8 @@ const items = [
     event: async () => await navigateTo('/usuario') 
   },
   { 
-    title: 'Cerrar Sesión' ,
-    event: async () => await navigateTo('/')
+    title: 'Cerrar Sesión',
+    event: () => logout()
   },
 ];  
 </script>
