@@ -66,11 +66,11 @@ public class TagRecetaController {
     public ResponseEntity<List<RecetaDTO>> buscarRecetasPorNombreDeTags(@RequestParam(name="tag") List<String> tags) {
         return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTags(tags));
     }
-    @Operation(summary = "Obtiene la lista de tags de una receta por su id.")
+   /* @Operation(summary = "Obtiene la lista de tags de una receta por su id.")
     @GetMapping("/tags")
     public ResponseEntity<List<TagRecetaDTO>> obtenerTagsPorIdReceta(@RequestParam(name="idReceta") Long idReceta) {
         return ResponseEntity.ok(this.recetaService.obtenerTagsRecetaPorId(idReceta));
-    }
+    }*/
 
 
 

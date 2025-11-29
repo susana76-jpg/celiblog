@@ -1,7 +1,7 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.enums.EstadoValidacion;
-import com.daw.celiblog.enums.ObjetoComentario;
+import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.enums.ObjetoEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
@@ -16,16 +16,16 @@ public class ComentarioDTO {
     private UsuarioDTO usuarioDTO;
     private Long idObjetoComentado;
 
-    public ObjetoComentario objetoComentado;
+    public ObjetoEnum objetoComentado;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaValidacion;
     private int  valoracion;
-    private EstadoValidacion estado = EstadoValidacion.APROBADO;
+    private EstadoValidacionEnum estado = EstadoValidacionEnum.APROBADO;
 
     public ComentarioDTO() {
     }
 
-    public ComentarioDTO(Long idComentario, Date fechaPublicacion, String contenido, String comentarioUrl, UsuarioDTO usuarioDTO, Long idObjetoComentado, ObjetoComentario objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacion estado) {
+    public ComentarioDTO(Long idComentario, Date fechaPublicacion, String contenido, String comentarioUrl, UsuarioDTO usuarioDTO, Long idObjetoComentado, ObjetoEnum objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacionEnum estado) {
         this.idComentario = idComentario;
         this.fechaPublicacion = fechaPublicacion;
         this.contenido = contenido;
@@ -82,11 +82,11 @@ public class ComentarioDTO {
         return idObjetoComentado;
     }
 
-    public ObjetoComentario getObjetoComentado() {
+    public ObjetoEnum getObjetoComentado() {
         return objetoComentado;
     }
 
-    public void setObjetoComentado(ObjetoComentario objetoComentado) {
+    public void setObjetoComentado(ObjetoEnum objetoComentado) {
         this.objetoComentado = objetoComentado;
     }
 
@@ -110,11 +110,11 @@ public class ComentarioDTO {
         this.valoracion = valoracion;
     }
 
-    public EstadoValidacion getEstado() {
+    public EstadoValidacionEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoValidacion estado) {
+    public void setEstado(EstadoValidacionEnum estado) {
         this.estado = estado;
     }
 }

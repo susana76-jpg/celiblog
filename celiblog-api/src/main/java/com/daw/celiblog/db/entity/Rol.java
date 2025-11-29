@@ -1,5 +1,6 @@
 package com.daw.celiblog.db.entity;
 
+import com.daw.celiblog.enums.RolEnum;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -10,7 +11,8 @@ import java.io.Serializable;
  */
 @Entity
 @NamedQuery(name="Rol.findAll", query="SELECT r FROM Rol r")
-public class Rol implements Serializable {
+public class
+Rol implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -23,13 +25,13 @@ public class Rol implements Serializable {
 	public Rol() {
 	}
 
-	public Rol(Long idRol, String nombre) {
+	public Rol(Long idRol, String rol) {
 		this.idRol = idRol;
-		this.nombre = nombre;
+		this.nombre = rol;
 	}
 
 	public Long getIdRol() {
-		return this.idRol;
+		return idRol;
 	}
 
 	public void setIdRol(Long idRol) {
@@ -37,14 +39,10 @@ public class Rol implements Serializable {
 	}
 
 	public String getNombre() {
-		return this.nombre;
+		return nombre;
 	}
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-
-
-
 }

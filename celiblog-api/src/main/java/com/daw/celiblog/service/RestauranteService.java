@@ -1,7 +1,7 @@
 package com.daw.celiblog.service;
 
 import com.daw.celiblog.dto.*;
-import com.daw.celiblog.enums.EstadoValidacion;
+import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
@@ -11,6 +11,7 @@ public interface RestauranteService {
     RestauranteDTO obtenerPorId(Long id);
     RestauranteDTO crear(RestauranteDTO dto);
     RestauranteDTO actualizar(Long id, RestauranteDTO dto) throws JsonProcessingException;
+    List<RestauranteDTO> byUbicacion(String ubicacion);
 
     void actualizarGeolocalizacion() throws JsonProcessingException;
     boolean eliminar(Long id);
@@ -25,7 +26,11 @@ public interface RestauranteService {
     List<RestauranteDTO> getRestaurantesEstadoPendiente();
     List<RestauranteDTO> getRestaurantesEstadoAprobado();
     List<RestauranteDTO> getRestaurantesEstadoRechazado();
-    RestauranteDTO updateEstadoPublicacionRestaurante(Long idRestaurante, EstadoValidacion estado);
+    RestauranteDTO updateEstadoPublicacionRestaurante(Long idRestaurante, EstadoValidacionEnum estado);
+
+    //usuario logado
+    List<RestauranteDTO> obtenerTodosConFavoritosUsuario(String emailUsuario);
+    List<RestauranteDTO> obtenerRestaurantesFavoritosUsuario(String emailUsuario);
 
 
 }

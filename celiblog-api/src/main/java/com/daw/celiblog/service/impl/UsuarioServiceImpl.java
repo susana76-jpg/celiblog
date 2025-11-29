@@ -34,6 +34,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public UsuarioDTO obtenerUsuarioPorEmail(String email) {
+        Optional<Usuario> user = this.usuarioRepository.findByEmail(email);
+        return user.map(UsuarioMapper::entityToDto).orElse(null);
+    }
+
+    @Override
     public List<UsuarioDTO> obtenerTodos() {
         return UsuarioMapper.entityToDtoList(this.usuarioRepository.findAll());
     }
@@ -75,5 +81,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         }else{
             return false;
         }
+    }
+
+    @Override
+    public Long getIdUsuarioLogado(String email) {
+        return this.usuarioRepository
+                .findByEmail(email).map(Usuario::getIdUsuario)
+                .orElse(null);
     }
 }

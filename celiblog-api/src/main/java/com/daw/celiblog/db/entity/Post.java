@@ -1,6 +1,6 @@
 package com.daw.celiblog.db.entity;
 
-import com.daw.celiblog.enums.EstadoValidacion;
+import com.daw.celiblog.enums.EstadoValidacionEnum;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -30,7 +30,7 @@ public class Post implements Serializable {
 	private String urlPost;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado", nullable = false)
-	private EstadoValidacion estado = EstadoValidacion.PENDIENTE;
+	private EstadoValidacionEnum estado = EstadoValidacionEnum.PENDIENTE;
 	@Column(name = "fecha_validacion")
 	private Date fechaValidacion;
 	private int valoracion;
@@ -38,7 +38,7 @@ public class Post implements Serializable {
 	public Post() {
 	}
 
-	public Post(Long idPost, Date fechaPublicacion, String contenido, Usuario usuario, String urlPost, EstadoValidacion estado, Date fechaValidacion, int valoracion) {
+	public Post(Long idPost, Date fechaPublicacion, String contenido, Usuario usuario, String urlPost, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion) {
 		this.idPost = idPost;
 		this.fechaPublicacion = fechaPublicacion;
 		this.contenido = contenido;
@@ -89,11 +89,11 @@ public class Post implements Serializable {
 		this.urlPost = urlPost;
 	}
 
-	public EstadoValidacion getEstado() {
+	public EstadoValidacionEnum getEstado() {
 		return estado;
 	}
 
-	public void setEstado(EstadoValidacion estado) {
+	public void setEstado(EstadoValidacionEnum estado) {
 		this.estado = estado;
 	}
 

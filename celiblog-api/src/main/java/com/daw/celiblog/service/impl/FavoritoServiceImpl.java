@@ -6,6 +6,7 @@ import com.daw.celiblog.db.repository.FavoritoRepository;
 import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.FavoritoDTO;
 import com.daw.celiblog.dto.FavoritoView;
+import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.FavoritoService;
 import com.daw.celiblog.service.mapper.FavoritoMapper;
 import org.springframework.stereotype.Service;
@@ -24,34 +25,20 @@ public class FavoritoServiceImpl implements FavoritoService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    @Override
-    public List<FavoritoDTO> getFavoritosRestaurantesByIdUsuario(Long idUsuario) {
-        return FavoritoMapper.entityToDtoList(this.favoritoRepository.getFavoritosRestaurantesByIdUsuario(idUsuario));
-    }
 
     @Override
-    public List<Long> getFavoritosIdRestaurantesByIdUsuario(Long idUsuario) {
-        return this.favoritoRepository.getFavoritosIdRestaurantesByIdUsuario(idUsuario);
+    public List<FavoritoDTO> getFavoritosRestaurantesByIdUsuario(Long idUsuario) {
+        return null;
     }
 
     @Override
     public List<FavoritoDTO> getFavoritosRecetasByIdUsuario(Long idUsuario) {
-        return FavoritoMapper.entityToDtoList(this.favoritoRepository.getFavoritosRecetasByIdUsuario(idUsuario));
-    }
-
-    @Override
-    public List<Long> getFavoritosIdRecetasByIdUsuario(Long idUsuario) {
-        return this.favoritoRepository.getFavoritosIdRecetasByIdUsuario(idUsuario);
+        return null;
     }
 
     @Override
     public List<FavoritoDTO> getFavoritosPostByIdUsuario(Long idUsuario) {
-        return FavoritoMapper.entityToDtoList(this.favoritoRepository.getFavoritosPostByIdUsuario(idUsuario));
-    }
-
-    @Override
-    public List<Long> getFavoritosIdPostByIdUsuario(Long idUsuario) {
-        return this.favoritoRepository.getFavoritosIdPostByIdUsuario(idUsuario);
+        return null;
     }
 
     @Override

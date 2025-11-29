@@ -26,6 +26,13 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     @Query(value = "SELECT * FROM restaurante WHERE estado = 'PENDIENTE'", nativeQuery = true)
     List<Restaurante> getRestaurantesEstadoPendiente();
 
+    @Query(value = """
+    SELECT DISTINCT *
+    FROM restaurante 
+    WHERE UPPER(ubicacion) LIKE %:ubicacion%
+    """, nativeQuery = true)
+    List<Restaurante> findByUbicacion(@Param("ubicacion") String ubicacion);
+
     @Query(value = "SELECT * FROM restaurante WHERE estado = 'APROBADO'", nativeQuery = true)
     List<Restaurante> getRestaurantesEstadoAprobado();
 

@@ -1,13 +1,14 @@
 package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.*;
-import com.daw.celiblog.enums.EstadoValidacion;
+import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.service.RestauranteService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,15 +22,21 @@ public class RestauranteController {
     private RestauranteService restauranteService;
 
     @Operation(summary = "Obtiene todos los restaurantes.")
-    @GetMapping("/all")
+    @GetMapping("public/all")
     public ResponseEntity<List<RestauranteDTO>> obtenerTodosRestaurantes() {
         return ResponseEntity.ok(restauranteService.obtenerTodos());
     }
 
     @Operation(summary = "Obtiene un restaurante por su id.")
-    @GetMapping("/byId")
+    @GetMapping("public/byId")
     public ResponseEntity<RestauranteDTO> getRestauranteById(@RequestParam(name="id") Long id) {
         return ResponseEntity.ok(restauranteService.obtenerPorId(id));
+    }
+
+    @Operation(summary = "Obtiene restaurantes por su ubicación.")
+    @GetMapping("public/ubicacion")
+    public ResponseEntity<List<RestauranteDTO>> getRestauranteByUbicacion(@RequestParam(name="ubicacion") String ubicacion) {
+        return ResponseEntity.ok(restauranteService.byUbicacion(ubicacion));
     }
 
     @Operation(summary = "Añade un restaurante.")
@@ -70,7 +77,7 @@ public class RestauranteController {
     }
 
     @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todos los restaurantes publicados por los usuarios y aprobados para su publicación por un administrador.")
-    @GetMapping("/estado-aprobada")
+    @GetMapping("public/estado-aprobada")
     public ResponseEntity<List<RestauranteDTO>> getRestaurantesEstadoAprobado() {
         return ResponseEntity.ok(this.restauranteService.getRestaurantesEstadoAprobado());
     }
@@ -84,8 +91,15 @@ public class RestauranteController {
 
     @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Actualiza el estado de publicación de un restaurante (PENDIENTE, APROBADO, RECHAZADO")
     @PutMapping("/update-estado-publicacion")
-    ResponseEntity<RestauranteDTO> updateEstadoPublicacionReceta(@RequestParam(name="idRestaurante") Long idRestaurante, @RequestParam(name="estado") EstadoValidacion estado) {
+    ResponseEntity<RestauranteDTO> updateEstadoPublicacionReceta(@RequestParam(name="idRestaurante") Long idRestaurante, @RequestParam(name="estado") EstadoValidacionEnum estado) {
         return ResponseEntity.ok(this.restauranteService.updateEstadoPublicacionRestaurante(idRestaurante, estado));
+    }
+
+
+    @Operation(summary = "USUARIO LOGADO: Restaurantes favoritos del usuario logado.")
+    @GetMapping("/allFavoritos")
+    public ResponseEntity<List<RestauranteDTO>> obtenerRestaurantesFavoritasUsuario(Authentication authentication) {
+        return ResponseEntity.ok(restauranteService.obtenerRestaurantesFavoritosUsuario(authentication.getName()));
     }
 
 }

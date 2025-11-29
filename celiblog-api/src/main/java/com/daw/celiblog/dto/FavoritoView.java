@@ -1,14 +1,20 @@
 package com.daw.celiblog.dto;
 
+import com.daw.celiblog.enums.ObjetoEnum;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 public class FavoritoView {
     private Long idUsuario;
-    private String tipoReferencia;
+    @Enumerated(EnumType.STRING)
+    private ObjetoEnum tipoReferencia;
     private Long idReferencia;
 
     public FavoritoView() {
     }
 
-    public FavoritoView(Long idUsuario, String tipoReferencia, Long idReferencia) {
+    public FavoritoView(Long idUsuario, ObjetoEnum tipoReferencia, Long idReferencia) {
         this.idUsuario = idUsuario;
         this.tipoReferencia = tipoReferencia;
         this.idReferencia = idReferencia;
@@ -22,11 +28,11 @@ public class FavoritoView {
         this.idUsuario = idUsuario;
     }
 
-    public String getTipoReferencia() {
+    public ObjetoEnum getTipoReferencia() {
         return tipoReferencia;
     }
 
-    public void setTipoReferencia(String tipoReferencia) {
+    public void setTipoReferencia(ObjetoEnum tipoReferencia) {
         this.tipoReferencia = tipoReferencia;
     }
 

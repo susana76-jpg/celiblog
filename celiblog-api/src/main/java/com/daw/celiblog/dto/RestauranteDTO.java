@@ -1,7 +1,9 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.enums.EstadoValidacion;
+import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 
@@ -14,6 +16,10 @@ public class RestauranteDTO {
     private Long idRestaurante;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaPublicacion;
+    @JsonProperty("usuarioPublicacion")
+    private UsuarioSummaryDTO usuario;
+    @ManyToOne
+    @JsonIgnore
     private UsuarioDTO usuarioDTO;
     private String descripcion;
     private String direccion;
@@ -37,17 +43,18 @@ public class RestauranteDTO {
     private String email;
     private int valoracion;
     @Enumerated(EnumType.STRING)
-    private EstadoValidacion estado = EstadoValidacion.APROBADO;
+    private EstadoValidacionEnum estado = EstadoValidacionEnum.APROBADO;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaValidacion;
+    private boolean esFavoritoUsuario;
 
     public RestauranteDTO() {
     }
 
-    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioDTO usuarioDTO, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacion estado, Date fechaValidacion) {
+    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioSummaryDTO usuario, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacionEnum estado, Date fechaValidacion) {
         this.idRestaurante = idRestaurante;
         this.fechaPublicacion = fechaPublicacion;
-        this.usuarioDTO = usuarioDTO;
+        this.usuario = usuario;
         this.descripcion = descripcion;
         this.direccion = direccion;
         this.imagenUrl = imagenUrl;
@@ -86,6 +93,14 @@ public class RestauranteDTO {
 
     public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
         this.usuarioDTO = usuarioDTO;
+    }
+
+    public UsuarioSummaryDTO getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioSummaryDTO usuario) {
+        this.usuario = usuario;
     }
 
     public String getDescripcion() {
@@ -184,11 +199,11 @@ public class RestauranteDTO {
         this.valoracion = valoracion;
     }
 
-    public EstadoValidacion getEstado() {
+    public EstadoValidacionEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoValidacion estado) {
+    public void setEstado(EstadoValidacionEnum estado) {
         this.estado = estado;
     }
 
@@ -198,6 +213,14 @@ public class RestauranteDTO {
 
     public void setFechaValidacion(Date fechaValidacion) {
         this.fechaValidacion = fechaValidacion;
+    }
+
+    public boolean isEsFavoritoUsuario() {
+        return esFavoritoUsuario;
+    }
+
+    public void setEsFavoritoUsuario(boolean esFavoritoUsuario) {
+        this.esFavoritoUsuario = esFavoritoUsuario;
     }
 
     @Override
