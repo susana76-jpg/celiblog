@@ -34,7 +34,10 @@ public class SecurityConfig {
                                 "/swagger-resources/**",
                                 "/webjars/**",
                                 "/api/receta/public/**",
-                                "/api/restaurante/public/**"
+                                "/api/restaurante/public/**",
+                                "/api/paso-receta/public/**",
+                                "/api/tag-receta/public/**",
+                                "/api/tag-restaurante/public/**"
                         ).permitAll()
 
                         // Endpoints protegidos por rol
