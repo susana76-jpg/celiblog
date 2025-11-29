@@ -1,5 +1,6 @@
 package com.daw.celiblog.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,10 +14,11 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private static final String SECRET = "31fdg2sfdg1sf3d2g1f3d2g1fsd32g1s3dfg1f3d2g1sfd32g";
+    @Value("${jwt.secret.key}")
+    private String SECRET_KEY;
 
     private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateToken(UserDetails userDetails) {
