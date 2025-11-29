@@ -23,7 +23,7 @@
         <h2>Rellena nuestro formulario de registro</h2>
         <p>Así tendrás acceso a todo nuestro contenido, pudiendo guardarlo como favorito y hacer comentarios.</p>
       </div>
-      <v-form>
+      <v-form ref="formRef" @submit.prevent="handleRegister">
         <v-text-field
           v-for="(field, index) in textFields"
           :key="index"
@@ -38,8 +38,12 @@
           base-color="primary"
           :label="field.label"
           :prepend-inner-icon="field.icon"
+          :rules="field.rules"
           v-model="field.model.value"
         ></v-text-field>
+        <v-alert v-if="errorMessage" type="error" class="mb-4">
+          {{ errorMessage }}
+        </v-alert>
         <v-btn
           block
           height="40"
@@ -47,11 +51,13 @@
           variant="flat"
           color="primary"
           rounded="xl"
+          type="submit"
+          :loading="loading"
         />
       </v-form>
 
       <div class="mt-4 text-center">
-        <p>Si ya eres usuario, <nuxt-link to="/login" class="text-primary font-weight-medium">inicia sesión aquí</nuxt-link>.</p>
+        <p>Si ya eres usuario, <nuxt-link to="/inicio" class="text-primary font-weight-medium">inicia sesión aquí</nuxt-link>.</p>
       </div>
     </v-row>
     <!---------------------------------------------------------->
@@ -66,11 +72,33 @@ definePageMeta({
 
 const { register } = useAuthStore()
 
+const formRef = ref<HTMLFormElement | null>(null);
 const name = ref<string>('');
 const email = ref<string>('');
 const password = ref<string>('');
 const confirmPassword = ref<string>('');
+const loading = ref<boolean>(false);
+const errorMessage = ref<string>('');
 
+// Validation rules
+const validationRules = {
+  name: [
+    (v: string) => !!v || 'El nombre es requerido',
+    (v: string) => v.length >= 2 || 'El nombre debe tener al menos 2 caracteres'
+  ],
+  email: [
+    (v: string) => !!v || 'El email es requerido',
+    (v: string) => /.+@.+\..+/.test(v) || 'El email debe ser válido'
+  ],
+  password: [
+    (v: string) => !!v || 'La contraseña es requerida',
+    (v: string) => v.length >= 6 || 'La contraseña debe tener al menos 6 caracteres'
+  ],
+  confirmPassword: [
+    (v: string) => !!v || 'Confirma tu contraseña',
+    (v: string) => v === password.value || 'Las contraseñas no coinciden'
+  ]
+}
 
 // Text fields configuration array
 const textFields = [
@@ -78,93 +106,72 @@ const textFields = [
     label: 'Nombre *',
     icon: 'mdi-account',
     type: 'text',
-    model: name
+    model: name,
+    rules: validationRules.name
   },
   {
     label: 'Correo electrónico *',
     icon: 'mdi-email',
     type: 'text',
-    model: email
+    model: email,
+    rules: validationRules.email
   },
   {
     label: 'Contraseña *',
     icon: 'mdi-lock',
     type: 'password',
-    model: password
+    model: password,
+    rules: validationRules.password
   },
   {
     label: 'Confirmar contraseña *',
     icon: 'mdi-lock-check',
     type: 'password',
-    model: confirmPassword
+    model: confirmPassword,
+    rules: validationRules.confirmPassword
   }
 ];
 
 
 
-const loading = ref(false);
-const errorMessage = ref('');
-const nameErrors = ref<string[]>([]);
-const emailErrors = ref<string[]>([]);
-const passwordErrors = ref<string[]>([]);
-const confirmPasswordErrors = ref<string[]>([]);
-
 const handleRegister = async () => {
-  // Reset errors
-  nombreErrors.value = []
-  emailErrors.value = []
-  passwordErrors.value = []
-  confirmPasswordErrors.value = []
-  errorMessage.value = ''
+  errorMessage.value = '';
+  const { valid } = await formRef.value?.validate();
   
-  // Basic validation
-  if (!nombre.value) {
-    nombreErrors.value = ['El nombre es requerido']
-    return
-  }
-  if (!email.value) {
-    emailErrors.value = ['El email es requerido']
-    return
-  }
-  if (!password.value) {
-    passwordErrors.value = ['La contraseña es requerida']
-    return
-  }
-  if (password.value.length < 6) {
-    passwordErrors.value = ['La contraseña debe tener al menos 6 caracteres']
-    return
-  }
-  if (password.value !== confirmPassword.value) {
-    confirmPasswordErrors.value = ['Las contraseñas no coinciden']
-    return
+  if (!valid) return;
+  
+  loading.value = true;
+  
+  try {
+    const data = await useApiFetch(API.USER.REGISTER, {
+      method: 'POST',
+      body: {
+        nombre: name.value,
+        email: email.value,
+        password: password.value,
+        idRol: 0,
+      }
+    });
+
+    console.log('Registration successful:', data);
+    await navigateTo('/usuario');
+
+  } catch (error: any) {
+    console.error('Registration error:', error);
+    errorMessage.value = error?.data?.message || 'Error al registrarse';
   }
   
-  loading.value = true
-  
-  const result = await register({
-    nombre: nombre.value,
-    email: email.value,
-    password: password.value
-  })
-  
-  loading.value = false
-  
-  if (result.success) {
-    // Redirect to user profile
-    await navigateTo('/usuario')
-  } else {
-    errorMessage.value = result.error || 'Error al registrarse'
-  }
+  loading.value = false;
 }
 </script>
 
-<style scoped lang="scss">
-.registro-page {
-  height: calc(100vh - 146px);
+<style lang="scss">
+.registro-page, .inicio-page {
+  height: calc(100vh - 145px);
   display: flex;
   padding: 0;
 
-  .registro-image {
+  .registro-image, .inicio-image {
     position: relative;
     width: 50%;
     margin: 0;
@@ -190,7 +197,7 @@ const handleRegister = async () => {
     }
   }
 
-  .registro-form {
+  .registro-form, .inicio-form {
     width: 50%;
     margin: 0;
     padding-left: 100px;
@@ -198,6 +205,8 @@ const handleRegister = async () => {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-top: 3px solid #836A02;
+    
 
     .section-main__title {
       width: 100%;

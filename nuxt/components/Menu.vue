@@ -175,7 +175,7 @@ const menuItems = [
 // List of account buttons
 const accountButtons = [
   {
-    path: '/login',
+    path: '/inicio',
     text: 'Iniciar Sesión',
     icon: 'mdi-account-outline',
     variant: 'flat' as Variant,

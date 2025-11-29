@@ -58,10 +58,10 @@ const pasos = ref<string[]>([]);
 // Get receta by ID from API
 const getReceipeById = async () => {
   try {
-    const { data } = await useApiFetch(API.RECIPES.BY_ID, {
+    const data = await useApiFetch(API.RECIPES.BY_ID, {
       params: { id },
     });
-    receta.value = data.value as Receta; 
+    receta.value = data as Receta; 
     receta.value.imagenUrl = '/img/recetas/receta' + id + '.jpg';
   } catch (error) {
     console.error('Error fetching receipe:', error);
@@ -71,13 +71,13 @@ const getReceipeById = async () => {
 // Get receta steps by ID from API
 const getReceipeStepsById = async () => {
   try {
-    const { data } = await useApiFetch(API.RECIPES.STEPS, {
+    let data = await useApiFetch(API.RECIPES.STEPS, {
       params: { idReceta: id },
-    }) as { data: Ref<RecetaPaso[]> };
+    }) as RecetaPaso[];
 
     // Sort steps by 'orden' and map to descriptions
-    data.value = data.value.sort((a: RecetaPaso, b: RecetaPaso) => a.orden - b.orden); 
-    pasos.value = data.value.map((step: RecetaPaso) => step.descripcion);
+    data = data.sort((a: RecetaPaso, b: RecetaPaso) => a.orden - b.orden); 
+    pasos.value = data.map((step: RecetaPaso) => step.descripcion);
   } catch (error) {
     console.error('Error fetching steps:', error);
   }
@@ -86,11 +86,11 @@ const getReceipeStepsById = async () => {
 // Get receta ingredients by ID from API
 const getReceipeIngredientsById = async () => {
   try {
-    const { data } = await useApiFetch(API.RECIPES.INGREDIENTS, {
+    const data = await useApiFetch(API.RECIPES.INGREDIENTS, {
       params: { idReceta: id },
-    }) as { data: Ref<RecetaIngrediente[]> };
+    }) as RecetaIngrediente[];
 
-    ingredientes.value = data.value.map((ingrediente: RecetaIngrediente) => 
+    ingredientes.value = data.map((ingrediente: RecetaIngrediente) => 
       `${ingrediente.cantidad} ${ingrediente.unidad} de ${ingrediente.nombre}`
     );
   } catch (error) {
