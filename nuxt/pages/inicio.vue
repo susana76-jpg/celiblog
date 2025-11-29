@@ -110,6 +110,30 @@ const textFields = [
 
 
 const handleLogin = async () => {
+  errorMessage.value = '';
+  const { valid } = await formRef.value?.validate();
   
+  if (!valid) return;
+  
+  loading.value = true;
+  
+  try {
+    const data = await useApiFetch(API.USER.LOGIN, {
+      method: 'POST',
+      body: {
+        username: email.value,
+        password: password.value,
+      }
+    });
+
+    console.log('Login successful:', data);
+    await navigateTo('/usuario');
+
+  } catch (error: any) {
+    console.error('Login error:', error);
+    errorMessage.value = error?.data?.message || 'Error al iniciar sesión';
+  }
+  
+  loading.value = false;
 }
 </script>
