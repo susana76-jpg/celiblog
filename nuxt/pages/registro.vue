@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="registro-page">
 
-    <!-- Image and Welcome Text -------------------------------->
+    <!-- IMAGE AND WELCOME TEXT -------------------------------->
     <v-row class="registro-image">
       <v-img 
         cover
@@ -17,7 +17,7 @@
     </v-row>
     <!---------------------------------------------------------->
 
-    <!-- Registration Form ------------------------------------->
+    <!-- REGISTRATION FORM ------------------------------------->
     <v-row class="registro-form">
       <div class="section-main__title">
         <h2>Rellena nuestro formulario de registro</h2>
@@ -66,11 +66,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  middleware: 'guest'
-})
-
-const { register } = useAuthStore()
+const { register } = useAuthStore();
 
 const formRef = ref<HTMLFormElement | null>(null);
 const name = ref<string>('');
@@ -98,7 +94,7 @@ const validationRules = {
     (v: string) => !!v || 'Confirma tu contraseña',
     (v: string) => v === password.value || 'Las contraseñas no coinciden'
   ]
-}
+};
 
 // Text fields configuration array
 const textFields = [
@@ -132,8 +128,7 @@ const textFields = [
   }
 ];
 
-
-
+// Handle registration
 const handleRegister = async () => {
   errorMessage.value = '';
   const { valid } = await formRef.value?.validate();
@@ -152,7 +147,7 @@ const handleRegister = async () => {
   else errorMessage.value = result.error || 'Error al registrarse';
   
   loading.value = false;
-}
+};
 </script>
 
 <style lang="scss">

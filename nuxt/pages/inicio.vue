@@ -66,11 +66,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  middleware: 'guest'
-})
-
-const { login } = useAuthStore()
+const { login } = useAuthStore();
 
 const formRef = ref<HTMLFormElement | null>(null);
 const email = ref<string>('');
@@ -108,7 +104,7 @@ const textFields = [
   },
 ];
 
-
+// Handle login
 const handleLogin = async () => {
   errorMessage.value = '';
   const { valid } = await formRef.value?.validate();
@@ -116,23 +112,14 @@ const handleLogin = async () => {
   if (!valid) return;
   
   loading.value = true;
-  
-  try {
-    const data = await useApiFetch(API.USER.LOGIN, {
-      method: 'POST',
-      body: {
-        email: email.value,
-        password: password.value,
-      }
-    });
 
-    console.log('Login successful:', data);
-    await navigateTo('/usuario');
+  const result = await login({
+    email: email.value,
+    password: password.value
+  });
 
-  } catch (error: any) {
-    console.error('Login error:', error);
-    errorMessage.value = error?.data?.message || 'Error al iniciar sesión';
-  }
+  if (result.success) await navigateTo('/usuario');
+  else errorMessage.value = result.error || 'Error al registrarse';
   
   loading.value = false;
 }

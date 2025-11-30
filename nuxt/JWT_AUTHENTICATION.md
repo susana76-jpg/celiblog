@@ -54,18 +54,6 @@ definePageMeta({
 </script>
 ```
 
-#### `middleware/guest.ts`
-Redirects authenticated users away from guest-only pages (like login/register).
-
-**Usage in pages:**
-```vue
-<script setup>
-definePageMeta({
-  middleware: 'guest'
-})
-</script>
-```
-
 ## Pages
 
 ### Login Page (`pages/login.vue`)
