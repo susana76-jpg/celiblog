@@ -8,9 +8,10 @@
     "start": "node .output/server/index.mjs"
   },
   "dependencies": {
+    "jsonwebtoken": "^9.0.2",
     "nuxt": "^3",
-    "vuetify": "^3.3.0",
-    "sass": "^1.66.0"
+    "sass": "^1.66.0",
+    "vuetify": "^3.3.0"
   },
   "devDependencies": {
     "nuxi": "^3"

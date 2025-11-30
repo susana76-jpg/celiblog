@@ -12,5 +12,10 @@ export const API = {
   RESTAURANTS: {
     BASE: '/api/restaurante/all',
     BY_ID: '/api/restaurante/byId'
+  },
+  USER: {
+    REGISTER: '/api/usuario/add',
+    LOGIN: '/auth/login',
+    PROFILE: '/api/usuario/profile'
   }
 };

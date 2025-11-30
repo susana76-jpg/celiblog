@@ -44,8 +44,8 @@ const recipes = ref<Receta[]>([]);
 // Get receta by ID from API
 const getAllRecipes = async () => {
   try {
-    const { data } = await useApiFetch(API.RECIPES.BASE);
-    recipes.value = data.value as Receta[];
+    const data = await useApiFetch(API.RECIPES.BASE);
+    recipes.value = data as Receta[];
     recipes.value.forEach((recipe, i) => recipe.imagenUrl = '/img/recetas/receta' + (i + 1) + '.jpg');
   } catch (error) {
     console.error('Error fetching receipe:', error);
