@@ -588,24 +588,23 @@ export const recetas = [
 
 export const restaurantes = [
   {
-    id: 1,
-    titulo: "La Espiga Celíaca",
+    idRestaurante: 1,
+    nombre: "La Espiga Celíaca",
     subtitulo:
       "Restaurante acogedor en el corazón de Madrid que ofrece una amplia variedad de platos tradicionales españoles completamente libres de gluten, preparados con ingredientes frescos y de alta calidad.",
     descripcion:
       "La Espiga Celíaca se especializa en cocina tradicional española adaptada para personas con intolerancia al gluten. Su menú incluye desde tapas típicas hasta platos principales elaborados cuidadosamente para evitar cualquier contaminación cruzada. El restaurante cuenta con un equipo formado en manipulación segura de alimentos sin gluten y utiliza proveedores certificados. Además, ofrece opciones vegetarianas y veganas, menús infantiles y postres artesanales sin gluten. Su ambiente cálido lo convierte en un espacio ideal tanto para reuniones familiares como para una comida casual.",
-    contacto: {
-      telefono: "+34 910 123 456",
-      email: "info@laespigaceliaca.es",
-      direccion: "Calle Mayor 22, 28013 Madrid",
-    },
+    telefono: "+34 910 123 456",
+    email: "info@laespigaceliaca.es",
+    direccion: "Calle Mayor 22, 28013 Madrid",
+    urlWeb: "https://www.laespigaceliaca.es",
     tags: ["sin gluten", "tradicional", "tapas", "español"],
     valoracion: 4.7,
     latitud: 40.4169,
     longitud: -3.7035,
-    favorito: false,
+    esFavoritoUsuario: false,
     imagenUrl: "/img/restaurantes/restaurante1.jpg",
-        comentarios: [
+    comentarios: [
       {
         usuario: "CeliacaFeliz",
         img: "/img/user.jpg",

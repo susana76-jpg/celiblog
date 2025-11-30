@@ -209,7 +209,7 @@ const items = [
 
 <style lang="scss">
 .v-app-bar.main-menu {
-  padding: 18px 80px;
+  padding: 18px 120px;
 
   // Adjust toolbar content alignment
   .v-toolbar__content {

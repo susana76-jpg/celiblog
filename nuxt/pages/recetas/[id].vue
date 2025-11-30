@@ -4,13 +4,14 @@
     <!-- HERO IMAGE ----------------------------->
     <DetailsHeroImage 
       v-if="receta" 
+      type="receta"
       :item="receta" 
       :imageUrl="receta.imagenUrl"
     />
     <!------------------------------------------->
 
     <!-- MAIN CONTENT --------------------------->
-    <div class="recipe-description">
+    <div class="details-page__main recipe-description">
 
       <DetailsReceipeKeyfact 
         v-if="receta" 
@@ -112,8 +113,6 @@ onMounted(async () => {
   padding-bottom: 60px;
   
   .recipe-description {
-    padding: 60px 120px;
-
     .v-chip__content {
       font-size: 1rem;
     }

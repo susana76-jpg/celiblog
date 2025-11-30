@@ -37,7 +37,6 @@ const openCommentForm = ref<boolean>(false);
 
 <style scoped lang="scss">
 .comment-section {
-  margin: auto 120px;
   padding: 50px;
   padding-bottom: 0;
   border-radius: 10px;

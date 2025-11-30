@@ -142,24 +142,14 @@ const handleRegister = async () => {
   
   loading.value = true;
   
-  try {
-    const data = await useApiFetch(API.USER.REGISTER, {
-      method: 'POST',
-      body: {
-        nombre: name.value,
-        email: email.value,
-        password: password.value,
-        idRol: 0,
-      }
-    });
+  const result = await register({
+    nombre: name.value,
+    email: email.value,
+    password: password.value
+  });
 
-    console.log('Registration successful:', data);
-    await navigateTo('/usuario');
-
-  } catch (error: any) {
-    console.error('Registration error:', error);
-    errorMessage.value = error?.data?.message || 'Error al registrarse';
-  }
+  if (result.success) await navigateTo('/usuario');
+  else errorMessage.value = result.error || 'Error al registrarse';
   
   loading.value = false;
 }

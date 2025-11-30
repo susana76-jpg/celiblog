@@ -121,7 +121,7 @@ const handleLogin = async () => {
     const data = await useApiFetch(API.USER.LOGIN, {
       method: 'POST',
       body: {
-        username: email.value,
+        email: email.value,
         password: password.value,
       }
     });

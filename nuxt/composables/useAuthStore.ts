@@ -1,93 +1,92 @@
 import type { Usuario } from '~/types/usuario'
 
 interface AuthState {
-  user: Usuario | null
-  token: string | null
+  refreshToken: string | null
+  accessToken: string | null
 }
 
 export const useAuthStore = () => {
-  const token = useState<string | null>('auth-token', () => null)
+  const refreshToken = useState<string | null>('auth-refresh-token', () => null)
+  const accessToken = useState<string | null>('auth-access-token', () => null)
   const user = useState<Usuario | null>('auth-user', () => null)
 
   // Initialize from localStorage on client side
   if (process.client) {
-    const storedToken = localStorage.getItem('auth-token')
-    const storedUser = localStorage.getItem('auth-user')
+    // const storedToken = localStorage.getItem('auth-token')
+    // const storedUser = localStorage.getItem('auth-user')
     
-    if (storedToken && !token.value) {
-      token.value = storedToken
-    }
-    if (storedUser && !user.value) {
-      try {
-        user.value = JSON.parse(storedUser)
-      } catch (e) {
-        console.error('Error parsing stored user:', e)
-        localStorage.removeItem('auth-user')
-      }
-    }
+    // if (storedToken && !token.value) {
+    //   token.value = storedToken
+    // }
+    // if (storedUser && !user.value) {
+    //   try {
+    //     user.value = JSON.parse(storedUser)
+    //   } catch (e) {
+    //     console.error('Error parsing stored user:', e)
+    //     localStorage.removeItem('auth-user')
+    //   }
+    // }
   }
 
   const setAuth = (newToken: string, newUser: Usuario) => {
-    token.value = newToken
-    user.value = newUser
+    // token.value = newToken
+    // user.value = newUser
     
-    if (process.client) {
-      localStorage.setItem('auth-token', newToken)
-      localStorage.setItem('auth-user', JSON.stringify(newUser))
-    }
+    // if (process.client) {
+    //   localStorage.setItem('auth-token', newToken)
+    //   localStorage.setItem('auth-user', JSON.stringify(newUser))
+    // }
   }
 
   const clearAuth = () => {
-    token.value = null
-    user.value = null
+    // token.value = null
+    // user.value = null
     
-    if (process.client) {
-      localStorage.removeItem('auth-token')
-      localStorage.removeItem('auth-user')
-    }
+    // if (process.client) {
+    //   localStorage.removeItem('auth-token')
+    //   localStorage.removeItem('auth-user')
+    // }
   }
 
-  const isAuthenticated = computed(() => !!token.value)
+  const isAuthenticated = computed(() => !!accessToken.value)
 
   const login = async (email: string, password: string) => {
-    try {
-      const config = useRuntimeConfig()
-      const response = await $fetch<{ token: string; user: Usuario }>('/auth/login', {
-        method: 'POST',
-        baseURL: config.public.apiBase,
-        body: { email, password }
-      })
+    // try {
+    //   const config = useRuntimeConfig()
+    //   const response = await $fetch<{ token: string; user: Usuario }>('/auth/login', {
+    //     method: 'POST',
+    //     baseURL: config.public.apiBase,
+    //     body: { email, password }
+    //   })
 
-      if (response.token && response.user) {
-        setAuth(response.token, response.user)
-        return { success: true, user: response.user }
-      }
+    //   if (response.token && response.user) {
+    //     setAuth(response.token, response.user)
+    //     return { success: true, user: response.user }
+    //   }
       
-      return { success: false, error: 'Invalid response from server' }
-    } catch (error: any) {
-      console.error('Login error:', error)
-      return { 
-        success: false, 
-        error: error?.data?.message || error?.message || 'Login failed' 
-      }
-    }
+    //   return { success: false, error: 'Invalid response from server' }
+    // } catch (error: any) {
+    //   console.error('Login error:', error)
+    //   return { 
+    //     success: false, 
+    //     error: error?.data?.message || error?.message || 'Login failed' 
+    //   }
+    // }
   }
 
   const register = async (userData: { email: string; password: string; nombre: string }) => {
     try {
-      const config = useRuntimeConfig()
-      const response = await $fetch<{ token: string; user: Usuario }>('/auth/register', {
+      const response: AuthState = await useApiFetch(API.USER.REGISTER, {
         method: 'POST',
-        baseURL: config.public.apiBase,
         body: userData
-      })
+      });
 
-      if (response.token && response.user) {
-        setAuth(response.token, response.user)
-        return { success: true, user: response.user }
-      }
+      // if (response.accessToken) {
+      //   setAuth(response.accessToken)
+      //   return { success: true, user: response.accessToken }
+      // }
       
-      return { success: false, error: 'Invalid response from server' }
+      // return { success: false, error: 'Invalid response from server' }
     } catch (error: any) {
       console.error('Registration error:', error)
       return { 
@@ -98,38 +97,38 @@ export const useAuthStore = () => {
   }
 
   const logout = () => {
-    clearAuth()
-    if (process.client) {
-      navigateTo('/inicio')
-    }
+    // clearAuth()
+    // if (process.client) {
+    //   navigateTo('/inicio')
+    // }
   }
 
   const refreshUser = async () => {
-    if (!token.value) return
+    // if (!token.value) return
 
-    try {
-      const config = useRuntimeConfig()
-      const response = await $fetch<Usuario>('/auth/me', {
-        method: 'GET',
-        baseURL: config.public.apiBase,
-        headers: {
-          Authorization: `Bearer ${token.value}`
-        }
-      })
+    // try {
+    //   const config = useRuntimeConfig()
+    //   const response = await $fetch<Usuario>('/auth/me', {
+    //     method: 'GET',
+    //     baseURL: config.public.apiBase,
+    //     headers: {
+    //       Authorization: `Bearer ${token.value}`
+    //     }
+    //   })
 
-      user.value = response
-      if (process.client) {
-        localStorage.setItem('auth-user', JSON.stringify(response))
-      }
-    } catch (error) {
-      console.error('Error refreshing user:', error)
-      clearAuth()
-    }
+    //   user.value = response
+    //   if (process.client) {
+    //     localStorage.setItem('auth-user', JSON.stringify(response))
+    //   }
+    // } catch (error) {
+    //   console.error('Error refreshing user:', error)
+    //   clearAuth()
+    // }
   }
 
   return {
-    token: readonly(token),
-    user: readonly(user),
+    // token: readonly(token),
+    // user: readonly(user),
     isAuthenticated,
     login,
     register,

@@ -32,3 +32,10 @@ export interface Restaurante {
   estado: string;
   fechaValidacion: string | null;
 }
+
+export interface RestauranteTag {
+  idTag: number;
+  nombre: string;
+  restaurante: Restaurante | null;
+  idRestaurante: number;
+}
