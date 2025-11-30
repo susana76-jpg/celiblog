@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="inicio-page">
 
-    <!-- Registration Form ------------------------------------->
+    <!-- REGISTRATION FORM ------------------------------------->
     <v-row class="inicio-form">
       <div class="section-main__title">
         <h2>Inicia sesión en tu cuenta</h2>
@@ -25,7 +25,12 @@
           :rules="field.rules"
           v-model="field.model.value"
         ></v-text-field>
-        <v-alert v-if="errorMessage" type="error" class="mb-4">
+        <v-alert 
+          v-if="errorMessage" 
+          type="error" 
+          class="mb-4"
+          density="compact"
+        >
           {{ errorMessage }}
         </v-alert>
         <v-btn
@@ -46,7 +51,7 @@
     </v-row>
     <!---------------------------------------------------------->
 
-    <!-- Image and Welcome Text -------------------------------->
+    <!-- IMAGE AND WELCOME TEXT -------------------------------->
     <v-row class="inicio-image">
       <v-img 
         cover
@@ -124,3 +129,12 @@ const handleLogin = async () => {
   loading.value = false;
 }
 </script>
+
+<style scoped lang="scss">
+.inicio-page {
+  .inicio-form {
+    padding-left: 120px;
+    padding-right: 100px;
+  }
+}
+</style>

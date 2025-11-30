@@ -55,11 +55,11 @@ export const useAuthStore = () => {
         return { success: true, user: response.usuarioLogin }
       }
       
-      return { success: false, error: 'Invalid response from server' }
+      return { success: false, error: 'Respuesta inválida del servidor' }
     } catch (error: any) {
       return { 
         success: false, 
-        error: error?.data?.message || error?.message || 'Login failed' 
+        error: error?.data?.message || error?.message || 'Error al iniciar sesión' 
       }
     }
   }
@@ -77,11 +77,11 @@ export const useAuthStore = () => {
         return { success: true, user: response.usuarioLogin }
       }
       
-      return { success: false, error: 'Invalid response from server' }
+      return { success: false, error: 'Respuesta inválida del servidor' }
     } catch (error: any) {
       return { 
         success: false, 
-        error: error?.data?.message || error?.message || 'Registration failed' 
+        error: error?.data?.message || error?.message || 'Error al registrarse' 
       }
     }
   }
