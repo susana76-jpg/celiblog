@@ -1,6 +1,6 @@
 package com.daw.celiblog.enums;
 
-public enum EstadoValidacion {
+public enum EstadoValidacionEnum {
     PENDIENTE,
     APROBADO,
     RECHAZADO

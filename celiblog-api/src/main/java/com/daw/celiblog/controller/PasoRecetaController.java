@@ -32,8 +32,8 @@ public class PasoRecetaController {
         return ResponseEntity.status(201).body(nuevaReceta);
     }
 
-    @Operation(summary = "Obtiene los pasos para hacer la receta, por id de receta y en orden de paso.")
-    @GetMapping("/pasos")
+    @Operation(summary = "PÚBLICO: Obtiene los pasos para hacer la receta, por id de receta y en orden de paso.")
+    @GetMapping("public/pasos")
     public ResponseEntity<List<PasoRecetaDTO>> obtenerPasosRecetaPorIdReceta(@RequestParam(name="idReceta") Long idReceta) {
         return ResponseEntity.ok(this.pasoRecetaService.obtenerPasosRecetaPorId(idReceta));
     }

@@ -1,7 +1,7 @@
 package com.daw.celiblog.db.entity;
 
-import com.daw.celiblog.enums.EstadoValidacion;
-import com.daw.celiblog.enums.ObjetoComentario;
+import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.enums.ObjetoEnum;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -38,7 +38,7 @@ public class Comentario implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "objeto_comentado", nullable = false)
-	private ObjetoComentario objeto_comentado = ObjetoComentario.PENDIENTE;
+	private ObjetoEnum objeto_comentado = ObjetoEnum.PENDIENTE;
 
 	@Column(name = "fecha_validacion")
 	private Date fechaValidacion;
@@ -47,14 +47,14 @@ public class Comentario implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado", nullable = false)
-	private EstadoValidacion estado = EstadoValidacion.PENDIENTE;
+	private EstadoValidacionEnum estado = EstadoValidacionEnum.PENDIENTE;
 
 
 
 	public Comentario() {
 	}
 
-	public Comentario(Long idComentario, Date fechaPublicacion, String contenido, String comentarioUrl, Usuario usuario, Long idObjetoComentado, ObjetoComentario objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacion estado) {
+	public Comentario(Long idComentario, Date fechaPublicacion, String contenido, String comentarioUrl, Usuario usuario, Long idObjetoComentado, ObjetoEnum objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacionEnum estado) {
 		this.idComentario = idComentario;
 		this.fechaPublicacion = fechaPublicacion;
 		this.comentarioUrl = comentarioUrl;
@@ -115,11 +115,11 @@ public class Comentario implements Serializable {
 		this.idObjetoComentado = idObjetoComentado;
 	}
 
-	public ObjetoComentario getObjeto_comentado() {
+	public ObjetoEnum getObjeto_comentado() {
 		return objeto_comentado;
 	}
 
-	public void setObjeto_comentado(ObjetoComentario objeto_comentado) {
+	public void setObjeto_comentado(ObjetoEnum objeto_comentado) {
 		this.objeto_comentado = objeto_comentado;
 	}
 
@@ -131,11 +131,11 @@ public class Comentario implements Serializable {
 		this.valoracion = valoracion;
 	}
 
-	public EstadoValidacion getEstado() {
+	public EstadoValidacionEnum getEstado() {
 		return estado;
 	}
 
-	public void setEstado(EstadoValidacion estado) {
+	public void setEstado(EstadoValidacionEnum estado) {
 		this.estado = estado;
 	}
 

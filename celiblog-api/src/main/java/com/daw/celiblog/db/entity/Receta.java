@@ -1,7 +1,7 @@
 package com.daw.celiblog.db.entity;
 
-import com.daw.celiblog.enums.EstadoValidacion;
-import com.daw.celiblog.enums.TipoComida;
+import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.enums.TipoComidaEnum;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -37,7 +37,7 @@ public class Receta implements Serializable {
 	private String dificultad;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado", nullable = false)
-	private EstadoValidacion estado = EstadoValidacion.APROBADO;
+	private EstadoValidacionEnum estado = EstadoValidacionEnum.APROBADO;
 	@Column(name = "fecha_validacion")
 	private Date fechaValidacion;
 	private int valoracion;
@@ -49,14 +49,14 @@ public class Receta implements Serializable {
 	private int valorEnergetico;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_comida", nullable = false)
-	private TipoComida tipoComida;
+	private TipoComidaEnum tipoComida;
 
 
 
 	public Receta() {
 	}
 
-	public Receta(Long idReceta, Usuario usuario, String descripcion, Date fechaCreacion, String imagenUrl, String titulo, String subtitulo, String dificultad, EstadoValidacion estado, Date fechaValidacion, int valoracion, int comensales, int tiempoPreparacion, int valorEnergetico, TipoComida tipoComida) {
+	public Receta(Long idReceta, Usuario usuario, String descripcion, Date fechaCreacion, String imagenUrl, String titulo, String subtitulo, String dificultad, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion, int comensales, int tiempoPreparacion, int valorEnergetico, TipoComidaEnum tipoComida) {
 		this.idReceta = idReceta;
 		this.usuario = usuario;
 		this.descripcion = descripcion;
@@ -140,11 +140,11 @@ public class Receta implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public EstadoValidacion getEstado() {
+	public EstadoValidacionEnum getEstado() {
 		return estado;
 	}
 
-	public void setEstado(EstadoValidacion estado) {
+	public void setEstado(EstadoValidacionEnum estado) {
 		this.estado = estado;
 	}
 
@@ -188,11 +188,11 @@ public class Receta implements Serializable {
 		this.valorEnergetico = valorEnergetico;
 	}
 
-	public TipoComida getTipoComida() {
+	public TipoComidaEnum getTipoComida() {
 		return tipoComida;
 	}
 
-	public void setTipoComida(TipoComida tipoComida) {
+	public void setTipoComida(TipoComidaEnum tipoComida) {
 		this.tipoComida = tipoComida;
 	}
 }

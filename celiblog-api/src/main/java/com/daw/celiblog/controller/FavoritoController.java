@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,40 +26,12 @@ public class FavoritoController {
 
     @Operation(summary = "Obtiene el listado de favoritos de restaurantes del usuario, por id de usuario.")
     @GetMapping("/restaurantes")
-    public ResponseEntity<List<FavoritoDTO>> obtenerFavoritosRestaurante(@RequestParam(name="idUsuario") Long idUsuario) {
+    public ResponseEntity<List<FavoritoDTO>> obtenerFavoritosRestaurante(@RequestParam(name="idUsuario") Long idUsuario, Authentication authentication) {
+        String email = authentication.getName(); // el "sub" del JWT (el email)
+
         return ResponseEntity.ok(this.favoritoService.getFavoritosRestaurantesByIdUsuario(idUsuario));
     }
-    @Operation(summary = "Obtiene el listado de ids de los restaurantes favoritos del usuario, por id de usuario.")
-    @GetMapping("/idRestaurantes")
-    public ResponseEntity<List<Long>> obtenerFavoritosRestauranteIds(@RequestParam(name="idUsuario") Long idUsuario) {
-        return ResponseEntity.ok(this.favoritoService.getFavoritosIdRestaurantesByIdUsuario(idUsuario));
-    }
 
-
-
-    @Operation(summary = "Obtiene el listado de los id_receta de recetas favoritas del usuario, por id de usuario.")
-    @GetMapping("/recetas")
-    public ResponseEntity<List<FavoritoDTO>> obtenerFavoritosReceta(@RequestParam(name="idUsuario") Long idUsuario) {
-        return ResponseEntity.ok(this.favoritoService.getFavoritosRecetasByIdUsuario(idUsuario));
-    }
-    @Operation(summary = "Obtiene el listado de ids de las recetas favoritas del usuario, por id de usuario.")
-    @GetMapping("/idRecetas")
-    public ResponseEntity<List<Long>> obtenerFavoritosRecetasIds(@RequestParam(name="idUsuario") Long idUsuario) {
-        return ResponseEntity.ok(this.favoritoService.getFavoritosIdRecetasByIdUsuario(idUsuario));
-    }
-
-
-
-    @Operation(summary = "Obtiene el listado de los id_post de post favoritos del usuario, por id de usuario.")
-    @GetMapping("/post")
-    public ResponseEntity<List<FavoritoDTO>> obtenerFavoritosPost(@RequestParam(name="idUsuario") Long idUsuario) {
-        return ResponseEntity.ok(this.favoritoService.getFavoritosPostByIdUsuario(idUsuario));
-    }
-    @Operation(summary = "Obtiene el listado de ids de los posts favoritos del usuario, por id de usuario.")
-    @GetMapping("/idPost")
-    public ResponseEntity<List<Long>> obtenerFavoritosPostIds(@RequestParam(name="idUsuario") Long idUsuario) {
-        return ResponseEntity.ok(this.favoritoService.getFavoritosIdPostByIdUsuario(idUsuario));
-    }
 
     @Operation(summary = "Añade un favorito.")
     @PostMapping("/add")

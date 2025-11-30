@@ -1,6 +1,8 @@
 package com.daw.celiblog.db.entity;
 
 
+import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.enums.ObjetoEnum;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,15 +19,16 @@ public class Favorito implements Serializable {
     @ManyToOne
     @JoinColumn(name="id_usuario")
     private Usuario usuario;
-    @Column(name = "tipo_referencia")
-    private String tipoReferencia;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_referencia", nullable = false)
+    private ObjetoEnum tipoReferencia;
     @Column(name = "id_referencia")
     private Long idReferencia;
     private Date fecha;
     public Favorito() {
     }
 
-    public Favorito(Long idFavorito, Usuario usuario, String tipoReferencia, Long idReferencia, Date fecha) {
+    public Favorito(Long idFavorito, Usuario usuario, ObjetoEnum tipoReferencia, Long idReferencia, Date fecha) {
         this.idFavorito = idFavorito;
         this.usuario = usuario;
         this.tipoReferencia = tipoReferencia;
@@ -33,7 +36,7 @@ public class Favorito implements Serializable {
         this.fecha = fecha;
     }
 
-    public Favorito(Usuario usuario, String tipoReferencia, Long idReferencia, Date fecha) {
+    public Favorito(Usuario usuario, ObjetoEnum tipoReferencia, Long idReferencia, Date fecha) {
         this.usuario = usuario;
         this.tipoReferencia = tipoReferencia;
         this.idReferencia = idReferencia;
@@ -56,11 +59,11 @@ public class Favorito implements Serializable {
         this.usuario = usuario;
     }
 
-    public String getTipoReferencia() {
+    public ObjetoEnum getTipoReferencia() {
         return tipoReferencia;
     }
 
-    public void setTipoReferencia(String tipoReferencia) {
+    public void setTipoReferencia(ObjetoEnum tipoReferencia) {
         this.tipoReferencia = tipoReferencia;
     }
 

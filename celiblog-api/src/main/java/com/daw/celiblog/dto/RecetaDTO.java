@@ -1,11 +1,10 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.db.entity.Usuario;
-import com.daw.celiblog.enums.EstadoValidacion;
-import com.daw.celiblog.enums.TipoComida;
+import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.enums.TipoComidaEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToOne;
@@ -17,6 +16,7 @@ public class RecetaDTO {
 
     private Long idReceta;
 
+    @JsonProperty("usuarioPublicacion")
     private UsuarioSummaryDTO usuario;
     @ManyToOne
     @JsonIgnore
@@ -29,21 +29,21 @@ public class RecetaDTO {
     private String titulo;
     private String subtitulo;
     @Enumerated(EnumType.STRING)
-    private EstadoValidacion estado = EstadoValidacion.APROBADO;
+    private EstadoValidacionEnum estado = EstadoValidacionEnum.APROBADO;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaValidacion;
     private int valoracion;
     private int comensales;
     private int tiempoPreparacion;
     private int valorEnergetico;
-    private TipoComida tipoComida;
+    private TipoComidaEnum tipoComida;
     private boolean esFavoritoUsuario;
 
 
     public RecetaDTO() {
     }
 
-    public RecetaDTO(Long idReceta, UsuarioSummaryDTO usuarioSummaryDTO, String descripcion, Date fechaCreacion, String imagenUrl, String titulo, String subtitulo, String dificultad, EstadoValidacion estado, Date fechaValidacion, int valoracion, int comensales, int tiempoPreparacion, int valorEnergetico, TipoComida tipoComida) {
+    public RecetaDTO(Long idReceta, UsuarioSummaryDTO usuarioSummaryDTO, String descripcion, Date fechaCreacion, String imagenUrl, String titulo, String subtitulo, String dificultad, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion, int comensales, int tiempoPreparacion, int valorEnergetico, TipoComidaEnum tipoComida) {
         this.idReceta = idReceta;
         this.usuario = usuarioSummaryDTO;
         this.descripcion = descripcion;
@@ -117,11 +117,11 @@ public class RecetaDTO {
         this.dificultad = dificultad;
     }
 
-    public EstadoValidacion getEstado() {
+    public EstadoValidacionEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoValidacion estado) {
+    public void setEstado(EstadoValidacionEnum estado) {
         this.estado = estado;
     }
 
@@ -173,11 +173,11 @@ public class RecetaDTO {
         this.valorEnergetico = valorEnergetico;
     }
 
-    public TipoComida getTipoComida() {
+    public TipoComidaEnum getTipoComida() {
         return tipoComida;
     }
 
-    public void setTipoComida(TipoComida tipoComida) {
+    public void setTipoComida(TipoComidaEnum tipoComida) {
         this.tipoComida = tipoComida;
     }
 

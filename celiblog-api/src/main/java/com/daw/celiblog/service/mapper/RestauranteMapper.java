@@ -2,6 +2,7 @@ package com.daw.celiblog.service.mapper;
 
 import com.daw.celiblog.db.entity.Restaurante;
 import com.daw.celiblog.dto.RestauranteDTO;
+import com.daw.celiblog.dto.UsuarioSummaryDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +20,7 @@ public class RestauranteMapper{
         return new RestauranteDTO(
                 source.getIdRestaurante(),
                 source.getFechaPublicacion(),
-                UsuarioMapper.entityToDto(source.getUsuario()) ,
+                new UsuarioSummaryDTO(source.getUsuario().getEmail(), source.getUsuario().getNombre()),
                 source.getDescripcion(),
                 source.getDireccion(),
                 source.getImagenUrl(),

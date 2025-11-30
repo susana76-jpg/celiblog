@@ -23,7 +23,7 @@ public class TagRecetaController {
     RecetaService recetaService;
 
     @Operation(summary = "Obtiene un listado de los nombres de todos los tags de recetas existentes.")
-    @GetMapping("/all")
+    @GetMapping("public/all")
     public ResponseEntity<List<String>> obtenerPorId() {
         return ResponseEntity.ok(tagRecetaService.obtenerTodosNombresTags());
     }
@@ -56,21 +56,21 @@ public class TagRecetaController {
     }
 
     @Operation(summary = "Obtiene la lista de recetas por nombre de un tag.")
-    @GetMapping("/recetasByTag")
+    @GetMapping("public/recetasByTag")
     public ResponseEntity<List<RecetaDTO>> obtenerRecetasPorNombreTag(@RequestParam(name="nombreTag") String nombreTag) {
         return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTag(nombreTag));
     }
 
     @Operation(summary = "Obtiene la lista de recetas por varios nombres de tag.")
-    @GetMapping("/recetasByTags")
+    @GetMapping("public/recetasByTags")
     public ResponseEntity<List<RecetaDTO>> buscarRecetasPorNombreDeTags(@RequestParam(name="tag") List<String> tags) {
         return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTags(tags));
     }
-    @Operation(summary = "Obtiene la lista de tags de una receta por su id.")
+   /* @Operation(summary = "Obtiene la lista de tags de una receta por su id.")
     @GetMapping("/tags")
     public ResponseEntity<List<TagRecetaDTO>> obtenerTagsPorIdReceta(@RequestParam(name="idReceta") Long idReceta) {
         return ResponseEntity.ok(this.recetaService.obtenerTagsRecetaPorId(idReceta));
-    }
+    }*/
 
 
 

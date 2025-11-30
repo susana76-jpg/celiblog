@@ -2,13 +2,16 @@ package com.daw.celiblog.service.impl;
 
 import com.daw.celiblog.db.entity.Restaurante;
 import com.daw.celiblog.db.entity.Usuario;
+import com.daw.celiblog.db.repository.FavoritoRepository;
 import com.daw.celiblog.db.repository.RestauranteRepository;
 import com.daw.celiblog.db.repository.TagRestauranteRepository;
 import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.*;
-import com.daw.celiblog.enums.EstadoValidacion;
+import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.GeolocalizacionService;
 import com.daw.celiblog.service.RestauranteService;
+import com.daw.celiblog.service.UsuarioService;
 import com.daw.celiblog.service.mapper.RestauranteMapper;
 import com.daw.celiblog.service.mapper.TagRestauranteMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,13 +31,18 @@ public class RestauranteServiceImpl implements RestauranteService {
     private final TagRestauranteRepository tagRestauranteRepository;
     private final UsuarioRepository usuarioRepository;
     private final GeolocalizacionService geolocalizacionService;
+    private final UsuarioService usuarioService;
+    private final FavoritoRepository favoritoRepository;
 
 
-    public RestauranteServiceImpl(RestauranteRepository restauranteRepository, TagRestauranteRepository tagRestauranteRepository, UsuarioRepository usuarioRepository, GeolocalizacionService geolocalizacionService) {
+
+    public RestauranteServiceImpl(RestauranteRepository restauranteRepository, TagRestauranteRepository tagRestauranteRepository, UsuarioRepository usuarioRepository, GeolocalizacionService geolocalizacionService, UsuarioService usuarioService, FavoritoRepository favoritoRepository) {
         this.restauranteRepository = restauranteRepository;
         this.tagRestauranteRepository = tagRestauranteRepository;
         this.usuarioRepository = usuarioRepository;
         this.geolocalizacionService = geolocalizacionService;
+        this.usuarioService = usuarioService;
+        this.favoritoRepository = favoritoRepository;
     }
 
 
@@ -78,6 +86,11 @@ public class RestauranteServiceImpl implements RestauranteService {
         }
         return null;
 
+    }
+
+    @Override
+    public List<RestauranteDTO> byUbicacion(String ubicacion) {
+        return RestauranteMapper.entityToDtoList(this.restauranteRepository.findByUbicacion(ubicacion)) ;
     }
 
     @Override
@@ -192,7 +205,7 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
     @Override
-    public RestauranteDTO updateEstadoPublicacionRestaurante(Long idRestaurante, EstadoValidacion estado) {
+    public RestauranteDTO updateEstadoPublicacionRestaurante(Long idRestaurante, EstadoValidacionEnum estado) {
         Optional<Restaurante> rest = this.restauranteRepository.findById(idRestaurante);
         if(rest.isPresent()){
             Restaurante restaurante = rest.get();
@@ -200,6 +213,31 @@ public class RestauranteServiceImpl implements RestauranteService {
             return RestauranteMapper.entityToDto(this.restauranteRepository.save(restaurante));
         }
         return null;
+    }
+
+    @Override
+    public List<RestauranteDTO> obtenerTodosConFavoritosUsuario(String emailUsuario) {
+        Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuario);
+        List<Long> idRestaurantesFavoritas = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RESTAURANTE.toString());
+        return obtenerTodos()
+                .stream()
+                .map(rest -> {
+                    if(idRestaurantesFavoritas.contains(rest.getIdRestaurante())){
+                        rest.setEsFavoritoUsuario(true);
+                    }
+                    return rest;
+                }).toList();
+    }
+
+    @Override
+    public List<RestauranteDTO> obtenerRestaurantesFavoritosUsuario(String emailUsuario) {
+        Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuario);
+        List<Long> idRestaurantesFavoritos = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RESTAURANTE.toString());
+
+        return idRestaurantesFavoritos
+                .stream()
+                .map(this::obtenerPorId)
+                .toList();
     }
 
 

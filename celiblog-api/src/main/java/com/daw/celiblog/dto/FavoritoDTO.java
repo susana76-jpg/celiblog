@@ -1,6 +1,7 @@
 package com.daw.celiblog.dto;
 
 import com.daw.celiblog.db.entity.Usuario;
+import com.daw.celiblog.enums.ObjetoEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
@@ -10,14 +11,15 @@ public class FavoritoDTO {
     private Long idFavorito;
     private UsuarioDTO usuarioDTO;
     private Long idUsuario;
-    private String tipoReferencia;
+    @Enumerated(EnumType.STRING)
+    private ObjetoEnum tipoReferencia;
     private Long idReferencia;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fecha;
 
     public FavoritoDTO() {
     }
-    public FavoritoDTO(Long idFavorito, UsuarioDTO usuarioDTO, Long idUsuario, String tipoReferencia, Long idReferencia, Date fecha) {
+    public FavoritoDTO(Long idFavorito, UsuarioDTO usuarioDTO, Long idUsuario, ObjetoEnum tipoReferencia, Long idReferencia, Date fecha) {
         this.idFavorito = idFavorito;
         this.usuarioDTO = usuarioDTO;
         this.idUsuario = idUsuario;
@@ -25,7 +27,7 @@ public class FavoritoDTO {
         this.idReferencia = idReferencia;
         this.fecha = fecha;
     }
-    public FavoritoDTO(Long idFavorito, Long idUsuario, String tipoReferencia, Long idReferencia, Date fecha) {
+    public FavoritoDTO(Long idFavorito, Long idUsuario, ObjetoEnum tipoReferencia, Long idReferencia, Date fecha) {
         this.idFavorito = idFavorito;
         this.idUsuario = idUsuario;
         this.tipoReferencia = tipoReferencia;
@@ -57,11 +59,11 @@ public class FavoritoDTO {
         this.idUsuario = idUsuario;
     }
 
-    public String getTipoReferencia() {
+    public ObjetoEnum getTipoReferencia() {
         return tipoReferencia;
     }
 
-    public void setTipoReferencia(String tipoReferencia) {
+    public void setTipoReferencia(ObjetoEnum tipoReferencia) {
         this.tipoReferencia = tipoReferencia;
     }
 

@@ -23,7 +23,7 @@ public class TagRestauranteController {
     private RestauranteService restauranteService;
 
     @Operation(summary = "Obtiene el listado de todos los nombres de tag de restaurantes, sin duplicados y ordenados alfabéticamente.")
-    @GetMapping("/all")
+    @GetMapping("public/all")
     public ResponseEntity<List<String>> obtenerPorId() {
         return ResponseEntity.ok(tagRestauranteService.obtenerTodosNombresTags());
     }
@@ -36,20 +36,20 @@ public class TagRestauranteController {
     }
 
     @Operation(summary = "Obtiene los tags de un restaurante por su id.")
-    @GetMapping("/tags")
+    @GetMapping("public/tags")
     public ResponseEntity<List<TagRestauranteDTO>> obtenerTagsPorIdRestaurante(@RequestParam(name="idRestaurante") Long idRestaurante) {
         return ResponseEntity.ok(restauranteService.obtenerTagsRestaurantePorId(idRestaurante));
     }
 
 
     @Operation(summary = "Obtiene la lista de restaurantes por nombre de tag.")
-    @GetMapping("/restaurantesByTag")
+    @GetMapping("public/restaurantesByTag")
     public ResponseEntity<List<RestauranteDTO>> obtenerRecetasPorNombreTag(@RequestParam(name="nombreTag") String nombreTag) {
         return ResponseEntity.ok(this.restauranteService.buscarRestaurantesPorNombreDeTag(nombreTag));
     }
 
     @Operation(summary = "Obtiene la lista de restaurantes por varios nombre de tag.")
-    @GetMapping("/restaurantesByTags")
+    @GetMapping("public/restaurantesByTags")
     public ResponseEntity<List<RestauranteDTO>> obtenerRestaurantesPorNombresTag(@RequestParam(name="tag") List<String> tags) {
         return ResponseEntity.ok(this.restauranteService.buscarRestaurantesPorNombresDeTag(tags));
     }

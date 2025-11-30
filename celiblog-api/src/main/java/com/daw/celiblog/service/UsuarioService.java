@@ -7,9 +7,12 @@ import java.util.List;
 
     public interface UsuarioService {
     UsuarioDTO obtenerUsuarioPorId(Long idUsuario);
+    UsuarioDTO obtenerUsuarioPorEmail(String email);
     List<UsuarioDTO> obtenerTodos();
     UsuarioDTO obtenerPorId(Long id);
     UsuarioDTO crear(UsuarioView dto);
     UsuarioDTO actualizarRol(Long idUsuario, Long idRol);
     boolean eliminar(Long id);
+    Long getIdUsuarioLogado(String email);
+
 }

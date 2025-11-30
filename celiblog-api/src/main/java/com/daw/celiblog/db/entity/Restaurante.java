@@ -1,7 +1,6 @@
 package com.daw.celiblog.db.entity;
 
-import com.daw.celiblog.dto.UsuarioDTO;
-import com.daw.celiblog.enums.EstadoValidacion;
+import com.daw.celiblog.enums.EstadoValidacionEnum;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -42,7 +41,7 @@ public class Restaurante implements Serializable {
 	private Usuario usuario;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado", nullable = false)
-	private EstadoValidacion estado = EstadoValidacion.PENDIENTE;
+	private EstadoValidacionEnum estado = EstadoValidacionEnum.PENDIENTE;
 	@Column(name = "fecha_validacion")
 	private Date fechaValidacion;
 	private int valoracion;
@@ -53,7 +52,7 @@ public class Restaurante implements Serializable {
 	public Restaurante() {
 	}
 
-	public Restaurante(Long idRestaurante, Date fechaPublicacion, Usuario usuario, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacion estado, Date fechaValidacion) {
+	public Restaurante(Long idRestaurante, Date fechaPublicacion, Usuario usuario, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacionEnum estado, Date fechaValidacion) {
 		this.idRestaurante = idRestaurante;
 		this.fechaPublicacion = fechaPublicacion;
 		this.usuario = usuario;
@@ -193,11 +192,11 @@ public class Restaurante implements Serializable {
 		this.valoracion = valoracion;
 	}
 
-	public EstadoValidacion getEstado() {
+	public EstadoValidacionEnum getEstado() {
 		return estado;
 	}
 
-	public void setEstado(EstadoValidacion estado) {
+	public void setEstado(EstadoValidacionEnum estado) {
 		this.estado = estado;
 	}
 
