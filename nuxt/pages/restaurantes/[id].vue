@@ -156,11 +156,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss"> 
-.tags-list {
-  .v-slide-group__content {
-    justify-content: flex-end;
-  }
-}
+
 
 .contact-section {
   display: grid;

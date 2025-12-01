@@ -50,6 +50,19 @@ export const useAuthStore = () => {
         body: userData
       });
 
+      // TODO: Remove this mock data when backend is ready
+      response.usuarioLogin =  {
+        idUsuario: 1,
+        nombre: 'Nuria',
+        email: 'nuria@gmail.com',
+        password: 'nuria123',
+        rol: {
+          idRol: 1,
+          nombre: 'Admin'
+        },
+        fechaAlta: '2024-01-01'
+      }
+
       if (response.accessToken && response.usuarioLogin) {
         setAuth(response.accessToken, response.usuarioLogin)
         return { success: true, user: response.usuarioLogin }
@@ -86,11 +99,10 @@ export const useAuthStore = () => {
     }
   }
 
+  // User logout
   const logout = () => {
-    // clearAuth()
-    // if (process.client) {
-    //   navigateTo('/inicio')
-    // }
+    clearAuth();
+    if (import.meta.client) navigateTo('/inicio');
   }
 
   const refreshUser = async () => {
@@ -123,8 +135,6 @@ export const useAuthStore = () => {
     login,
     register,
     logout,
-    setAuth,
-    clearAuth,
     refreshUser
   }
 }

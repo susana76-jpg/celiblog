@@ -55,7 +55,7 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   item: any;
-  type: 'receta' | 'restaurante';
+  type: 'receta' | 'restaurante' | 'consejo';
   imageUrl?: string;
   showRating?: boolean;
   showFavorite?: boolean;
@@ -104,8 +104,10 @@ const title = computed(() => {
     justify-content: space-between;
 
     .v-chip {
+      align-self: flex-start;
       padding: 10px 20px !important;
-      width: 180px;
+      min-width: 180px;
+      height: 40px;
       font-family: 'Poppins', sans-serif;
       font-size: 16px;
       line-height: 16px;

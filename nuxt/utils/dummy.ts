@@ -1271,3 +1271,28 @@ export const restaurantes = [
     ],
   },
 ];
+
+export const tip = {
+  titulo: "Cómo organizar tu despensa sin gluten para evitar contaminaciones cruzadas",
+  subtitulo: "Una guía práctica y detallada para mantener tu cocina segura, ordenada y libre de gluten, especialmente pensada para quienes conviven con personas no celíacas.",
+  autor: "Susana Martínez",
+  fechaCreacion: "2025-12-01",
+  esFavoritoUsuario: false,
+  valoracion: 4.8,
+  categoria: "Consejos prácticos",
+  tags: ["organización", "seguridad alimentaria", "despensa", "vida sin gluten", "contaminación cruzada"],
+  imagenUrl: "/img/consejos/consejo1.jpg",
+  texto: [
+    "Mantener una despensa completamente libre de gluten puede parecer una tarea sencilla en apariencia, pero cuando convivimos con otras personas que consumen productos con gluten o cuando compramos ingredientes variados, la organización se convierte en una pieza clave para evitar contaminaciones cruzadas. Organizar tu despensa adecuadamente no solo te da tranquilidad, sino que también facilita tu día a día, reduce riesgos y mejora tu experiencia culinaria.",
+    "Para empezar, es importante comprender que la contaminación cruzada puede producirse de formas que a veces pasan desapercibidas. No se trata únicamente de mezclar productos o utensilios, sino de pequeñas partículas de harina, migas o restos invisibles que pueden quedar en envases, superficies o incluso en el aire. Por eso, el primer paso para organizar tu despensa es hacer una limpieza profunda. Retira todos los alimentos, limpia cada balda y revisa fechas de caducidad.",
+    "Una vez limpia, el siguiente paso es la separación de espacios. Lo ideal es que tengas una zona exclusiva para productos sin gluten. Si tu despensa es amplia, reserva una balda completa; si es pequeña, utiliza recipientes o contenedores herméticos para crear compartimentos seguros. Lo importante es que haya una frontera clara entre lo que contiene gluten y lo que no. Si compartes espacio con otros alimentos, ubica los productos sin gluten siempre en la parte superior.",
+    "El almacenamiento hermético es otro punto fundamental. Aunque muchos productos sin gluten vienen en envases bien sellados, una vez abiertos es recomendable transferirlos a recipientes herméticos. Esto evita contaminaciones y mantiene la frescura durante más tiempo. Etiqueta cada recipiente con el nombre del producto y la fecha de apertura para gestionar mejor tus existencias.",
+    "Además del almacenamiento físico, es importante establecer un orden lógico de los productos. Clasifica los alimentos por categorías: harinas sin gluten, pastas, repostería, snacks, cereales, etc. Esta organización te ayudará a encontrar rápidamente lo que necesitas y reducirá la manipulación innecesaria de envases, disminuyendo así las posibilidades de contaminación.",
+    "Otro aspecto relevante es el control de utensilios cercanos a la despensa. Si tienes cucharas, pinzas o medidores cerca de los envases, asegúrate de separar los destinados a productos sin gluten de aquellos utilizados con gluten. Incluso en una despensa, estos pequeños detalles son fundamentales.",
+    "Si vives con personas que consumen gluten, la organización debe ser clara también para ellas. Utiliza etiquetas visibles y explica la importancia de no mezclar utensilios ni introducir manos contaminadas en los recipientes. Con una comunicación adecuada, el resto de la familia puede colaborar sin dificultad.",
+    "En cuanto a los productos industriales sin gluten, revisa siempre las etiquetas para confirmar que cuentan con certificación o indicaciones claras. Evita aquellos que mencionen posibles trazas. Dedica una sección exclusiva a estos productos ya verificados para incrementar la seguridad.",
+    "Un truco útil para mantener el orden y la seguridad es hacer un inventario periódico. Revisa qué productos están por agotarse, cuáles llevan demasiado tiempo abiertos o cuáles están próximos a caducar. Esto te ayudará a evitar desperdicios y a planificar mejor tus compras.",
+    "Finalmente, recuerda que una despensa organizada no solo incrementa la seguridad alimentaria, sino que también puede motivarte a cocinar más y mejor. Ver un espacio limpio y bien estructurado te invita a experimentar nuevas recetas y a mantener hábitos saludables que beneficien tu vida sin gluten.",
+    "Organizar tu despensa sin gluten es una inversión en bienestar. Puede requerir tiempo al principio, pero pronto se convertirá en una rutina natural. Con constancia y un sistema claro, tu despensa será un espacio seguro y práctico que te acompañará de manera eficaz en tu día a día."
+  ]
+}

@@ -66,7 +66,7 @@
           >
             <v-img
               alt="John"
-              src="https://cdn.vuetifyjs.com/images/john.jpg"
+              src="/img/avatar.png"
             ></v-img>
           </v-avatar>
           <v-menu activator="parent">
