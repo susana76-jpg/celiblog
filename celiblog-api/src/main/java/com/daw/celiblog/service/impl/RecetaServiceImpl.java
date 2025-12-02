@@ -21,7 +21,6 @@ import java.util.*;
 @Service
 public class RecetaServiceImpl implements RecetaService {
     private final RecetaRepository recetaRepository;
-    private final TagRecetaRepository tagRecetaRepository;
     private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
     private final FavoritoRepository favoritoRepository;
@@ -31,7 +30,6 @@ public class RecetaServiceImpl implements RecetaService {
 
     public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository1, FavoritoRepository favoritoRepository) {
         this.recetaRepository = recetaRepository;
-        this.tagRecetaRepository = tagRecetaRepository;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository1;
         this.favoritoRepository = favoritoRepository;
@@ -140,7 +138,7 @@ public class RecetaServiceImpl implements RecetaService {
 
         if(authentication != null && authentication.getAuthorities().contains(RolEnum.VISITOR.toString())){
             Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(authentication.getName());
-            List<Long> listaRecetasFavoritas = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RECETA.toString());
+            List<Long> listaRecetasFavoritas = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RECETA);
 
             return RecetaMapper.entityToDtoList(this.recetaRepository.findAll())
                     .stream()
@@ -186,7 +184,7 @@ public class RecetaServiceImpl implements RecetaService {
 
     private List<RecetaDTO> getFavorits(List<RecetaDTO> listado, String emailUsuarioLogin){
         Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuarioLogin);
-        List<Long> idRecetasFavoritas = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RECETA.toString());
+        List<Long> idRecetasFavoritas = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RECETA);
         return listado
                 .stream()
                 .peek(receta -> {
@@ -198,7 +196,7 @@ public class RecetaServiceImpl implements RecetaService {
 
     private boolean isFavorit(Long idReceta, String emailUsuarioLogin){
         Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuarioLogin);
-        return (this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RECETA.toString())).contains(idReceta);
+        return (this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RECETA)).contains(idReceta);
     }
 
 

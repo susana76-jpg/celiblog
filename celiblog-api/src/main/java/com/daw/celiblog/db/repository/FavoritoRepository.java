@@ -12,11 +12,19 @@ import java.util.List;
 public interface FavoritoRepository extends JpaRepository<Favorito, Long> {
 
     @Query(value = """
-    SELECT DISTINCT f.id_referencia
-    FROM favoritos f
+    SELECT DISTINCT id_referencia
+    FROM favoritos
     WHERE id_usuario = :idUsuario
     AND tipo_referencia =:tipoReferencia
     """, nativeQuery = true)
-    List<Long> getIdFavoritosByTipoReferencia(@Param("idUsuario") Long idUsuario, @Param("tipoReferencia") String tipoReferencia);
+    List<Long> getIdFavoritosByTipoReferencia(@Param("idUsuario") Long idUsuario, @Param("tipoReferencia") ObjetoEnum tipoReferencia);
+
+    @Query(value = """
+    SELECT DISTINCT *
+    FROM favoritos
+    WHERE id_usuario = :idUsuario
+    AND tipo_referencia =:tipoReferencia
+    """, nativeQuery = true)
+    List<Favorito> getFavoritosByTipoReferencia(@Param("idUsuario") Long idUsuario, @Param("tipoReferencia") ObjetoEnum tipoReferencia);
 
 }

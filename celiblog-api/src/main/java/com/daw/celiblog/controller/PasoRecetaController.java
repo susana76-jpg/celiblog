@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,12 +26,6 @@ public class PasoRecetaController {
     PasoRecetaService pasoRecetaService;
 
 
-    @Operation(summary = "Añade el paso de elaboración de una receta por orden.")
-    @PostMapping("/add")
-    public ResponseEntity<PasoRecetaDTO> crearPasoDeReceta(@RequestBody PasoRecetaView recetaView){
-        PasoRecetaDTO nuevaReceta = this.pasoRecetaService.addPasoReceta(recetaView);
-        return ResponseEntity.status(201).body(nuevaReceta);
-    }
 
     @Operation(summary = "PÚBLICO: Obtiene los pasos para hacer la receta, por id de receta y en orden de paso.")
     @GetMapping("public/pasos")
@@ -38,12 +33,22 @@ public class PasoRecetaController {
         return ResponseEntity.ok(this.pasoRecetaService.obtenerPasosRecetaPorId(idReceta));
     }
 
+
+
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR','EDITOR','VISITOR')")
+    @Operation(summary = "Añade el paso de elaboración de una receta por orden.")
+    @PostMapping("/add")
+    public ResponseEntity<PasoRecetaDTO> crearPasoDeReceta(@RequestBody PasoRecetaView recetaView){
+        PasoRecetaDTO nuevaReceta = this.pasoRecetaService.addPasoReceta(recetaView);
+        return ResponseEntity.status(201).body(nuevaReceta);
+    }
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR','EDITOR','VISITOR')")
     @Operation(summary = "Actualiza el paso de una receta por id de receta y número de orden del paso.")
     @PutMapping("/update-paso")
     public ResponseEntity<PasoRecetaDTO> updatePasoReceta(@RequestBody PasoRecetaView pasoRecetaView) {
         return ResponseEntity.ok(this.pasoRecetaService.updatePasoReceta(pasoRecetaView));
     }
-
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR','EDITOR','VISITOR')")
     @Operation(summary = "Elimina el paso de una receta por id de receta y número de orden del paso.")
     @DeleteMapping("/delete-paso")
     public ResponseEntity<String> deletePasoReceta(@RequestBody PasoRecetaView pasoRecetaView) {

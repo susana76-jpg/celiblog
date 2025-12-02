@@ -78,11 +78,11 @@ public class UsuarioDTO {
         this.rol = rol;
     }
 
-    public Date getFechaAta() {
+    public Date getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAta(Date fechaAta) {
-        this.fechaAlta = fechaAta;
+    public void setFechaAlta(Date fechaAltata) {
+        this.fechaAlta = fechaAltata;
     }
 }

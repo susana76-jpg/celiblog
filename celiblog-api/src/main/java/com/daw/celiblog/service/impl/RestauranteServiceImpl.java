@@ -218,7 +218,7 @@ public class RestauranteServiceImpl implements RestauranteService {
     @Override
     public List<RestauranteDTO> obtenerTodosConFavoritosUsuario(String emailUsuario) {
         Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuario);
-        List<Long> idRestaurantesFavoritas = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RESTAURANTE.toString());
+        List<Long> idRestaurantesFavoritas = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RESTAURANTE);
         return obtenerTodos()
                 .stream()
                 .map(rest -> {
@@ -232,7 +232,7 @@ public class RestauranteServiceImpl implements RestauranteService {
     @Override
     public List<RestauranteDTO> obtenerRestaurantesFavoritosUsuario(String emailUsuario) {
         Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuario);
-        List<Long> idRestaurantesFavoritos = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RESTAURANTE.toString());
+        List<Long> idRestaurantesFavoritos = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RESTAURANTE);
 
         return idRestaurantesFavoritos
                 .stream()

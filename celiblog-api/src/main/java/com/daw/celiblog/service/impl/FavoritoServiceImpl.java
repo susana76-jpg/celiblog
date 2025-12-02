@@ -9,6 +9,7 @@ import com.daw.celiblog.dto.FavoritoView;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.FavoritoService;
 import com.daw.celiblog.service.mapper.FavoritoMapper;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,21 +26,6 @@ public class FavoritoServiceImpl implements FavoritoService {
         this.usuarioRepository = usuarioRepository;
     }
 
-
-    @Override
-    public List<FavoritoDTO> getFavoritosRestaurantesByIdUsuario(Long idUsuario) {
-        return null;
-    }
-
-    @Override
-    public List<FavoritoDTO> getFavoritosRecetasByIdUsuario(Long idUsuario) {
-        return null;
-    }
-
-    @Override
-    public List<FavoritoDTO> getFavoritosPostByIdUsuario(Long idUsuario) {
-        return null;
-    }
 
     @Override
     public FavoritoDTO addFavorito(FavoritoView favoritoView) {

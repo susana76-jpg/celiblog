@@ -8,7 +8,6 @@ com\daw\celiblog\error\NotFoundException.class
 com\daw\celiblog\db\entity\Receta.class
 com\daw\celiblog\db\repository\FavoritoRepository.class
 com\daw\celiblog\security\JwtUtil.class
-com\daw\celiblog\dto\LoginRequestDTO.class
 com\daw\celiblog\db\entity\Comentario.class
 com\daw\celiblog\db\repository\RolRepository.class
 com\daw\celiblog\dto\AuthResponse.class
@@ -39,13 +38,13 @@ com\daw\celiblog\service\mapper\PasoRecetaMapper.class
 com\daw\celiblog\dto\RestauranteViewSummary.class
 com\daw\celiblog\db\entity\TagReceta.class
 com\daw\celiblog\db\entity\TagRestaurante.class
+com\daw\celiblog\dto\ComentarioView.class
 com\daw\celiblog\service\impl\TagRecetaServiceImpl.class
 com\daw\celiblog\db\entity\Usuario.class
 com\daw\celiblog\db\entity\VistaRecetaIngredientes.class
 com\daw\celiblog\db\repository\TagRecetaRepository.class
 com\daw\celiblog\dto\UsuarioSummaryDTO.class
 com\daw\celiblog\controller\RecetaController.class
-com\daw\celiblog\dto\LoginResponseDTO.class
 com\daw\celiblog\service\PasoRecetaService.class
 com\daw\celiblog\db\repository\IngredienteRepository.class
 com\daw\celiblog\config\WebConfig.class
@@ -58,6 +57,7 @@ com\daw\celiblog\dto\RestauranteView.class
 com\daw\celiblog\service\mapper\TagRestauranteMapper.class
 com\daw\celiblog\db\repository\RestauranteRepository.class
 com\daw\celiblog\dto\TagRestauranteView.class
+com\daw\celiblog\controller\ComentarioController.class
 com\daw\celiblog\dto\ComentarioDTO.class
 com\daw\celiblog\dto\PasoRecetaDTO.class
 com\daw\celiblog\db\repository\TagRestauranteRepository.class
@@ -88,9 +88,11 @@ com\daw\celiblog\controller\RestauranteController.class
 com\daw\celiblog\service\impl\RecetaServiceImpl.class
 com\daw\celiblog\service\TagRecetaService.class
 com\daw\celiblog\db\entity\Rol.class
+com\daw\celiblog\service\impl\ComentarioServiceImpl.class
 com\daw\celiblog\service\impl\FavoritoServiceImpl.class
 com\daw\celiblog\db\repository\ComentarioRepository.class
 com\daw\celiblog\db\repository\TagComentarioRepository.class
+com\daw\celiblog\service\ComentarioService.class
 com\daw\celiblog\service\UsuarioService.class
 com\daw\celiblog\dto\AuthRequest.class
 com\daw\celiblog\dto\FavoritoView.class

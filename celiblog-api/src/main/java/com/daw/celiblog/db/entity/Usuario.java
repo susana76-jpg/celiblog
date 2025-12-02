@@ -2,6 +2,7 @@ package com.daw.celiblog.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -35,7 +36,8 @@ public class Usuario implements Serializable {
 	@JoinColumn(name="id_rol")
 	private Rol rol;
 
-	@Column(name="fecha_alta")
+	@CreationTimestamp
+	@Column(name = "fecha_alta", updatable = false)
 	private Date fechaAlta;
 
 	public Usuario() {

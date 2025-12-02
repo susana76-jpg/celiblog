@@ -6,8 +6,10 @@ import com.daw.celiblog.db.repository.RolRepository;
 import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.AuthRequest;
 import com.daw.celiblog.dto.AuthResponse;
+import com.daw.celiblog.dto.UsuarioDTO;
 import com.daw.celiblog.enums.RolEnum;
 import com.daw.celiblog.security.JwtUtil;
+import com.daw.celiblog.service.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,8 +62,10 @@ public class AuthController {
             UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
             String accessToken = jwtUtil.generateToken(userDetails);
             String refreshToken = jwtUtil.generateRefreshToken(userDetails);
+            UsuarioDTO usuario = UsuarioMapper.entityToDto(this.usuarioRepository.findByEmail(request.getEmail()).get());
 
-            return ResponseEntity.ok(new AuthResponse(accessToken, refreshToken));
+
+            return ResponseEntity.ok(new AuthResponse(accessToken, refreshToken, usuario));
         }
     }
 
@@ -76,15 +80,14 @@ public class AuthController {
             user.setPassword(passwordEncoder.encode(request.getPassword())); // encriptación con BCrypt
             user.setRol(this.rolRepository.findById(3L).get());
             user.setNombre(request.getNombre());
-            usuarioRepository.save(user);
+            Usuario usuarioLogin = usuarioRepository.save(user);
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
             String accessToken = jwtUtil.generateToken(userDetails);
             String refreshToken = jwtUtil.generateRefreshToken(userDetails);
 
-            return ResponseEntity.ok(new AuthResponse(accessToken, refreshToken));
+            return ResponseEntity.ok(new AuthResponse(accessToken, refreshToken, UsuarioMapper.entityToDto(usuarioLogin)));
         }
-
 
     }
 
@@ -99,7 +102,7 @@ public class AuthController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         if (jwtUtil.validateToken(refreshToken, userDetails)) {
             String newAccessToken = jwtUtil.generateToken(userDetails);
-            return ResponseEntity.ok(new AuthResponse(refreshToken,refreshToken));
+            return ResponseEntity.ok(new AuthResponse(refreshToken,refreshToken, UsuarioMapper.entityToDto(user)));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
