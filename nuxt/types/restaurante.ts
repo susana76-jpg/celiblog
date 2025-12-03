@@ -3,7 +3,7 @@ export interface Rol {
   nombre: string;
 }
 
-export interface Usuario {
+export interface RestauranteUsuario {
   idUsuario: number;
   email: string;
   nombre: string;
@@ -16,7 +16,7 @@ export interface Usuario {
 export interface Restaurante {
   idRestaurante: number;
   fechaPublicacion: string;
-  usuarioDTO: Usuario;
+  usuarioDTO: RestauranteUsuario;
   descripcion: string;
   direccion: string;
   imagenUrl: string;
@@ -31,4 +31,11 @@ export interface Restaurante {
   valoracion: number;
   estado: string;
   fechaValidacion: string | null;
+}
+
+export interface RestauranteTag {
+  idTag: number;
+  nombre: string;
+  restaurante: Restaurante | null;
+  idRestaurante: number;
 }

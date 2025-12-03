@@ -44,12 +44,12 @@
 const img = '/img/restaurantes/hero-image.jpg';
 const restaurants = ref<Restaurante[]>([]);
 
-// Get receta by ID from API
+// Get all restaurants from API
 const getAllRestaurants = async () => {
   try {
-    const { data } = await useApiFetch(API.RESTAURANTS.BASE);
+    const data = await useApiFetch(API.RESTAURANTS.BASE);
   
-    restaurants.value = data.value as Restaurante[];
+    restaurants.value = data as Restaurante[];
     restaurants.value.forEach((restaurant, index) => restaurant.imagenUrl = `/img/restaurantes/restaurante${index + 1}.jpg`);
   } catch (error) {
     console.error('Error fetching receipe:', error);

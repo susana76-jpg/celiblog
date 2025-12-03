@@ -69,6 +69,22 @@ li {
   }
 }
 
+
+
+/***********************************/
+/* Details page Styles */
+/**********************************/
+.details-page__main {
+  padding: 60px 120px;
+}
+
+.tags-list {
+  .v-slide-group__content {
+    justify-content: flex-end;
+  }
+}
+
+
 /***********************************/
 /* Card Item Styles */
 /***********************************/

@@ -10,3 +10,15 @@ export const setLevelChip = (level: string) => {
       return { color: 'bg-success', rating: 1 };
   }
 };
+
+
+export const setDate = (date: string) => {
+  const texto = new Intl.DateTimeFormat("es-ES", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  }).format(new Date(date));
+
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
+};

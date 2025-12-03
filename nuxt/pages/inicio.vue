@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="inicio-page">
 
-    <!-- Registration Form ------------------------------------->
+    <!-- REGISTRATION FORM ------------------------------------->
     <v-row class="inicio-form">
       <div class="section-main__title">
         <h2>Inicia sesión en tu cuenta</h2>
@@ -25,7 +25,12 @@
           :rules="field.rules"
           v-model="field.model.value"
         ></v-text-field>
-        <v-alert v-if="errorMessage" type="error" class="mb-4">
+        <v-alert 
+          v-if="errorMessage" 
+          type="error" 
+          class="mb-4"
+          density="compact"
+        >
           {{ errorMessage }}
         </v-alert>
         <v-btn
@@ -46,7 +51,7 @@
     </v-row>
     <!---------------------------------------------------------->
 
-    <!-- Image and Welcome Text -------------------------------->
+    <!-- IMAGE AND WELCOME TEXT -------------------------------->
     <v-row class="inicio-image">
       <v-img 
         cover
@@ -66,11 +71,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  middleware: 'guest'
-})
-
-const { login } = useAuthStore()
+const { login, token } = useAuthStore();
 
 const formRef = ref<HTMLFormElement | null>(null);
 const email = ref<string>('');
@@ -108,7 +109,7 @@ const textFields = [
   },
 ];
 
-
+// Handle login
 const handleLogin = async () => {
   errorMessage.value = '';
   const { valid } = await formRef.value?.validate();
@@ -116,24 +117,24 @@ const handleLogin = async () => {
   if (!valid) return;
   
   loading.value = true;
-  
-  try {
-    const data = await useApiFetch(API.USER.LOGIN, {
-      method: 'POST',
-      body: {
-        username: email.value,
-        password: password.value,
-      }
-    });
 
-    console.log('Login successful:', data);
-    await navigateTo('/usuario');
+  const result = await login({
+    email: email.value,
+    password: password.value
+  });
 
-  } catch (error: any) {
-    console.error('Login error:', error);
-    errorMessage.value = error?.data?.message || 'Error al iniciar sesión';
-  }
+  if (result.success) await navigateTo('/usuario');
+  else errorMessage.value = result.error || 'Error al registrarse';
   
   loading.value = false;
 }
 </script>
+
+<style scoped lang="scss">
+.inicio-page {
+  .inicio-form {
+    padding-left: 120px;
+    padding-right: 100px;
+  }
+}
+</style>

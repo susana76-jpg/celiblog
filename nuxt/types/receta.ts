@@ -1,11 +1,11 @@
-export interface Usuario {
+export interface RecetaUsuario {
   email: string;
   nombre: string;
 }
 
 export interface Receta {
   idReceta: number;
-  usuario: Usuario;
+  usuario: RecetaUsuario;
   descripcion: string;
   fechaCreacion: string;
   imagenUrl: string;

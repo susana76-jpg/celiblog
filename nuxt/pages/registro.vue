@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="registro-page">
 
-    <!-- Image and Welcome Text -------------------------------->
+    <!-- IMAGE AND WELCOME TEXT -------------------------------->
     <v-row class="registro-image">
       <v-img 
         cover
@@ -17,7 +17,7 @@
     </v-row>
     <!---------------------------------------------------------->
 
-    <!-- Registration Form ------------------------------------->
+    <!-- REGISTRATION FORM ------------------------------------->
     <v-row class="registro-form">
       <div class="section-main__title">
         <h2>Rellena nuestro formulario de registro</h2>
@@ -41,8 +41,13 @@
           :rules="field.rules"
           v-model="field.model.value"
         ></v-text-field>
-        <v-alert v-if="errorMessage" type="error" class="mb-4">
-          {{ errorMessage }}
+        <v-alert 
+          v-if="message.show"
+          class="mb-4"
+          density="compact"
+          :type="message.type" 
+        >
+          {{ message.text }}
         </v-alert>
         <v-btn
           block
@@ -66,11 +71,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  middleware: 'guest'
-})
-
-const { register } = useAuthStore()
+const { register } = useAuthStore();
 
 const formRef = ref<HTMLFormElement | null>(null);
 const name = ref<string>('');
@@ -78,7 +79,11 @@ const email = ref<string>('');
 const password = ref<string>('');
 const confirmPassword = ref<string>('');
 const loading = ref<boolean>(false);
-const errorMessage = ref<string>('');
+const message = ref<{ show: boolean; text: string; type: string }>({ 
+  show: false, 
+  text: '', 
+  type: 'error' 
+});
 
 // Validation rules
 const validationRules = {
@@ -98,7 +103,7 @@ const validationRules = {
     (v: string) => !!v || 'Confirma tu contraseña',
     (v: string) => v === password.value || 'Las contraseñas no coinciden'
   ]
-}
+};
 
 // Text fields configuration array
 const textFields = [
@@ -132,37 +137,46 @@ const textFields = [
   }
 ];
 
-
-
+// Handle registration
 const handleRegister = async () => {
-  errorMessage.value = '';
+  message.value.show = false;
   const { valid } = await formRef.value?.validate();
   
   if (!valid) return;
   
   loading.value = true;
   
-  try {
-    const data = await useApiFetch(API.USER.REGISTER, {
-      method: 'POST',
-      body: {
-        nombre: name.value,
-        email: email.value,
-        password: password.value,
-        idRol: 0,
-      }
-    });
+  const result = await register({
+    nombre: name.value,
+    email: email.value,
+    password: password.value
+  });
 
-    console.log('Registration successful:', data);
-    await navigateTo('/usuario');
-
-  } catch (error: any) {
-    console.error('Registration error:', error);
-    errorMessage.value = error?.data?.message || 'Error al registrarse';
-  }
+  if (result.success) setSuccessMessage();
+  else setErrorMessage(result.error || 'Error al registrarse');
   
   loading.value = false;
-}
+};
+
+// Set success message and redirect to login
+const setSuccessMessage = () => {
+  message.value = {
+    show: true,
+    text: 'Registro exitoso. Ya puedes iniciar sesión.',
+    type: 'success'
+  };
+
+  setTimeout(() => navigateTo('/inicio'), 3000);
+};
+
+// Set error message
+const setErrorMessage = (errorText: string) => {
+  message.value = {
+    show: true,
+    text: errorText,
+    type: 'error'
+  };
+};
 </script>
 
 <style lang="scss">
@@ -200,8 +214,6 @@ const handleRegister = async () => {
   .registro-form, .inicio-form {
     width: 50%;
     margin: 0;
-    padding-left: 100px;
-    padding-right: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -222,6 +234,13 @@ const handleRegister = async () => {
     .v-form {
       width: 100%;
     }
+  }
+}
+
+.registro-page {
+  .registro-form {
+    padding-right: 120px;
+    padding-left: 100px;
   }
 }
 </style>

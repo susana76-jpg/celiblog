@@ -3,6 +3,7 @@
     <div class="comment-section__header">
       <h2>Comentarios</h2>
       <v-btn
+        v-if="isAuthenticated"
         class="ml-4"
         color="primary"
         variant="flat"
@@ -28,6 +29,8 @@
 </template>
 
 <script setup lang="ts">
+const { isAuthenticated } = useAuthStore();
+
 const props = defineProps<{
   comentarios: any[];
 }>();
@@ -37,7 +40,6 @@ const openCommentForm = ref<boolean>(false);
 
 <style scoped lang="scss">
 .comment-section {
-  margin: auto 120px;
   padding: 50px;
   padding-bottom: 0;
   border-radius: 10px;

@@ -30,7 +30,7 @@
           density="compact"
           :model-value="item.valoracion || 4"
         ></v-rating>
-        <h1>{{ item.titulo }}</h1>
+        <h1>{{ title }}</h1>
         <p>{{ item.subtitulo }}</p>
       </div>
     </div>
@@ -42,7 +42,7 @@
         :alt="item.titulo || 'Hero Image'" 
       />
       <v-btn
-        v-if="props.showFavorite"
+        v-if="isAuthenticated && props.showFavorite"
         :color="item.esFavoritoUsuario ? 'error' : 'darkgray'"
         variant="outlined"
         icon="mdi-heart"
@@ -53,8 +53,11 @@
   </div>
 </template>
 <script setup lang="ts">
+const { isAuthenticated } = useAuthStore();
+
 const props = withDefaults(defineProps<{
   item: any;
+  type: 'receta' | 'restaurante' | 'consejo';
   imageUrl?: string;
   showRating?: boolean;
   showFavorite?: boolean;
@@ -80,6 +83,11 @@ const setLevelChip = (difficulty: string | undefined) => {
       return { color: 'bg-success', rating: 1 };
   }
 };
+
+const title = computed(() => {
+  if (props.type === 'restaurante') return props.item.nombre || 'Nombre no disponible';
+  return props.item.titulo || 'Título no disponible';
+});
 </script>
 <style lang="scss">
 .details-page {
@@ -98,8 +106,10 @@ const setLevelChip = (difficulty: string | undefined) => {
     justify-content: space-between;
 
     .v-chip {
+      align-self: flex-start;
       padding: 10px 20px !important;
-      width: 180px;
+      min-width: 180px;
+      height: 40px;
       font-family: 'Poppins', sans-serif;
       font-size: 16px;
       line-height: 16px;
@@ -166,7 +176,7 @@ const setLevelChip = (difficulty: string | undefined) => {
     &__favourite {
       position: absolute;
       top: 2rem;
-      right: 80px;
+      right: 120px;
       height: 80px !important;
       width: 80px !important;
       background-color: #ffffffd3;

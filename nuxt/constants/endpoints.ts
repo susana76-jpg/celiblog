@@ -4,18 +4,19 @@ export const API = {
     ID: '/api/usuario/byId'
   },
   RECIPES: {
-    BASE: '/api/receta/all',
-    BY_ID: '/api/receta/byId',
-    STEPS: '/api/paso-receta/pasos',
-    INGREDIENTS: '/api/receta/ingredientes'
+    BASE: '/api/receta/public/all',
+    BY_ID: '/api/receta/public/byId',
+    STEPS: '/api/paso-receta/public/pasos',
+    INGREDIENTS: '/api/receta/public/ingredientes'
   },
   RESTAURANTS: {
-    BASE: '/api/restaurante/all',
-    BY_ID: '/api/restaurante/byId'
+    BASE: '/api/restaurante/public/all',
+    BY_ID: '/api/restaurante/public/byId',
+    TAGS: '/api/tag-restaurante/public/tags'
   },
   USER: {
-    REGISTER: '/api/usuario/add',
-    LOGIN: '/auth/login',
+    REGISTER: '/api/auth/register',
+    LOGIN: '/api/auth/login',
     PROFILE: '/api/usuario/profile'
   }
 };

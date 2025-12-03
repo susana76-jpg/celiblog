@@ -6,7 +6,7 @@
     scroll-threshold="300"
   >
 
-    <!-- Logo -->
+    <!-- LOGO ------------------------------------------>
     <v-img 
       inline
       height="46px"
@@ -15,8 +15,9 @@
       src="/img/celiblog_logo.png" 
       alt="Celiblog logo" 
     />
+    <!-------------------------------------------------->
 
-    <!-- Desktop Navigation -->
+    <!-- DESKTOP NAVIGATION ---------------------------->
     <nav class="desktop-nav">
       <v-btn
         v-for="item in menuItems"
@@ -29,10 +30,11 @@
         rounded="0"
       />
     </nav>
+    <!-------------------------------------------------->
 
     <v-spacer class="mobile-spacer" />
 
-    <!-- Desktop Account Buttons -->
+    <!-- DESKTOP ACCOUNT BUTTONS ----------------------->
     <div class="account-buttons desktop-account">
       <template v-if="!isUserLoggedIn">
         <v-btn
@@ -64,7 +66,7 @@
           >
             <v-img
               alt="John"
-              src="https://cdn.vuetifyjs.com/images/john.jpg"
+              src="/img/avatar.png"
             ></v-img>
           </v-avatar>
           <v-menu activator="parent">
@@ -82,18 +84,20 @@
         </v-btn>
       </template>
     </div>
-
-    <!-- Mobile Menu Button -->
+    <!-------------------------------------------------->
+    
+    <!-- MOBILE MENU BUTTON ---------------------------->
     <v-btn
       icon="mdi-menu"
       variant="text"
       class="mobile-menu-btn"
       @click="drawer = !drawer"
     />
-
+    <!-------------------------------------------------->
+    
   </v-app-bar>
 
-  <!-- Mobile Navigation Drawer -->
+  <!-- MOBILE NAVIGATION DRAWER ----------------------->
   <v-navigation-drawer
     temporary
     location="right"
@@ -145,15 +149,17 @@
       </template>
     </v-list>
   </v-navigation-drawer>
+  <!-------------------------------------------------->
+
 </template>
 
 <script setup lang="ts">
-const route = useRoute();
 const { user, isAuthenticated, logout } = useAuthStore();
+const route = useRoute();
 const drawer = ref<boolean>(false);
 
 // Computed properties for authentication
-const isUserLoggedIn = computed(() => isAuthenticated.value);
+const isUserLoggedIn = computed(() => isAuthenticated.value && user.value !== null);
 const userName = computed(() => user.value?.nombre || 'Usuario');
 
 // Check if route is active
@@ -209,7 +215,7 @@ const items = [
 
 <style lang="scss">
 .v-app-bar.main-menu {
-  padding: 18px 80px;
+  padding: 18px 120px;
 
   // Adjust toolbar content alignment
   .v-toolbar__content {
