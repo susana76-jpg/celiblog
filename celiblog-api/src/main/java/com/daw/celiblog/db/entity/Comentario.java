@@ -23,6 +23,7 @@ public class Comentario implements Serializable {
 
 	@Column(name="fecha_publicacion")
 	private Date fechaPublicacion;
+	private String titulo;
 	private String subtitulo;
 	private String contenido;
 
@@ -55,11 +56,12 @@ public class Comentario implements Serializable {
 	public Comentario() {
 	}
 
-	public Comentario(Long idComentario, Date fechaPublicacion, String contenido, String subtitulo, String comentarioUrl, Usuario usuario, Long idObjetoComentado, ObjetoEnum objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacionEnum estado) {
+	public Comentario(Long idComentario, Date fechaPublicacion, String contenido, String titulo,String subtitulo, String comentarioUrl, Usuario usuario, Long idObjetoComentado, ObjetoEnum objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacionEnum estado) {
 		this.idComentario = idComentario;
 		this.fechaPublicacion = fechaPublicacion;
 		this.comentarioUrl = comentarioUrl;
 		this.contenido = contenido;
+		this.titulo = titulo;
 		this.subtitulo = subtitulo;
 		this.usuario = usuario;
 		this.idObjetoComentado = idObjetoComentado;
@@ -155,5 +157,13 @@ public class Comentario implements Serializable {
 
 	public void setFechaValidacion(Date fechaValidacion) {
 		this.fechaValidacion = fechaValidacion;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 }

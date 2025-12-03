@@ -22,6 +22,8 @@ public class RestauranteMapper{
                 source.getFechaPublicacion(),
                 new UsuarioSummaryDTO(source.getUsuario().getEmail(), source.getUsuario().getNombre()),
                 source.getDescripcion(),
+                source.getTitulo(),
+                source.getSubtitulo(),
                 source.getDireccion(),
                 source.getImagenUrl(),
                 source.getNombre(),
@@ -38,23 +40,25 @@ public class RestauranteMapper{
     }
 
     public static Restaurante dtoToEntity(RestauranteDTO source){
-        return new Restaurante(  source.getIdRestaurante(),
+        return new Restaurante(source.getIdRestaurante(),
                 source.getFechaPublicacion(),
-                UsuarioMapper.dtoToEntity(source.getUsuarioDTO()) ,
-                source.getDescripcion(),
-                source.getDireccion(),
-                source.getImagenUrl(),
                 source.getNombre(),
+                source.getDireccion(),
+                source.getTitulo(),
+                source.getSubtitulo(),
+                source.getDescripcion(),
+                source.getUrlWeb(),
+                source.getImagenUrl(),
                 source.getUbicacion(),
                 source.getCodigoPostal(),
                 source.getLatitud(),
                 source.getLongitud(),
-                source.getUrlWeb(),
                 source.getTelefono(),
                 source.getEmail(),
-                source.getValoracion(),
+                UsuarioMapper.dtoToEntity(source.getUsuarioDTO()),
                 source.getEstado(),
-                source.getFechaValidacion());
+                source.getFechaValidacion(),
+                source.getValoracion());
 
     }
 

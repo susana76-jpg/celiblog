@@ -14,6 +14,7 @@ public class ComentarioDTO {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaPublicacion;
     private String contenido;
+    private String titulo;
     private String subtitulo;
     private String comentarioUrl;
 
@@ -33,10 +34,11 @@ public class ComentarioDTO {
     public ComentarioDTO() {
     }
 
-    public ComentarioDTO(Long idComentario, Date fechaPublicacion, String contenido, String subtitulo, String comentarioUrl, UsuarioSummaryDTO usuarioSummaryDTO, Long idObjetoComentado, ObjetoEnum objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacionEnum estado) {
+    public ComentarioDTO(Long idComentario, Date fechaPublicacion, String contenido, String titulo,String subtitulo, String comentarioUrl, UsuarioSummaryDTO usuarioSummaryDTO, Long idObjetoComentado, ObjetoEnum objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacionEnum estado) {
         this.idComentario = idComentario;
         this.fechaPublicacion = fechaPublicacion;
         this.contenido = contenido;
+        this.titulo = titulo;
         this.subtitulo= subtitulo;
         this.comentarioUrl = comentarioUrl;
         this.usuario = usuarioSummaryDTO;
@@ -141,5 +143,13 @@ public class ComentarioDTO {
 
     public void setUsuario(UsuarioSummaryDTO usuario) {
         this.usuario = usuario;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }

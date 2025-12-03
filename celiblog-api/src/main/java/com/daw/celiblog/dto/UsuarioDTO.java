@@ -3,6 +3,7 @@ package com.daw.celiblog.dto;
 import com.daw.celiblog.db.entity.Rol;
 import com.daw.celiblog.service.mapper.RolMapper;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 
 import java.util.Date;
@@ -12,6 +13,7 @@ public class UsuarioDTO {
     private Long idUsuario;
     private String email;
     private String nombre;
+    @JsonIgnore
     private String password;
     private RolDTO rol;
     private Long idRol;

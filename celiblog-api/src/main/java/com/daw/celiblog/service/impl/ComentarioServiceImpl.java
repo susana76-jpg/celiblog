@@ -42,6 +42,7 @@ public class ComentarioServiceImpl implements ComentarioService {
         if(usuario.isPresent()){
             Comentario comentario = new Comentario();
             comentario.setContenido(comentarioView.getContenido());
+            comentario.setTitulo(comentarioView.getTitulo());
             comentario.setSubtitulo(comentarioView.getSubtitulo());
             comentario.setComentarioUrl(comentarioView.getComentarioUrl());
             comentario.setUsuario(usuario.get());

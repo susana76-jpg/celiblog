@@ -13,7 +13,9 @@ public class PostDTO {
     private Long idPost;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaPublicacion;
-    //bi-directional many-to-one association to Usuario
+
+    private String titulo;
+    private String subtitulo;
     private String contenido;
 
     private UsuarioDTO usuarioDTO;
@@ -27,9 +29,11 @@ public class PostDTO {
     public PostDTO() {
     }
 
-    public PostDTO(Long idPost, Date fechaPublicacion, String contenido, UsuarioDTO usuarioDTO, String urlPost, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion) {
+    public PostDTO(Long idPost, Date fechaPublicacion, String titulo, String subtitulo, String contenido, UsuarioDTO usuarioDTO, String urlPost, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion) {
         this.idPost = idPost;
         this.fechaPublicacion = fechaPublicacion;
+        this.titulo = titulo;
+        this.subtitulo = subtitulo;
         this.contenido = contenido;
         this.usuarioDTO = usuarioDTO;
         this.urlPost = urlPost;
@@ -100,5 +104,21 @@ public class PostDTO {
 
     public void setValoracion(int valoracion) {
         this.valoracion = valoracion;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getSubtitulo() {
+        return subtitulo;
+    }
+
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
     }
 }

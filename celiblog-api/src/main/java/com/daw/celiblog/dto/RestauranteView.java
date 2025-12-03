@@ -6,6 +6,8 @@ public class RestauranteView {
 
     public String nombre;
     public String direccion;
+    public String titulo;
+    public String subtitulo;
     public String descripcion;
     public String urlWeb;
     public String imagen_url;
@@ -28,9 +30,11 @@ public class RestauranteView {
     public RestauranteView() {
     }
 
-    public RestauranteView(String nombre, String direccion, String descripcion, String urlWeb, String imagen_url, String ubicacion, int codigoPostal, String telefono, String email, Long idUsuario, int valoracion) {
+    public RestauranteView(String nombre, String direccion, String titulo, String subtitulo, String descripcion, String urlWeb, String imagen_url, String ubicacion, int codigoPostal, String telefono, String email, Long idUsuario, int valoracion) {
         this.nombre = nombre;
         this.direccion = direccion;
+        this.titulo = titulo;
+        this.subtitulo = subtitulo;
         this.descripcion = descripcion;
         this.urlWeb = urlWeb;
         this.imagen_url = imagen_url;
@@ -128,5 +132,21 @@ public class RestauranteView {
 
     public void setValoracion(int valoracion) {
         this.valoracion = valoracion;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getSubtitulo() {
+        return subtitulo;
+    }
+
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
     }
 }

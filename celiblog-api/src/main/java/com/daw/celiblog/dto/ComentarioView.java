@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class ComentarioView {
+    private String titulo;
     private String subtitulo;
     private String contenido;
     private String comentarioUrl;
@@ -17,8 +18,9 @@ public class ComentarioView {
     public ComentarioView() {
     }
 
-    public ComentarioView(String subtitulo, String contenido, String comentarioUrl, Long idObjetoComentado, int valoracion) {
+    public ComentarioView(String subtitulo, String titulo,String contenido, String comentarioUrl, Long idObjetoComentado, int valoracion) {
         this.subtitulo = subtitulo;
+        this.titulo = titulo;
         this.contenido = contenido;
         this.comentarioUrl = comentarioUrl;
         this.idObjetoComentado = idObjetoComentado;
@@ -61,5 +63,13 @@ public class ComentarioView {
 
     public void setValoracion(int valoracion) {
         this.valoracion = valoracion;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }

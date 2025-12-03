@@ -144,6 +144,8 @@ public class RestauranteServiceImpl implements RestauranteService {
             nuevoRestaurante.setNombre(restauranteView.getNombre());
             nuevoRestaurante.setDireccion(restauranteView.getDireccion());
             nuevoRestaurante.setCodigoPostal(restauranteView.getCodigoPostal());
+            nuevoRestaurante.setTitulo(restauranteView.getTitulo());
+            nuevoRestaurante.setSubtitulo(restauranteView.getSubtitulo());
             nuevoRestaurante.setDescripcion(restauranteView.getDescripcion());
             nuevoRestaurante.setUrlWeb(restauranteView.getUrlWeb());
             nuevoRestaurante.setImagenUrl(restauranteView.getImagen_url());

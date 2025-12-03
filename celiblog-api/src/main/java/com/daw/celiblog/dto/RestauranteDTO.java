@@ -21,6 +21,8 @@ public class RestauranteDTO {
     @ManyToOne
     @JsonIgnore
     private UsuarioDTO usuarioDTO;
+    private String titulo;
+    private String subtitulo;
     private String descripcion;
     private String direccion;
     private String imagenUrl;
@@ -51,10 +53,12 @@ public class RestauranteDTO {
     public RestauranteDTO() {
     }
 
-    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioSummaryDTO usuario, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacionEnum estado, Date fechaValidacion) {
+    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioSummaryDTO usuario, String descripcion,String titulo,String subtitulo, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacionEnum estado, Date fechaValidacion) {
         this.idRestaurante = idRestaurante;
         this.fechaPublicacion = fechaPublicacion;
         this.usuario = usuario;
+        this.titulo = titulo;
+        this.subtitulo = subtitulo;
         this.descripcion = descripcion;
         this.direccion = direccion;
         this.imagenUrl = imagenUrl;
@@ -221,6 +225,22 @@ public class RestauranteDTO {
 
     public void setEsFavoritoUsuario(boolean esFavoritoUsuario) {
         this.esFavoritoUsuario = esFavoritoUsuario;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getSubtitulo() {
+        return subtitulo;
+    }
+
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
     }
 
     @Override
