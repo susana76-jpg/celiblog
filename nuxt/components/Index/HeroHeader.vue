@@ -8,14 +8,9 @@
       gradient="to right, #836A02 0%, #836A02 16%, #836A0290 70%, #ffffff85 100%" 
     />
     <div class="hero-content">
-      <h1>Lorem ipsum dolor</h1>
+      <h1>Vive el Sabor Sin Gluten</h1>
       <p class="hero-description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas
-        neque nec fringilla finibus. Quisque fringilla odio turpis. Nam eget
-        tincidunt metus. Sed ornare aliquet tortor, id viverra mi vehicula at.
-        Nullam volutpat turpis a aliquam semper. In dignissim sapien at sapien
-        dignissim porttitor. Proin placerat lacus a luctus consequat. Vestibulum
-        vehicula scelerisque sollicitudin.
+        Descubre restaurantes seguros, recetas creativas y consejos esenciales para personas celíacas, con inspiración diaria para disfrutar una vida deliciosa, variada y sin preocupaciones, explorando nuevos sabores y encontrando opciones confiables en cada comida, siempre con la tranquilidad de elegir lo mejor para tu bienestar.
       </p>
       <div class="hero-buttons">
         <v-btn

@@ -46,7 +46,8 @@ const getAllRecipes = async () => {
   try {
     const data = await useApiFetch(API.RECIPES.BASE);
     recipes.value = data as Receta[];
-    recipes.value.forEach((recipe, i) => recipe.imagenUrl = '/img/recetas/receta' + (i + 1) + '.jpg');
+    recipes.value.forEach((recipe, i) => recipe.imagenUrl = '/img/recetas/' + recipe.imagenUrl.split('.').shift() + '.png');
+    recipes.value = recipes.value.slice(0, 9); 
   } catch (error) {
     console.error('Error fetching receipe:', error);
   }

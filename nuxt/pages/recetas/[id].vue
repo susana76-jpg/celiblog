@@ -19,7 +19,7 @@
       />
       
       <h2 class="mt-10 mb-4">Descripción de la receta</h2>
-      <p>{{ receta?.descripcion || '' }}</p>
+      <p v-html="formattedDescripcion"></p>
       <h2 class="mt-10 mb-4">Pasos de la receta</h2>
       <ul v-for="(step, index) in pasos" :key="index" class="pl-5">
         <li class="mb-3">{{ step }}</li>
@@ -35,14 +35,15 @@
           {{ ingrediente }}
         </v-chip>
       </v-chip-group>
-    </div>
-    <!------------------------------------------->
 
-    <!-- COMMENTS CONTENT ----------------------->
-    <CommentsMainContent 
-      class="mt-8 mb-15" 
-      :comentarios="comentarios" 
-    />
+      <!-- COMMENTS CONTENT ----------------------->
+      <CommentsMainContent 
+        class="mt-15" 
+        :comentarios="comentarios" 
+      />
+      <!------------------------------------------->
+
+    </div>
     <!------------------------------------------->
 
   </section>
@@ -63,7 +64,7 @@ const getReceipeById = async () => {
       params: { id },
     });
     receta.value = data as Receta; 
-    receta.value.imagenUrl = '/img/recetas/receta' + id + '.jpg';
+    receta.value.imagenUrl = '/img/recetas/' + receta.value.imagenUrl.split('.').shift() + '.png';
   } catch (error) {
     console.error('Error fetching receipe:', error);
   }
@@ -98,6 +99,12 @@ const getReceipeIngredientsById = async () => {
     console.error('Error fetching ingredients:', error);
   }
 };
+
+// Format descripcion with line breaks
+const formattedDescripcion = computed(() => {
+  if (!receta.value?.descripcion) return '';
+  return receta.value.descripcion.replace(/\r\n\r\n/g, '<br/><br/>');
+});
 
 // Fetch the receipe data when the component is mounted
 onMounted(async () => {

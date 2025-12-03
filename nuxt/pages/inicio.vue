@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-const { login } = useAuthStore();
+const { login, token } = useAuthStore();
 
 const formRef = ref<HTMLFormElement | null>(null);
 const email = ref<string>('');

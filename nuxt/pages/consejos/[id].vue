@@ -1,54 +1,90 @@
 <template>
   <section class="details-page recipe-page">
 
-    <!-- HERO IMAGE ----------------------------->
-    <DetailsHeroImage 
-      v-if="consejo" 
-      type="consejo"
-      :item="consejo" 
-      :imageUrl="consejo.imagenUrl"
-    >
-      <template #chip>
-        <v-chip
-          elevation="7"
-          variant="outlined"
-          class="card-image__chip bg-success"
-          :text="consejo.categoria"
+    <!-- LOADER ---------------------------------->
+    <div v-if="loading" class="loader-container">
+      <div class="loader-content">
+        <!-- Hero Image Skeleton -->
+        <v-skeleton-loader
+          type="image"
+          class="hero-skeleton"
+          height="500"
         />
-      </template>
-    </DetailsHeroImage> 
+        
+        <!-- Main Content Skeleton -->
+        <div class="loader-main">
+          <v-skeleton-loader
+            type="chip@3"
+            class="mb-8"
+          />
+          <v-skeleton-loader
+            type="heading, subtitle"
+            class="mb-6"
+          />
+          <v-skeleton-loader
+            type="paragraph@3"
+            class="mb-10"
+          />
+          <v-skeleton-loader
+            type="article"
+          />
+        </div>
+      </div>
+    </div>
     <!------------------------------------------->
 
-    <!-- MAIN CONTENT --------------------------->
-    <div class="details-page__main recipe-description">
-      <v-chip-group column  class="tags-list" >
-        <v-chip 
-          v-for="tag in consejo.tags" 
-          :key="tag"
-          size="large"
-          class="bg-primary"
-        >
-          {{ tag }}
-        </v-chip>
-      </v-chip-group>
-
-      <h2 class="mt-10">{{ setDate(consejo.fechaCreacion) }}</h2>
-      <h3 class="mb-4">{{ consejo.autor }}</h3>
-      <p
-        v-for="texto in consejo.texto"
-        :key="texto"
-        class="mb-6"
+    <!-- CONTENT (shown when loaded) ------------>
+    <div v-else>
+      <!-- HERO IMAGE ----------------------------->
+      <DetailsHeroImage 
+        v-if="consejo" 
+        type="consejo"
+        :item="consejo" 
+        :imageUrl="consejo.imagenUrl"
       >
-        {{ texto }}
-      </p>
-      
-      <!-- COMMENTS CONTENT ----------------------->
-      <CommentsMainContent 
-        class="mt-15" 
-        :comentarios="comentarios" 
-      />
+        <template #chip>
+          <v-chip
+            elevation="7"
+            variant="outlined"
+            class="card-image__chip bg-success"
+            :text="consejo.categoria"
+          />
+        </template>
+      </DetailsHeroImage> 
       <!------------------------------------------->
 
+      <!-- MAIN CONTENT --------------------------->
+      <div class="details-page__main recipe-description">
+        <v-chip-group column  class="tags-list" >
+          <v-chip 
+            v-for="tag in consejo.tags" 
+            :key="tag"
+            size="large"
+            class="bg-primary"
+          >
+            {{ tag }}
+          </v-chip>
+        </v-chip-group>
+
+        <h2 class="mt-10">{{ setDate(consejo.fechaCreacion) }}</h2>
+        <h3 class="mb-4">{{ consejo.autor }}</h3>
+        <p
+          v-for="texto in consejo.texto"
+          :key="texto"
+          class="mb-6"
+        >
+          {{ texto }}
+        </p>
+        
+        <!-- COMMENTS CONTENT ----------------------->
+        <CommentsMainContent 
+          class="mt-15" 
+          :comentarios="comentarios" 
+        />
+        <!------------------------------------------->
+
+      </div>
+      <!------------------------------------------->
     </div>
     <!------------------------------------------->
 
@@ -62,6 +98,7 @@ const consejo = tip;
 const comentarios = recetas[0].comentarios;
 const ingredientes = ref<string[]>([]);
 const pasos = ref<string[]>([]);
+const loading = ref(true);
 
 // Get receta by ID from API
 const getConsejoById = async () => {
@@ -108,9 +145,14 @@ const getReceipeIngredientsById = async () => {
 
 // Fetch the receipe data when the component is mounted
 onMounted(async () => {
+  // Simulate loading delay (remove in production with real API)
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  
   // await getConsejoById();
   // await getReceipeStepsById();
   // await getReceipeIngredientsById();
+  
+  loading.value = false;
 });
 </script>
 
@@ -123,6 +165,35 @@ onMounted(async () => {
     .v-chip__content {
       font-size: 1rem;
     }
-  } 
+  }
+  
+  .loader-container {
+    animation: fadeIn 0.3s ease-in;
+    
+    .loader-content {
+      width: 100%;
+      
+      .hero-skeleton {
+        width: 100%;
+        margin-bottom: 2rem;
+        border-radius: 8px;
+      }
+      
+      .loader-main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

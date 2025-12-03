@@ -1,8 +1,8 @@
 <template>
   <section class="carousel-section">
     <div class="carousel-title">
-      <h2>Lorem ipsum dolor sit amet</h2>
-      <p>Cras risus risus, accumsan lacinia imperdiet id, varius sed mi. Fusce accumsan nec odio nec consequat.</p>
+      <h2>{{ title }}</h2>
+      <p>{{ subtitle }}</p>
     </div>
     <v-carousel
       height="auto"
@@ -17,32 +17,32 @@
         <v-row>
           <v-col
             v-for="(item, i) in items.slice((n-1)*4, n*4)"
-            :key="item.id"
+            :key="item.idReceta"
             cols="12"
             md="3"
           >
             <v-card
-              :to="item.link"
+              :to="setItemLink(item.idReceta, type)"
               class="mx-2 pa-2"
               variant="text"
             >
               <v-img  
                 cover
                 height="400"
-                :src="`/img/recetas/receta${i + 1}.jpg`"
+                :src="item.imagenUrl"
               ></v-img>
               <v-card-title class="px-0">
-                {{ item.title }}
+                {{ item.titulo }}
               </v-card-title>
               <v-card-text class="px-0">
-                {{ item.description }}
+                {{ item.subtitulo }}
               </v-card-text>
               <v-rating
                 readonly
                 half-increments
                 color="primary"
                 density="compact"
-                :model-value="item.rating"
+                :model-value="item.valoracion"
               ></v-rating>
             </v-card>
           </v-col>
@@ -54,16 +54,18 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  items: Array<{
-    id: number;
-    title: string;
-    description: string;
-    image: string;
-    link: string;
-    rating: number;
-    favorite?: boolean;
-  }>;
+  title: string;
+  subtitle: string;
+  items: Receta[];
+  type: 'recetas' | 'consejos';
 }>();
+
+// Set link for each item based on its type
+const setItemLink = (id: number, type: 'recetas' | 'consejos') => {
+  if (type === 'recetas') return `/recetas/${id}`;
+  else if (type === 'consejos') return `/consejos/${id}`;
+  return '/';
+};
 </script>
 
 <style lang="scss" scoped>
