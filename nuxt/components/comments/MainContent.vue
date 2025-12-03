@@ -3,6 +3,7 @@
     <div class="comment-section__header">
       <h2>Comentarios</h2>
       <v-btn
+        v-if="isAuthenticated"
         class="ml-4"
         color="primary"
         variant="flat"
@@ -28,6 +29,8 @@
 </template>
 
 <script setup lang="ts">
+const { isAuthenticated } = useAuthStore();
+
 const props = defineProps<{
   comentarios: any[];
 }>();

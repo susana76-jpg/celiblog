@@ -42,7 +42,7 @@
         :alt="item.titulo || 'Hero Image'" 
       />
       <v-btn
-        v-if="props.showFavorite"
+        v-if="isAuthenticated && props.showFavorite"
         :color="item.esFavoritoUsuario ? 'error' : 'darkgray'"
         variant="outlined"
         icon="mdi-heart"
@@ -53,6 +53,8 @@
   </div>
 </template>
 <script setup lang="ts">
+const { isAuthenticated } = useAuthStore();
+
 const props = withDefaults(defineProps<{
   item: any;
   type: 'receta' | 'restaurante' | 'consejo';

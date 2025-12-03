@@ -24,6 +24,7 @@
         ></v-rating>
       </v-chip>
       <v-btn
+        v-if="isAuthenticated"
         :color="item.esFavoritoUsuario ? 'error' : 'darkgray'"
         variant="outlined"
         icon="mdi-heart"
@@ -48,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-// }>(); 
+const { isAuthenticated } = useAuthStore();
 const props = defineProps<{
   item: Receta;
 }>();
