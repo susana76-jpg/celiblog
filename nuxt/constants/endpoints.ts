@@ -18,5 +18,15 @@ export const API = {
     REGISTER: '/api/auth/register',
     LOGIN: '/api/auth/login',
     PROFILE: '/api/usuario/profile'
+  },
+  FAVORITES: {
+    ADD: '/api/favoritos/add',
+    REMOVE: '/api/favoritos/deleteById'
+  },
+  COMMENTS: {
+    ALL: '/api/comentario/public/all',
+    ADD: '/api/comentario/add',
+    DELETE: '/api/comentario/delete',
+    UPDATE: '/api/comentario/update',
   }
 };

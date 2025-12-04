@@ -23,6 +23,8 @@
 
     <CommentsReviewForm 
       :show="openCommentForm"
+      :itemType="itemType"
+      :itemId="itemId"
       @close="openCommentForm = false"
     />
   </section>
@@ -33,6 +35,8 @@ const { isAuthenticated } = useAuthStore();
 
 const props = defineProps<{
   comentarios: any[];
+  itemType: 'RECETA' | 'RESTAURANTE' | 'POST';
+  itemId: number;
 }>();
 
 const openCommentForm = ref<boolean>(false);

@@ -29,7 +29,6 @@
         variant="outlined"
         icon="mdi-heart"
         class="card-image__favourite"
-        @click.stop="$emit('toggle-favorite', item.idReceta)"
       />
     </div>
     <v-card-title class="px-0">
@@ -50,9 +49,11 @@
 
 <script setup lang="ts">
 const { isAuthenticated } = useAuthStore();
+
 const props = defineProps<{
   item: Receta;
 }>();
+
 
 const setChipClass = (difficulty: Receta['dificultad'] | undefined) => {
   switch (difficulty) {
@@ -68,6 +69,7 @@ const setChipClass = (difficulty: Receta['dificultad'] | undefined) => {
 };
 
 const setLink = computed(() => `/recetas/${props.item.idReceta}`);
+
 </script>
 
 <style lang="scss">
