@@ -1,0 +1,5 @@
+export const TYPE = {
+  RECIPE: 'RECETA',
+  RESTAURANT: 'RESTAURANTE',
+  TIP: 'POST'
+}

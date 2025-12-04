@@ -3,10 +3,10 @@ export const useAuthStore = () => {
   const user = useState<UsuarioLogin | null>('auth-user', () => null);
   const isAuthenticated = computed(() => !!token.value);
 
-  // Initialize from localStorage on client side
+  // Initialize from sessionStorage on client side
   if (import.meta.client) {
-    const storedToken = localStorage.getItem('auth-token');
-    const storedUser = localStorage.getItem('auth-user');
+    const storedToken = sessionStorage.getItem('auth-token');
+    const storedUser = sessionStorage.getItem('auth-user');
     
     if (storedToken && !token.value) token.value = storedToken;
 
@@ -15,34 +15,49 @@ export const useAuthStore = () => {
         user.value = JSON.parse(storedUser);
       } catch (e) {
         console.error('Error parsing stored user:', e);
-        localStorage.removeItem('auth-user');
+        sessionStorage.removeItem('auth-user');
       }
     }
   }
 
-  // Set token and user in both state and localStorage
+
+  /**
+   * Sets the authentication token and user data in both state and sessionStorage.
+   * @param {string} newToken - The authentication token to store
+   * @param {UsuarioLogin} newUser - The user data to store
+   */
   const setAuth = (newToken: string, newUser: UsuarioLogin) => {
     token.value = newToken;
     user.value = newUser;
     
     if (import.meta.client) {
-      localStorage.setItem('auth-token', newToken)
-      localStorage.setItem('auth-user', JSON.stringify(newUser))
+      sessionStorage.setItem('auth-token', newToken)
+      sessionStorage.setItem('auth-user', JSON.stringify(newUser))
     }
   };
 
-  // Clear token and user from both state and localStorage
+
+  /**
+   * Clears the authentication token and user data from both state and sessionStorage.
+   */
   const clearAuth = () => {
     token.value = null;
     user.value = null;
 
     if (import.meta.client) {
-      localStorage.removeItem('auth-token');
-      localStorage.removeItem('auth-user');
+      sessionStorage.removeItem('auth-token');
+      sessionStorage.removeItem('auth-user');
     }
   };
 
-  // User login
+
+  /**
+   * Authenticates a user with email and password credentials.
+   * @param userData - The login credentials
+   * @param userData.email - The user's email address
+   * @param userData.password - The user's password
+   * @returns Login result with user data or error message
+   */
   const login = async (userData: { email: string; password: string }) => {
     try {
       const response: LoginResponse = await useApiFetch(API.USER.LOGIN, {
@@ -64,7 +79,15 @@ export const useAuthStore = () => {
     }
   }
 
-  // User registration
+
+  /**
+   * Registers a new user account with the provided credentials.
+   * @param userData - The registration data
+   * @param userData.email - The user's email address
+   * @param userData.password - The user's password
+   * @param userData.nombre - The user's name
+   * @returns Registration result with user data or error message
+   */
   const register = async (userData: { email: string; password: string; nombre: string }) => {
     try {
       const response: LoginResponse = await useApiFetch(API.USER.REGISTER, {
@@ -86,33 +109,13 @@ export const useAuthStore = () => {
     }
   }
 
-  // User logout
+  
+  /**
+   * Logs out the current user by clearing authentication data and redirecting to the home page.
+   */
   const logout = () => {
     clearAuth();
     if (import.meta.client) navigateTo('/inicio');
-  }
-
-  const refreshUser = async () => {
-    // if (!token.value) return
-
-    // try {
-    //   const config = useRuntimeConfig()
-    //   const response = await $fetch<Usuario>('/auth/me', {
-    //     method: 'GET',
-    //     baseURL: config.public.apiBase,
-    //     headers: {
-    //       Authorization: `Bearer ${token.value}`
-    //     }
-    //   })
-
-    //   user.value = response
-    //   if (process.client) {
-    //     localStorage.setItem('auth-user', JSON.stringify(response))
-    //   }
-    // } catch (error) {
-    //   console.error('Error refreshing user:', error)
-    //   clearAuth()
-    // }
   }
 
   return {
@@ -122,6 +125,5 @@ export const useAuthStore = () => {
     login,
     register,
     logout,
-    refreshUser
   }
 }

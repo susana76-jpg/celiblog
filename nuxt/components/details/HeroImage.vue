@@ -47,13 +47,14 @@
         variant="outlined"
         icon="mdi-heart"
         class="details-page__hero-image__favourite"
-        @click.stop="$emit('toggle-favorite')"
+        @click.stop="toggleFavorite(item)"
       />
     </div>
   </div>
 </template>
 <script setup lang="ts">
 const { isAuthenticated } = useAuthStore();
+const { addToFavorites, removeFromFavorites } = useUserActions();
 
 const props = withDefaults(defineProps<{
   item: any;
@@ -67,6 +68,10 @@ const props = withDefaults(defineProps<{
   showFavorite: true,
   isFavorite: false
 });
+
+const emit = defineEmits<{
+  'update:favorite': [isFavorite: boolean]
+}>();
 
 const setLevelChip = (difficulty: string | undefined) => {
   switch (difficulty?.toLowerCase()) {
@@ -88,6 +93,16 @@ const title = computed(() => {
   if (props.type === 'restaurante') return props.item.nombre || 'Nombre no disponible';
   return props.item.titulo || 'Título no disponible';
 });
+
+const toggleFavorite = async (item: Receta) => {
+  if (item.esFavoritoUsuario) {
+    const response = await removeFromFavorites(item.idReceta);
+    if (response.success) emit('update:favorite', false);
+  } else {
+    const response = await addToFavorites(item.idReceta, 'RECETA');
+    if (response.success) emit('update:favorite', true);
+  }
+};
 </script>
 <style lang="scss">
 .details-page {

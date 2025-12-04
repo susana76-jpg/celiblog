@@ -4,14 +4,14 @@
     <IndexCarousel 
       v-if="recipes.length > 0"
       title="Nuevas Recetas Sin Gluten"
-      subtitle="Descubre las últimas creaciones pensadas para personas celíacas: preparaciones fáciles, seguras y llenas de sabor que podrás disfrutar sin preocupaciones. Explora el carrusel y encuentra tu próxima receta favorita."
+      subtitle="Descubre las últimas creaciones pensadas para personas celíacas: preparaciones fáciles, seguras y llenas de sabor que podrás disfrutar sin preocupaciones."
       :items="recipes" 
       type="recetas"
     />
     <IndexCarousel 
       v-if="recipes.length > 0"
       title="Consejos para una Vida Sin Gluten"
-      subtitle="Accede a las recomendaciones más recientes para vivir con celiaquía de forma segura y práctica. Descubre trucos, guías y hábitos que te ayudarán a disfrutar cada día con mayor tranquilidad y bienestar."
+      subtitle="Accede a las recomendaciones más recientes para vivir con celiaquía de forma segura Descubre trucos, guías y hábitos que te ayudarán a disfrutar cada día."
       :items="recipes" 
       type="consejos"
     />

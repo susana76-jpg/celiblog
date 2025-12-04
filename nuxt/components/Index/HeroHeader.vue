@@ -10,7 +10,7 @@
     <div class="hero-content">
       <h1>Vive el Sabor Sin Gluten</h1>
       <p class="hero-description">
-        Descubre restaurantes seguros, recetas creativas y consejos esenciales para personas celíacas, con inspiración diaria para disfrutar una vida deliciosa, variada y sin preocupaciones, explorando nuevos sabores y encontrando opciones confiables en cada comida, siempre con la tranquilidad de elegir lo mejor para tu bienestar.
+        Descubre restaurantes seguros, recetas creativas y consejos esenciales para personas celíacas, con inspiración diaria para disfrutar una vida deliciosa, variada y sin preocupaciones, explorando nuevos sabores y encontrando opciones confiables en cada comida.
       </p>
       <div class="hero-buttons">
         <v-btn
