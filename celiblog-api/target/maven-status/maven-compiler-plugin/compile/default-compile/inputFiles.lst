@@ -20,6 +20,7 @@ C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\ma
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\util\Constantes.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\service\mapper\RolMapper.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\db\repository\PasoRecetaRepository.java
+C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\db\repository\VistaRecetaRepository.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\service\RolService.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\enums\TipoComidaEnum.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\dto\ComentarioDTO.java
@@ -42,6 +43,7 @@ C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\ma
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\service\RecetaService.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\dto\RecetaView.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\db\entity\TagPost.java
+C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\db\entity\VistaReceta.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\db\repository\TagRestauranteRepository.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\dto\UsuarioView.java
 C:\Users\srico\Desktop\PROYECTO DAW\proyecto spring\celiblog\celiblog-api\src\main\java\com\daw\celiblog\CeliblogApplication.java

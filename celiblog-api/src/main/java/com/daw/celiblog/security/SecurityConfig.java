@@ -37,8 +37,6 @@ public class SecurityConfig {
                         // Endpoints públicos
                         .requestMatchers(
                                 "/api/auth/**",
-                                "api/auth/register",
-                                "api/auth/login",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-resources/**",
@@ -52,9 +50,9 @@ public class SecurityConfig {
                         ).permitAll()
 
                         // Endpoints protegidos por rol
-                        .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers("/editor/**").hasRole("EDITOR")
-                        .requestMatchers("/visitor/**").hasRole("VISITOR")
+                        .requestMatchers("/admin/**").hasAuthority("ADMINISTRADOR")
+                        .requestMatchers("/editor/**").hasAuthority("EDITOR")
+                        .requestMatchers("/visitor/**").hasAnyAuthority("VISITOR","EDITOR","ADMINISTRADOR")
 
                         // El resto requiere login
                         .anyRequest().authenticated()

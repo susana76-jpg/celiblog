@@ -1,5 +1,6 @@
 package com.daw.celiblog.controller;
 
+import com.daw.celiblog.db.entity.VistaReceta;
 import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
@@ -72,6 +73,16 @@ public class RecetaController {
         return ResponseEntity.ok(recetaService.getRecetasEstadoAprobado());
     }
 
+    @Operation(summary = "PÚBLICO: Obtiene las recetas filtradas por título, subtítulo, descripción, nombre de ingrediente o tipo de comida")
+    @GetMapping("public/buscar")
+    public ResponseEntity<List<RecetaDTO>> buscarVista(
+            Authentication authentication,
+            @RequestParam(required = false, name="keyword") String keyword,
+            @RequestParam(required = false, name="tipoComida") List<TipoComidaEnum> tipoComida
+    ) {
+        return ResponseEntity.ok(recetaService.buscarVista(authentication, keyword, tipoComida));
+    }
+
 
 
 
@@ -118,7 +129,7 @@ public class RecetaController {
     }
     @PreAuthorize("hasAnyRole('ADMINISTRADOR','EDITOR','VISITOR')")
     @Operation(summary = "PROTEGIDO: Recetas favoritas del usuario logado.")
-    @GetMapping("/allFavoritas")
+    @GetMapping("visitor/allFavoritas")
     public ResponseEntity<List<RecetaDTO>> obtenerRecetasFavoritasUsuario(Authentication authentication) {
         return ResponseEntity.ok(recetaService.obtenerRecetasFavoritasUsuario(authentication));
     }

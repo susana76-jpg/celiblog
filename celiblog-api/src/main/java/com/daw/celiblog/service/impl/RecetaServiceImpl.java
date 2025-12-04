@@ -2,6 +2,7 @@ package com.daw.celiblog.service.impl;
 
 import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.db.entity.Usuario;
+import com.daw.celiblog.db.entity.VistaReceta;
 import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
 import com.daw.celiblog.db.repository.*;
 import com.daw.celiblog.dto.*;
@@ -12,7 +13,6 @@ import com.daw.celiblog.enums.TipoComidaEnum;
 import com.daw.celiblog.service.RecetaService;
 import com.daw.celiblog.service.UsuarioService;
 import com.daw.celiblog.service.mapper.RecetaMapper;
-import com.daw.celiblog.service.mapper.UsuarioMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +24,17 @@ public class RecetaServiceImpl implements RecetaService {
     private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
     private final FavoritoRepository favoritoRepository;
+    private final VistaRecetaRepository vistaRecetaRepository;
 
 
 
 
-    public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository1, FavoritoRepository favoritoRepository) {
+    public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository1, FavoritoRepository favoritoRepository, VistaRecetaRepository vistaRecetaRepository) {
         this.recetaRepository = recetaRepository;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository1;
         this.favoritoRepository = favoritoRepository;
+        this.vistaRecetaRepository = vistaRecetaRepository;
     }
 
     //PÚBLICO ------------------------------------------------------------------
@@ -107,6 +109,26 @@ public class RecetaServiceImpl implements RecetaService {
             recetas.addAll(new HashSet<>(this.buscarRecetasPorNombreDeTag(tag)));
         }
         return recetas.stream().toList();
+    }
+
+    @Override
+    public List<RecetaDTO> buscarVista(Authentication authentication, String keyword, List<TipoComidaEnum> tipoComida) {
+        List<Long> recetas = this.vistaRecetaRepository.buscarVista(keyword);
+        List<RecetaDTO> recetasDTO =
+                recetas.stream()
+                    .map(idReceta -> {
+                        return getById(authentication, idReceta);
+                    }).toList();
+
+        if(tipoComida != null){
+            return recetasDTO
+                .stream()
+                .filter(receta -> tipoComida.contains(receta.getTipoComida()))
+                .toList();
+        }else{
+            return recetasDTO;
+        }
+
     }
     //fin PÚBL  ICO ------------------------------------------------------------------
 

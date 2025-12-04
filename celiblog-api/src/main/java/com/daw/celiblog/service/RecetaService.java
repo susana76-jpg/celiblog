@@ -1,5 +1,6 @@
 package com.daw.celiblog.service;
 
+import com.daw.celiblog.db.entity.VistaReceta;
 import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
@@ -20,6 +21,10 @@ public interface RecetaService {
     List<RecetaDTO> getRecetasEstadoAprobado();
     List<RecetaDTO> buscarRecetasPorNombreDeTag(String nombreTag);
     List<RecetaDTO> buscarRecetasPorNombreDeTags(List<String> tags);
+
+    List<RecetaDTO> buscarVista(Authentication authentication, String keyword, List<TipoComidaEnum> tipoComida);
+
+
 
 
 
