@@ -1,6 +1,5 @@
 package com.daw.celiblog.service;
 
-import com.daw.celiblog.db.entity.VistaReceta;
 import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
@@ -21,27 +20,20 @@ public interface RecetaService {
     List<RecetaDTO> getRecetasEstadoAprobado();
     List<RecetaDTO> buscarRecetasPorNombreDeTag(String nombreTag);
     List<RecetaDTO> buscarRecetasPorNombreDeTags(List<String> tags);
-
     List<RecetaDTO> buscarVista(Authentication authentication, String keyword, List<TipoComidaEnum> tipoComida);
 
 
-
-
-
     //PRIVADO
-    RecetaDTO actualizar(Authentication authentication, Long id, RecetaDTO dto);
-    boolean deleteReceta(Authentication authentication, Long id);
+    RecetaDTO update(Authentication authentication, RecetaView view);
+    boolean deleteById(Authentication authentication, Long id);
 
     //PRIVADO - GESTIÓN DE PUBLICACIONES
     List<RecetaDTO> getRecetasEstadoPendiente(Authentication authentication);
     List<RecetaDTO> getRecetasEstadoRechazado(Authentication authentication);
     RecetaDTO updateEstadoPublicacionReceta(Authentication authentication, Long idReceta, EstadoValidacionEnum estado);
-    List<ComentarioDTO> obtenerComentariosDeRecetaPorIdReceta(Long idReceta);
-
 
     //PROTEGIDO
-    RecetaDTO crearReceta(Authentication authentication, RecetaView recetaView);
-    List<RecetaDTO> obtenerRecetasFavoritasUsuario(Authentication authentication);
+    RecetaDTO add(Authentication authentication, RecetaView recetaView);
 
 
 

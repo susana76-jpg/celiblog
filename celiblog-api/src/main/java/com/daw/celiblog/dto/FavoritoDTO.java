@@ -3,14 +3,19 @@ package com.daw.celiblog.dto;
 import com.daw.celiblog.db.entity.Usuario;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.Date;
 
 public class FavoritoDTO {
     private Long idFavorito;
+    @ManyToOne
+    @JsonIgnore
     private UsuarioDTO usuarioDTO;
-    private Long idUsuario;
+    @JsonProperty("usuarioPublicacion")
+    private UsuarioSummaryDTO usuario;
     @Enumerated(EnumType.STRING)
     private ObjetoEnum tipoReferencia;
     private Long idReferencia;
@@ -19,17 +24,10 @@ public class FavoritoDTO {
 
     public FavoritoDTO() {
     }
-    public FavoritoDTO(Long idFavorito, UsuarioDTO usuarioDTO, Long idUsuario, ObjetoEnum tipoReferencia, Long idReferencia, Date fecha) {
+
+    public FavoritoDTO(Long idFavorito, UsuarioSummaryDTO usuario, ObjetoEnum tipoReferencia, Long idReferencia, Date fecha) {
         this.idFavorito = idFavorito;
-        this.usuarioDTO = usuarioDTO;
-        this.idUsuario = idUsuario;
-        this.tipoReferencia = tipoReferencia;
-        this.idReferencia = idReferencia;
-        this.fecha = fecha;
-    }
-    public FavoritoDTO(Long idFavorito, Long idUsuario, ObjetoEnum tipoReferencia, Long idReferencia, Date fecha) {
-        this.idFavorito = idFavorito;
-        this.idUsuario = idUsuario;
+        this.usuario = usuario;
         this.tipoReferencia = tipoReferencia;
         this.idReferencia = idReferencia;
         this.fecha = fecha;
@@ -51,13 +49,6 @@ public class FavoritoDTO {
         this.usuarioDTO = usuario;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 
     public ObjetoEnum getTipoReferencia() {
         return tipoReferencia;
@@ -81,5 +72,21 @@ public class FavoritoDTO {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public UsuarioDTO getUsuarioDTO() {
+        return usuarioDTO;
+    }
+
+    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+        this.usuarioDTO = usuarioDTO;
+    }
+
+    public void getUsuario(UsuarioSummaryDTO usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setUsuario(UsuarioSummaryDTO usuario) {
+        this.usuario = usuario;
     }
 }

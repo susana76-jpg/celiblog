@@ -30,6 +30,7 @@ public class ComentarioDTO {
     private Date fechaValidacion;
     private int  valoracion;
     private EstadoValidacionEnum estado = EstadoValidacionEnum.APROBADO;
+    private boolean esFavoritoUsuario;
 
     public ComentarioDTO() {
     }
@@ -151,5 +152,13 @@ public class ComentarioDTO {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public boolean isEsFavoritoUsuario() {
+        return esFavoritoUsuario;
+    }
+
+    public void setEsFavoritoUsuario(boolean esFavoritoUsuario) {
+        this.esFavoritoUsuario = esFavoritoUsuario;
     }
 }

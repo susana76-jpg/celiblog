@@ -1,3 +1,4 @@
+com\daw\celiblog\controller\PostController.class
 com\daw\celiblog\dto\UsuarioDTO.class
 com\daw\celiblog\service\mapper\UsuarioMapper.class
 com\daw\celiblog\config\SwaggerConfig.class
@@ -25,8 +26,10 @@ com\daw\celiblog\service\mapper\ComentarioMapper.class
 com\daw\celiblog\dto\PasoRecetaView.class
 com\daw\celiblog\service\mapper\RecetaMapper.class
 com\daw\celiblog\util\Constantes.class
+com\daw\celiblog\service\impl\PostServiceImpl.class
 com\daw\celiblog\dto\TagRestauranteDTO.class
 com\daw\celiblog\service\mapper\FavoritoMapper.class
+com\daw\celiblog\service\mapper\PostMapper.class
 com\daw\celiblog\db\entity\TipoComentario.class
 com\daw\celiblog\enums\EstadoValidacionEnum.class
 com\daw\celiblog\service\RestauranteService.class
@@ -38,6 +41,7 @@ com\daw\celiblog\service\mapper\PasoRecetaMapper.class
 com\daw\celiblog\dto\RestauranteViewSummary.class
 com\daw\celiblog\db\entity\TagReceta.class
 com\daw\celiblog\db\entity\TagRestaurante.class
+com\daw\celiblog\service\PostService.class
 com\daw\celiblog\dto\ComentarioView.class
 com\daw\celiblog\service\impl\TagRecetaServiceImpl.class
 com\daw\celiblog\db\entity\Usuario.class
@@ -60,6 +64,7 @@ com\daw\celiblog\db\repository\RestauranteRepository.class
 com\daw\celiblog\dto\TagRestauranteView.class
 com\daw\celiblog\controller\ComentarioController.class
 com\daw\celiblog\dto\ComentarioDTO.class
+com\daw\celiblog\db\repository\PostRepository.class
 com\daw\celiblog\dto\PasoRecetaDTO.class
 com\daw\celiblog\db\repository\TagRestauranteRepository.class
 com\daw\celiblog\db\entity\VistaReceta.class
@@ -95,9 +100,9 @@ com\daw\celiblog\service\impl\FavoritoServiceImpl.class
 com\daw\celiblog\db\repository\ComentarioRepository.class
 com\daw\celiblog\db\repository\TagComentarioRepository.class
 com\daw\celiblog\service\ComentarioService.class
+com\daw\celiblog\dto\PostView.class
 com\daw\celiblog\service\UsuarioService.class
 com\daw\celiblog\dto\AuthRequest.class
-com\daw\celiblog\dto\FavoritoView.class
 com\daw\celiblog\db\entity\PasoReceta.class
 com\daw\celiblog\controller\AuthController.class
 com\daw\celiblog\db\entity\Favorito.class

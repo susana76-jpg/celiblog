@@ -46,13 +46,14 @@ public class SecurityConfig {
                                 "/api/paso-receta/public/**",
                                 "/api/tag-receta/public/**",
                                 "/api/tag-restaurante/public/**",
-                                "/api/comentario/public/**"
+                                "/api/comentario/public/**",
+                                "/api/post/public/**"
                         ).permitAll()
 
-                        // Endpoints protegidos por rol
+                        /* Endpoints protegidos por rol
                         .requestMatchers("/admin/**").hasAuthority("ADMINISTRADOR")
                         .requestMatchers("/editor/**").hasAuthority("EDITOR")
-                        .requestMatchers("/visitor/**").hasAnyAuthority("VISITOR","EDITOR","ADMINISTRADOR")
+                        .requestMatchers("/visitor/**").hasAnyAuthority("VISITOR","EDITOR","ADMINISTRADOR")*/
 
                         // El resto requiere login
                         .anyRequest().authenticated()

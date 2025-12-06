@@ -14,32 +14,24 @@ import java.util.Date;
 import java.util.Objects;
 
 public class RecetaView {
-
-    @NotNull(message = "Este campo no debe ser nulo")
+    private Long idReceta;
+    private String titulo;
+    private String subtitulo;
     private String descripcion;
     private String imagenUrl;
-    @NotNull(message = "Este campo no debe ser nulo")
     private String dificultad;
-    @NotNull(message = "Este campo no debe ser nulo")
-    private String titulo;
-    @NotNull(message = "Este campo no debe ser nulo")
-    private String subtitulo;
-    @NotNull(message = "Este campo no debe ser nulo")
     private int valoracion;
-    @NotNull(message = "Este campo no debe ser nulo")
     private int comensales;
-    @NotNull(message = "Este campo no debe ser nulo")
     private int tiempoPreparacion;
-    @NotNull(message = "Este campo no debe ser nulo")
     private int valorEnergetico;
-    @NotNull(message = "Este campo no debe ser nulo")
     private TipoComidaEnum tipoComida;
 
 
     public RecetaView() {
     }
 
-    public RecetaView(String descripcion, String imagenUrl, String dificultad, String titulo, String subtitulo, int valoracion, int comensales, int tiempoPreparacion, int valorEnergetico, TipoComidaEnum tipoComida) {
+    public RecetaView(Long idReceta, String descripcion, String imagenUrl, String dificultad, String titulo, String subtitulo, int valoracion, int comensales, int tiempoPreparacion, int valorEnergetico, TipoComidaEnum tipoComida) {
+        this.idReceta = idReceta;
         this.descripcion = descripcion;
         this.imagenUrl = imagenUrl;
         this.dificultad = dificultad;
@@ -50,6 +42,13 @@ public class RecetaView {
         this.tiempoPreparacion = tiempoPreparacion;
         this.valorEnergetico = valorEnergetico;
         this.tipoComida = tipoComida;
+    }
+
+    public Long getIdReceta() {
+        return idReceta;
+    }
+    public void setIdReceta(Long idReceta) {
+        this.idReceta = idReceta;
     }
 
     public String getDescripcion() {

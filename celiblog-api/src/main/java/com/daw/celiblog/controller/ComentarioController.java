@@ -2,11 +2,8 @@ package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.ComentarioDTO;
 import com.daw.celiblog.dto.ComentarioView;
-import com.daw.celiblog.dto.FavoritoDTO;
-import com.daw.celiblog.dto.FavoritoView;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.ComentarioService;
-import com.daw.celiblog.service.FavoritoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,30 +31,32 @@ public class ComentarioController {
             @RequestParam(value="idObjetoComentado")Long idObjetoComentado) {
         return ResponseEntity.ok(this.comentarioService.allComentariosByObject(authentication,objetoComentado,idObjetoComentado));
     }
-
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
     @Operation(summary = "PROTEGIDO: Añade un comentario. Solo los usuarios logados podrán hacer comentarios sobre RESTAURANTE, RECETAS,POST")
     @PostMapping("/add")
-    public ResponseEntity<ComentarioDTO> addComentario(
+    public ResponseEntity<?> add(
             Authentication authentication,
             @RequestBody ComentarioView comentarioView, @RequestParam(name=("objetoComentado")) ObjetoEnum objetoComentado){
-        return ResponseEntity.status(200).body(this.comentarioService.addComentario(authentication,comentarioView,objetoComentado));
+        ComentarioDTO comentario = this.comentarioService.add(authentication,comentarioView,objetoComentado);
+        if(comentario != null){
+            return ResponseEntity.ok(comentario);
+        }else{
+            return ResponseEntity.badRequest().body("No se añadió el objeto.");
+        }
     }
 
-
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "PRIVADO: Actualiza un comentario.")
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
+    @Operation(summary = "PROTEGIDO: Actualiza un comentario.")
     @PutMapping("/update")
-    public ResponseEntity<ComentarioDTO> updateComentario(
+    public ResponseEntity<?> updateComentario(
             Authentication authentication,
             @RequestBody ComentarioView comentarioView, @RequestParam(name=("idComentario")) Long idComentario){
-
-        ComentarioDTO comentario = this.comentarioService.updateComentario(authentication,comentarioView,idComentario);
-        if (comentario == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(null);
+        ComentarioDTO comentario = this.comentarioService.update(authentication, comentarioView, idComentario);
+        if(comentario != null){
+            return ResponseEntity.ok(comentario);
+        }else{
+            return ResponseEntity.badRequest().body("No se actualizó el objeto.");
         }
-        return ResponseEntity.status(200).body(this.comentarioService.updateComentario(authentication,comentarioView,idComentario));
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")

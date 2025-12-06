@@ -4,9 +4,10 @@ import com.daw.celiblog.db.entity.TagReceta;
 import com.daw.celiblog.db.entity.Receta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface TagRecetaRepository extends JpaRepository<TagReceta, Long> {
 
     @Query(value = "SELECT * FROM tag_receta", nativeQuery = true)
