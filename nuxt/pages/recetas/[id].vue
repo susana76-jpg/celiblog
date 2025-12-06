@@ -1,54 +1,58 @@
 <template>
   <section class="details-page recipe-page">
 
-    <!-- HERO IMAGE ----------------------------->
-    <DetailsHeroImage 
-      v-if="receta" 
-      type="receta"
-      :item="receta" 
-      :imageUrl="receta.imagenUrl"
-      @update:favorite="receta.esFavoritoUsuario = $event"
-    />
+    <!-- LOADER --------------------------------->
+    <DetailsLoaderBlock v-if="loading" />
     <!------------------------------------------->
 
-    <!-- MAIN CONTENT --------------------------->
-    <div class="details-page__main recipe-description">
+    <!-- CONTENT (shown when loaded) ------------>
+    <div v-else>
 
-      <DetailsReceipeKeyfact 
+      <!-- HERO IMAGE ----------------------------->
+      <DetailsHeroImage 
         v-if="receta" 
-        :receipe="receta" 
-      />
-      
-      <h2 class="mt-10 mb-4">Descripción de la receta</h2>
-      <p v-html="formatHtmlText(receta?.descripcion)"></p>
-      <h2 class="mt-10 mb-4">Pasos de la receta</h2>
-      <ul v-for="(step, index) in pasos" :key="index" class="pl-5">
-        <li class="mb-3">{{ step }}</li>
-      </ul>
-
-      <h2 class="mt-12 mb-2">Ingredientes de la receta</h2>
-      <v-chip-group column>
-        <v-chip 
-          v-for="ingrediente in ingredientes" 
-          :key="ingrediente"
-          class="bg-primary"
-        >
-          {{ ingrediente }}
-        </v-chip>
-      </v-chip-group>
-
-      <!-- COMMENTS CONTENT ----------------------->
-      <CommentsMainContent 
-        class="mt-15" 
-        itemType="RECETA" 
-        :comentarios="comentarios"
-        :itemId="id"
+        type="receta"
+        :item="receta" 
+        :imageUrl="receta.imagenUrl"
+        @update:favorite="receta.esFavoritoUsuario = $event"
       />
       <!------------------------------------------->
 
-    </div>
-    <!------------------------------------------->
+      <!-- MAIN CONTENT --------------------------->
+      <div v-if="receta" class="details-page__main recipe-description">
+        <DetailsReceipeKeyfact :receipe="receta" />
+        
+        <h2 class="mt-10 mb-4">Descripción de la receta</h2>
+        <p v-html="formatHtmlText(receta?.descripcion)"></p>
+        <h2 class="mt-10 mb-4">Pasos de la receta</h2>
+        <ul v-for="(step, index) in pasos" :key="index" class="pl-5">
+          <li class="mb-3">{{ step }}</li>
+        </ul>
 
+        <h2 class="mt-12 mb-2">Ingredientes de la receta</h2>
+        <v-chip-group column>
+          <v-chip 
+            v-for="ingrediente in ingredientes" 
+            :key="ingrediente"
+            class="bg-primary"
+          >
+            {{ ingrediente }}
+          </v-chip>
+        </v-chip-group>
+
+        <!-- COMMENTS CONTENT ----------------------->
+        <CommentsMainContent 
+          class="mt-15" 
+          itemType="RECETA" 
+          :comentarios="comentarios"
+          :itemId="id"
+        />
+        <!------------------------------------------->
+
+      </div>
+      <!------------------------------------------->
+
+    </div>  
   </section>
 </template>
 
@@ -59,9 +63,12 @@ const comentarios = recetas[0].comentarios;
 const ingredientes = ref<string[]>([]);
 const receta = ref<Receta | null>(null);
 const pasos = ref<string[]>([]);
+const loading = ref(true);
 
 // Get receta by ID from API
 const getReceipeById = async () => {
+  loading.value = true;
+
   try {
     const data = await useApiFetch(API.RECIPES.BY_ID, {
       params: { id },
@@ -70,6 +77,8 @@ const getReceipeById = async () => {
     receta.value.imagenUrl = '/img/recetas/' + receta.value.imagenUrl;
   } catch (error) {
     console.error('Error fetching receipe:', error);
+  } finally {
+    loading.value = false;
   }
 };
 

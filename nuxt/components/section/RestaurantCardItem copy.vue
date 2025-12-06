@@ -8,34 +8,28 @@
       <v-img 
         cover 
         height="400" 
-        :src="'/img/recetas/' + item.imagenUrl"
+        :src="item.imagenUrl"
       />
-      <v-chip
-        class="card-image__chip"
-        :class="setChipClass(item.dificultad)"
+      <v-chip 
+        class="card-image__chip bg-success text-white"
         variant="outlined"
       >
-        <span>{{ item.dificultad || 'fácil' }}</span>
-        <v-rating
-          readonly
-          color="white"
-          length="3"
-          :model-value="item.dificultad === 'fácil' ? 1 : item.dificultad === 'media' ? 2 : 3"
-        ></v-rating>
+        <v-icon left>mdi-plus</v-icon>
+        Información
       </v-chip>
       <v-btn
-        v-if="isAuthenticated"
-        :color="item.esFavoritoUsuario ? 'error' : 'darkgray'"
+        :color="true ? 'error' : 'darkgray'"
         variant="outlined"
         icon="mdi-heart"
         class="card-image__favourite"
+        @click.stop="$emit('toggle-favorite', item.idRestaurante)"
       />
     </div>
     <v-card-title class="px-0">
-      {{ item.titulo }}
+      {{ item.nombre }}
     </v-card-title>
     <v-card-text class="px-0">
-      {{ item.subtitulo }}
+      {{ item.descripcion }}
     </v-card-text>
     <v-rating
       readonly
@@ -48,28 +42,12 @@
 </template>
 
 <script setup lang="ts">
-const { isAuthenticated } = useAuthStore();
-
 const props = defineProps<{
-  item: Receta;
+  item: Restaurante;
 }>();
 
 
-const setChipClass = (difficulty: Receta['dificultad'] | undefined) => {
-  switch (difficulty) {
-    case 'fácil':
-      return 'bg-success';
-    case 'media':
-      return 'bg-warning';
-    case 'difícil':
-      return 'bg-error';
-    default:
-      return 'bg-success';
-  }
-};
-
-const setLink = computed(() => `/recetas/${props.item.idReceta}`);
-
+const setLink = computed(() => `/restaurantes/${props.item.idRestaurante}`);
 </script>
 
 <style lang="scss">
