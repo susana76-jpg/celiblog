@@ -1,78 +1,83 @@
 <template>
-  <section 
-    v-if="restaurant"
-    class="details-page restaurant-page"
-  >
+  <section class="details-page restaurant-page">
 
-    <DetailsHeroImage 
-      v-if="restaurant" 
-      type="restaurante"
-      :item="restaurant" 
-      :imageUrl="restaurant.imagenUrl"
-    />
+    <!-- LOADER --------------------------------->
+    <DetailsLoaderBlock v-if="loading" />
+    <!------------------------------------------->
 
+    <!-- CONTENT (shown when loaded) ------------>
+    <div v-else>
+      <DetailsHeroImage 
+        v-if="restaurant" 
+        type="restaurante"
+        :item="restaurant" 
+        :imageUrl="restaurant.imagenUrl"
+      />
 
-    <div class="details-page__main restaurant-description">
+      <div class="details-page__main restaurant-description">
 
-      <!-- TAGS -------------------------------------->
-      <v-chip-group column class="tags-list" >
-        <v-chip 
-          v-for="tag in tags" 
-          :key="tag.idTag"
-          size="large"
-          class="bg-primary"
-        >
-          {{ tag.nombre }}
-        </v-chip>
-      </v-chip-group>
-      <!---------------------------------------------->
+        <!-- TAGS -------------------------------------->
+        <v-chip-group column class="tags-list" >
+          <v-chip 
+            v-for="tag in tags" 
+            :key="tag.idTag"
+            size="large"
+            class="bg-primary"
+          >
+            {{ tag.nombre }}
+          </v-chip>
+        </v-chip-group>
+        <!---------------------------------------------->
 
-      <!-- DESCRIPTION ------------------------------->
-      <h2 class="mt-10 mb-4">Descripción del restaurante</h2>
-      <p>{{ restaurant.descripcion }}</p>
-      <!---------------------------------------------->
+        <!-- DESCRIPTION ------------------------------->
+        <h2 class="mt-10 mb-4">Descripción del restaurante</h2>
+        <p>{{ restaurant.descripcion }}</p>
+        <!---------------------------------------------->
 
-      <!-- CONTACT INFO ------------------------------>
-      <h2 class="mt-12 mb-4">Datos de contacto del restaurante</h2>
-      <div class="contact-section">
-        <RestaurantesMapaDetails 
-          class="contact-section__map"
-          :restaurant="restaurant"
-        />
-        <div class="contact-section__info">
-          <h2>Información de contacto</h2>
-          <v-divider :thickness="2" class="mb-10"></v-divider>
-          <div>
-            <div 
-              v-for="item in contactItems" 
-              :key="item.label"
-              class="contact-item"
-            >
-              <v-icon :icon="item.icon" class="contact-item__icon" />
-              <div class="contact-item__content">
-                <span class="contact-item__label">{{ item.label }}</span>
-                <a 
-                  v-if="item.link"
-                  :href="item.link" 
-                  class="contact-item__value contact-item__link"
-                >
-                  {{ item.value }}
-                </a>
-                <span v-else class="contact-item__value">{{ item.value }}</span>
+        <!-- CONTACT INFO ------------------------------>
+        <h2 class="mt-12 mb-4">Datos de contacto del restaurante</h2>
+        <div class="contact-section">
+          <RestaurantesMapaDetails 
+            class="contact-section__map"
+            :restaurant="restaurant"
+          />
+          <div class="contact-section__info">
+            <h2>Información de contacto</h2>
+            <v-divider :thickness="2" class="mb-10"></v-divider>
+            <div>
+              <div 
+                v-for="item in contactItems" 
+                :key="item.label"
+                class="contact-item"
+              >
+                <v-icon :icon="item.icon" class="contact-item__icon" />
+                <div class="contact-item__content">
+                  <span class="contact-item__label">{{ item.label }}</span>
+                  <a 
+                    v-if="item.link"
+                    :href="item.link" 
+                    class="contact-item__value contact-item__link"
+                  >
+                    {{ item.value }}
+                  </a>
+                  <span v-else class="contact-item__value">{{ item.value }}</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <!---------------------------------------------->
+
+        <!-- COMMENTS ---------------------------------->
+        <CommentsMainContent 
+          class="mt-16"
+          itemType="RESTAURANTE" 
+          :itemId="id"
+          :comentarios="restaurant.comentarios" 
+        />
+        <!---------------------------------------------->
+
       </div>
-      <!---------------------------------------------->
-
-      <!-- COMMENTS ---------------------------------->
-      <CommentsMainContent 
-        class="mt-16"
-        :comentarios="restaurant.comentarios" 
-      />
-      <!---------------------------------------------->
-
     </div>
   </section>
 </template>
@@ -82,6 +87,7 @@ const route = useRoute();
 const id = parseInt(route.params.id as string);
 const restaurant = ref<Restaurante | null>(null);
 const tags = ref<RestauranteTag[]>([]);
+const loading = ref(true);
 
 // Computed contact items
 const contactItems = computed(() => {
@@ -121,6 +127,8 @@ const contactItems = computed(() => {
 
 // Get restaurant by ID from API
 const getRestaurantById = async () => {
+  loading.value = true;
+
   try {
     const data = await useApiFetch(API.RESTAURANTS.BY_ID, {
       params: { id }
@@ -130,6 +138,8 @@ const getRestaurantById = async () => {
     restaurant.value = restaurantes[0];
   } catch (error) {
     console.error('Error fetching restaurant:', error);
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -140,8 +150,6 @@ const getTagsByRestaurantId = async () => {
       params: { idRestaurante: id }
     });
     
-    console.log('Tags fetched:', data);
-    // restaurant.value = data as Restaurante;
     tags.value = data as RestauranteTag[];
   } catch (error) {
     console.error('Error fetching restaurant tags:', error);
@@ -156,8 +164,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss"> 
-
-
 .contact-section {
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -229,6 +235,5 @@ onMounted(() => {
     }
   }
 }
-
 </style>
 

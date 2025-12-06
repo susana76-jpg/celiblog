@@ -56,9 +56,15 @@ function addMarkers() {
     popupAnchor: [0, -41]
   });
 
+  // Collect all marker coordinates
+  const bounds = L.latLngBounds();
+
   // Add markers for each restaurant
   props.restaurants.forEach(restaurant => {
-    const marker = L.marker([restaurant.latitud, restaurant.longitud], { icon: customIcon })
+    const latLng = L.latLng(restaurant.latitud, restaurant.longitud);
+    bounds.extend(latLng);
+    
+    const marker = L.marker(latLng, { icon: customIcon })
       .addTo(markersLayer)
       .bindPopup(`
         <div class="restaurant-popup" style="cursor: pointer;">
@@ -76,6 +82,11 @@ function addMarkers() {
       }
     });
   });
+
+  // Fit map to show all markers with padding
+  if (props.restaurants.length > 0) {
+    map.fitBounds(bounds, { padding: [50, 50] });
+  }
 }
 </script>
 

@@ -8,7 +8,7 @@
       <v-img 
         cover 
         height="400" 
-        :src="item.imagenUrl"
+        :src="item.urlPost"
       />
       <v-chip 
         class="card-image__chip bg-success text-white"
@@ -22,14 +22,14 @@
         variant="outlined"
         icon="mdi-heart"
         class="card-image__favourite"
-        @click.stop="$emit('toggle-favorite', item.idRestaurante)"
+        @click.stop="$emit('toggle-favorite', item.idPost)"
       />
     </div>
     <v-card-title class="px-0">
-      {{ item.nombre }}
+      {{ item.titulo }}
     </v-card-title>
     <v-card-text class="px-0">
-      {{ item.descripcion }}
+      {{ item.subtitulo }}
     </v-card-text>
     <v-rating
       readonly
@@ -43,11 +43,11 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  item: Restaurante;
+  item: Post;
 }>();
 
 
-const setLink = computed(() => `/restaurantes/${props.item.idRestaurante}`);
+const setLink = computed(() => `/consejos/${props.item.idPost}`);
 </script>
 
 <style lang="scss">

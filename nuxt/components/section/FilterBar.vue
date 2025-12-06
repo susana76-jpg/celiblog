@@ -4,92 +4,68 @@
     <!-- TITLE ------------------------->
     <div class="filter-bar__title">
       <h3>Búsqueda</h3>
-      <p>{{ total }} resultados</p>
+      <p class="py-1">{{ total }} resultados</p>
     </div>
     <!---------------------------------->
 
     <!-- SEARCH AND FILTER ------------->
-    <div class="filter-bar__inputs">
-      <v-text-field 
-        clearable
-        single-line
-        hide-details
-        prepend-inner-icon="mdi-magnify"
-        label="Busca entre todas nuestras recetas" 
-        variant="outlined"
-        color="primary"
-        base-color="primary"
-        density="comfortable"
-        class="main-search-input"
-        :model-value="search"
-      />
-      <v-menu
-        v-model="menu"
-        :close-on-content-click="false"
-        location="end"
-      >
-        <template v-slot:activator="{ props }">
-          <v-btn
-            v-bind="props"
-            append-icon="mdi-filter-variant"
-            text="filtros"
-            variant="outlined"
-            color="primary"
-            rounded="md"
-            height="48px"
-            size="large"
-          />
-        </template>
-
-        <v-card min-width="300">
-          Menu
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-
-            <v-btn
-              variant="text"
-              @click="menu = false"
-            >
-              Cancel
-            </v-btn>
-            <v-btn
-              color="primary"
-              variant="text"
-              @click="menu = false"
-            >
-              Save
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-menu>
-    </div>
+    <v-text-field 
+      clearable
+      single-line
+      hide-details
+      prepend-inner-icon="mdi-magnify"
+      variant="outlined"
+      color="primary"
+      base-color="primary"
+      density="comfortable"
+      class="main-search-input mb-1"
+      :label="label" 
+      :model-value="search"
+      @update:modelValue="emit('update:search', $event)"
+    />
     <!---------------------------------->
 
     <!-- CHIP GROUP -------------------->
     <v-chip-group
-      column
-      class="mt-1"
+      v-if="showTags"
+      filter
+      multiple
+      selected-class="bg-primary text-white"
+      v-model="type"
+      @update:modelValue="emit('update:tag', $event)"
     >
       <v-chip
         v-for="tag in tags"
         :key="tag"
-        closable
-        base-color="primary"
-        variant="flat"
+        :value="tag"
+        variant="outlined"
+        class="text-primary bg-white"
       >
         {{ tag }}
       </v-chip>
     </v-chip-group>
+    <!---------------------------------->
 
   </div>
 </template>
 
 <script setup lang="ts">
-const menu = ref<boolean>(false);
-const search = ref<string>('');
-const total = ref<number>(15); 
-const tags = [ 'Fácil', 'Comida', 'Cena', 'Dulce', 'Salado', 'Desayuno' ];// This would typically come from props or a store
+const props = withDefaults(defineProps<{
+  total: number;
+  label: string;
+  search?: string;
+  tags?: string[];
+  showTags?: boolean;
+}>(), {
+  showTags: true
+});
+
+const emit = defineEmits<{
+  (e: 'update:tag', value: string[]): void;
+  (e: 'update:search', value: string): void;
+}>();
+
+const type = ref<string[]>([]);
 </script>
 
 <style lang="scss">
@@ -117,18 +93,12 @@ const tags = [ 'Fácil', 'Comida', 'Cena', 'Dulce', 'Salado', 'Desayuno' ];// Th
     }
   }
 
-  &__inputs {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .v-field__overlay {
+    border: 2px solid #836A02 !important;
+  }
 
-    .main-search-input {
-      flex-grow: 1; 
-
-      .v-field__overlay {
-        border: 2px solid #836A02 !important;
-      }
-    }
+  .v-chip.bg-primary {
+    color: white !important;
   }
 }
 </style>

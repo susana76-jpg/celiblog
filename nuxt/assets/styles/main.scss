@@ -152,3 +152,45 @@ li {
     padding-bottom: 8px;
   }
 }
+
+/***********************************/
+/* Loader Styles */
+/***********************************/
+// Loader for Index Page
+.loader-container-index {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 3rem 0;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+
+  &__spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #836A02; 
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  &__text {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
