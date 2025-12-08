@@ -1,11 +1,12 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.db.entity.Usuario;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 
 import java.util.Date;
 
@@ -21,7 +22,6 @@ public class FavoritoDTO {
     private Long idReferencia;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fecha;
-
     public FavoritoDTO() {
     }
 

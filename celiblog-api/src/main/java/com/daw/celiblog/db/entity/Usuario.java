@@ -22,20 +22,12 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_usuario")
 	private Long idUsuario;
-
 	private String email;
-
 	private String nombre;
-
 	private String password;
-
-	//bi-directional many-to-one association to Comentario
-
-	//bi-directional many-to-one association to Rol
 	@ManyToOne
 	@JoinColumn(name="id_rol")
 	private Rol rol;
-
 	@CreationTimestamp
 	@Column(name = "fecha_alta", updatable = false)
 	private Date fechaAlta;

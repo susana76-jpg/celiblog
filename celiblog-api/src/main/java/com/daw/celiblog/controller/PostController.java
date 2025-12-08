@@ -2,11 +2,7 @@ package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.PostDTO;
 import com.daw.celiblog.dto.PostView;
-import com.daw.celiblog.dto.RestauranteDTO;
-import com.daw.celiblog.dto.RestauranteView;
-import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.service.PostService;
-import com.daw.celiblog.service.RestauranteService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

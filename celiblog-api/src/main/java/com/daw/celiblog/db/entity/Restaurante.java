@@ -36,7 +36,6 @@ public class Restaurante implements Serializable {
 	private int codigoPostal;
 	private Double latitud;
 	private Double longitud;
-
 	private String telefono;
 	private String email;
 	@Enumerated(EnumType.STRING)
@@ -51,8 +50,6 @@ public class Restaurante implements Serializable {
 	@Column(name = "fecha_validacion")
 	private Date fechaValidacion;
 	private int valoracion;
-
-
 
 
 	public Restaurante() {

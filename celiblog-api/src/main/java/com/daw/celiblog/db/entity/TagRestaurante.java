@@ -18,14 +18,10 @@ public class TagRestaurante implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_tag")
 	private Long idTag;
-
 	private String nombre;
-
-	//bi-directional many-to-one association to Restaurante
 	@ManyToOne
 	@JoinColumn(name="id_restaurante")
 	private Restaurante restaurante;
-
 	public TagRestaurante() {}
 
 	public TagRestaurante(Long idTag, String nombre, Restaurante restaurante) {

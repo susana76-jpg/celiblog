@@ -5,7 +5,6 @@ com\daw\celiblog\config\SwaggerConfig.class
 com\daw\celiblog\enums\RolEnum.class
 com\daw\celiblog\db\entity\RecetaIngrediente.class
 com\daw\celiblog\db\entity\Post.class
-com\daw\celiblog\error\NotFoundException.class
 com\daw\celiblog\db\entity\Receta.class
 com\daw\celiblog\db\repository\FavoritoRepository.class
 com\daw\celiblog\security\JwtUtil.class
@@ -17,7 +16,6 @@ com\daw\celiblog\dto\TagRecetaView.class
 com\daw\celiblog\dto\TipoComentarioDTO.class
 com\daw\celiblog\service\RolService.class
 com\daw\celiblog\db\entity\Restaurante.class
-com\daw\celiblog\dto\ErrorDTO.class
 com\daw\celiblog\controller\TagRestauranteController.class
 com\daw\celiblog\dto\TagRecetaDTO.class
 com\daw\celiblog\service\impl\UsuarioServiceImpl.class

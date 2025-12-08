@@ -1,12 +1,12 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.db.entity.Usuario;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
-import com.daw.celiblog.enums.TipoComidaEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 
 import java.util.Date;
 

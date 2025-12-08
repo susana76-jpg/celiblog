@@ -1,11 +1,5 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.enums.EstadoValidacionEnum;
-import com.daw.celiblog.enums.ObjetoEnum;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Date;
-
 public class ComentarioView {
     private String titulo;
     private String subtitulo;

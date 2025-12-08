@@ -17,24 +17,20 @@ public class ComentarioDTO {
     private String titulo;
     private String subtitulo;
     private String comentarioUrl;
-
     @JsonProperty("usuarioPublicacion")
     private UsuarioSummaryDTO usuario;
     @ManyToOne
     @JsonIgnore
     private UsuarioDTO usuarioDTO;
     private Long idObjetoComentado;
-
     public ObjetoEnum objetoComentado;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaValidacion;
     private int  valoracion;
     private EstadoValidacionEnum estado = EstadoValidacionEnum.APROBADO;
     private boolean esFavoritoUsuario;
-
     public ComentarioDTO() {
     }
-
     public ComentarioDTO(Long idComentario, Date fechaPublicacion, String contenido, String titulo,String subtitulo, String comentarioUrl, UsuarioSummaryDTO usuarioSummaryDTO, Long idObjetoComentado, ObjetoEnum objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacionEnum estado) {
         this.idComentario = idComentario;
         this.fechaPublicacion = fechaPublicacion;

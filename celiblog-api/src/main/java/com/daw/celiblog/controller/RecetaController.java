@@ -1,8 +1,8 @@
 package com.daw.celiblog.controller;
 
 import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
-import com.daw.celiblog.dto.*;
-import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.dto.RecetaDTO;
+import com.daw.celiblog.dto.RecetaView;
 import com.daw.celiblog.enums.TipoComidaEnum;
 import com.daw.celiblog.service.RecetaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +31,6 @@ public class RecetaController {
     @Autowired
     RecetaService recetaService;
 
-    //PUBLICO
     @Operation(summary = "PÚBLICO: Obtiene todas las recetas registradas.")
     @GetMapping("public/all")
     public ResponseEntity<List<RecetaDTO>> all(Authentication authentication) {

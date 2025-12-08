@@ -50,11 +50,6 @@ public class SecurityConfig {
                                 "/api/post/public/**"
                         ).permitAll()
 
-                        /* Endpoints protegidos por rol
-                        .requestMatchers("/admin/**").hasAuthority("ADMINISTRADOR")
-                        .requestMatchers("/editor/**").hasAuthority("EDITOR")
-                        .requestMatchers("/visitor/**").hasAnyAuthority("VISITOR","EDITOR","ADMINISTRADOR")*/
-
                         // El resto requiere login
                         .anyRequest().authenticated()
                 )

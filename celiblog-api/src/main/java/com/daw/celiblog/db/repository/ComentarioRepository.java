@@ -1,14 +1,9 @@
 package com.daw.celiblog.db.repository;
 
 import com.daw.celiblog.db.entity.Comentario;
-import com.daw.celiblog.db.entity.Receta;
-import com.daw.celiblog.dto.ComentarioDTO;
-import com.daw.celiblog.dto.ComentarioView;
-import com.daw.celiblog.enums.ObjetoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

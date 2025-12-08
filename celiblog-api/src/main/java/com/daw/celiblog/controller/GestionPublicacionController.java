@@ -1,6 +1,5 @@
 package com.daw.celiblog.controller;
 
-import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.GestionPublicacionService;
@@ -31,16 +30,16 @@ public class GestionPublicacionController {
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "PRIVADO :: Actualiza el estado de publicación de un objeto")
+    @Operation(summary = "PRIVADO : Actualiza el estado de publicación de un objeto")
     @PutMapping("/update")
     ResponseEntity<?> update(Authentication authentication,
-                            @RequestParam(name="idReceta") Long idReceta,
+                            @RequestParam(name="idObjeto") Long idObjeto,
                             @RequestParam(name="objeto") ObjetoEnum objeto,
                             @RequestParam(name="estado") EstadoValidacionEnum estado) {
 
-        Object objetoActualizado = this.gestionPublicacionService.updateObjetoEstadoPublicacion(authentication, idReceta, objeto, estado);
+        Object objetoActualizado = this.gestionPublicacionService.updateObjetoEstadoPublicacion(authentication, idObjeto, objeto, estado);
         if(objetoActualizado != null){
-            return ResponseEntity.status(200).body("Se ha atualizado el objeto "+ objeto.toString()+" con id "+idReceta);
+            return ResponseEntity.status(200).body("Se ha atualizado el objeto "+ objeto.toString()+" con id "+idObjeto);
         }else{
             return ResponseEntity.status(300).body("No existe el objeto a actualizar.");
         }

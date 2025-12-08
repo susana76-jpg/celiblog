@@ -1,17 +1,6 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.TipoComidaEnum;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotNull;
-
-import java.util.Date;
-import java.util.Objects;
 
 public class RecetaView {
     private Long idReceta;
@@ -25,7 +14,6 @@ public class RecetaView {
     private int tiempoPreparacion;
     private int valorEnergetico;
     private TipoComidaEnum tipoComida;
-
 
     public RecetaView() {
     }

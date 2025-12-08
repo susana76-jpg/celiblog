@@ -19,9 +19,7 @@ Rol implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_rol")
 	private Long idRol;
-
 	private String nombre;
-
 	public Rol() {
 	}
 

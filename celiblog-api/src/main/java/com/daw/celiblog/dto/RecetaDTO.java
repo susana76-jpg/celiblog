@@ -15,7 +15,6 @@ import java.util.Objects;
 public class RecetaDTO {
 
     private Long idReceta;
-
     @JsonProperty("usuarioPublicacion")
     private UsuarioSummaryDTO usuario;
     @ManyToOne

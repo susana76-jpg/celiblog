@@ -1,16 +1,8 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.db.entity.Rol;
-import com.daw.celiblog.service.mapper.RolMapper;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Date;
-
 public class UsuarioSummaryDTO {
-
     private String email;
     private String nombre;
-
 
     public UsuarioSummaryDTO() {
     }

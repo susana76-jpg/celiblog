@@ -1,8 +1,5 @@
 package com.daw.celiblog.dto;
 
-import jakarta.validation.constraints.Pattern;
-
-
 public class PostView {
     private String titulo;
     private String subtitulo;

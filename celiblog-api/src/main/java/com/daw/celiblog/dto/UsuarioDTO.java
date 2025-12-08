@@ -4,7 +4,6 @@ import com.daw.celiblog.db.entity.Rol;
 import com.daw.celiblog.service.mapper.RolMapper;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
 
 import java.util.Date;
 

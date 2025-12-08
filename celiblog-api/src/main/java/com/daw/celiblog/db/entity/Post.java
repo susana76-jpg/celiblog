@@ -21,7 +21,6 @@ public class Post implements Serializable {
 	private Long idPost;
 	@Column(name="fecha_publicacion")
 	private Date fechaPublicacion;
-
 	private String titulo;
 	private String subtitulo;
 	private String contenido;

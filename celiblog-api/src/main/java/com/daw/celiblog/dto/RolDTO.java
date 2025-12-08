@@ -1,7 +1,5 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.enums.RolEnum;
-
 public class RolDTO {
     private Long idRol;
     private String nombre;

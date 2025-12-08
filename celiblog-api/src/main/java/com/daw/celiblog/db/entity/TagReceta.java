@@ -19,14 +19,10 @@ public class TagReceta implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_tag")
 	private Long idTag;
-
 	private String nombre;
-
-	//bi-directional many-to-one association to Receta
 	@ManyToOne
 	@JoinColumn(name="id_receta")
 	private Receta receta;
-
 	public TagReceta() {
 	}
 

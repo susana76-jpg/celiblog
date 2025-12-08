@@ -2,7 +2,6 @@ package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.PasoRecetaDTO;
 import com.daw.celiblog.dto.PasoRecetaView;
-import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.service.PasoRecetaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

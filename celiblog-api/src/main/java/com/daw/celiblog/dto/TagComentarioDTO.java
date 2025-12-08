@@ -3,18 +3,13 @@ package com.daw.celiblog.dto;
 public class TagComentarioDTO {
 
     private Long idComentario;
-
     private String comentarioUrl;
-
     private String contenido;
-
     private UsuarioDTO usuario;
-
     private TipoComentarioDTO tipoComentario;
 
     public TagComentarioDTO() {
     }
-
     public TagComentarioDTO(Long idComentario, String comentarioUrl, String contenido, UsuarioDTO usuario, TipoComentarioDTO tipoComentario) {
         this.idComentario = idComentario;
         this.comentarioUrl = comentarioUrl;

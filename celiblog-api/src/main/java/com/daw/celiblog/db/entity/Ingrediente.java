@@ -16,11 +16,8 @@ public class Ingrediente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_ingrediente")
 	private Long id_Ingrediente;
-
 	private String nombre;
-
 	private String unidad;
-
 	public Ingrediente() {
 	}
 
