@@ -23,11 +23,6 @@ public interface RestauranteService {
     RestauranteDTO crearRestaurante(RestauranteView restauranteView) throws JsonProcessingException;
     RestauranteDTO update(RestauranteView restauranteView, Long idRestaurante) throws JsonProcessingException;
 
-    //gestión de aprobación de publicaciones de recetas
-    List<RestauranteDTO> getRestaurantesEstadoPendiente();
-    List<RestauranteDTO> getRestaurantesEstadoAprobado();
-    List<RestauranteDTO> getRestaurantesEstadoRechazado();
-    RestauranteDTO updateEstadoPublicacionRestaurante(Long idRestaurante, EstadoValidacionEnum estado);
 
 
 

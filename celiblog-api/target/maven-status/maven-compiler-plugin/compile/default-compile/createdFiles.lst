@@ -39,6 +39,7 @@ com\daw\celiblog\controller\UsuarioController.class
 com\daw\celiblog\service\impl\RolServiceImpl.class
 com\daw\celiblog\service\mapper\PasoRecetaMapper.class
 com\daw\celiblog\dto\RestauranteViewSummary.class
+com\daw\celiblog\enums\TipoRestauranteEnum.class
 com\daw\celiblog\db\entity\TagReceta.class
 com\daw\celiblog\db\entity\TagRestaurante.class
 com\daw\celiblog\service\PostService.class
@@ -55,6 +56,7 @@ com\daw\celiblog\config\WebConfig.class
 com\daw\celiblog\dto\FavoritoDTO.class
 com\daw\celiblog\service\Ingrediente.class
 com\daw\celiblog\service\RecetaService.class
+com\daw\celiblog\controller\GestionPublicacionController.class
 com\daw\celiblog\dto\RestauranteDTO.class
 com\daw\celiblog\db\repository\VistaRecetaRepository.class
 com\daw\celiblog\dto\RecetaView.class
@@ -104,8 +106,10 @@ com\daw\celiblog\dto\PostView.class
 com\daw\celiblog\service\UsuarioService.class
 com\daw\celiblog\dto\AuthRequest.class
 com\daw\celiblog\db\entity\PasoReceta.class
+com\daw\celiblog\service\GestionPublicacionService.class
 com\daw\celiblog\controller\AuthController.class
 com\daw\celiblog\db\entity\Favorito.class
 com\daw\celiblog\db\repository\UsuarioRepository.class
+com\daw\celiblog\service\impl\GestionPublicacionServiceImpl.class
 com\daw\celiblog\dto\UsuarioView.class
 com\daw\celiblog\enums\TipoComidaEnum.class

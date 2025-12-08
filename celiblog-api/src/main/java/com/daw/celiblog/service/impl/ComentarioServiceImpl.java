@@ -43,7 +43,6 @@ public class ComentarioServiceImpl implements ComentarioService {
         }
     }
 
-
     @Override
     public ComentarioDTO add(Authentication authentication, ComentarioView comentarioView, ObjetoEnum objetoEnum) {
         Optional<Usuario> usuario = this.usuarioRepository.findByEmail(authentication.getName());

@@ -75,33 +75,7 @@ public class PostController {
     }
 
 
-    //GESTIÓN ESTADO DE PUBLICACIÓN
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "ADMINISTRADOR - GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todos los post publicados por los usuarios y pendientes de validar para su publicación por un administrador.")
-    @GetMapping("/estado-pendiente")
-    public ResponseEntity<List<PostDTO>> getPostEstadoPendiente() {
-        return ResponseEntity.ok(this.postService.getPostEstadoPendiente());
-    }
 
-    @Operation(summary = "Obtiene todos los post publicados por los usuarios y aprobados para su publicación por un administrador.")
-    @GetMapping("public/estado-aprobada")
-    public ResponseEntity<List<PostDTO>> getPostEstadoAprobado() {
-        return ResponseEntity.ok(this.postService.getPostEstadoAprobado());
-    }
-
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "ADMINISTRADOR - GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todos los restaurantes publicados por los usuarios  y rechazados para su publicación por un administrador.")
-    @GetMapping("/estado-rechazado")
-    public ResponseEntity<List<PostDTO>> getPostEstadoRechazado() {
-        return ResponseEntity.ok(this.postService.getPostEstadoRechazado());
-    }
-
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "ADMINISTRADOR - GESTIÓN ESTADO DE PUBLICACIÓN: Actualiza el estado de publicación de un post (PENDIENTE, APROBADO, RECHAZADO")
-    @PutMapping("/update-estado-publicacion")
-    ResponseEntity<PostDTO> updateEstadoPublicacionPost(@RequestParam(name="idPost") Long idPost, @RequestParam(name="estado") EstadoValidacionEnum estado) {
-        return ResponseEntity.ok(this.postService.updateEstadoPublicacionPost(idPost, estado));
-    }
 
 
 }

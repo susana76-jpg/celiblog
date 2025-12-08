@@ -1,9 +1,11 @@
 package com.daw.celiblog.dto;
 
 import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.enums.TipoRestauranteEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToOne;
@@ -24,26 +26,22 @@ public class RestauranteView {
     private String ubicacion;
     private int codigoPostal;
     private String urlWeb;
-    //@NotBlank(message = "El teléfono no puede estar vacío")
-    @Pattern(
-            regexp = "^(?:\\+34|0034)?d{9}$",
-            message = "El teléfono debe ser válido en España"
-    )
     private String telefono;
-    @Pattern(
-            regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
-            message = "Formato de email inválido"
-    )
     private String email;
     private int valoracion;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_restaurante", nullable = false)
+    private TipoRestauranteEnum tipoRestaurante = TipoRestauranteEnum.SIN_GLUTEN;
+
 
     public RestauranteView() {
     }
 
-    public RestauranteView(String titulo, String subtitulo, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, String urlWeb, String telefono, String email, int valoracion) {
+    public RestauranteView(String titulo, String subtitulo, String descripcion, TipoRestauranteEnum tipoRestaurante, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, String urlWeb, String telefono, String email, int valoracion) {
         this.titulo = titulo;
         this.subtitulo = subtitulo;
         this.descripcion = descripcion;
+        this.tipoRestaurante = tipoRestaurante;
         this.direccion = direccion;
         this.imagenUrl = imagenUrl;
         this.nombre = nombre;
@@ -149,5 +147,13 @@ public class RestauranteView {
 
     public void setValoracion(int valoracion) {
         this.valoracion = valoracion;
+    }
+
+    public TipoRestauranteEnum getTipoRestaurante() {
+        return tipoRestaurante;
+    }
+
+    public void setTipoRestaurante(TipoRestauranteEnum tipoRestaurante) {
+        this.tipoRestaurante = tipoRestaurante;
     }
 }

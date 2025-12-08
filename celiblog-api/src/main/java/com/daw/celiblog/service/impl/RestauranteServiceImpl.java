@@ -77,12 +77,14 @@ public class RestauranteServiceImpl implements RestauranteService {
             Restaurante restaurante = new Restaurante();
             restaurante.setTitulo(restauranteView.getTitulo());
             restaurante.setSubtitulo(restauranteView.getSubtitulo());
+            restaurante.setNombre(restauranteView.getNombre());
             restaurante.setDescripcion(restauranteView.getDescripcion());
             restaurante.setUsuario(usuario.get());
             restaurante.setEmail(restauranteView.getEmail());
             restaurante.setFechaPublicacion(new Date());
             restaurante.setDescripcion(restauranteView.getDireccion());
             restaurante.setDireccion(restauranteView.getDireccion());
+            restaurante.setTipoRestaurante(restauranteView.getTipoRestaurante());
             //geolocalización del restaurante
             double[] coords = this.geolocalizacionService.geolocalizar(restaurante.getDireccion());
             restaurante.setLatitud(coords[0]);
@@ -107,6 +109,9 @@ public class RestauranteServiceImpl implements RestauranteService {
             }
             if(restauranteView.getSubtitulo() != null){
                 restaurante.setSubtitulo(restauranteView.getSubtitulo());
+            }
+            if(restauranteView.getTipoRestaurante() != null){
+                restaurante.setTipoRestaurante(restauranteView.getTipoRestaurante());
             }
             if(restauranteView.getDireccion() != null){
                 restaurante.setDireccion(restauranteView.getDireccion());
@@ -227,39 +232,7 @@ public class RestauranteServiceImpl implements RestauranteService {
         }else{
             return null;
         }
-
     }
-
-    @Override
-    public List<RestauranteDTO> getRestaurantesEstadoPendiente() {
-        return RestauranteMapper.entityToDtoList(this.restauranteRepository.getRestaurantesEstadoPendiente());
-    }
-
-    @Override
-    public List<RestauranteDTO> getRestaurantesEstadoAprobado() {
-        return RestauranteMapper.entityToDtoList(this.restauranteRepository.getRestaurantesEstadoAprobado());
-    }
-
-    @Override
-    public List<RestauranteDTO> getRestaurantesEstadoRechazado() {
-        return RestauranteMapper.entityToDtoList(this.restauranteRepository.getRestaurantesEstadoRechazado());
-    }
-
-    @Override
-    public RestauranteDTO updateEstadoPublicacionRestaurante(Long idRestaurante, EstadoValidacionEnum estado) {
-        Optional<Restaurante> rest = this.restauranteRepository.findById(idRestaurante);
-        if(rest.isPresent()){
-            Restaurante restaurante = rest.get();
-            restaurante.setEstado(estado);
-            return RestauranteMapper.entityToDto(this.restauranteRepository.save(restaurante));
-        }
-        return null;
-    }
-
-
-
-
-
 
     private List<RestauranteDTO> getFavorits(List<RestauranteDTO> listado, String emailUsuarioLogin){
         Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuarioLogin);

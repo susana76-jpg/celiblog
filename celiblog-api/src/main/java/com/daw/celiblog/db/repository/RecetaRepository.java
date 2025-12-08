@@ -26,14 +26,9 @@ public interface RecetaRepository extends JpaRepository<Receta, Long> {
     List<Receta> buscarRecetasPorNombreDeTag(@Param("nombreTag") String nombreTag);
 
 
-    @Query(value = "SELECT * FROM receta WHERE estado = 'PENDIENTE'", nativeQuery = true)
-    List<Receta> getRecetasEstadoPendiente();
+    @Query(value = "SELECT * FROM receta WHERE estado =:estadoPublicacion", nativeQuery = true)
+    List<Receta> getByEstadoPublicacion(@Param("estadoPublicacion") String estadoPublicacion);
 
-    @Query(value = "SELECT * FROM receta WHERE estado = 'APROBADO'", nativeQuery = true)
-    List<Receta> getRecetasEstadoAprobado();
-
-    @Query(value = "SELECT * FROM receta WHERE estado = 'RECHAZADO'", nativeQuery = true)
-    List<Receta> getRecetasEstadoRechazado();
 
     @Query(value = "SELECT * FROM vista_receta_ingredientes WHERE id_receta =:idReceta", nativeQuery = true)
     List<VistaRecetaIngredientes> getIngredientesByIdReceta(@Param("idReceta") Long idReceta);

@@ -1,6 +1,7 @@
 package com.daw.celiblog.db.repository;
 
 import com.daw.celiblog.db.entity.Comentario;
+import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.dto.ComentarioDTO;
 import com.daw.celiblog.dto.ComentarioView;
 import com.daw.celiblog.enums.ObjetoEnum;
@@ -23,6 +24,9 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
     ORDER BY fecha_publicacion ASC
     """, nativeQuery = true)
     List<Comentario> allComentariosByObject(@Param("objetoComentado")String objetoComentado, @Param("idObjetoComentado")Long idObjetoComentado);
+
+    @Query(value = "SELECT * FROM comentario WHERE estado =:estadoPublicacion", nativeQuery = true)
+    List<Comentario> getByEstadoPublicacion(@Param("estadoPublicacion") String estadoPublicacion);
 
 
 

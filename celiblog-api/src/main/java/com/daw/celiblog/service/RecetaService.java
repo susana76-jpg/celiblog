@@ -17,7 +17,6 @@ public interface RecetaService {
     List<RecetaDTO> getByValoracion(Authentication authentication, int valoracion);
     List<RecetaDTO> getByTipoComida(Authentication authentication, TipoComidaEnum tipoComida);
     List<VistaRecetaIngredientes> getIngredientesByIdReceta(Long idReceta);
-    List<RecetaDTO> getRecetasEstadoAprobado();
     List<RecetaDTO> buscarRecetasPorNombreDeTag(String nombreTag);
     List<RecetaDTO> buscarRecetasPorNombreDeTags(List<String> tags);
     List<RecetaDTO> buscarVista(Authentication authentication, String keyword, List<TipoComidaEnum> tipoComida);
@@ -27,10 +26,6 @@ public interface RecetaService {
     RecetaDTO update(Authentication authentication, RecetaView view);
     boolean deleteById(Authentication authentication, Long id);
 
-    //PRIVADO - GESTIÓN DE PUBLICACIONES
-    List<RecetaDTO> getRecetasEstadoPendiente(Authentication authentication);
-    List<RecetaDTO> getRecetasEstadoRechazado(Authentication authentication);
-    RecetaDTO updateEstadoPublicacionReceta(Authentication authentication, Long idReceta, EstadoValidacionEnum estado);
 
     //PROTEGIDO
     RecetaDTO add(Authentication authentication, RecetaView recetaView);

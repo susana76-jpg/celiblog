@@ -67,11 +67,7 @@ public class RecetaController {
     public ResponseEntity<List<VistaRecetaIngredientes>> getIngredientesByIdReceta(@RequestParam(name="idReceta") Long idReceta) {
         return ResponseEntity.ok(this.recetaService.getIngredientesByIdReceta(idReceta));
     }
-    @Operation(summary = "PÚBLICO: Obtiene todas las recetas publicadas por los usuarios y aprobadas para su publicación por un administrador.")
-    @GetMapping("public/estado-aprobada")
-    public ResponseEntity<List<RecetaDTO>> getRecetasEstadoAprobado() {
-        return ResponseEntity.ok(recetaService.getRecetasEstadoAprobado());
-    }
+
     @Operation(summary = "PÚBLICO: Obtiene las recetas filtradas por título, subtítulo, descripción, nombre de ingrediente o tipo de comida")
     @GetMapping("public/buscar")
     public ResponseEntity<List<RecetaDTO>> buscar(
@@ -93,25 +89,6 @@ public class RecetaController {
         }
     }
 
-    //PRIVADO - GESTIÓN ESTADO DE PUBLICACIÓN
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "PRIVADO - GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todas las recetas publicadas por los usuarios y pendientes de validar para su publicación por un administrador o editor.")
-    @GetMapping("/estado-pendiente")
-    public ResponseEntity<List<RecetaDTO>> getRecetasEstadoPendiente(Authentication authentication) {
-        return ResponseEntity.ok(recetaService.getRecetasEstadoPendiente(authentication));
-    }
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "PRIVADO - GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todas las recetas publicadas por los usuarios y rechazadas para su publicación por un administrador.")
-    @GetMapping("/estado-rechazado")
-    public ResponseEntity<List<RecetaDTO>> getRecetasEstadoRechazado(Authentication authentication) {
-        return ResponseEntity.ok(recetaService.getRecetasEstadoRechazado(authentication));
-    }
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "PRIVADO - GESTIÓN ESTADO DE PUBLICACIÓN: Actualiza el estado de publicación de una receta (PENDIENTE, APROBADO, RECHAZADO")
-    @PutMapping("/update-estado-publicacion")
-    ResponseEntity<RecetaDTO> updateEstadoPublicacionReceta(Authentication authentication, @RequestParam(name="idReceta") Long idReceta, @RequestParam(name="estado") EstadoValidacionEnum estado) {
-        return ResponseEntity.ok(recetaService.updateEstadoPublicacionReceta(authentication, idReceta, estado));
-    }
 
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
     @Operation(summary = "PROTEGIDO: Añade una receta.")

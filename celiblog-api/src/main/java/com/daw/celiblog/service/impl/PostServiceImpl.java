@@ -114,32 +114,6 @@ public class PostServiceImpl implements PostService {
         }
     }
 
-    @Override
-    public List<PostDTO> getPostEstadoPendiente() {
-        return PostMapper.entityToDtoList(this.postRepository.getPostEstadoPendiente());
-    }
-
-    @Override
-    public List<PostDTO> getPostEstadoAprobado() {
-        return PostMapper.entityToDtoList(this.postRepository.getPostEstadoAprobado());
-    }
-
-    @Override
-    public List<PostDTO> getPostEstadoRechazado() {
-        return PostMapper.entityToDtoList(this.postRepository.getPostEstadoRechazado());
-    }
-
-    @Override
-    public PostDTO updateEstadoPublicacionPost(Long id, EstadoValidacionEnum estado) {
-        Optional<Post> post = this.postRepository.findById(id);
-        if(post.isPresent()){
-            Post newPost = post.get();
-            newPost.setEstado(estado);
-            return PostMapper.entityToDto(this.postRepository.save(newPost));
-        }
-        return null;
-    }
-
 
     private List<PostDTO> getFavorits(List<PostDTO> listado, String emailUsuarioLogin){
         Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuarioLogin);

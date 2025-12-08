@@ -88,10 +88,7 @@ public class RecetaServiceImpl implements RecetaService {
         List<VistaRecetaIngredientes> ingredientes = this.recetaRepository.getIngredientesByIdReceta(idReceta);
         return ingredientes;
     }
-    @Override
-    public List<RecetaDTO> getRecetasEstadoAprobado() {
-        return RecetaMapper.entityToDtoList(this.recetaRepository.getRecetasEstadoAprobado());
-    }
+
     @Override
     public List<RecetaDTO> buscarRecetasPorNombreDeTag(String nombreTag) {
         return RecetaMapper.entityToDtoList(this.recetaRepository.buscarRecetasPorNombreDeTag(nombreTag.toUpperCase()));
@@ -206,27 +203,6 @@ public class RecetaServiceImpl implements RecetaService {
         return (this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RECETA.toString())).contains(idReceta);
     }
 
-    @Override
-    public List<RecetaDTO> getRecetasEstadoPendiente(Authentication authentication) {
-        return RecetaMapper.entityToDtoList(this.recetaRepository.getRecetasEstadoPendiente());
-    }
-
-    @Override
-    public List<RecetaDTO> getRecetasEstadoRechazado(Authentication authentication) {
-        return RecetaMapper.entityToDtoList(this.recetaRepository.getRecetasEstadoRechazado());
-    }
-
-
-    @Override
-    public RecetaDTO updateEstadoPublicacionReceta(Authentication authentication, Long idReceta, EstadoValidacionEnum estado) {
-        Optional<Receta> rec = this.recetaRepository.findById(idReceta);
-        if(rec.isPresent()){
-            Receta receta = rec.get();
-            receta.setEstado(estado);
-            return RecetaMapper.entityToDto(this.recetaRepository.save(receta));
-        }
-        return null;
-    }
 
 
 }

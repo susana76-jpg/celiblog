@@ -85,33 +85,6 @@ public class RestauranteController {
         return ResponseEntity.ok("Restaurantes actualizados en su longitud y latitud desde su dirección");
     }
 
-    //GESTIÓN ESTADO DE PUBLICACIÓN
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "ADMINISTRADOR - GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todos los restaurantes publicados por los usuarios y pendientes de validar para su publicación por un administrador.")
-    @GetMapping("/estado-pendiente")
-    public ResponseEntity<List<RestauranteDTO>> getRestaurantesEstadoPendiente() {
-        return ResponseEntity.ok(this.restauranteService.getRestaurantesEstadoPendiente());
-    }
-
-    @Operation(summary = "Obtiene todos los restaurantes publicados por los usuarios y aprobados para su publicación por un administrador.")
-    @GetMapping("public/estado-aprobada")
-    public ResponseEntity<List<RestauranteDTO>> getRestaurantesEstadoAprobado() {
-        return ResponseEntity.ok(this.restauranteService.getRestaurantesEstadoAprobado());
-    }
-
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "ADMINISTRADOR - GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todos los restaurantes publicados por los usuarios  y rechazados para su publicación por un administrador.")
-    @GetMapping("/estado-rechazado")
-    public ResponseEntity<List<RestauranteDTO>> getRestaurantesEstadoRechazado() {
-        return ResponseEntity.ok(this.restauranteService.getRestaurantesEstadoRechazado());
-    }
-
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "ADMINISTRADOR - GESTIÓN ESTADO DE PUBLICACIÓN: Actualiza el estado de publicación de un restaurante (PENDIENTE, APROBADO, RECHAZADO")
-    @PutMapping("/update-estado-publicacion")
-    ResponseEntity<RestauranteDTO> updateEstadoPublicacionRestaurante(@RequestParam(name="idRestaurante") Long idRestaurante, @RequestParam(name="estado") EstadoValidacionEnum estado) {
-        return ResponseEntity.ok(this.restauranteService.updateEstadoPublicacionRestaurante(idRestaurante, estado));
-    }
 
 
 }

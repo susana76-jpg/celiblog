@@ -14,9 +14,4 @@ public interface PostService {
     PostDTO update(Long id, PostView postView);
     boolean deleteById(Long id);
 
-    //gestión de aprobación de publicaciones de recetas
-    List<PostDTO> getPostEstadoPendiente();
-    List<PostDTO> getPostEstadoAprobado();
-    List<PostDTO> getPostEstadoRechazado();
-    PostDTO updateEstadoPublicacionPost(Long id, EstadoValidacionEnum estado);
 }

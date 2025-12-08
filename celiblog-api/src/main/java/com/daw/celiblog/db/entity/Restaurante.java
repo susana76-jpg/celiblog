@@ -1,6 +1,7 @@
 package com.daw.celiblog.db.entity;
 
 import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.enums.TipoRestauranteEnum;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -38,6 +39,9 @@ public class Restaurante implements Serializable {
 
 	private String telefono;
 	private String email;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo_restaurante", nullable = false)
+	private TipoRestauranteEnum tipoRestaurante = TipoRestauranteEnum.SIN_GLUTEN;
 	@ManyToOne
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
@@ -54,7 +58,7 @@ public class Restaurante implements Serializable {
 	public Restaurante() {
 	}
 
-	public Restaurante(Long idRestaurante, Date fechaPublicacion, String nombre, String direccion, String titulo, String subtitulo, String descripcion, String urlWeb, String imagenUrl, String ubicacion, int codigoPostal, Double latitud, Double longitud, String telefono, String email, Usuario usuario, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion) {
+	public Restaurante(Long idRestaurante, Date fechaPublicacion, String nombre, String direccion, String titulo, String subtitulo, String descripcion, TipoRestauranteEnum tipoRestaurante, String urlWeb, String imagenUrl, String ubicacion, int codigoPostal, Double latitud, Double longitud, String telefono, String email, Usuario usuario, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion) {
 		this.idRestaurante = idRestaurante;
 		this.fechaPublicacion = fechaPublicacion;
 		this.nombre = nombre;
@@ -62,6 +66,7 @@ public class Restaurante implements Serializable {
 		this.titulo = titulo;
 		this.subtitulo = subtitulo;
 		this.descripcion = descripcion;
+		this.tipoRestaurante = tipoRestaurante;
 		this.urlWeb = urlWeb;
 		this.imagenUrl = imagenUrl;
 		this.ubicacion = ubicacion;
@@ -226,5 +231,13 @@ public class Restaurante implements Serializable {
 
 	public void setSubtitulo(String subtitulo) {
 		this.subtitulo = subtitulo;
+	}
+
+	public TipoRestauranteEnum getTipoRestaurante() {
+		return tipoRestaurante;
+	}
+
+	public void setTipoRestaurante(TipoRestauranteEnum tipoRestaurante) {
+		this.tipoRestaurante = tipoRestaurante;
 	}
 }
