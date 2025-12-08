@@ -22,7 +22,7 @@ public class GestionPublicacionController {
     private GestionPublicacionService gestionPublicacionService;
 
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "PRIVADO : Obtiene todas las objetos publicadas por los usuarios, según su estado de publicación, y su tipo de referencia.")
+    @Operation(summary = "PRIVADO : Obtiene todos los objetos publicados por los usuarios, según su estado de publicación, y su tipo de referencia.")
     @GetMapping("/list")
     public ResponseEntity<List<?>> getObjetosByEstado(Authentication authentication,
             @RequestParam(name="objeto") ObjetoEnum objeto,
@@ -31,7 +31,7 @@ public class GestionPublicacionController {
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Actualiza el estado de publicación de un objeto")
+    @Operation(summary = "PRIVADO :: Actualiza el estado de publicación de un objeto")
     @PutMapping("/update")
     ResponseEntity<?> update(Authentication authentication,
                             @RequestParam(name="idReceta") Long idReceta,
