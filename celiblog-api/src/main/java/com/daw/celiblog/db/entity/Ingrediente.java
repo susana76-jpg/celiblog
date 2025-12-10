@@ -15,24 +15,24 @@ public class Ingrediente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_ingrediente")
-	private Long id_Ingrediente;
+	private Long idIngrediente;
 	private String nombre;
 	private String unidad;
 	public Ingrediente() {
 	}
 
 	public Ingrediente(Long id_Ingrediente, String nombre, String unidad) {
-		this.id_Ingrediente = id_Ingrediente;
+		this.idIngrediente = id_Ingrediente;
 		this.nombre = nombre;
 		this.unidad = unidad;
 	}
 
 	public Long getId_Ingrediente() {
-		return id_Ingrediente;
+		return idIngrediente;
 	}
 
 	public void setId_Ingrediente(Long id_Ingrediente) {
-		this.id_Ingrediente = id_Ingrediente;
+		this.idIngrediente = id_Ingrediente;
 	}
 
 	public String getNombre() {

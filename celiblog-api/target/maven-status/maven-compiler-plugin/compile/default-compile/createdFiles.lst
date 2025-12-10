@@ -10,12 +10,15 @@ com\daw\celiblog\db\repository\FavoritoRepository.class
 com\daw\celiblog\security\JwtUtil.class
 com\daw\celiblog\db\entity\Comentario.class
 com\daw\celiblog\db\repository\RolRepository.class
+com\daw\celiblog\controller\IngredienteController.class
 com\daw\celiblog\dto\AuthResponse.class
 com\daw\celiblog\CeliblogApplication.class
 com\daw\celiblog\dto\TagRecetaView.class
+com\daw\celiblog\db\repository\RecetaIngredienteRepository.class
 com\daw\celiblog\dto\TipoComentarioDTO.class
 com\daw\celiblog\service\RolService.class
 com\daw\celiblog\db\entity\Restaurante.class
+com\daw\celiblog\service\impl\IngredienteServiceImpl.class
 com\daw\celiblog\controller\TagRestauranteController.class
 com\daw\celiblog\dto\TagRecetaDTO.class
 com\daw\celiblog\service\impl\UsuarioServiceImpl.class
@@ -28,6 +31,7 @@ com\daw\celiblog\service\impl\PostServiceImpl.class
 com\daw\celiblog\dto\TagRestauranteDTO.class
 com\daw\celiblog\service\mapper\FavoritoMapper.class
 com\daw\celiblog\service\mapper\PostMapper.class
+com\daw\celiblog\dto\IngredienteView.class
 com\daw\celiblog\db\entity\TipoComentario.class
 com\daw\celiblog\enums\EstadoValidacionEnum.class
 com\daw\celiblog\service\RestauranteService.class
@@ -52,7 +56,6 @@ com\daw\celiblog\service\PasoRecetaService.class
 com\daw\celiblog\db\repository\IngredienteRepository.class
 com\daw\celiblog\config\WebConfig.class
 com\daw\celiblog\dto\FavoritoDTO.class
-com\daw\celiblog\service\Ingrediente.class
 com\daw\celiblog\service\RecetaService.class
 com\daw\celiblog\controller\GestionPublicacionController.class
 com\daw\celiblog\dto\RestauranteDTO.class
@@ -80,6 +83,7 @@ com\daw\celiblog\service\mapper\TagRecetaMapper.class
 com\daw\celiblog\service\impl\PasoRecetaServiceImpl.class
 com\daw\celiblog\service\impl\TagRestauranteServiceImpl.class
 com\daw\celiblog\service\mapper\RolMapper.class
+com\daw\celiblog\dto\IngredienteDTO.class
 com\daw\celiblog\db\entity\Ingrediente.class
 com\daw\celiblog\controller\PasoRecetaController.class
 com\daw\celiblog\security\SecurityConfig.class
@@ -109,5 +113,6 @@ com\daw\celiblog\controller\AuthController.class
 com\daw\celiblog\db\entity\Favorito.class
 com\daw\celiblog\db\repository\UsuarioRepository.class
 com\daw\celiblog\service\impl\GestionPublicacionServiceImpl.class
+com\daw\celiblog\service\IngredienteService.class
 com\daw\celiblog\dto\UsuarioView.class
 com\daw\celiblog\enums\TipoComidaEnum.class
