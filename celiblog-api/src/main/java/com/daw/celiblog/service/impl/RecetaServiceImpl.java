@@ -135,6 +135,7 @@ public class RecetaServiceImpl implements RecetaService {
             receta.setComensales(recetaView.getComensales());
             receta.setImagenUrl(recetaView.getImagenUrl());
             receta.setTiempoPreparacion(recetaView.getTiempoPreparacion());
+            receta.setFechaCreacion(new Date());
             receta.setValorEnergetico(recetaView.getValorEnergetico());
             Optional<Usuario> user = this.usuarioRepository.findByEmail(authentication.getName());
             user.ifPresent(receta::setUsuario);
