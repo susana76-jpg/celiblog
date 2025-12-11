@@ -23,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +61,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                 if(res.isPresent()){
                     Restaurante restaurante = res.get();
                     restaurante.setEstado(estado);
+                    restaurante.setFechaValidacion(new Date());
                     return RestauranteMapper.entityToDto(this.restauranteRepository.save(restaurante));
                 }
             case "RECETA":
@@ -67,6 +69,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                 if(rec.isPresent()){
                     Receta receta = rec.get();
                     receta.setEstado(estado);
+                    receta.setFechaValidacion(new Date());
                     return RecetaMapper.entityToDto(this.recetaRepository.save(receta));
                 }
             case "POST":
@@ -74,6 +77,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                 if(pos.isPresent()){
                     Post post = pos.get();
                     post.setEstado(estado);
+                    post.setFechaValidacion(new Date());
                     return PostMapper.entityToDto(this.postRepository.save(post));
                 }
             case "COMENTARIO":
@@ -81,6 +85,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                 if(comen.isPresent()){
                     Comentario comentario = comen.get();
                     comentario.setEstado(estado);
+                    comentario.setFechaValidacion(new Date());
                     return ComentarioMapper.entityToDto(this.comentarioRepository.save(comentario));
                 }
         }
