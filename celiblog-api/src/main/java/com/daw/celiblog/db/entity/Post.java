@@ -21,7 +21,8 @@ public class Post implements Serializable {
 	private Long idPost;
 	@Column(name="fecha_publicacion")
 	private Date fechaPublicacion;
-	//bi-directional many-to-one association to Usuario
+	private String titulo;
+	private String subtitulo;
 	private String contenido;
 	@ManyToOne
 	@JoinColumn(name="id_usuario")
@@ -38,9 +39,11 @@ public class Post implements Serializable {
 	public Post() {
 	}
 
-	public Post(Long idPost, Date fechaPublicacion, String contenido, Usuario usuario, String urlPost, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion) {
+	public Post(Long idPost, Date fechaPublicacion, String contenido, String titulo, String subtitulo, Usuario usuario, String urlPost, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion) {
 		this.idPost = idPost;
 		this.fechaPublicacion = fechaPublicacion;
+		this.titulo = titulo;
+		this.subtitulo = subtitulo;
 		this.contenido = contenido;
 		this.usuario = usuario;
 		this.urlPost = urlPost;
@@ -111,5 +114,21 @@ public class Post implements Serializable {
 
 	public void setValoracion(int valoracion) {
 		this.valoracion = valoracion;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getSubtitulo() {
+		return subtitulo;
+	}
+
+	public void setSubtitulo(String subtitulo) {
+		this.subtitulo = subtitulo;
 	}
 }

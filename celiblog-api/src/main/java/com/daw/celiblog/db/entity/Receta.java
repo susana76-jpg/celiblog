@@ -20,13 +20,10 @@ public class Receta implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_receta")
 	private Long idReceta;
-
 	@ManyToOne
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
-
 	private String descripcion;
-
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_creacion")
 	private Date fechaCreacion;
@@ -41,7 +38,6 @@ public class Receta implements Serializable {
 	@Column(name = "fecha_validacion")
 	private Date fechaValidacion;
 	private int valoracion;
-
 	private int comensales;
 	@Column(name = "tiempo_preparacion")
 	private int tiempoPreparacion;

@@ -18,14 +18,10 @@ public class TagPost implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_tag_post")
 	private int idTagPost;
-
 	private String nombre;
-
-	//bi-directional many-to-one association to Post
 	@ManyToOne
 	@JoinColumn(name="id_post")
 	private Post post;
-
 	public TagPost() {
 	}
 

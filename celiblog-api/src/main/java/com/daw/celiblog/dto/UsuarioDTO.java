@@ -3,7 +3,7 @@ package com.daw.celiblog.dto;
 import com.daw.celiblog.db.entity.Rol;
 import com.daw.celiblog.service.mapper.RolMapper;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
 
@@ -12,6 +12,7 @@ public class UsuarioDTO {
     private Long idUsuario;
     private String email;
     private String nombre;
+    @JsonIgnore
     private String password;
     private RolDTO rol;
     private Long idRol;
@@ -78,11 +79,11 @@ public class UsuarioDTO {
         this.rol = rol;
     }
 
-    public Date getFechaAta() {
+    public Date getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAta(Date fechaAta) {
-        this.fechaAlta = fechaAta;
+    public void setFechaAlta(Date fechaAltata) {
+        this.fechaAlta = fechaAltata;
     }
 }

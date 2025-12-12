@@ -15,19 +15,16 @@ import com.daw.celiblog.service.UsuarioService;
 import com.daw.celiblog.service.mapper.RestauranteMapper;
 import com.daw.celiblog.service.mapper.TagRestauranteMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class RestauranteServiceImpl implements RestauranteService {
 
     private final RestauranteRepository restauranteRepository;
-
     private final TagRestauranteRepository tagRestauranteRepository;
     private final UsuarioRepository usuarioRepository;
     private final GeolocalizacionService geolocalizacionService;
@@ -47,50 +44,120 @@ public class RestauranteServiceImpl implements RestauranteService {
 
 
     @Override
-    public List<RestauranteDTO> obtenerTodos() {
-        return restauranteRepository.findAll().stream()
+    public List<RestauranteDTO> all(Authentication authentication) {
+        List<RestauranteDTO> restaurantes =  restauranteRepository.findAll().stream()
                 .map(RestauranteMapper::entityToDto)
-                .collect(Collectors.toList());
+                .toList();
+        if(authentication == null){
+            return restaurantes;
+        }else{
+            return getFavorits(restaurantes, authentication.getName());
+        }
+
    }
 
     @Override
-    public RestauranteDTO obtenerPorId(Long id) {
-        return restauranteRepository
+    public RestauranteDTO getById(Authentication authentication, Long id) {
+        RestauranteDTO restaurante =  restauranteRepository
                 .findById(id)
                 .map(RestauranteMapper::entityToDto)
                 .orElse(null);
+        if(authentication == null){
+            return restaurante;
+        }else if(restaurante != null){
+            return getFavorit(restaurante, authentication.getName());
+        }
+        return null;
     }
 
     @Override
-    public RestauranteDTO crear(RestauranteDTO dto) {
-        return RestauranteMapper.entityToDto(this.restauranteRepository.save(RestauranteMapper.dtoToEntity(dto)));
-    }
-
-    @Override
-    public RestauranteDTO actualizar(Long id, RestauranteDTO dto) throws JsonProcessingException {
-        Optional<Restaurante> rest = this.restauranteRepository.findById(id);
-        if(rest.isPresent()){
-            Restaurante restaurante = rest.get();
-            restaurante.setDireccion(dto.getDireccion());
-            restaurante.setCodigoPostal(rest.get().getCodigoPostal());
-            restaurante.setDescripcion(dto.getDescripcion());
-            restaurante.setUbicacion(dto.getUbicacion());
-            restaurante.setImagenUrl(dto.getImagenUrl());
-            restaurante.setNombre(dto.getNombre());
-            restaurante.setUrlWeb(dto.getUrlWeb());
+    public RestauranteDTO add(Authentication authentication, RestauranteView restauranteView) throws JsonProcessingException {
+        Optional<Usuario> usuario = this.usuarioRepository.findByEmail(authentication.getName());
+        if(usuario.isPresent()){
+            Restaurante restaurante = new Restaurante();
+            restaurante.setTitulo(restauranteView.getTitulo());
+            restaurante.setSubtitulo(restauranteView.getSubtitulo());
+            restaurante.setNombre(restauranteView.getNombre());
+            restaurante.setDescripcion(restauranteView.getDescripcion());
+            restaurante.setUsuario(usuario.get());
+            restaurante.setEmail(restauranteView.getEmail());
+            restaurante.setFechaPublicacion(new Date());
+            restaurante.setDescripcion(restauranteView.getDireccion());
+            restaurante.setDireccion(restauranteView.getDireccion());
+            restaurante.setTipoRestaurante(restauranteView.getTipoRestaurante());
             //geolocalización del restaurante
-            double[] coords = this.geolocalizacionService.geolocalizar(dto.getDireccion());
+            double[] coords = this.geolocalizacionService.geolocalizar(restaurante.getDireccion());
             restaurante.setLatitud(coords[0]);
             restaurante.setLongitud(coords[1]);
+            restaurante.setUrlWeb(restauranteView.getUrlWeb());
+            restaurante.setImagenUrl(restauranteView.getImagenUrl());
+            restaurante.setUbicacion(restauranteView.getUbicacion());
+            restaurante.setCodigoPostal(restauranteView.getCodigoPostal());
+            restaurante.setValoracion(restauranteView.getValoracion());
             return RestauranteMapper.entityToDto(this.restauranteRepository.save(restaurante));
         }
         return null;
-
     }
 
     @Override
-    public List<RestauranteDTO> byUbicacion(String ubicacion) {
-        return RestauranteMapper.entityToDtoList(this.restauranteRepository.findByUbicacion(ubicacion)) ;
+    public RestauranteDTO update(Long id, RestauranteView restauranteView) throws JsonProcessingException {
+        Optional<Restaurante> rest = this.restauranteRepository.findById(id);
+        if(rest.isPresent()){
+            Restaurante restaurante = rest.get();
+            if(restauranteView.getTitulo() != null){
+                restaurante.setTitulo(restauranteView.getTitulo());
+            }
+            if(restauranteView.getSubtitulo() != null){
+                restaurante.setSubtitulo(restauranteView.getSubtitulo());
+            }
+            if(restauranteView.getTipoRestaurante() != null){
+                restaurante.setTipoRestaurante(restauranteView.getTipoRestaurante());
+            }
+            if(restauranteView.getDireccion() != null){
+                restaurante.setDireccion(restauranteView.getDireccion());
+                //geolocalización del restaurante
+                double[] coords = this.geolocalizacionService.geolocalizar(restaurante.getDireccion());
+                restaurante.setLatitud(coords[0]);
+                restaurante.setLongitud(coords[1]);
+            }
+            if(restauranteView.getCodigoPostal() != restaurante.getCodigoPostal()){
+                restaurante.setCodigoPostal(restauranteView.getCodigoPostal());
+            }
+            if(restauranteView.getDireccion() != null){
+                restaurante.setDescripcion(restauranteView.getDescripcion());
+            }
+            if(restauranteView.getEmail() != null){
+                restaurante.setEmail(restauranteView.getEmail());
+            }
+            if(restauranteView.getUbicacion() != null){
+                restaurante.setUbicacion(restauranteView.getUbicacion());
+            }
+            if(restauranteView.getImagenUrl() != null){
+                restaurante.setImagenUrl(restauranteView.getImagenUrl());
+            }
+            if(restauranteView.getNombre() != null){
+                restaurante.setNombre(restauranteView.getNombre());
+            }
+            if(restaurante.getUrlWeb() != null){
+                restaurante.setUrlWeb(restauranteView.getUrlWeb());
+            }
+            if(restaurante.getValoracion() != restauranteView.getValoracion()){
+                restaurante.setValoracion(restauranteView.getValoracion());
+            }
+            return RestauranteMapper.entityToDto(this.restauranteRepository.save(restaurante));
+        }
+        return null;
+    }
+
+    @Override
+    public List<RestauranteDTO> byUbicacion(Authentication authentication, String ubicacion) {
+        List<RestauranteDTO> restaurantes =  RestauranteMapper.entityToDtoList(this.restauranteRepository.findByUbicacion(ubicacion)) ;
+        if(authentication == null){
+            return restaurantes;
+        }else{
+            return getFavorits(restaurantes, authentication.getName());
+        }
+
     }
 
     @Override
@@ -105,7 +172,7 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
     @Override
-    public boolean eliminar(Long id) {
+    public boolean deleteById(Long id) {
         if(this.restauranteRepository.findById(id).isPresent()){
             restauranteRepository.deleteById(id);
             return true;
@@ -135,34 +202,13 @@ public class RestauranteServiceImpl implements RestauranteService {
        return restaurantes.stream().toList();
     }
 
-
     @Override
     public RestauranteDTO crearRestaurante(RestauranteView restauranteView) throws JsonProcessingException {
-        Optional<Usuario> usuario = this.usuarioRepository.findById(restauranteView.getIdUsuario());
-        if(usuario.isPresent()){
-            Restaurante nuevoRestaurante = new Restaurante();
-            nuevoRestaurante.setNombre(restauranteView.getNombre());
-            nuevoRestaurante.setDireccion(restauranteView.getDireccion());
-            nuevoRestaurante.setCodigoPostal(restauranteView.getCodigoPostal());
-            nuevoRestaurante.setDescripcion(restauranteView.getDescripcion());
-            nuevoRestaurante.setUrlWeb(restauranteView.getUrlWeb());
-            nuevoRestaurante.setImagenUrl(restauranteView.getImagen_url());
-            nuevoRestaurante.setUbicacion(restauranteView.getUbicacion());
-            nuevoRestaurante.setTelefono(restauranteView.getTelefono());
-            nuevoRestaurante.setEmail(restauranteView.getEmail());
-            nuevoRestaurante.setTelefono(restauranteView.getTelefono());
-            nuevoRestaurante.setUsuario(usuario.get());
-            nuevoRestaurante.setValoracion(restauranteView.getValoracion());
-
-            //geolocalización del restaurante
-            double[] coords = this.geolocalizacionService.geolocalizar(nuevoRestaurante.getDireccion());
-            nuevoRestaurante.setLatitud(coords[0]);
-            nuevoRestaurante.setLongitud(coords[1]);
-
-            return RestauranteMapper.entityToDto(this.restauranteRepository.save(nuevoRestaurante));
-        }
         return null;
     }
+
+
+
 
     @Override
     public RestauranteDTO update(RestauranteView restauranteView, Long idRestaurante) throws JsonProcessingException {
@@ -186,58 +232,31 @@ public class RestauranteServiceImpl implements RestauranteService {
         }else{
             return null;
         }
-
     }
 
-    @Override
-    public List<RestauranteDTO> getRestaurantesEstadoPendiente() {
-        return RestauranteMapper.entityToDtoList(this.restauranteRepository.getRestaurantesEstadoPendiente());
-    }
-
-    @Override
-    public List<RestauranteDTO> getRestaurantesEstadoAprobado() {
-        return RestauranteMapper.entityToDtoList(this.restauranteRepository.getRestaurantesEstadoAprobado());
-    }
-
-    @Override
-    public List<RestauranteDTO> getRestaurantesEstadoRechazado() {
-        return RestauranteMapper.entityToDtoList(this.restauranteRepository.getRestaurantesEstadoRechazado());
-    }
-
-    @Override
-    public RestauranteDTO updateEstadoPublicacionRestaurante(Long idRestaurante, EstadoValidacionEnum estado) {
-        Optional<Restaurante> rest = this.restauranteRepository.findById(idRestaurante);
-        if(rest.isPresent()){
-            Restaurante restaurante = rest.get();
-            restaurante.setEstado(estado);
-            return RestauranteMapper.entityToDto(this.restauranteRepository.save(restaurante));
-        }
-        return null;
-    }
-
-    @Override
-    public List<RestauranteDTO> obtenerTodosConFavoritosUsuario(String emailUsuario) {
-        Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuario);
-        List<Long> idRestaurantesFavoritas = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RESTAURANTE.toString());
-        return obtenerTodos()
+    private List<RestauranteDTO> getFavorits(List<RestauranteDTO> listado, String emailUsuarioLogin){
+        Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuarioLogin);
+        List<Long> idRestaurantesFavorits = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RESTAURANTE.toString());
+        return listado
                 .stream()
-                .map(rest -> {
-                    if(idRestaurantesFavoritas.contains(rest.getIdRestaurante())){
+                .peek(rest -> {
+                    if(idRestaurantesFavorits.contains(rest.getIdRestaurante())){
                         rest.setEsFavoritoUsuario(true);
                     }
-                    return rest;
                 }).toList();
     }
+    private RestauranteDTO getFavorit(RestauranteDTO restaurante, String emailUsuarioLogin){
+        Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuarioLogin);
+        List<Long> idRestaurantesFavorits = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RESTAURANTE.toString());
+        if(idRestaurantesFavorits.contains(restaurante.getIdRestaurante())){
+            restaurante.setEsFavoritoUsuario(true);
+        }
+        return restaurante;
+    }
 
-    @Override
-    public List<RestauranteDTO> obtenerRestaurantesFavoritosUsuario(String emailUsuario) {
-        Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuario);
-        List<Long> idRestaurantesFavoritos = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RESTAURANTE.toString());
-
-        return idRestaurantesFavoritos
-                .stream()
-                .map(this::obtenerPorId)
-                .toList();
+    private boolean isFavorit(Long id, String emailUsuarioLogin){
+        Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuarioLogin);
+        return (this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RECETA.toString())).contains(id);
     }
 
 

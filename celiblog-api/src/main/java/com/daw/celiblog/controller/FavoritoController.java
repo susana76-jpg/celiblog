@@ -1,15 +1,12 @@
 package com.daw.celiblog.controller;
 
-import com.daw.celiblog.dto.FavoritoDTO;
-import com.daw.celiblog.dto.FavoritoView;
-import com.daw.celiblog.dto.UsuarioDTO;
-import com.daw.celiblog.dto.UsuarioView;
+import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.FavoritoService;
-import com.daw.celiblog.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,25 +20,33 @@ public class FavoritoController {
     @Autowired
     private FavoritoService favoritoService;
 
-
-    @Operation(summary = "Obtiene el listado de favoritos de restaurantes del usuario, por id de usuario.")
-    @GetMapping("/restaurantes")
-    public ResponseEntity<List<FavoritoDTO>> obtenerFavoritosRestaurante(@RequestParam(name="idUsuario") Long idUsuario, Authentication authentication) {
-        String email = authentication.getName(); // el "sub" del JWT (el email)
-
-        return ResponseEntity.ok(this.favoritoService.getFavoritosRestaurantesByIdUsuario(idUsuario));
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
+    @Operation(summary = "PROTEGIDO: Obtiene el listado de los favoritos del usuario de: restaurante, recetas, post o comentarios.")
+    @GetMapping("/byReferencia")
+    public ResponseEntity<List<?>> obtenerFavoritos(
+        Authentication authentication,
+        @RequestParam(name="tipoReferencia") ObjetoEnum tipoReferencia) {
+        return ResponseEntity.ok(this.favoritoService.getFavoritosByReferencia(authentication, tipoReferencia));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
+    @Operation(summary = "PROTEGIDO: Añade un favorito.")
+    @GetMapping("/add")
+    public ResponseEntity<?> creaFavorito(Authentication authentication,
+        @RequestParam(name="idReferencia")Long idReferencia,
+        @RequestParam(name="tipoReferencia") ObjetoEnum tipoReferencia){
 
-    @Operation(summary = "Añade un favorito.")
-    @PostMapping("/add")
-    public ResponseEntity<FavoritoDTO> crearFavorito(@RequestBody FavoritoView favoritoView){
-        return ResponseEntity.status(200).body(this.favoritoService.addFavorito(favoritoView));
+        if(this.favoritoService.addFavorito(authentication, idReferencia, tipoReferencia) != null){
+            return ResponseEntity.ok(this.favoritoService.addFavorito(authentication, idReferencia, tipoReferencia));
+        }else{
+            return ResponseEntity.badRequest().body("No existe el objeto al que quieres hacer favorito.");
+        }
     }
 
-    @Operation(summary = "Elimina un favorito por su id.")
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR','EDITOR','VISITOR')")
+    @Operation(summary = "PROTEGIDO: Elimina un favorito por su id.")
     @DeleteMapping("/deleteById")
-    public ResponseEntity<String> deleteReceta(@RequestParam(name="idFavorito") Long idFavorito){
+    public ResponseEntity<String> deleteFavorito(Authentication authentication, @RequestParam(name="idFavorito") Long idFavorito){
         if(this.favoritoService.deleteFavorito(idFavorito)){
             return ResponseEntity.status(200).body("Se ha eliminado el favorito con id "+idFavorito);
         }else{

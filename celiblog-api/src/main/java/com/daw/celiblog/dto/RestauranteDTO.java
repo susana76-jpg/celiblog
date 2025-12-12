@@ -1,10 +1,14 @@
 package com.daw.celiblog.dto;
 
 import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.enums.TipoRestauranteEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.Date;
@@ -21,10 +25,15 @@ public class RestauranteDTO {
     @ManyToOne
     @JsonIgnore
     private UsuarioDTO usuarioDTO;
+    private String titulo;
+    private String subtitulo;
     private String descripcion;
     private String direccion;
     private String imagenUrl;
     private String nombre;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_restaurante", nullable = false)
+    private TipoRestauranteEnum tipoRestaurante = TipoRestauranteEnum.SIN_GLUTEN;
     private String ubicacion;
     private int codigoPostal;
     private Double latitud;
@@ -51,11 +60,14 @@ public class RestauranteDTO {
     public RestauranteDTO() {
     }
 
-    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioSummaryDTO usuario, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacionEnum estado, Date fechaValidacion) {
+    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioSummaryDTO usuario, String descripcion, TipoRestauranteEnum tipoRestaurante, String titulo,String subtitulo, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacionEnum estado, Date fechaValidacion) {
         this.idRestaurante = idRestaurante;
         this.fechaPublicacion = fechaPublicacion;
         this.usuario = usuario;
+        this.titulo = titulo;
+        this.subtitulo = subtitulo;
         this.descripcion = descripcion;
+        this.tipoRestaurante = tipoRestaurante;
         this.direccion = direccion;
         this.imagenUrl = imagenUrl;
         this.nombre = nombre;
@@ -221,6 +233,30 @@ public class RestauranteDTO {
 
     public void setEsFavoritoUsuario(boolean esFavoritoUsuario) {
         this.esFavoritoUsuario = esFavoritoUsuario;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getSubtitulo() {
+        return subtitulo;
+    }
+
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
+    }
+
+    public TipoRestauranteEnum getTipoRestaurante() {
+        return tipoRestaurante;
+    }
+
+    public void setTipoRestaurante(TipoRestauranteEnum tipoRestaurante) {
+        this.tipoRestaurante = tipoRestaurante;
     }
 
     @Override

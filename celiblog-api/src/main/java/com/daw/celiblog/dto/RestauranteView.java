@@ -1,61 +1,63 @@
 package com.daw.celiblog.dto;
 
-import jakarta.validation.constraints.Pattern;
+import com.daw.celiblog.enums.TipoRestauranteEnum;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 
 public class RestauranteView {
 
-    public String nombre;
-    public String direccion;
-    public String descripcion;
-    public String urlWeb;
-    public String imagen_url;
-    public String ubicacion;
-    public int codigoPostal;
+    private String titulo;
+    private String subtitulo;
+    private String descripcion;
+    private String direccion;
+    private String imagenUrl;
+    private String nombre;
+    private String ubicacion;
+    private int codigoPostal;
+    private String urlWeb;
+    private String telefono;
+    private String email;
+    private int valoracion;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_restaurante", nullable = false)
+    private TipoRestauranteEnum tipoRestaurante = TipoRestauranteEnum.SIN_GLUTEN;
 
-    @Pattern(
-            regexp = "^(?:\\+34|0034)?d{9}$",
-            message = "El teléfono debe ser válido en España"
-    )
-    public String telefono;
-    @Pattern(
-            regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
-            message = "Formato de email inválido"
-    )
-    public String email;
-    public Long idUsuario;
-    public int valoracion;
 
     public RestauranteView() {
     }
 
-    public RestauranteView(String nombre, String direccion, String descripcion, String urlWeb, String imagen_url, String ubicacion, int codigoPostal, String telefono, String email, Long idUsuario, int valoracion) {
-        this.nombre = nombre;
-        this.direccion = direccion;
+    public RestauranteView(String titulo, String subtitulo, String descripcion, TipoRestauranteEnum tipoRestaurante, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, String urlWeb, String telefono, String email, int valoracion) {
+        this.titulo = titulo;
+        this.subtitulo = subtitulo;
         this.descripcion = descripcion;
-        this.urlWeb = urlWeb;
-        this.imagen_url = imagen_url;
+        this.tipoRestaurante = tipoRestaurante;
+        this.direccion = direccion;
+        this.imagenUrl = imagenUrl;
+        this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.codigoPostal = codigoPostal;
+        this.urlWeb = urlWeb;
         this.telefono = telefono;
         this.email = email;
-        this.idUsuario = idUsuario;
         this.valoracion = valoracion;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getSubtitulo() {
+        return subtitulo;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
     }
 
     public String getDescripcion() {
@@ -66,20 +68,28 @@ public class RestauranteView {
         this.descripcion = descripcion;
     }
 
-    public String getUrlWeb() {
-        return urlWeb;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setUrlWeb(String urlWeb) {
-        this.urlWeb = urlWeb;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
-    public String getImagen_url() {
-        return imagen_url;
+    public String getImagenUrl() {
+        return imagenUrl;
     }
 
-    public void setImagen_url(String imagen_url) {
-        this.imagen_url = imagen_url;
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getUbicacion() {
@@ -98,6 +108,14 @@ public class RestauranteView {
         this.codigoPostal = codigoPostal;
     }
 
+    public String getUrlWeb() {
+        return urlWeb;
+    }
+
+    public void setUrlWeb(String urlWeb) {
+        this.urlWeb = urlWeb;
+    }
+
     public String getTelefono() {
         return telefono;
     }
@@ -114,19 +132,19 @@ public class RestauranteView {
         this.email = email;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
     public int getValoracion() {
         return valoracion;
     }
 
     public void setValoracion(int valoracion) {
         this.valoracion = valoracion;
+    }
+
+    public TipoRestauranteEnum getTipoRestaurante() {
+        return tipoRestaurante;
+    }
+
+    public void setTipoRestaurante(TipoRestauranteEnum tipoRestaurante) {
+        this.tipoRestaurante = tipoRestaurante;
     }
 }

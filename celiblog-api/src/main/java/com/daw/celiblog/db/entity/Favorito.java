@@ -24,6 +24,7 @@ public class Favorito implements Serializable {
     private ObjetoEnum tipoReferencia;
     @Column(name = "id_referencia")
     private Long idReferencia;
+    @Column(name = "fecha", nullable = false, updatable = false, insertable = false)
     private Date fecha;
     public Favorito() {
     }

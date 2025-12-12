@@ -3,7 +3,6 @@ package com.daw.celiblog.dto;
 public class TagRecetaView {
     private String descripcionTag;
     private Long idReceta;
-
     public TagRecetaView() {
     }
 

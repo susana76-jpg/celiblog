@@ -2,6 +2,7 @@ package com.daw.celiblog.service.mapper;
 
 import com.daw.celiblog.db.entity.Comentario;
 import com.daw.celiblog.dto.ComentarioDTO;
+import com.daw.celiblog.dto.UsuarioSummaryDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,8 +21,10 @@ public class ComentarioMapper {
                 source.getIdComentario(),
                 source.getFechaPublicacion(),
                 source.getContenido(),
+                source.getTitulo(),
+                source.getSubtitulo(),
                 source.getComentarioUrl(),
-                UsuarioMapper.entityToDto(source.getUsuario()) ,
+                new UsuarioSummaryDTO(source.getUsuario().getEmail(), source.getUsuario().getNombre()),
                 source.getIdObjetoComentado(),
                 source.getObjeto_comentado(),
                 source.getFechaValidacion(),
@@ -34,6 +37,8 @@ public class ComentarioMapper {
                 source.getIdComentario(),
                 source.getFechaPublicacion(),
                 source.getContenido(),
+                source.getTitulo(),
+                source.getSubtitulo(),
                 source.getComentarioUrl(),
                 UsuarioMapper.dtoToEntity(source.getUsuarioDTO()) ,
                 source.getIdObjetoComentado(),

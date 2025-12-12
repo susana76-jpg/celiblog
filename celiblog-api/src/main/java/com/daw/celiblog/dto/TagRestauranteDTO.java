@@ -3,9 +3,7 @@ package com.daw.celiblog.dto;
 public class TagRestauranteDTO {
 
     private Long idTag;
-
     private String nombre;
-
     private RestauranteDTO restaurante;
     private Long idRestaurante;
 

@@ -6,7 +6,6 @@ public class PasoRecetaDTO {
     private int orden;
     private RecetaDTO recetaDTO;
     private Long idReceta;
-
     public PasoRecetaDTO() {
     }
 

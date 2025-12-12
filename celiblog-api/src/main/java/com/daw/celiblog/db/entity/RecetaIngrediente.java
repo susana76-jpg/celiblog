@@ -17,28 +17,22 @@ public class RecetaIngrediente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_receta_ingrediente")
-	private int idRecetaIngrediente;
-
+	private Long idRecetaIngrediente;
 	private int cantidad;
-
-	//bi-directional many-to-one association to Ingrediente
 	@ManyToOne
 	@JoinColumn(name="id_ingrediente")
 	private Ingrediente ingrediente;
-
-	//bi-directional many-to-one association to Receta
 	@ManyToOne
 	@JoinColumn(name="id_receta")
 	private Receta receta;
-
 	public RecetaIngrediente() {
 	}
 
-	public int getId_recetaIngrediente() {
+	public Long getId_recetaIngrediente() {
 		return this.idRecetaIngrediente;
 	}
 
-	public void setId_recetaIngrediente(int id_recetaIngrediente) {
+	public void setId_recetaIngrediente(Long id_recetaIngrediente) {
 		this.idRecetaIngrediente = id_recetaIngrediente;
 	}
 

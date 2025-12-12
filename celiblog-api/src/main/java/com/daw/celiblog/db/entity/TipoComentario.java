@@ -19,13 +19,10 @@ public class TipoComentario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_tipo_comentario")
 	private Long idTipoComentario;
-
 	private String nombre;
-
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tema", nullable = false)
 	private ObjetoEnum tema = ObjetoEnum.PENDIENTE;
-
 	public TipoComentario() {
 	}
 

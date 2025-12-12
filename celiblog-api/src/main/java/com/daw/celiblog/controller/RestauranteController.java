@@ -1,13 +1,14 @@
 package com.daw.celiblog.controller;
 
-import com.daw.celiblog.dto.*;
-import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.dto.RestauranteDTO;
+import com.daw.celiblog.dto.RestauranteView;
 import com.daw.celiblog.service.RestauranteService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,85 +22,69 @@ public class RestauranteController {
     @Autowired
     private RestauranteService restauranteService;
 
-    @Operation(summary = "Obtiene todos los restaurantes.")
+    @Operation(summary = "PÚBLICO: Obtiene todos los restaurantes.")
     @GetMapping("public/all")
-    public ResponseEntity<List<RestauranteDTO>> obtenerTodosRestaurantes() {
-        return ResponseEntity.ok(restauranteService.obtenerTodos());
+    public ResponseEntity<List<RestauranteDTO>> all(Authentication authentication) {
+        return ResponseEntity.ok(restauranteService.all(authentication));
     }
-
-    @Operation(summary = "Obtiene un restaurante por su id.")
+    @Operation(summary = "PÚBLICO: Obtiene un restaurante por su id.")
     @GetMapping("public/byId")
-    public ResponseEntity<RestauranteDTO> getRestauranteById(@RequestParam(name="id") Long id) {
-        return ResponseEntity.ok(restauranteService.obtenerPorId(id));
+    public ResponseEntity<?> getById(Authentication authentication, @RequestParam(name="id") Long id) {
+        if(restauranteService.getById(authentication, id) != null){
+            return ResponseEntity.ok(restauranteService.getById(authentication, id));
+        }else{
+            return ResponseEntity.badRequest().body("No existe objeto.");
+        }
     }
-
-    @Operation(summary = "Obtiene restaurantes por su ubicación.")
+    @Operation(summary = "PÚBLICO: Obtiene restaurantes por su ubicación.")
     @GetMapping("public/ubicacion")
-    public ResponseEntity<List<RestauranteDTO>> getRestauranteByUbicacion(@RequestParam(name="ubicacion") String ubicacion) {
-        return ResponseEntity.ok(restauranteService.byUbicacion(ubicacion));
+    public ResponseEntity<List<RestauranteDTO>> getRestauranteByUbicacion(Authentication authentication, @RequestParam(name="ubicacion") String ubicacion) {
+        return ResponseEntity.ok(restauranteService.byUbicacion(authentication, ubicacion));
     }
 
-    @Operation(summary = "Añade un restaurante.")
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
+    @Operation(summary = "PROTEGIDO: Añade un restaurante.")
     @PostMapping("/add")
-    public ResponseEntity<RestauranteDTO> crearRestaurante(@RequestBody RestauranteView restauranteView) throws JsonProcessingException {
-        RestauranteDTO nuevoRestaurante = this.restauranteService.crearRestaurante(restauranteView);
-        return ResponseEntity.status(201).body(nuevoRestaurante);
+    public ResponseEntity<?> add(Authentication authentication, @RequestBody RestauranteView restauranteView) throws JsonProcessingException {
+        RestauranteDTO nuevoRestaurante = this.restauranteService.add(authentication, restauranteView);
+        if(nuevoRestaurante != null){
+            return ResponseEntity.ok(nuevoRestaurante);
+        }else{
+            return ResponseEntity.badRequest().body("No se añadió el objeto.");
+        }
     }
 
-    @Operation(summary = "Elimina una restaurante por su id. Elimina también los tags vinculados al restaurante eliminado")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @Operation(summary = "ADMINISTRADOR: Elimina una restaurante por su id. Elimina también los tags vinculados al restaurante eliminado")
     @DeleteMapping("/deleteById")
-    public ResponseEntity<String> deleteRestaurante(@RequestParam(name="id") Long id){
-        if(this.restauranteService.eliminar(id)){
+    public ResponseEntity<String> delete(@RequestParam(name="id") Long id){
+        if(this.restauranteService.deleteById(id)){
             return ResponseEntity.status(200).body("Se ha eliminado el restaurante.");
         }else{
             return ResponseEntity.status(300).body("No existe el restaurante a eliminar.");
         }
     }
 
-    @Operation(summary = "Actualiza los datos de un restaurante.")
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
+    @Operation(summary = "PROTEGIDO: Actualiza los datos de un restaurante.")
     @PutMapping("/update")
-    public ResponseEntity<RestauranteDTO> updatePasoReceta(@RequestBody RestauranteView restauranteView, @RequestParam(name="idRestaurante") Long idRestaurante) throws JsonProcessingException {
-        return ResponseEntity.ok(this.restauranteService.update(restauranteView, idRestaurante));
+    public ResponseEntity<?> update(@RequestBody RestauranteView restauranteView, @RequestParam(name="idRestaurante") Long idRestaurante) throws JsonProcessingException {
+        RestauranteDTO restaurante = this.restauranteService.update(restauranteView, idRestaurante);
+        if(restaurante != null){
+            return ResponseEntity.ok(restaurante);
+        }else{
+            return ResponseEntity.badRequest().body("No se actualizó el objeto.");
+        }
     }
 
-    @Operation(summary = "Actualiza todos los datos de geolocalización de todos restaurantes, por su dirección completa.")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @Operation(summary = "ADMINISTRADOR: Actualiza todos los datos de geolocalización de todos restaurantes, por su dirección completa.")
     @PutMapping("/update-geolocalizacion")
     public ResponseEntity<String> updateAllRestaurantesGeolocalizacion() throws JsonProcessingException {
         this.restauranteService.actualizarGeolocalizacion();
         return ResponseEntity.ok("Restaurantes actualizados en su longitud y latitud desde su dirección");
     }
 
-    //GESTIÓN ESTADO DE PUBLICACIÓN
-    @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todos los restaurantes publicados por los usuarios y pendientes de validar para su publicación por un administrador.")
-    @GetMapping("/estado-pendiente")
-    public ResponseEntity<List<RestauranteDTO>> getRestaurantesEstadoPendiente() {
-        return ResponseEntity.ok(this.restauranteService.getRestaurantesEstadoPendiente());
-    }
 
-    @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todos los restaurantes publicados por los usuarios y aprobados para su publicación por un administrador.")
-    @GetMapping("public/estado-aprobada")
-    public ResponseEntity<List<RestauranteDTO>> getRestaurantesEstadoAprobado() {
-        return ResponseEntity.ok(this.restauranteService.getRestaurantesEstadoAprobado());
-    }
-
-    @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Obtiene todos los restaurantes publicados por los usuarios  y rechazados para su publicación por un administrador.")
-    @GetMapping("/estado-rechazado")
-    public ResponseEntity<List<RestauranteDTO>> getRestaurantesEstadoRechazado() {
-        return ResponseEntity.ok(this.restauranteService.getRestaurantesEstadoRechazado());
-    }
-
-
-    @Operation(summary = "GESTIÓN ESTADO DE PUBLICACIÓN: Actualiza el estado de publicación de un restaurante (PENDIENTE, APROBADO, RECHAZADO")
-    @PutMapping("/update-estado-publicacion")
-    ResponseEntity<RestauranteDTO> updateEstadoPublicacionReceta(@RequestParam(name="idRestaurante") Long idRestaurante, @RequestParam(name="estado") EstadoValidacionEnum estado) {
-        return ResponseEntity.ok(this.restauranteService.updateEstadoPublicacionRestaurante(idRestaurante, estado));
-    }
-
-
-    @Operation(summary = "USUARIO LOGADO: Restaurantes favoritos del usuario logado.")
-    @GetMapping("/allFavoritos")
-    public ResponseEntity<List<RestauranteDTO>> obtenerRestaurantesFavoritasUsuario(Authentication authentication) {
-        return ResponseEntity.ok(restauranteService.obtenerRestaurantesFavoritosUsuario(authentication.getName()));
-    }
 
 }

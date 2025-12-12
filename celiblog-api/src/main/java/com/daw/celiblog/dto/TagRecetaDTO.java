@@ -8,7 +8,6 @@ public class TagRecetaDTO {
 
     public TagRecetaDTO() {
     }
-
     public TagRecetaDTO(Long idTag, String nombre, RecetaDTO recetaDTO, Long idReceta) {
         this.idTag = idTag;
         this.nombre = nombre;

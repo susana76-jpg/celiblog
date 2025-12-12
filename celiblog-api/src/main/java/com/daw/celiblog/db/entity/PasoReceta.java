@@ -18,16 +18,11 @@ public class PasoReceta implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_paso")
 	private Long idPaso;
-
 	private String descripcion;
-
 	private int orden;
-
-	//bi-directional many-to-one association to Receta
 	@ManyToOne
 	@JoinColumn(name="id_receta")
 	private Receta receta;
-
 	public PasoReceta() {
 	}
 

@@ -4,7 +4,6 @@ public class PasoRecetaView {
     private Long idReceta;
     private String descripcion;
     private int orden;
-
     public PasoRecetaView() {
     }
 

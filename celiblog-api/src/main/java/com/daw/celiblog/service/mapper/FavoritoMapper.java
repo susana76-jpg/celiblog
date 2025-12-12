@@ -5,6 +5,7 @@ import com.daw.celiblog.db.entity.Favorito;
 import com.daw.celiblog.db.entity.Usuario;
 import com.daw.celiblog.dto.FavoritoDTO;
 import com.daw.celiblog.dto.FavoritoDTO;
+import com.daw.celiblog.dto.UsuarioSummaryDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -20,11 +21,19 @@ public class FavoritoMapper {
     }
 
     public static FavoritoDTO entityToDto(Favorito source){
-        return new FavoritoDTO(source.getIdFavorito(), source.getUsuario().getIdUsuario(), source.getTipoReferencia(), source.getIdReferencia(), source.getFecha());
+        return new FavoritoDTO(source.getIdFavorito(),
+                new UsuarioSummaryDTO(source.getUsuario().getNombre(), source.getUsuario().getEmail()),
+                source.getTipoReferencia(),
+                source.getIdReferencia(),
+                source.getFecha());
     }
 
     public static Favorito dtoToEntity(FavoritoDTO source){
-        return new Favorito(source.getIdFavorito(), UsuarioMapper.dtoToEntity(source.getUsuario()) , source.getTipoReferencia(), source.getIdReferencia(), source.getFecha());
+        return new Favorito(source.getIdFavorito(),
+                UsuarioMapper.dtoToEntity(source.getUsuario()) ,
+                source.getTipoReferencia(),
+                source.getIdReferencia(),
+                source.getFecha());
     }
 
 

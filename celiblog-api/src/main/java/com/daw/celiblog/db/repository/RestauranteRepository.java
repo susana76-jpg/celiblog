@@ -23,9 +23,6 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     """, nativeQuery = true)
     List<Restaurante> buscarRestaurantesPorNombreDeTag(@Param("nombreTag") String nombreTag);
 
-    @Query(value = "SELECT * FROM restaurante WHERE estado = 'PENDIENTE'", nativeQuery = true)
-    List<Restaurante> getRestaurantesEstadoPendiente();
-
     @Query(value = """
     SELECT DISTINCT *
     FROM restaurante 
@@ -33,10 +30,7 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     """, nativeQuery = true)
     List<Restaurante> findByUbicacion(@Param("ubicacion") String ubicacion);
 
-    @Query(value = "SELECT * FROM restaurante WHERE estado = 'APROBADO'", nativeQuery = true)
-    List<Restaurante> getRestaurantesEstadoAprobado();
-
-    @Query(value = "SELECT * FROM restaurante WHERE estado = 'RECHAZADO'", nativeQuery = true)
-    List<Restaurante> getRestaurantesEstadoRechazado();
+    @Query(value = "SELECT * FROM restaurante WHERE estado =:estadoPublicacion", nativeQuery = true)
+    List<Restaurante> getByEstadoPublicacion(@Param("estadoPublicacion") String estadoPublicacion);
 
 }

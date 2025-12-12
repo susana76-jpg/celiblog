@@ -10,7 +10,13 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("*")   // Permitir todos los orígenes
                 .allowedMethods("*")   // Permitir todos los métodos (GET, POST, PUT, DELETE, etc.)
-                .allowedHeaders("*");  // Permitir todos los headers
+                .allowedHeaders("*")    // Permitir todos los headers
+                .allowedOrigins("http://localhost:3000") // origen del local
+                .allowedOrigins("http://46.183.113.124:3000") //orignen servidor
+                .allowedMethods("GET","POST","PUT","DELETE")
+                .allowCredentials(true)
+                .exposedHeaders("Authorization");
+
     }
 
 }

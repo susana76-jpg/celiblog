@@ -20,45 +20,39 @@ public class Comentario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_comentario")
 	private Long idComentario;
-
 	@Column(name="fecha_publicacion")
 	private Date fechaPublicacion;
+	private String titulo;
+	private String subtitulo;
 	private String contenido;
-
 	@Column(name="comentario_url")
 	private String comentarioUrl;
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
-	//bi-directional many-to-one association to TipoComentario
-
 	@Column(name="id_objeto_comentado")
 	private Long idObjetoComentado;
-
 	@Enumerated(EnumType.STRING)
 	@Column(name = "objeto_comentado", nullable = false)
 	private ObjetoEnum objeto_comentado = ObjetoEnum.PENDIENTE;
-
 	@Column(name = "fecha_validacion")
 	private Date fechaValidacion;
-
 	private int  valoracion;
-
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado", nullable = false)
 	private EstadoValidacionEnum estado = EstadoValidacionEnum.PENDIENTE;
 
-
-
 	public Comentario() {
 	}
 
-	public Comentario(Long idComentario, Date fechaPublicacion, String contenido, String comentarioUrl, Usuario usuario, Long idObjetoComentado, ObjetoEnum objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacionEnum estado) {
+	public Comentario(Long idComentario, Date fechaPublicacion, String contenido, String titulo,String subtitulo, String comentarioUrl, Usuario usuario, Long idObjetoComentado, ObjetoEnum objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacionEnum estado) {
 		this.idComentario = idComentario;
 		this.fechaPublicacion = fechaPublicacion;
 		this.comentarioUrl = comentarioUrl;
 		this.contenido = contenido;
+		this.titulo = titulo;
+		this.subtitulo = subtitulo;
 		this.usuario = usuario;
 		this.idObjetoComentado = idObjetoComentado;
 		this.objeto_comentado = objetoComentado;
@@ -97,6 +91,14 @@ public class Comentario implements Serializable {
 
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
+	}
+
+	public String getSubtitulo() {
+		return subtitulo;
+	}
+
+	public void setSubtitulo(String subtitulo) {
+		this.subtitulo = subtitulo;
 	}
 
 	public Usuario getUsuario() {
@@ -145,5 +147,13 @@ public class Comentario implements Serializable {
 
 	public void setFechaValidacion(Date fechaValidacion) {
 		this.fechaValidacion = fechaValidacion;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 }

@@ -3,11 +3,13 @@ package com.daw.celiblog.dto;
 public class AuthResponse {
     private String accessToken;
     private String refreshToken;
+    private UsuarioDTO usuarioLogin;
 
     // Constructor
-    public AuthResponse(String accessToken, String refreshToken) {
+    public AuthResponse(String accessToken, String refreshToken, UsuarioDTO usuarioLogin) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+        this.usuarioLogin = usuarioLogin;
     }
 
     // Getters y setters
@@ -25,6 +27,14 @@ public class AuthResponse {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public UsuarioDTO getUsuarioLogin() {
+        return usuarioLogin;
+    }
+
+    public void setUsuarioLogin(UsuarioDTO usuarioLogin) {
+        this.usuarioLogin = usuarioLogin;
     }
 }
 

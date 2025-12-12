@@ -1,6 +1,7 @@
 package com.daw.celiblog.db.entity;
 
 import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.enums.TipoRestauranteEnum;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -23,6 +24,8 @@ public class Restaurante implements Serializable {
 	private Date fechaPublicacion;
 	private String nombre;
 	private String direccion;
+	private String titulo;
+	private String subtitulo;
 	private String descripcion;
 	@Column(name="url_web")
 	private String urlWeb;
@@ -33,9 +36,11 @@ public class Restaurante implements Serializable {
 	private int codigoPostal;
 	private Double latitud;
 	private Double longitud;
-
 	private String telefono;
 	private String email;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo_restaurante", nullable = false)
+	private TipoRestauranteEnum tipoRestaurante = TipoRestauranteEnum.SIN_GLUTEN;
 	@ManyToOne
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
@@ -47,29 +52,30 @@ public class Restaurante implements Serializable {
 	private int valoracion;
 
 
-
-
 	public Restaurante() {
 	}
 
-	public Restaurante(Long idRestaurante, Date fechaPublicacion, Usuario usuario, String descripcion, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacionEnum estado, Date fechaValidacion) {
+	public Restaurante(Long idRestaurante, Date fechaPublicacion, String nombre, String direccion, String titulo, String subtitulo, String descripcion, TipoRestauranteEnum tipoRestaurante, String urlWeb, String imagenUrl, String ubicacion, int codigoPostal, Double latitud, Double longitud, String telefono, String email, Usuario usuario, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion) {
 		this.idRestaurante = idRestaurante;
 		this.fechaPublicacion = fechaPublicacion;
-		this.usuario = usuario;
-		this.descripcion = descripcion;
-		this.direccion = direccion;
-		this.imagenUrl = imagenUrl;
 		this.nombre = nombre;
+		this.direccion = direccion;
+		this.titulo = titulo;
+		this.subtitulo = subtitulo;
+		this.descripcion = descripcion;
+		this.tipoRestaurante = tipoRestaurante;
+		this.urlWeb = urlWeb;
+		this.imagenUrl = imagenUrl;
 		this.ubicacion = ubicacion;
 		this.codigoPostal = codigoPostal;
 		this.latitud = latitud;
 		this.longitud = longitud;
-		this.urlWeb = urlWeb;
 		this.telefono = telefono;
 		this.email = email;
-		this.valoracion = valoracion;
+		this.usuario = usuario;
 		this.estado = estado;
 		this.fechaValidacion = fechaValidacion;
+		this.valoracion = valoracion;
 	}
 
 	public Long getIdRestaurante() {
@@ -206,5 +212,29 @@ public class Restaurante implements Serializable {
 
 	public void setFechaValidacion(Date fechaValidacion) {
 		this.fechaValidacion = fechaValidacion;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getSubtitulo() {
+		return subtitulo;
+	}
+
+	public void setSubtitulo(String subtitulo) {
+		this.subtitulo = subtitulo;
+	}
+
+	public TipoRestauranteEnum getTipoRestaurante() {
+		return tipoRestaurante;
+	}
+
+	public void setTipoRestaurante(TipoRestauranteEnum tipoRestaurante) {
+		this.tipoRestaurante = tipoRestaurante;
 	}
 }
