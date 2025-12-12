@@ -29,7 +29,7 @@
           :key="index"
           active
           required
-          hide-details
+          hide-details="auto"
           :type="field.type"
           density="comfortable"
           variant="outlined"

@@ -1,7 +1,10 @@
 export const API = {
   USERS: {
     BASE: '/api/usuario/all',
-    ID: '/api/usuario/byId'
+    ID: '/api/usuario/byId',  
+    DELETE: '/api/usuario/delete',
+    ADD: '/api/usuario/add',
+    UPDATE_ROLE: '/api/usuario/update-rol-usuario'
   },
   RECIPES: {
     BASE: '/api/receta/public/all',
