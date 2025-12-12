@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-const { login, token } = useAuthStore();
+const { login, token, user } = useAuthStore();
 
 const formRef = ref<HTMLFormElement | null>(null);
 const email = ref<string>('');
@@ -123,7 +123,10 @@ const handleLogin = async () => {
     password: password.value
   });
 
-  if (result.success) await navigateTo('/usuario');
+  if (result.success) {
+    if (user.value?.rol.idRol === 1) await navigateTo('/admin');
+    else await navigateTo('/usuario');
+  }
   else errorMessage.value = result.error || 'Error al registrarse';
   
   loading.value = false;

@@ -21,7 +21,7 @@
               
               <v-list-item>
                 <v-list-item-title>Rol</v-list-item-title>
-                <v-list-item-subtitle>{{ user.rol.nombre }}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{ user.rol.nombre }}{{ user.rol.idRol }}</v-list-item-subtitle>
               </v-list-item>
               
               <v-list-item>
