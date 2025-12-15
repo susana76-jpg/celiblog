@@ -14,5 +14,6 @@ export interface Post {
   fechaValidacion: string;
   valoracion: number;
   esFavoritoUsuario: boolean;
+  valoracionMedia: number;
   usuarioPublicacion: UsuarioPublicacion;
 }

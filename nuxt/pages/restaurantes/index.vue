@@ -27,7 +27,7 @@
       />
       <RestaurantesMapaIndex
         class="mb-16"
-        :restaurants="filteredRestaurants" 
+        :restaurants="paginatedRestaurants" 
       />
 
       <!-- LOADER -->
@@ -78,7 +78,7 @@ const loading = ref<boolean>(true);
 const type = ref<string[]>([]);
 const search = ref<string>('');
 let searchTimeout: ReturnType<typeof setTimeout> | null = null;
-const tags = [ 'DESAYUNO', 'BRUNCH', 'ALMUERZO', 'MERIENDA', 'CENA', 'TAPAS', 'RACIONES', 'POSTRE', 'SALADO', 'DULCE' ];
+const tags = [ 'SIN_GLUTEN', 'MEDITERRANEA', 'ASIATICA', 'VEGANO', 'MEXICANA' ];
 
 // Search handlers
 const updateSearch = (value: string) => {
@@ -106,7 +106,12 @@ const getAllRestaurants = async () => {
   loading.value = true;
 
   try {
-    const data = await useApiFetch(API.RESTAURANTS.BASE);
+    const data = await useApiFetch(API.RESTAURANTS.SEARCH, {
+      params: {
+        ubicacion: search.value,
+        tiposRestaurante: type.value,
+      }
+    });
   
     restaurants.value = data as Restaurante[];
     restaurants.value.forEach((restaurant, index) => restaurant.imagenUrl = `/img/restaurantes/restaurante${index + 1}.jpg`);
@@ -119,11 +124,6 @@ const getAllRestaurants = async () => {
 
 onMounted(() => {
   getAllRestaurants();
-});
-
-const filteredRestaurants = computed(() => {
-  // Here you can add filtering logic based on user input
-  return paginatedRestaurants.value;
 });
 
 /*******************************/

@@ -164,6 +164,7 @@ const publishComment = async () => {
     titulo: comment.value.title,
     contenido: comment.value.text,
     comentarioUrl: '',
+    subtitulo: '',
     idObjetoComentado: props.itemId,
     objetoComentado: props.itemType,
     valoracion: comment.value.rating

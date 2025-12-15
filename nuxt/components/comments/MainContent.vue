@@ -25,7 +25,7 @@
       :show="openCommentForm"
       :itemType="itemType"
       :itemId="itemId"
-      @close="openCommentForm = false"
+      @close="closeDialog"
     />
   </section>
 </template>
@@ -34,18 +34,27 @@
 const { isAuthenticated } = useAuthStore();
 
 const props = defineProps<{
-  comentarios: any[];
+  comentarios: Comentario[];
   itemType: 'RECETA' | 'RESTAURANTE' | 'POST';
   itemId: number;
 }>();
 
+const emit = defineEmits<{
+  (e: 'update:comentarios'): void;
+}>();
+
 const openCommentForm = ref<boolean>(false);
+
+// Close dialog and emit event to update comments
+const closeDialog = () => {
+  openCommentForm.value = false;
+  emit('update:comentarios');
+};
 </script>
 
 <style scoped lang="scss">
 .comment-section {
   padding: 50px;
-  padding-bottom: 0;
   border-radius: 10px;
   background-color: #8080801f;
 

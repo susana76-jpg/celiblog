@@ -17,11 +17,14 @@ export const API = {
     BASE: '/api/restaurante/public/all',
     BY_ID: '/api/restaurante/public/byId',
     TAGS: '/api/tag-restaurante/public/tags',
+    DELETE: '/api/restaurante/deleteById',
+    SEARCH: '/api/restaurante/public/ubicacion'
   },
   POSTS: {
     BASE: '/api/post/public/all',
     BY_ID: '/api/post/public/byId',
     TAGS: '/api/tag-post/public/tags',
+    SEARCH: '/api/post/public/buscar'
   },
   USER: {
     REGISTER: '/api/auth/register',

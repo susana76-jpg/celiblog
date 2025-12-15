@@ -32,15 +32,16 @@
 
     <!-- TAB CONTENT ------------------------>
     <component 
-      :is="currentTabComponent" 
       :ref="setTabRef"
+      :is="currentTabComponent" 
+      @edit-restaurant="editRestaurant"
     />
     <!------------------------------------->
 
     <!-- ADD DIALOG ------------------------->
     <v-dialog
       v-model="showDialog"
-      max-width="50%"
+      max-width="65%"
       opacity="60%"
       class="comment-form"
     >
@@ -58,13 +59,14 @@
             @submit="saveItem"
             @update:model-value="(value) => userForm = value"  
           />
-            <!-- <AdminRestaurantForm 
-              v-if="activeTab === 'restaurants'" 
-              v-model="restaurantForm" 
-              @submit="saveItem"
-              @update:model-value="(value) => restaurantForm = value"
-            />
-            <AdminRecipeForm 
+          <AdminRestaurantForm 
+            v-if="activeTab === 'restaurants'" 
+            id="restaurants-form"
+            v-model="restaurantForm" 
+            @submit="saveItem"
+            @update:model-value="(value) => restaurantForm = value"
+          />
+          <!-- <AdminRecipeForm 
               v-if="activeTab === 'recipes'" 
               v-model="recipeForm" 
             />
@@ -110,6 +112,7 @@ const tabs = [
   { label: 'Restaurantes', value: 'restaurants' },
   { label: 'Recetas', value: 'recipes' },
   { label: 'Consejos', value: 'tips' },
+  { label: 'Comentarios', value: 'comments' }
 ]
 
 // Function to handle tab component ref
@@ -165,6 +168,23 @@ const userForm = ref({
   password: ''
 });
 
+// Restaurant Form
+const restaurantForm = ref({
+  titulo: '',
+  subtitulo: '',
+  descripcion: '',
+  direccion: '',
+  imagenUrl: '',
+  nombre: '',
+  ubicacion: '',
+  codigoPostal: 0,
+  urlWeb: '',
+  telefono: '',
+  email: '',
+  valoracion: 0,
+  tipoRestaurante: ''
+});
+
 // Reset forms
 const resetForms = () => {
   userForm.value = {
@@ -173,11 +193,27 @@ const resetForms = () => {
     idRol: 3,
     password: ''
   };
+
+  restaurantForm.value = {
+    titulo: '',
+    subtitulo: '',
+    descripcion: '',
+    direccion: '',
+    imagenUrl: '',
+    nombre: '',
+    ubicacion: '',
+    codigoPostal: 0,
+    urlWeb: '',
+    telefono: '',
+    email: '',
+    valoracion: 0,
+    tipoRestaurante: ''
+  };
 };
 
+// Close dialog and reset forms
 const closeDialog = () => {
   showDialog.value = false;
-  // Add a small delay to ensure form is reset after dialog closes
   nextTick(() => {
     resetForms();
   });
@@ -215,6 +251,12 @@ const addNewUser = async (userData: any) => {
     console.error('UsersTable ref not available');
   }
 };  
+
+const editRestaurant = (restaurantData: Restaurante) => {
+  showDialog.value = true;
+  restaurantForm.value = { ...restaurantForm.value, ...restaurantData };
+  console.log('Editing restaurant:', restaurantForm.value)
+};
 
 </script>
 

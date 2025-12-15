@@ -1,7 +1,7 @@
 export const TYPE = {
   RECIPE: 'RECETA',
   RESTAURANT: 'RESTAURANTE',
-  TIP: 'POST'
+  POST: 'POST'
 }
 
 export const USER_ROLES = [
