@@ -28,7 +28,6 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     SELECT DISTINCT id_restaurante
     FROM restaurante 
     WHERE (:ubicacion IS NULL OR UPPER(v.ubicacion) LIKE CONCAT('%', UPPER(:ubicacion), '%'))
-    AND 
     """, nativeQuery = true)
     List<Long> findByUbicacion(@Param("ubicacion") String ubicacion);
 
