@@ -13,6 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")    // Permitir todos los headers
                 .allowedOrigins("http://localhost:3000") // origen del local
                 .allowedOrigins("http://46.183.113.124:3000") //orignen servidor
+                .allowedOrigins("https://46.183.113.124/")
                 .allowedMethods("GET","POST","PUT","DELETE")
                 .allowCredentials(true)
                 .exposedHeaders("Authorization");
