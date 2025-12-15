@@ -4,12 +4,12 @@
     class="comment"
   >
     <v-card-title class="comment__header">
-      <v-avatar size="48" class="mr-2">
+      <!-- <v-avatar size="48" class="mr-2">
         <v-img :src="comentario.img || '/img/default-user.png'" alt="User Avatar" />
-      </v-avatar>
+      </v-avatar> -->
       <div>
-        <h3 class="comment__username">{{ comentario.usuario }}</h3>
-        <p class="comment__date">{{ new Date(comentario.fechaPublicacion) }}</p>
+        <h3 class="comment__username">{{ comentario.usuarioPublicacion.nombre }}</h3>
+        <p class="comment__date">{{ comentario.fechaPublicacion }}</p>
       </div>
     </v-card-title>
     <v-card-subtitle class="comment__title">
@@ -20,24 +20,19 @@
         color="primary"
         size="small"
         density="compact"
-        :model-value="comentario.valoracion || 4"
+        :model-value="comentario.valoracion"
       ></v-rating>
     </v-card-subtitle>
     <v-card-text class="comment__body">
-      {{ comentario.comentario }}
+      {{ comentario.contenido }}
     </v-card-text>
   </v-card>
 </template>
 
-<script>
-export default {
-  props: {
-    comentario: {
-      type: Object,
-      required: true
-    }
-  }
-}
+<script setup lang="ts">
+const props = defineProps<{
+  comentario: Comentario
+}>();
 </script>
 
 <style scoped lang="scss">

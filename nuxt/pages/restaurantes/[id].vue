@@ -14,7 +14,10 @@
         :imageUrl="restaurant.imagenUrl"
       />
 
-      <div class="details-page__main restaurant-description">
+      <div 
+        v-if="restaurant"
+        class="details-page__main restaurant-description"
+      >
 
         <!-- TAGS -------------------------------------->
         <v-chip-group column class="tags-list" >
@@ -134,8 +137,7 @@ const getRestaurantById = async () => {
       params: { id }
     });
     
-    // restaurant.value = data as Restaurante;
-    restaurant.value = restaurantes[0];
+    restaurant.value = data as Restaurante; 
   } catch (error) {
     console.error('Error fetching restaurant:', error);
   } finally {

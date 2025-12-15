@@ -1,6 +1,6 @@
 <template>
   <v-card 
-    :to="setLink" 
+    :to="`/recetas/${item.idReceta}`" 
     variant="text"
     class="card-item mx-2 pa-2" 
   >
@@ -67,8 +67,6 @@ const setChipClass = (difficulty: Receta['dificultad'] | undefined) => {
       return 'bg-success';
   }
 };
-
-const setLink = computed(() => `/recetas/${props.item.idReceta}`);
 
 </script>
 

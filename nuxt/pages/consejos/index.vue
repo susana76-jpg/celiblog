@@ -84,16 +84,21 @@ const updateSearch = (value: string) => {
   
   // Set new timeout
   searchTimeout = setTimeout(() => {
-    getAllTips();
+    getAllPosts();
   }, 500); 
 };  
 
 // Get receta by ID from API
-const getAllTips = async () => {
+const getAllPosts = async () => {
   loading.value = true;
   try {
-    const data = await useApiFetch(API.POSTS.BASE);
-    tips.value = data as any[];
+    const data = await useApiFetch(API.POSTS.SEARCH, {
+      params: {
+        keyword: keyword.value,
+      }
+    });
+
+    tips.value = data as Post[];
   } catch (error) {
     console.error('Error fetching tips:', error);
   } finally {
@@ -102,7 +107,7 @@ const getAllTips = async () => {
 };
 
 onMounted(() => {
-  getAllTips();
+  getAllPosts();
 });
 
 /*******************************/

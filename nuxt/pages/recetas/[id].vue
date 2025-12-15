@@ -46,6 +46,7 @@
           itemType="RECETA" 
           :comentarios="comentarios"
           :itemId="id"
+          @update:comentarios="getComments"
         />
         <!------------------------------------------->
 
@@ -57,16 +58,18 @@
 </template>
 
 <script setup lang="ts">
+const { getCommentsByObjectId } = useComments();
+
 const route = useRoute();
 const id = parseInt(route.params.id as string);
-const comentarios = recetas[0].comentarios;
+const comentarios = ref<Comentario[]>([]);
 const ingredientes = ref<string[]>([]);
 const receta = ref<Receta | null>(null);
 const pasos = ref<string[]>([]);
 const loading = ref(true);
 
 // Get receta by ID from API
-const getReceipeById = async () => {
+const getRecipeById = async () => {
   loading.value = true;
 
   try {
@@ -83,7 +86,7 @@ const getReceipeById = async () => {
 };
 
 // Get receta steps by ID from API
-const getReceipeStepsById = async () => {
+const getRecipeStepsById = async () => {
   try {
     let data = await useApiFetch(API.RECIPES.STEPS, {
       params: { idReceta: id },
@@ -98,7 +101,7 @@ const getReceipeStepsById = async () => {
 };
 
 // Get receta ingredients by ID from API
-const getReceipeIngredientsById = async () => {
+const getRecipeIngredientsById = async () => {
   try {
     const data = await useApiFetch(API.RECIPES.INGREDIENTS, {
       params: { idReceta: id },
@@ -112,11 +115,17 @@ const getReceipeIngredientsById = async () => {
   }
 };
 
+// Get comments for the recipe with the given ID
+const getComments = async () => {
+  comentarios.value = await getCommentsByObjectId('RECETA', id) ?? [];
+};  
+
 // Fetch the receipe data when the component is mounted
 onMounted(async () => {
-  await getReceipeById();
-  await getReceipeStepsById();
-  await getReceipeIngredientsById();
+  await getRecipeById();
+  await getRecipeStepsById();
+  await getRecipeIngredientsById();
+  getComments();
 });
 </script>
 

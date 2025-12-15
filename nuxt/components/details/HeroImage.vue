@@ -56,6 +56,7 @@
 const { isAuthenticated } = useAuthStore();
 const { addToFavorites, removeFromFavorites } = useUserActions();
 
+
 const props = withDefaults(defineProps<{
   item: any;
   type: 'receta' | 'restaurante' | 'consejo';
@@ -94,6 +95,7 @@ const title = computed(() => {
   return props.item.titulo || 'Título no disponible';
 });
 
+// Toggle favorite status
 const toggleFavorite = async (item: Receta) => {
   if (item.esFavoritoUsuario) {
     const response = await removeFromFavorites(item.idReceta);

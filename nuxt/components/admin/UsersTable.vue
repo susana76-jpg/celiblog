@@ -57,6 +57,7 @@ const loading = ref<boolean>(false);
 
 // Use global notification composable
 const { showSuccess, showError } = useNotification();
+const store = useAdminStore();
 
 /*************************************/
 /* USERS DATA TABLE */
@@ -131,6 +132,7 @@ const getUsers = async () => {
   try {
     const response = await useApiFetch(API.USERS.BASE);
     users.value = response as AdminUsuario[];
+    store.keyfacts.totalUsers = users.value.length;
   } catch (error: any) {
     console.error('Login error:', error);
   } finally {
@@ -161,7 +163,7 @@ defineExpose({
 });
 
 // Load data on mount
-onMounted(async () => {
+onMounted(() => {
   getUsers();
 })
 </script>

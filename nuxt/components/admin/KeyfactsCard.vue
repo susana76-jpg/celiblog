@@ -7,7 +7,7 @@
     >
       <v-icon class="keyfact-icon" color="#836a02" size="60">{{ card.icon }}</v-icon>
       <div class="keyfact-content">
-        <div class="keyfact-number">{{ stats[card.statsKey] }}</div>
+        <div class="keyfact-number">{{ stats[card.statsKey as keyof typeof stats] }}</div>
         <div class="keyfact-label">{{ card.label }}</div>
       </div>
     </div>
@@ -15,61 +15,59 @@
 </template>
 
 <script setup lang="ts">
-// Stats with values of the database entities
-const stats = {
-  restaurantes: 0,
-  consejos: 0,
-  recetas: 0,
-  comentarios: 0,
-  usuarios: 0
+import { useAdminStore } from '@/stores/admin';
+
+const store = useAdminStore();
+
+type StatsType = {
+  restaurants: number;
+  posts: number;
+  recipes: number;
+  comments: number;
+  users: number;
 };
+
+const stats = computed<StatsType>(() => ({
+  restaurants: store.keyfacts.totalRestaurants,
+  posts: store.keyfacts.totalPosts,
+  recipes: store.keyfacts.totalRecipes,
+  comments: store.keyfacts.totalComments,
+  users: store.keyfacts.totalUsers
+}));
 
 // Array defining the keyfact cards
 const keyfactCards = [
   {
     tab: 'restaurants',
     icon: 'mdi-silverware-fork-knife',
-    statsKey: 'restaurantes' as keyof typeof stats,
+    statsKey: 'restaurants' as keyof StatsType,
     label: 'Restaurantes'
   },
   {
     tab: 'tips',
     icon: 'mdi-lightbulb-outline',
-    statsKey: 'consejos' as keyof typeof stats,
+    statsKey: 'posts' as keyof StatsType,
     label: 'Consejos'
   },
   {
     tab: 'recipes',
     icon: 'mdi-food-outline',
-    statsKey: 'recetas' as keyof typeof stats,
+    statsKey: 'recipes' as keyof StatsType,
     label: 'Recetas'
   },
   {
     tab: 'comments',
     icon: 'mdi-comment-outline',
-    statsKey: 'comentarios' as keyof typeof stats,
+    statsKey: 'comments' as keyof StatsType,
     label: 'Comentarios'
   },
   {
     tab: 'users',
     icon: 'mdi-account-outline',
-    statsKey: 'usuarios' as keyof typeof stats,
+    statsKey: 'users' as keyof StatsType,
     label: 'Usuarios'
   }
 ]
-
-// Fetch stats from API on component mount
-const getStats = async () => {
-  // try {
-  //   const response = await useApiFetch(API.USER.LOGIN);
-  // } catch (error: any) {
-  //   console.error('Login error:', error);
-  // }
-};
-
-onMounted(() => {
-  getStats();
-});
 </script>
 
 <style scoped lang="scss">
