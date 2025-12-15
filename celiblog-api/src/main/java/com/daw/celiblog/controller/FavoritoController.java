@@ -43,7 +43,7 @@ public class FavoritoController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR','EDITOR','VISITOR')")
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
     @Operation(summary = "PROTEGIDO: Elimina un favorito por su id.")
     @DeleteMapping("/deleteById")
     public ResponseEntity<String> deleteFavorito(Authentication authentication, @RequestParam(name="idFavorito") Long idFavorito){
