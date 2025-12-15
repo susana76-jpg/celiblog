@@ -18,4 +18,15 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "SELECT * FROM post WHERE estado =:estadoPublicacion", nativeQuery = true)
     List<Post> getByEstadoPublicacion(@Param("estadoPublicacion") String estadoPublicacion);
 
+    @Query(value = """
+            SELECT DISTINCT id_post
+            FROM post
+            WHERE (:keyword IS NULL OR UPPER(titulo) LIKE CONCAT('%', UPPER(:keyword), '%'))
+            OR (:keyword IS NULL OR UPPER(subtitulo) LIKE CONCAT('%', UPPER(:keyword), '%'))
+            OR (:keyword IS NULL OR UPPER(contenido) LIKE CONCAT('%', UPPER(:keyword), '%'))
+            """, nativeQuery = true)
+    List<Long> buscar(
+            @Param("keyword") String keyword
+    );
+
 }

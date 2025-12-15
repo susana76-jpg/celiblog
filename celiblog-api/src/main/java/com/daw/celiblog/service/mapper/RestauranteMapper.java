@@ -37,7 +37,8 @@ public class RestauranteMapper{
                 source.getEmail(),
                 source.getValoracion(),
                 source.getEstado(),
-                source.getFechaValidacion());
+                source.getFechaValidacion(),
+                0);
     }
 
     public static Restaurante dtoToEntity(RestauranteDTO source){

@@ -2,6 +2,8 @@ package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.PostDTO;
 import com.daw.celiblog.dto.PostView;
+import com.daw.celiblog.dto.RecetaDTO;
+import com.daw.celiblog.enums.TipoComidaEnum;
 import com.daw.celiblog.service.PostService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -68,6 +70,15 @@ public class PostController {
         }else{
             return ResponseEntity.badRequest().body("No se actualizó el objeto.");
         }
+    }
+
+    @Operation(summary = "PÚBLICO: Obtiene los post por palabra contenida en su título, subtítulo o contenido")
+    @GetMapping("public/buscar")
+    public ResponseEntity<List<PostDTO>> buscar(
+            Authentication authentication,
+            @RequestParam(required = false, name="keyword") String keyword
+    ) {
+        return ResponseEntity.ok(this.postService.buscar(authentication, keyword));
     }
 
 

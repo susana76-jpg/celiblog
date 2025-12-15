@@ -2,6 +2,7 @@ package com.daw.celiblog.db.repository;
 
 import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.db.entity.Restaurante;
+import com.daw.celiblog.enums.TipoRestauranteEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,11 +25,12 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     List<Restaurante> buscarRestaurantesPorNombreDeTag(@Param("nombreTag") String nombreTag);
 
     @Query(value = """
-    SELECT DISTINCT *
+    SELECT DISTINCT id_restaurante
     FROM restaurante 
-    WHERE UPPER(ubicacion) LIKE %:ubicacion%
+    WHERE (:ubicacion IS NULL OR UPPER(v.ubicacion) LIKE CONCAT('%', UPPER(:ubicacion), '%'))
+    AND 
     """, nativeQuery = true)
-    List<Restaurante> findByUbicacion(@Param("ubicacion") String ubicacion);
+    List<Long> findByUbicacion(@Param("ubicacion") String ubicacion);
 
     @Query(value = "SELECT * FROM restaurante WHERE estado =:estadoPublicacion", nativeQuery = true)
     List<Restaurante> getByEstadoPublicacion(@Param("estadoPublicacion") String estadoPublicacion);

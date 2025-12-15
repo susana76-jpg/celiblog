@@ -10,6 +10,7 @@ import com.daw.celiblog.service.UsuarioService;
 import com.daw.celiblog.service.mapper.RestauranteMapper;
 import com.daw.celiblog.service.mapper.RolMapper;
 import com.daw.celiblog.service.mapper.UsuarioMapper;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -70,6 +71,17 @@ public class UsuarioServiceImpl implements UsuarioService {
             usuario.setRol(nuevoRol.get());
             return UsuarioMapper.entityToDto(this.usuarioRepository.save(usuario));
             }
+        return null;
+    }
+
+    @Override
+    public UsuarioDTO actualizarNombre(Authentication authentication, String nombre) {
+        Optional<Usuario> usu = this.usuarioRepository.findByEmail(authentication.getName());
+        if(usu.isPresent() && nombre != null){
+            Usuario usuario = usu.get();
+            usuario.setNombre(nombre);
+            return UsuarioMapper.entityToDto(this.usuarioRepository.save(usuario));
+        }
         return null;
     }
 

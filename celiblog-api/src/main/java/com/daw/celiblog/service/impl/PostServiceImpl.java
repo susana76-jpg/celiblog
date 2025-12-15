@@ -8,6 +8,7 @@ import com.daw.celiblog.db.repository.PostRepository;
 import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.PostDTO;
 import com.daw.celiblog.dto.PostView;
+import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.PostService;
@@ -112,6 +113,15 @@ public class PostServiceImpl implements PostService {
         }else{
             return false;
         }
+    }
+
+    @Override
+    public List<PostDTO> buscar(Authentication authentication, String keyword) {
+        List<Long> posts = this.postRepository.buscar(keyword);
+        return posts.stream()
+            .map(idPost -> {
+                return getById(authentication, idPost);
+            }).toList();
     }
 
 

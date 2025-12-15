@@ -13,5 +13,6 @@ public interface PostService {
     PostDTO add(Authentication authentication, PostView postView);
     PostDTO update(Long id, PostView postView);
     boolean deleteById(Long id);
+    List<PostDTO> buscar(Authentication authentication, String keyword);
 
 }
