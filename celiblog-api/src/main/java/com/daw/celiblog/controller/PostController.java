@@ -2,8 +2,6 @@ package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.PostDTO;
 import com.daw.celiblog.dto.PostView;
-import com.daw.celiblog.dto.RecetaDTO;
-import com.daw.celiblog.enums.TipoComidaEnum;
 import com.daw.celiblog.service.PostService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
