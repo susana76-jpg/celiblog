@@ -5,15 +5,17 @@ public class EstadisticaDTO {
     private int numRecetas;
     private int numPost;
     private int numComentarios;
+    private int numUsuarios;
 
     public EstadisticaDTO() {
     }
 
-    public EstadisticaDTO(int numRestaurantes, int numRecetas, int numPost, int numComentarios) {
+    public EstadisticaDTO(int numRestaurantes, int numRecetas, int numPost, int numComentarios, int numUsuarios) {
         this.numRestaurantes = numRestaurantes;
         this.numRecetas = numRecetas;
         this.numPost = numPost;
         this.numComentarios = numComentarios;
+        this.numUsuarios = numUsuarios;
     }
 
     public int getNumRestaurantes() {
@@ -46,5 +48,13 @@ public class EstadisticaDTO {
 
     public void setNumComentarios(int numComentarios) {
         this.numComentarios = numComentarios;
+    }
+
+    public int getNumUsuarios() {
+        return numUsuarios;
+    }
+
+    public void setNumUsuarios(int numUsuarios) {
+        this.numUsuarios = numUsuarios;
     }
 }

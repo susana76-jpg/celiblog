@@ -4,10 +4,7 @@ import com.daw.celiblog.db.entity.Comentario;
 import com.daw.celiblog.db.entity.Post;
 import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.db.entity.Restaurante;
-import com.daw.celiblog.db.repository.ComentarioRepository;
-import com.daw.celiblog.db.repository.PostRepository;
-import com.daw.celiblog.db.repository.RecetaRepository;
-import com.daw.celiblog.db.repository.RestauranteRepository;
+import com.daw.celiblog.db.repository.*;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
@@ -19,7 +16,6 @@ import com.daw.celiblog.service.mapper.RestauranteMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -31,12 +27,14 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
     private final RestauranteRepository restauranteRepository;
     private final PostRepository postRepository;
     private final ComentarioRepository comentarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public GestionPublicacionServiceImpl(RecetaService recetaService, RecetaRepository recetaRepository, RestauranteService restauranteService, RestauranteRepository restauranteRepository, PostService postService, PostRepository postRepository, ComentarioService comentarioService, ComentarioRepository comentarioRepository) {
+    public GestionPublicacionServiceImpl(RecetaService recetaService, RecetaRepository recetaRepository, RestauranteService restauranteService, RestauranteRepository restauranteRepository, PostService postService, PostRepository postRepository, ComentarioService comentarioService, ComentarioRepository comentarioRepository, UsuarioRepository usuarioRepository) {
         this.recetaRepository = recetaRepository;
         this.restauranteRepository = restauranteRepository;
         this.postRepository = postRepository;
         this.comentarioRepository = comentarioRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
@@ -96,6 +94,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
         estadisticaDTO.setNumRestaurantes(this.restauranteRepository.countAll());
         estadisticaDTO.setNumRecetas(this.recetaRepository.countAll());
         estadisticaDTO.setNumPost(this.postRepository.countAll());
+        estadisticaDTO.setNumUsuarios(this.usuarioRepository.countAll());
 
         return estadisticaDTO;
     }
