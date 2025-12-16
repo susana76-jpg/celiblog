@@ -8,10 +8,7 @@ import com.daw.celiblog.db.repository.ComentarioRepository;
 import com.daw.celiblog.db.repository.PostRepository;
 import com.daw.celiblog.db.repository.RecetaRepository;
 import com.daw.celiblog.db.repository.RestauranteRepository;
-import com.daw.celiblog.dto.ComentarioDTO;
-import com.daw.celiblog.dto.PostDTO;
-import com.daw.celiblog.dto.RecetaDTO;
-import com.daw.celiblog.dto.RestauranteDTO;
+import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.*;
@@ -90,6 +87,17 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                 }
         }
         return null;
+    }
+
+    @Override
+    public EstadisticaDTO getEstadisticasObjetos() {
+        EstadisticaDTO estadisticaDTO = new EstadisticaDTO();
+        estadisticaDTO.setNumComentarios(this.comentarioRepository.countAll());
+        estadisticaDTO.setNumRestaurantes(this.restauranteRepository.countAll());
+        estadisticaDTO.setNumRecetas(this.recetaRepository.countAll());
+        estadisticaDTO.setNumPost(this.postRepository.countAll());
+
+        return estadisticaDTO;
     }
 
 }

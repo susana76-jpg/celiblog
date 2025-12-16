@@ -127,4 +127,19 @@ public class FavoritoServiceImpl implements FavoritoService {
        }
         return null;
     }
+
+    @Override
+    public EstadisticaDTO getFavoritosEstadistica(Authentication authentication) {
+        Optional<Usuario> usuario = this.usuarioRepository.findByEmail(authentication.getName());
+        if(usuario.isPresent()){
+            Long idUsuario = usuario.get().getIdUsuario();
+            EstadisticaDTO estadistica = new EstadisticaDTO();
+            estadistica.setNumPost(this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.POST.toString()).size());
+            estadistica.setNumRecetas(favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.RECETA.toString()).size());
+            estadistica.setNumRestaurantes(favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.RESTAURANTE.toString()).size());
+            estadistica.setNumComentarios(favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.COMENTARIO.toString()).size());
+            return estadistica;
+        }
+        return null;
+    }
 }

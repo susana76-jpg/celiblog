@@ -16,6 +16,9 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     @Query(value = "SELECT * FROM restaurante", nativeQuery = true)
     List<Restaurante> findAll();
 
+    @Query(value = "SELECT count(*) FROM restaurante", nativeQuery = true)
+    int countAll();
+
     @Query(value = """
     SELECT DISTINCT r.*
     FROM restaurante r

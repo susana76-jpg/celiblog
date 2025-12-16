@@ -15,6 +15,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "SELECT * FROM post WHERE estado = 'PENDIENTE'", nativeQuery = true)
     List<Post> getPostEstadoPendiente();
 
+    @Query(value = "SELECT count(*) FROM post", nativeQuery = true)
+    int countAll();
+
     @Query(value = "SELECT * FROM post WHERE estado =:estadoPublicacion", nativeQuery = true)
     List<Post> getByEstadoPublicacion(@Param("estadoPublicacion") String estadoPublicacion);
 

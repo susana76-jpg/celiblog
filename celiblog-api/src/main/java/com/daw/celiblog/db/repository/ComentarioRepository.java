@@ -23,6 +23,9 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
     @Query(value = "SELECT * FROM comentario WHERE estado =:estadoPublicacion", nativeQuery = true)
     List<Comentario> getByEstadoPublicacion(@Param("estadoPublicacion") String estadoPublicacion);
 
+    @Query(value = "SELECT count(*) FROM comentario", nativeQuery = true)
+    int countAll();
+
 
 
 }

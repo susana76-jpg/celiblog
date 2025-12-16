@@ -16,6 +16,9 @@ public interface RecetaRepository extends JpaRepository<Receta, Long> {
     @Query(value = "SELECT * FROM receta", nativeQuery = true)
     List<Receta> findAll();
 
+    @Query(value = "SELECT count(*) FROM receta", nativeQuery = true)
+    int countAll();
+
     @Query(value = """
     SELECT DISTINCT r.*
     FROM receta r

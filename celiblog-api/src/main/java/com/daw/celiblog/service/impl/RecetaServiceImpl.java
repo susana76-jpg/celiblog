@@ -90,15 +90,20 @@ public class RecetaServiceImpl implements RecetaService {
     }
 
     @Override
-    public List<RecetaDTO> buscarRecetasPorNombreDeTag(String nombreTag) {
-        return RecetaMapper.entityToDtoList(this.recetaRepository.buscarRecetasPorNombreDeTag(nombreTag.toUpperCase()));
+    public List<RecetaDTO> buscarRecetasPorNombreDeTag(Authentication authentication, String nombreTag) {
+        List<RecetaDTO> recetas =  RecetaMapper.entityToDtoList(this.recetaRepository.buscarRecetasPorNombreDeTag(nombreTag.toUpperCase())) ;
+        if(authentication == null){
+            return recetas;
+        }else{
+            return getFavorits(recetas, authentication.getName());
+        }
     }
 
     @Override
-    public List<RecetaDTO> buscarRecetasPorNombreDeTags(List<String> tags) {
+    public List<RecetaDTO> buscarRecetasPorNombreDeTags(Authentication authentication, List<String> tags) {
         Set<RecetaDTO> recetas = new HashSet<>();
         for(String tag:tags){
-            recetas.addAll(new HashSet<>(this.buscarRecetasPorNombreDeTag(tag)));
+            recetas.addAll(new HashSet<>(this.buscarRecetasPorNombreDeTag(authentication, tag)));
         }
         return recetas.stream().toList();
     }

@@ -9,6 +9,7 @@ import com.daw.celiblog.dto.TagRecetaDTO;
 import com.daw.celiblog.dto.TagRecetaView;
 import com.daw.celiblog.service.TagRecetaService;
 import com.daw.celiblog.service.mapper.TagRecetaMapper;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class TagRecetaServiceImpl implements TagRecetaService {
     }
 
     @Override
-    public List<String> obtenerTodosNombresTags() {
+    public List<String> obtenerTodosNombresTags(Authentication authentication) {
        return this.tagRecetaRepository.findAllTagsOrder();
     }
     public TagRecetaDTO crearTagReceta(TagRecetaView tagRecetaView){
