@@ -1,7 +1,9 @@
 package com.daw.celiblog.controller;
 
+import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
+import com.daw.celiblog.enums.TipoComidaEnum;
 import com.daw.celiblog.service.GestionPublicacionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,8 +26,8 @@ public class GestionPublicacionController {
     @Operation(summary = "PRIVADO : Obtiene todos los objetos publicados por los usuarios, según su estado de publicación, y su tipo de referencia.")
     @GetMapping("/list")
     public ResponseEntity<List<?>> getObjetosByEstado(Authentication authentication,
-            @RequestParam(name="objeto") ObjetoEnum objeto,
-            @RequestParam(name="estado") EstadoValidacionEnum estado) {
+                                                      @RequestParam(name="objeto") ObjetoEnum objeto,
+                                                      @RequestParam(name="estado", required = false) List<EstadoValidacionEnum> estado) {
         return ResponseEntity.ok(this.gestionPublicacionService.getObjetosByEstado(authentication,objeto,estado));
     }
 

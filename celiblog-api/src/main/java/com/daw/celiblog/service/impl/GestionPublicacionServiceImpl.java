@@ -16,6 +16,7 @@ import com.daw.celiblog.service.mapper.RestauranteMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -38,14 +39,40 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
     }
 
     @Override
-    public List<?> getObjetosByEstado(Authentication authentication, ObjetoEnum tipoReferencia, EstadoValidacionEnum estadoValidacionEnum) {
-        return switch (tipoReferencia.toString()) {
-            case "RESTAURANTE" -> this.restauranteRepository.getByEstadoPublicacion(estadoValidacionEnum.toString());
-            case "RECETA" -> this.recetaRepository.getByEstadoPublicacion(estadoValidacionEnum.toString());
-            case "POST" -> this.postRepository.getByEstadoPublicacion(estadoValidacionEnum.toString());
-            case "COMENTARIO" -> this.comentarioRepository.getByEstadoPublicacion(estadoValidacionEnum.toString());
-            default -> null;
-        };
+    public List<?> getObjetosByEstado(Authentication authentication, ObjetoEnum tipoReferencia, List<EstadoValidacionEnum> estadoValidacionEnum) {
+        switch (tipoReferencia.toString()){
+            case "RESTAURANTE":
+                List<Restaurante> restaurantes = this.restauranteRepository.findAll();
+                if(estadoValidacionEnum != null   && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
+                   return restaurantes
+                           .stream()
+                           .filter(restaurante -> estadoValidacionEnum.contains(restaurante.getEstado())).toList();
+                }else{
+                    return restaurantes;
+                }
+            case "RECETA":
+                List<Receta> recetas = this.recetaRepository.findAll();
+                if(estadoValidacionEnum != null && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
+                   return recetas.stream().filter(receta -> estadoValidacionEnum.contains(receta.getEstado())).toList();
+                }else{
+                    return recetas;
+                }
+            case "POST":
+                List<Post> posts = this.postRepository.findAll();
+                if(estadoValidacionEnum != null   && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
+                    return posts.stream().filter(post -> estadoValidacionEnum.contains(post.getEstado())).toList();
+                }else{
+                    return posts;
+                }
+            case "COMENTARIO":
+                List<Comentario> comentarios = this.comentarioRepository.findAll();
+                if(estadoValidacionEnum != null  && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
+                    return comentarios.stream().filter(coment -> estadoValidacionEnum.contains(coment.getEstado())).toList();
+                }else{
+                    return comentarios;
+                }
+        }
+        return null;
     }
 
     @Override
@@ -53,7 +80,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
         switch (tipoReferencia.toString()){
             case "RESTAURANTE":
                 Optional<Restaurante> res = this.restauranteRepository.findById(idObjeto);
-                if(res.isPresent()){
+                if(res.isPresent() && !estado.equals(EstadoValidacionEnum.TODOS) ){
                     Restaurante restaurante = res.get();
                     restaurante.setEstado(estado);
                     restaurante.setFechaValidacion(new Date());
@@ -61,7 +88,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                 }
             case "RECETA":
                 Optional<Receta> rec = this.recetaRepository.findById(idObjeto);
-                if(rec.isPresent()){
+                if(rec.isPresent() && !estado.equals(EstadoValidacionEnum.TODOS)){
                     Receta receta = rec.get();
                     receta.setEstado(estado);
                     receta.setFechaValidacion(new Date());
@@ -69,7 +96,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                 }
             case "POST":
                 Optional<Post> pos = this.postRepository.findById(idObjeto);
-                if(pos.isPresent()){
+                if(pos.isPresent() && !estado.equals(EstadoValidacionEnum.TODOS)){
                     Post post = pos.get();
                     post.setEstado(estado);
                     post.setFechaValidacion(new Date());
@@ -77,12 +104,13 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                 }
             case "COMENTARIO":
                 Optional<Comentario> comen = this.comentarioRepository.findById(idObjeto);
-                if(comen.isPresent()){
+                if(comen.isPresent() && !estado.equals(EstadoValidacionEnum.TODOS)){
                     Comentario comentario = comen.get();
                     comentario.setEstado(estado);
                     comentario.setFechaValidacion(new Date());
                     return ComentarioMapper.entityToDto(this.comentarioRepository.save(comentario));
                 }
+
         }
         return null;
     }

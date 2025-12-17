@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +29,8 @@ public class ComentarioController {
             Authentication authentication,
             @RequestParam(value="objetoComentado")ObjetoEnum objetoComentado,
             @RequestParam(value="idObjetoComentado")Long idObjetoComentado) {
-        return ResponseEntity.ok(this.comentarioService.allComentariosByObject(authentication,objetoComentado,idObjetoComentado));
+
+            return ResponseEntity.ok(this.comentarioService.allComentariosByObject(authentication,objetoComentado,idObjetoComentado));
     }
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
     @Operation(summary = "PROTEGIDO: Añade un comentario. Solo los usuarios logados podrán hacer comentarios sobre RESTAURANTE, RECETAS,POST")

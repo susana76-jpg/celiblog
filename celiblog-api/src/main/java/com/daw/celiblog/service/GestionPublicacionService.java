@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface GestionPublicacionService {
 
-    List<?> getObjetosByEstado(Authentication authentication, ObjetoEnum tipoReferencia, EstadoValidacionEnum estadoValidacionEnum);
+    List<?> getObjetosByEstado(Authentication authentication, ObjetoEnum tipoReferencia, List<EstadoValidacionEnum> estadoValidacionEnum);
     Object updateObjetoEstadoPublicacion(Authentication authentication, Long idObjeto, ObjetoEnum tipoReferencia, EstadoValidacionEnum estado);
     EstadisticaDTO getEstadisticasObjetos();
 }
