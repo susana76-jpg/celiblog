@@ -24,6 +24,7 @@ public interface RecetaRepository extends JpaRepository<Receta, Long> {
     FROM receta r
     JOIN tag_receta t ON r.id_receta = t.id_receta
     WHERE UPPER(t.nombre) LIKE %:nombreTag%
+    AND r.estado = 'APROBADO'
     """, nativeQuery = true)
     List<Receta> buscarRecetasPorNombreDeTag(@Param("nombreTag") String nombreTag);
 

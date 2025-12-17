@@ -22,7 +22,7 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @Operation(summary = "PÚBLICO: Obtiene todos los post.")
+    @Operation(summary = "PÚBLICO: Obtiene todos los post, en estado aprobado por el administrador.")
     @GetMapping("public/all")
     public ResponseEntity<List<PostDTO>> all(Authentication authentication) {
         return ResponseEntity.ok(this.postService.all(authentication));
@@ -70,7 +70,7 @@ public class PostController {
         }
     }
 
-    @Operation(summary = "PÚBLICO: Obtiene los post por palabra contenida en su título, subtítulo o contenido")
+    @Operation(summary = "PÚBLICO: Obtiene los post por palabra contenida en su título, subtítulo o contenido, en estado aprobado por el administrador.")
     @GetMapping("public/buscar")
     public ResponseEntity<List<PostDTO>> buscar(
             Authentication authentication,

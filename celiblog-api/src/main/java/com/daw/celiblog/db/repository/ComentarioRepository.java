@@ -16,6 +16,7 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
     FROM comentario
     WHERE id_objeto_comentado = :idObjetoComentado
     AND objeto_comentado =:objetoComentado
+    AND estado = "APROBADO"
     ORDER BY fecha_publicacion ASC
     """, nativeQuery = true)
     List<Comentario> allComentariosByObject(@Param("objetoComentado")String objetoComentado, @Param("idObjetoComentado")Long idObjetoComentado);

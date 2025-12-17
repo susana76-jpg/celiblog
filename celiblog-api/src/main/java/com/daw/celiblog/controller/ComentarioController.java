@@ -23,7 +23,8 @@ public class ComentarioController {
     @Autowired
     private ComentarioService comentarioService;
 
-    @Operation(summary = "PÚBLICO: Obtiene todos los comentarios referidos a un objeto (RESTAURANTE, RECETAS,POST), ordenados por fecha de publicación, por el id de objeto comentado.")
+    @Operation(summary = "PÚBLICO: Obtiene todos los comentarios referidos a un objeto (RESTAURANTE, RECETAS,POST), " +
+            "ordenados por fecha de publicación, por el id de objeto comentado, en estado aprobado por el administrador.")
     @GetMapping("public/all")
     public ResponseEntity<List<ComentarioDTO>> allComentariosByObject(
             Authentication authentication,

@@ -24,7 +24,7 @@ public class RestauranteController {
     @Autowired
     private RestauranteService restauranteService;
 
-    @Operation(summary = "PÚBLICO: Obtiene todos los restaurantes.")
+    @Operation(summary = "PÚBLICO: Obtiene todos los restaurantes, en estado aprobado por el administrador.")
     @GetMapping("public/all")
     public ResponseEntity<List<RestauranteDTO>> all(Authentication authentication) {
         return ResponseEntity.ok(restauranteService.all(authentication));
@@ -38,7 +38,7 @@ public class RestauranteController {
             return ResponseEntity.badRequest().body("No existe objeto.");
         }
     }
-    @Operation(summary = "PÚBLICO: Obtiene restaurantes por su ubicación y por el tipo de restaurante.")
+    @Operation(summary = "PÚBLICO: Obtiene restaurantes por su ubicación y por el tipo de restaurante, en estado aprobado por el administrador.")
     @GetMapping("public/ubicacion")
     public ResponseEntity<List<RestauranteDTO>> getRestauranteByUbicacion(
             Authentication authentication,

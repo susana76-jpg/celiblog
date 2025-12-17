@@ -31,7 +31,7 @@ public class RecetaController {
     @Autowired
     RecetaService recetaService;
 
-    @Operation(summary = "PÚBLICO: Obtiene todas las recetas registradas.")
+    @Operation(summary = "PÚBLICO: Obtiene todas las recetas registradas, en estado aprobado por el administrador.")
     @GetMapping("public/all")
     public ResponseEntity<List<RecetaDTO>> all(Authentication authentication) {
         return ResponseEntity.ok(recetaService.getAll(authentication));
@@ -67,7 +67,8 @@ public class RecetaController {
         return ResponseEntity.ok(this.recetaService.getIngredientesByIdReceta(idReceta));
     }
 
-    @Operation(summary = "PÚBLICO: Obtiene las recetas filtradas por título, subtítulo, descripción, nombre de ingrediente o tipo de comida")
+    @Operation(summary = "PÚBLICO: Obtiene las recetas filtradas por título, subtítulo, descripción, nombre de ingrediente o tipo de comida, " +
+            "en estado aprobado por el administrador.")
     @GetMapping("public/buscar")
     public ResponseEntity<List<RecetaDTO>> buscar(
             Authentication authentication,

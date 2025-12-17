@@ -43,7 +43,7 @@ public class TagRestauranteController {
     }
 
 
-    @Operation(summary = "PÚBLICO: Obtiene la lista de restaurantes por nombre de tag.")
+    @Operation(summary = "PÚBLICO: Obtiene la lista de restaurantes por nombre de tag, en estado aprobado por el administrador.")
     @GetMapping("public/restaurantesByTag")
     public ResponseEntity<List<RestauranteDTO>> obtenerRecetasPorNombreTag(@RequestParam(name="nombreTag") String nombreTag) {
         return ResponseEntity.ok(this.restauranteService.buscarRestaurantesPorNombreDeTag(nombreTag));
