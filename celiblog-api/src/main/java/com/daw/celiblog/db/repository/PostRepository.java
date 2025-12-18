@@ -27,6 +27,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             WHERE (:keyword IS NULL OR UPPER(titulo) LIKE CONCAT('%', UPPER(:keyword), '%'))
             OR (:keyword IS NULL OR UPPER(subtitulo) LIKE CONCAT('%', UPPER(:keyword), '%'))
             OR (:keyword IS NULL OR UPPER(contenido) LIKE CONCAT('%', UPPER(:keyword), '%'))
+            AND estado = 'APROBADO'
             """, nativeQuery = true)
     List<Long> buscar(
             @Param("keyword") String keyword

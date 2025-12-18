@@ -46,7 +46,7 @@ public class RestauranteServiceImpl implements RestauranteService {
 
     @Override
     public List<RestauranteDTO> all(Authentication authentication) {
-        List<RestauranteDTO> restaurantes =  restauranteRepository.findAll().stream()
+        List<RestauranteDTO> restaurantes =  restauranteRepository.getByEstadoPublicacion(EstadoValidacionEnum.APROBADO.toString()).stream()
                 .map(RestauranteMapper::entityToDto)
                 .toList();
         if(authentication == null){

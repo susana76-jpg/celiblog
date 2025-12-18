@@ -16,6 +16,7 @@ import com.daw.celiblog.service.UsuarioService;
 import com.daw.celiblog.service.mapper.PostMapper;
 import com.daw.celiblog.service.mapper.RestauranteMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +42,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDTO> all(Authentication authentication) {
-        List<PostDTO> post =  this.postRepository.findAll().stream()
+        List<PostDTO> post =  this.postRepository.getByEstadoPublicacion(EstadoValidacionEnum.APROBADO.toString())
+                .stream()
                 .map(PostMapper::entityToDto)
                 .toList();
         if(authentication == null){

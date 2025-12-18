@@ -60,15 +60,15 @@ public class TagPostController {
         }
     }
 
-    @Operation(summary = "PÚBLICO: Obtiene la lista de recetas por nombre de un tag.")
-    @GetMapping("public/recetasByTag")
-    public ResponseEntity<List<RecetaDTO>> obtenerRecetasPorNombreTag(Authentication authentication,  @RequestParam(name="nombreTag") String nombreTag) {
+    @Operation(summary = "PÚBLICO: Obtiene la lista de post por nombre de un tag.")
+    @GetMapping("public/postByTag")
+    public ResponseEntity<List<RecetaDTO>> obtenerPostPorNombreTag(Authentication authentication,  @RequestParam(name="nombreTag") String nombreTag) {
         return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTag(authentication, nombreTag));
     }
 
-    @Operation(summary = "PÚBLICO: Obtiene la lista de recetas por varios nombres de tag.")
-    @GetMapping("public/recetasByTags")
-    public ResponseEntity<List<RecetaDTO>> buscarRecetasPorNombreDeTags(Authentication authentication, @RequestParam(name="tag") List<String> tags) {
+    @Operation(summary = "PÚBLICO: Obtiene la lista de post por varios nombres de tag.")
+    @GetMapping("public/postByTags")
+    public ResponseEntity<List<RecetaDTO>> buscarPostPorNombreDeTags(Authentication authentication, @RequestParam(name="tag") List<String> tags) {
         return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTags(authentication, tags));
     }
 

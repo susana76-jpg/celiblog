@@ -4,10 +4,7 @@ import com.daw.celiblog.db.entity.Comentario;
 import com.daw.celiblog.db.entity.Post;
 import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.db.entity.Restaurante;
-import com.daw.celiblog.db.repository.ComentarioRepository;
-import com.daw.celiblog.db.repository.PostRepository;
-import com.daw.celiblog.db.repository.RecetaRepository;
-import com.daw.celiblog.db.repository.RestauranteRepository;
+import com.daw.celiblog.db.repository.*;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
@@ -31,23 +28,51 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
     private final RestauranteRepository restauranteRepository;
     private final PostRepository postRepository;
     private final ComentarioRepository comentarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public GestionPublicacionServiceImpl(RecetaService recetaService, RecetaRepository recetaRepository, RestauranteService restauranteService, RestauranteRepository restauranteRepository, PostService postService, PostRepository postRepository, ComentarioService comentarioService, ComentarioRepository comentarioRepository) {
+    public GestionPublicacionServiceImpl(RecetaService recetaService, RecetaRepository recetaRepository, RestauranteService restauranteService, RestauranteRepository restauranteRepository, PostService postService, PostRepository postRepository, ComentarioService comentarioService, ComentarioRepository comentarioRepository, UsuarioRepository usuarioRepository) {
         this.recetaRepository = recetaRepository;
         this.restauranteRepository = restauranteRepository;
         this.postRepository = postRepository;
         this.comentarioRepository = comentarioRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
-    public List<?> getObjetosByEstado(Authentication authentication, ObjetoEnum tipoReferencia, EstadoValidacionEnum estadoValidacionEnum) {
-        return switch (tipoReferencia.toString()) {
-            case "RESTAURANTE" -> this.restauranteRepository.getByEstadoPublicacion(estadoValidacionEnum.toString());
-            case "RECETA" -> this.recetaRepository.getByEstadoPublicacion(estadoValidacionEnum.toString());
-            case "POST" -> this.postRepository.getByEstadoPublicacion(estadoValidacionEnum.toString());
-            case "COMENTARIO" -> this.comentarioRepository.getByEstadoPublicacion(estadoValidacionEnum.toString());
-            default -> null;
-        };
+    public List<?> getObjetosByEstado(Authentication authentication, ObjetoEnum tipoReferencia, List<EstadoValidacionEnum> estadoValidacionEnum) {
+        switch (tipoReferencia.toString()){
+            case "RESTAURANTE":
+                List<Restaurante> restaurantes = this.restauranteRepository.findAll();
+                if(estadoValidacionEnum != null   && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
+                   return restaurantes
+                           .stream()
+                           .filter(restaurante -> estadoValidacionEnum.contains(restaurante.getEstado())).toList();
+                }else{
+                    return restaurantes;
+                }
+            case "RECETA":
+                List<Receta> recetas = this.recetaRepository.findAll();
+                if(estadoValidacionEnum != null && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
+                   return recetas.stream().filter(receta -> estadoValidacionEnum.contains(receta.getEstado())).toList();
+                }else{
+                    return recetas;
+                }
+            case "POST":
+                List<Post> posts = this.postRepository.findAll();
+                if(estadoValidacionEnum != null   && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
+                    return posts.stream().filter(post -> estadoValidacionEnum.contains(post.getEstado())).toList();
+                }else{
+                    return posts;
+                }
+            case "COMENTARIO":
+                List<Comentario> comentarios = this.comentarioRepository.findAll();
+                if(estadoValidacionEnum != null  && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
+                    return comentarios.stream().filter(coment -> estadoValidacionEnum.contains(coment.getEstado())).toList();
+                }else{
+                    return comentarios;
+                }
+        }
+        return null;
     }
 
     @Override
@@ -55,7 +80,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
         switch (tipoReferencia.toString()){
             case "RESTAURANTE":
                 Optional<Restaurante> res = this.restauranteRepository.findById(idObjeto);
-                if(res.isPresent()){
+                if(res.isPresent() && !estado.equals(EstadoValidacionEnum.TODOS) ){
                     Restaurante restaurante = res.get();
                     restaurante.setEstado(estado);
                     restaurante.setFechaValidacion(new Date());
@@ -63,7 +88,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                 }
             case "RECETA":
                 Optional<Receta> rec = this.recetaRepository.findById(idObjeto);
-                if(rec.isPresent()){
+                if(rec.isPresent() && !estado.equals(EstadoValidacionEnum.TODOS)){
                     Receta receta = rec.get();
                     receta.setEstado(estado);
                     receta.setFechaValidacion(new Date());
@@ -71,7 +96,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                 }
             case "POST":
                 Optional<Post> pos = this.postRepository.findById(idObjeto);
-                if(pos.isPresent()){
+                if(pos.isPresent() && !estado.equals(EstadoValidacionEnum.TODOS)){
                     Post post = pos.get();
                     post.setEstado(estado);
                     post.setFechaValidacion(new Date());
@@ -79,12 +104,13 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                 }
             case "COMENTARIO":
                 Optional<Comentario> comen = this.comentarioRepository.findById(idObjeto);
-                if(comen.isPresent()){
+                if(comen.isPresent() && !estado.equals(EstadoValidacionEnum.TODOS)){
                     Comentario comentario = comen.get();
                     comentario.setEstado(estado);
                     comentario.setFechaValidacion(new Date());
                     return ComentarioMapper.entityToDto(this.comentarioRepository.save(comentario));
                 }
+
         }
         return null;
     }
@@ -96,6 +122,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
         estadisticaDTO.setNumRestaurantes(this.restauranteRepository.countAll());
         estadisticaDTO.setNumRecetas(this.recetaRepository.countAll());
         estadisticaDTO.setNumPost(this.postRepository.countAll());
+        estadisticaDTO.setNumUsuarios(this.usuarioRepository.countAll());
 
         return estadisticaDTO;
     }

@@ -1,0 +1,9 @@
+services:
+  webserver:
+    image: local-nginx:latest
+    ports:
+      - 8080:8080
+      - 443:443
+    restart: always
+    volumes:
+      - /etc/nginx/conf.d/

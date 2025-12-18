@@ -24,6 +24,7 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     FROM restaurante r
     JOIN tag_restaurante t ON r.id_restaurante = t.id_restaurante
     WHERE UPPER(t.nombre) LIKE %:nombreTag%
+    AND r.estado = 'APROBADO'
     """, nativeQuery = true)
     List<Restaurante> buscarRestaurantesPorNombreDeTag(@Param("nombreTag") String nombreTag);
 
@@ -31,6 +32,7 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     SELECT DISTINCT id_restaurante
     FROM restaurante 
     WHERE (:ubicacion IS NULL OR UPPER(ubicacion) LIKE CONCAT('%', UPPER(:ubicacion), '%'))
+    AND estado = 'APROBADO'
     """, nativeQuery = true)
     List<Long> findByUbicacion(@Param("ubicacion") String ubicacion);
 

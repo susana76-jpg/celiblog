@@ -35,7 +35,7 @@ public class RecetaServiceImpl implements RecetaService {
 
     @Override
     public List<RecetaDTO> getAll(Authentication authentication) {
-        List<RecetaDTO> recetas = RecetaMapper.entityToDtoList(recetaRepository.findAll());
+        List<RecetaDTO> recetas = RecetaMapper.entityToDtoList(recetaRepository.getByEstadoPublicacion(EstadoValidacionEnum.APROBADO.toString()));
         if(authentication == null){
             return recetas;
         }else{
