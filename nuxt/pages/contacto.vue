@@ -1,4 +1,5 @@
 <template>
+  <div class="formulario-con-fondo">
   <v-container fluid class="fill-height d-flex justify-center align-center bg-grey-lighten-4 pa-4">
     <v-card class="pa-6 pa-sm-10 rounded-xl elevation-10 w-100" max-width="800">
 
@@ -361,6 +362,7 @@
       </v-form>
     </v-card>
   </v-container>
+</div>
 </template>
   
 <script setup lang="ts">
@@ -678,6 +680,8 @@ const handleSubmit = async () => {
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Arial&display=swap');
   
+
+
   // Definición de colores
   .text-gold {
     color: #836a02 !important; // El color dorado de tu estilo original para el título
@@ -708,5 +712,16 @@ const handleSubmit = async () => {
       max-width: 100%;
       margin: 0 auto;
     }
+
+    //imagen de fondo
+    .formulario-con-fondo {
+  background-image: url('/img/fonfo_contacto.png'); 
+  background-size: cover;      
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 2rem;               
+  border-radius: 1rem;        
+  color: #fff;               
+}
   }
   </style>

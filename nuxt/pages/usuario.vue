@@ -421,7 +421,7 @@ const handleSubmit = async () => {
     dataToSend.newPassword = formData.value.newPassword;
   }
   
-  // Endpoint de Actualización de Perfil
+  // Endpoint de Actualización de Perfilge
   const endpoint = '/api/usuario/update'; // Asumo este endpoint para la actualización
   
   try {
