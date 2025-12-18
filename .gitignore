@@ -8,3 +8,35 @@
 .idea/
 *.iml
 *.iws
+
+# Nuxt
+node_modules/
+.nuxt/
+.output/
+dist/
+.env
+
+# Java / Maven
+celiblog-api/target/
+bin/
+*.class
+*.jar
+
+# VS Code
+.vscode/
+
+# Nuxt
+node_modules/
+.nuxt/
+.output/
+dist/
+.env
+
+# Java / Maven
+celiblog-api/target/
+bin/
+*.class
+*.jar
+
+# VS Code
+.vscode/
