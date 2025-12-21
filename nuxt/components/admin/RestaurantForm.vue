@@ -12,7 +12,11 @@
       <v-divider></v-divider>
 
       <v-card-text>
-        <v-form ref="formRef">
+        <v-form 
+          id="restaurantForm"
+          ref="formRef"
+          validation-on="submit"
+        >
           <v-row class="pt-5">
             <v-col
               v-for="(field, index) in textFields"
@@ -69,6 +73,8 @@
           Cancelar
         </v-btn>
         <v-btn 
+          form="restaurantForm"
+          type="submit"
           color="primary" 
           variant="flat" 
           @click="validateForm"
@@ -100,15 +106,16 @@ const props = defineProps({
   }
 });
 
-const showDialog = computed({
-  get: () => props.show,
-  set: (value) => emit('update:show', value)
-});
-
 const emit = defineEmits<{
   (e: 'update:show', value: boolean): void;
   (e: 'get:restaurants'): void;
 }>();
+
+// Show dialog computed property
+const showDialog = computed({
+  get: () => props.show,
+  set: (value) => emit('update:show', value)
+});
 
 /*************************************/
 /* FORM DATA BINDING + INPUTS */

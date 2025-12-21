@@ -9,6 +9,8 @@ export const API = {
   RECIPES: {
     BASE: '/api/receta/public/all',
     BY_ID: '/api/receta/public/byId',
+    ADD: '/api/receta/add',
+    UPDATE: '/api/receta/update',
     DELETE: '/api/receta/deleteById',
     STEPS: '/api/paso-receta/public/pasos',
     INGREDIENTS: '/api/receta/public/ingredientes',
@@ -26,6 +28,9 @@ export const API = {
   POSTS: {
     BASE: '/api/post/public/all',
     BY_ID: '/api/post/public/byId',
+    ADD: '/api/post/add',
+    UPDATE: '/api/post/update',
+    DELETE: '/api/post/deleteById',
     TAGS: '/api/tag-post/public/tags',
     SEARCH: '/api/post/public/buscar'
   },

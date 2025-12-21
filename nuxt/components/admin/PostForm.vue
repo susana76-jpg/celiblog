@@ -3,16 +3,20 @@
     v-model="showDialog"
     max-width="65%"
     opacity="60%"
-    class="comment-form"
+    class="post-form"
   >
     <v-card class="px-10 py-6">
       <v-card-title class="text-h5 text-primary pa-0 pb-3">
-        {{ isEdit ? 'Editar' : 'Agregar' }} Restaurante
+        {{ isEdit ? 'Editar' : 'Agregar' }} Publicación
       </v-card-title>
       <v-divider></v-divider>
 
       <v-card-text>
-        <v-form ref="formRef">
+        <v-form 
+          id="postForm"
+          ref="formRef"
+          validate-on="submit"
+        >
           <v-row class="pt-5">
             <v-col
               v-for="(field, index) in textFields"
@@ -35,25 +39,6 @@
                 v-model="field.model.value"
               ></v-text-field>
             </v-col>
-            <v-col class="py-0" cols="6">
-              <v-select
-                chips
-                hide-details
-                active
-                required
-                class="mb-5 mt-3"
-                color="primary"
-                base-color="primary"
-                variant="outlined"
-                item-title="nombre"
-                item-value="idRol"
-                density="comfortable"
-                label="Tipo de restaurante *"
-                :items="restaurantTypes"
-                v-model="restaurantForm.tipoRestaurante"
-                @update:modelValue="($event) => restaurantForm.tipoRestaurante = $event"
-              ></v-select>
-            </v-col>
           </v-row>
         </v-form>
       </v-card-text>
@@ -69,6 +54,8 @@
           Cancelar
         </v-btn>
         <v-btn 
+          id="postForm"
+          type="submit"
           color="primary" 
           variant="flat" 
           @click="validateForm"
@@ -93,81 +80,53 @@ const props = defineProps({
     required: true,
     default: false
   },
-  restaurant: {
-    type: Object as PropType<Restaurante | null>,
+  post: {
+    type: Object as PropType<Post | null>,
     required: false,
     default: null
   }
 });
 
+const emit = defineEmits<{
+  (e: 'update:show', value: boolean): void;
+  (e: 'get:posts'): void;
+}>();
+
+// Show dialog computed property
 const showDialog = computed({
   get: () => props.show,
   set: (value) => emit('update:show', value)
 });
 
-const emit = defineEmits<{
-  (e: 'update:show', value: boolean): void;
-  (e: 'get:restaurants'): void;
-}>();
 
 /*************************************/
 /* FORM DATA BINDING + INPUTS */
 /*************************************/
-const restaurantTypes = ['SIN_GLUTEN', 'MEDITERRANEA', 'ASIATICA', 'VEGANO', 'MEXICANA'];
-
-// Restaurant Form
-const restaurantForm = ref({
+// Post Form
+const postForm = ref({
   titulo: '',
   subtitulo: '',
-  descripcion: '',
-  direccion: '',
-  imagenUrl: '',
-  nombre: '',
-  ubicacion: '',
-  codigoPostal: 0,
-  urlWeb: '',
-  telefono: '',
-  email: '',
-  valoracion: 0,
-  tipoRestaurante: ''
+  contenido: '',
+  urlPost: '',
 });
 
 // Watch for dialog open and populate form if editing
 watch(() => props.show, (newValue) => {
   if (newValue) {
-    if (props.isEdit && props.restaurant) {
-      // Fill form with restaurant data
-      restaurantForm.value = {
-        titulo: props.restaurant.titulo || '',
-        subtitulo: props.restaurant.subtitulo || '',
-        descripcion: props.restaurant.descripcion || '',
-        direccion: props.restaurant.direccion || '',
-        imagenUrl: props.restaurant.imagenUrl || '',
-        nombre: props.restaurant.nombre || '',
-        ubicacion: props.restaurant.ubicacion || '',
-        codigoPostal: props.restaurant.codigoPostal || 0,
-        urlWeb: props.restaurant.urlWeb || '',
-        telefono: props.restaurant.telefono || '',
-        email: props.restaurant.email || '',
-        valoracion: props.restaurant.valoracion || 0,
-        tipoRestaurante: props.restaurant.tipoRestaurante || ''
+    if (props.isEdit && props.post) {
+      postForm.value = {
+          titulo: props.post.titulo || '',
+          subtitulo: props.post.subtitulo || '',
+          contenido: props.post.contenido || '',
+          urlPost: props.post.urlPost || '',
       };
     } else {
-      // Reset form for new restaurant
-      restaurantForm.value = {
+      // Reset form for new recipe
+      postForm.value = {
         titulo: '',
         subtitulo: '',
-        descripcion: '',
-        direccion: '',
-        imagenUrl: '',
-        nombre: '',
-        ubicacion: '',
-        codigoPostal: 0,
-        urlWeb: '',
-        telefono: '',
-        email: '',
-        valoracion: 0,
-        tipoRestaurante: ''
+        contenido: '',
+        urlPost: '',
       };
     }
   }
@@ -175,129 +134,58 @@ watch(() => props.show, (newValue) => {
 
 // Validation rules
 const validationRules = {
-  name: [
-    (v: string) => !!v || 'El nombre es obligatorio',
-    (v: string) => v.length >= 2 || 'El nombre debe tener al menos 2 caracteres'
+  required: [(v: any) => !!v || 'Este campo es obligatorio'],
+  title: [
+    (v: string) => !!v || 'El título es obligatorio',
+    (v: string) => v.length >= 20 || 'El título debe tener al menos 20 caracteres'
   ],
   text: [
     (v: string) => !!v || 'El texto es obligatorio',
-    (v: string) => v.length >= 10 || 'El texto debe tener al menos 10 caracteres'
+    (v: string) => v.length >= 50 || 'El texto debe tener al menos 50 caracteres'
   ],
-  email: [
-    (v: string) => !!v || 'El email es requerido',
-    (v: string) => /.+@.+\..+/.test(v) || 'El email debe ser válido'
-  ],
-  telephone: [
-    (v: string) => !!v || 'El teléfono es obligatorio',
-    (v: string) => /^\d{9,15}$/.test(v) || 'El teléfono debe ser válido'
-  ],  
-  postalCode: [
-    (v: string) => !!v || 'El código postal es obligatorio',
-    (v: string) => /^\d{5}$/.test(v) || 'El código postal debe ser válido'
-  ], 
 };
 
 // Text fields configuration array
 const textFields = computed(() => [
   {
-    label: 'Nombre *',
+    label: 'Titulo *',
     type: 'text',
     col: '12',
     model: computed({
-      get: () => restaurantForm.value.nombre,
-      set: (val) => restaurantForm.value.nombre = val
+      get: () => postForm.value.titulo,
+      set: (val) => postForm.value.titulo = val
     }),
-    rules: validationRules.name
+    rules: validationRules.title
   },
   {
     label: 'Subtítulo *',
     type: 'text',
     col: '12',
     model: computed({
-      get: () => restaurantForm.value.subtitulo,
-      set: (val) => restaurantForm.value.subtitulo = val
+      get: () => postForm.value.subtitulo,
+      set: (val) => postForm.value.subtitulo = val
     }),
     rules: validationRules.text
   },
   {
-    label: 'Descripción *',
+    label: 'Contenido *',
     type: 'text',
     col: '12',
     model: computed({
-      get: () => restaurantForm.value.descripcion,
-      set: (val) => restaurantForm.value.descripcion = val
+      get: () => postForm.value.contenido,
+      set: (val) => postForm.value.contenido = val
     }),
     rules: validationRules.text
   },
   {
-    label: 'Dirección *',
+    label: 'Imagen URL *',
     type: 'text',
-    col: '6',
+    col: '12',
     model: computed({
-      get: () => restaurantForm.value.direccion,
-      set: (val) => restaurantForm.value.direccion = val
+      get: () => postForm.value.urlPost,
+      set: (val) => postForm.value.urlPost = val
     }),
-    rules: validationRules.text
-  },
-  {
-    label: 'Ubicación *',
-    type: 'text',
-    col: '6',
-    model: computed({
-      get: () => restaurantForm.value.ubicacion,
-      set: (val) => restaurantForm.value.ubicacion = val
-    }),
-    rules: validationRules.text
-  },
-  {
-    label: 'Código Postal *',
-    type: 'number',
-    col: '6',
-    model: computed({
-      get: () => restaurantForm.value.codigoPostal,
-      set: (val) => restaurantForm.value.codigoPostal = val
-    }),
-    rules: validationRules.postalCode
-  },
-  {
-    label: 'Imagen url *',
-    type: 'text',
-    col: '6',
-    model: computed({
-      get: () => restaurantForm.value.imagenUrl,
-      set: (val) => restaurantForm.value.imagenUrl = val
-    }),
-    rules: validationRules.text
-  },
-  {
-    label: 'Teléfono *',
-    type: 'number',
-    col: '6',
-    model: computed({
-      get: () => restaurantForm.value.telefono,
-      set: (val) => restaurantForm.value.telefono = val
-    }),
-    rules: validationRules.telephone
-  },
-  {
-    label: 'Correo electrónico *',
-    type: 'text',
-    col: '6',
-    model: computed({
-      get: () => restaurantForm.value.email,
-      set: (val) => restaurantForm.value.email = val
-    }),
-    rules: validationRules.email
-  },
-  {
-    label: 'Página web *',
-    type: 'text',
-    col: '6',
-    model: computed({
-      get: () => restaurantForm.value.urlWeb,
-      set: (val) => restaurantForm.value.urlWeb = val
-    }),
-    rules: validationRules.text
+    rules: validationRules.required
   },
 ]);
 
@@ -307,38 +195,38 @@ const textFields = computed(() => [
 /*************************************/
 const formRef = ref();
 
-// Update restaurant
-const updateRestaurant = async () => {
+// Update recipe
+const updatePost = async () => {
   try {
-    const url = API.RESTAURANTS.UPDATE + `?idRestaurante=${props.restaurant?.idRestaurante}`;
+    const url = API.POSTS.UPDATE + `?idPost=${props.post?.idPost}`;
     const response = await useApiFetch(url, {
       method: 'PUT',
-      body: restaurantForm.value
+      body: postForm.value
     });
     
     if (response) {
-      showSuccess(`Restaurante ${restaurantForm.value.nombre} editado correctamente`);
-      emit('get:restaurants');
+      showSuccess(`Publicación ${postForm.value.titulo} editada correctamente`);
+      emit('get:posts');
     }
   } catch (error: any) {
-    showError(`Error al editar el restaurante: ${error.message || error}`);
+    showError(`Error al editar la publicación: ${error.message || error}`);
   }
 };
 
-// Add new restaurant
-const addRestaurant = async () => {
+// Add new post
+const addPost = async () => {
   try {
-    const response = await useApiFetch(API.RESTAURANTS.ADD, {
+    const response = await useApiFetch(API.POSTS.ADD, {
       method: 'POST',
-      body: restaurantForm.value
+      body: postForm.value
     });
     
     if (response) {
-      showSuccess(`Restaurante ${restaurantForm.value.nombre} agregado correctamente`);
-      emit('get:restaurants');
+      showSuccess(`Publicación ${postForm.value.titulo} agregada correctamente`);
+      emit('get:posts');
     }
   } catch (error: any) {
-    showError(`Error al agregar el restaurante: ${error.message || error}`);
+    showError(`Error al agregar la publicación: ${error.message || error}`);
   }
 };
 
@@ -347,7 +235,8 @@ const validateForm = async () => {
   const { valid } = await formRef.value?.validate();
   if (!valid) return;
 
-  if (props.isEdit && props.restaurant) updateRestaurant();
-  else addRestaurant();  
+  if (props.isEdit && props.post) updatePost();
+  else addPost();  
 };
 </script>
+

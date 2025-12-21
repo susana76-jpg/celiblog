@@ -22,8 +22,7 @@
         hide-details
         width="350"
         max-width="350"
-        color="grey"
-        base-color="grey"
+        color="lightgray"
         class="status-filter"
         :class="{ 'mr-2': showAddButton, 'mr-0': !showAddButton }"
         variant="outlined"

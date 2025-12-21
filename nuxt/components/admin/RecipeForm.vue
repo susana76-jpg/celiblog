@@ -3,16 +3,20 @@
     v-model="showDialog"
     max-width="65%"
     opacity="60%"
-    class="comment-form"
+    class="recipe-form"
   >
     <v-card class="px-10 py-6">
       <v-card-title class="text-h5 text-primary pa-0 pb-3">
-        {{ isEdit ? 'Editar' : 'Agregar' }} Restaurante
+        {{ isEdit ? 'Editar' : 'Agregar' }} Receta
       </v-card-title>
       <v-divider></v-divider>
 
       <v-card-text>
-        <v-form ref="formRef">
+        <v-form 
+          id="recipeForm"
+          ref="formRef"
+          validate-on="submit"
+        >
           <v-row class="pt-5">
             <v-col
               v-for="(field, index) in textFields"
@@ -35,7 +39,12 @@
                 v-model="field.model.value"
               ></v-text-field>
             </v-col>
-            <v-col class="py-0" cols="6">
+            <v-col 
+              v-for="(select, index) in selectInputs"
+              :key="index"
+              class="py-0" 
+              cols="6"
+            >
               <v-select
                 chips
                 hide-details
@@ -45,13 +54,11 @@
                 color="primary"
                 base-color="primary"
                 variant="outlined"
-                item-title="nombre"
-                item-value="idRol"
                 density="comfortable"
-                label="Tipo de restaurante *"
-                :items="restaurantTypes"
-                v-model="restaurantForm.tipoRestaurante"
-                @update:modelValue="($event) => restaurantForm.tipoRestaurante = $event"
+                :label="select.label"
+                :items="select.items"
+                v-model="select.model.value"
+                @update:modelValue="($event) => select.model.value = $event"
               ></v-select>
             </v-col>
           </v-row>
@@ -61,10 +68,16 @@
       <v-divider></v-divider>
       <v-card-actions class="pt-4">
         <v-spacer />
-        <v-btn color="grey" variant="text" @click="showDialog = false">
+        <v-btn 
+          color="grey" 
+          variant="text" 
+          @click="showDialog = false"
+        >
           Cancelar
         </v-btn>
         <v-btn 
+          id="recipeForm"
+          type="submit"
           color="primary" 
           variant="flat" 
           @click="validateForm"
@@ -96,122 +109,101 @@ const props = defineProps({
   }
 });
 
-const showDialog = computed({
-  get: () => props.show,
-  set: (value) => emit('update:show', value)
-});
-
 const emit = defineEmits<{
   (e: 'update:show', value: boolean): void;
   (e: 'get:recipes'): void;
 }>();
 
+// Show dialog computed property
+const showDialog = computed({
+  get: () => props.show,
+  set: (value) => emit('update:show', value)
+});
+
+
 /*************************************/
 /* FORM DATA BINDING + INPUTS */
 /*************************************/
-const restaurantTypes = ['SIN_GLUTEN', 'MEDITERRANEA', 'ASIATICA', 'VEGANO', 'MEXICANA'];
+const level = ['FACIL', 'MEDIO', 'DIFICIL'];
+const foodTypes = ['DESAYUNO', 'BRUNCH', 'ALMUERZO', 'MERIENDA', 'CENA', 'TAPAS', 'RACIONES', 'POSTRE', 'SALADO', 'DULCE'];
 
-// Restaurant Form
-const restaurantForm = ref({
+// Recipe Form
+const recipeForm = ref({
   titulo: '',
   subtitulo: '',
   descripcion: '',
-  direccion: '',
   imagenUrl: '',
-  nombre: '',
-  ubicacion: '',
-  codigoPostal: 0,
-  urlWeb: '',
-  telefono: '',
-  email: '',
-  valoracion: 0,
-  tipoRestaurante: ''
+  dificultad: 'FACIL',
+  comensales: 0,
+  tiempoPreparacion: 0,
+  valorEnergetico: 0,
+  tipoComida: 'DESAYUNO'
 });
 
 // Watch for dialog open and populate form if editing
 watch(() => props.show, (newValue) => {
-  // if (newValue) {
-  //   if (props.isEdit && props.restaurant) {
-  //     // Fill form with restaurant data
-  //     restaurantForm.value = {
-  //       titulo: props.restaurant.titulo || '',
-  //       subtitulo: props.restaurant.subtitulo || '',
-  //       descripcion: props.restaurant.descripcion || '',
-  //       direccion: props.restaurant.direccion || '',
-  //       imagenUrl: props.restaurant.imagenUrl || '',
-  //       nombre: props.restaurant.nombre || '',
-  //       ubicacion: props.restaurant.ubicacion || '',
-  //       codigoPostal: props.restaurant.codigoPostal || 0,
-  //       urlWeb: props.restaurant.urlWeb || '',
-  //       telefono: props.restaurant.telefono || '',
-  //       email: props.restaurant.email || '',
-  //       valoracion: props.restaurant.valoracion || 0,
-  //       tipoRestaurante: props.restaurant.tipoRestaurante || ''
-  //     };
-  //   } else {
-  //     // Reset form for new restaurant
-  //     restaurantForm.value = {
-  //       titulo: '',
-  //       subtitulo: '',
-  //       descripcion: '',
-  //       direccion: '',
-  //       imagenUrl: '',
-  //       nombre: '',
-  //       ubicacion: '',
-  //       codigoPostal: 0,
-  //       urlWeb: '',
-  //       telefono: '',
-  //       email: '',
-  //       valoracion: 0,
-  //       tipoRestaurante: ''
-  //     };
-  //   }
-  // }
+  if (newValue) {
+    if (props.isEdit && props.recipe) {
+      recipeForm.value = {
+          titulo: props.recipe.titulo || '',
+          subtitulo: props.recipe.subtitulo || '',
+          descripcion: props.recipe.descripcion || '',
+          imagenUrl: props.recipe.imagenUrl || '',
+          dificultad: props.recipe.dificultad || 'FACIL',
+          comensales: props.recipe.comensales || 0,
+          tiempoPreparacion: props.recipe.tiempoPreparacion || 0,
+          valorEnergetico: props.recipe.valorEnergetico || 0,
+          tipoComida: props.recipe.tipoComida || 'DESAYUNO'
+      };
+    } else {
+      // Reset form for new recipe
+      recipeForm.value = {
+          titulo: '',
+          subtitulo: '',
+          descripcion: '',
+          imagenUrl: '',
+          dificultad: 'FACIL',
+          comensales: 0,
+          tiempoPreparacion: 0,
+          valorEnergetico: 0,
+          tipoComida: 'DESAYUNO'
+      };
+    }
+  }
 });
 
 // Validation rules
 const validationRules = {
-  name: [
-    (v: string) => !!v || 'El nombre es obligatorio',
-    (v: string) => v.length >= 2 || 'El nombre debe tener al menos 2 caracteres'
+  required: [(v: any) => !!v || 'Este campo es obligatorio'],
+  title: [
+    (v: string) => !!v || 'El título es obligatorio',
+    (v: string) => v.length >= 20 || 'El título debe tener al menos 20 caracteres'
   ],
   text: [
     (v: string) => !!v || 'El texto es obligatorio',
-    (v: string) => v.length >= 10 || 'El texto debe tener al menos 10 caracteres'
+    (v: string) => v.length >= 50 || 'El texto debe tener al menos 50 caracteres'
   ],
-  email: [
-    (v: string) => !!v || 'El email es requerido',
-    (v: string) => /.+@.+\..+/.test(v) || 'El email debe ser válido'
-  ],
-  telephone: [
-    (v: string) => !!v || 'El teléfono es obligatorio',
-    (v: string) => /^\d{9,15}$/.test(v) || 'El teléfono debe ser válido'
-  ],  
-  postalCode: [
-    (v: string) => !!v || 'El código postal es obligatorio',
-    (v: string) => /^\d{5}$/.test(v) || 'El código postal debe ser válido'
-  ], 
 };
 
 // Text fields configuration array
 const textFields = computed(() => [
   {
-    label: 'Nombre *',
+    label: 'Titulo *',
     type: 'text',
     col: '12',
     model: computed({
-      get: () => restaurantForm.value.nombre,
-      set: (val) => restaurantForm.value.nombre = val
+      get: () => recipeForm.value.titulo,
+      set: (val) => recipeForm.value.titulo = val
     }),
-    rules: validationRules.name
+    rules: validationRules.title
   },
   {
     label: 'Subtítulo *',
     type: 'text',
     col: '12',
     model: computed({
-      get: () => restaurantForm.value.subtitulo,
-      set: (val) => restaurantForm.value.subtitulo = val
+      get: () => recipeForm.value.subtitulo,
+      set: (val) => recipeForm.value.subtitulo = val
     }),
     rules: validationRules.text
   },
@@ -220,81 +212,70 @@ const textFields = computed(() => [
     type: 'text',
     col: '12',
     model: computed({
-      get: () => restaurantForm.value.descripcion,
-      set: (val) => restaurantForm.value.descripcion = val
+      get: () => recipeForm.value.descripcion,
+      set: (val) => recipeForm.value.descripcion = val
     }),
     rules: validationRules.text
   },
   {
-    label: 'Dirección *',
+    label: 'Imagen URL *',
     type: 'text',
     col: '6',
     model: computed({
-      get: () => restaurantForm.value.direccion,
-      set: (val) => restaurantForm.value.direccion = val
+      get: () => recipeForm.value.imagenUrl,
+      set: (val) => recipeForm.value.imagenUrl = val
     }),
-    rules: validationRules.text
+    rules: validationRules.required
   },
   {
-    label: 'Ubicación *',
-    type: 'text',
-    col: '6',
-    model: computed({
-      get: () => restaurantForm.value.ubicacion,
-      set: (val) => restaurantForm.value.ubicacion = val
-    }),
-    rules: validationRules.text
-  },
-  {
-    label: 'Código Postal *',
+    label: 'Comensales *',
     type: 'number',
     col: '6',
     model: computed({
-      get: () => restaurantForm.value.codigoPostal,
-      set: (val) => restaurantForm.value.codigoPostal = val
+      get: () => recipeForm.value.comensales,
+      set: (val) => recipeForm.value.comensales = val
     }),
-    rules: validationRules.postalCode
+    rules: validationRules.required
   },
   {
-    label: 'Imagen url *',
-    type: 'text',
-    col: '6',
-    model: computed({
-      get: () => restaurantForm.value.imagenUrl,
-      set: (val) => restaurantForm.value.imagenUrl = val
-    }),
-    rules: validationRules.text
-  },
-  {
-    label: 'Teléfono *',
+    label: 'Tiempo preparación *',
     type: 'number',
     col: '6',
     model: computed({
-      get: () => restaurantForm.value.telefono,
-      set: (val) => restaurantForm.value.telefono = val
+      get: () => recipeForm.value.tiempoPreparacion,
+      set: (val) => recipeForm.value.tiempoPreparacion = val
     }),
-    rules: validationRules.telephone
+    rules: validationRules.required
   },
   {
-    label: 'Correo electrónico *',
-    type: 'text',
+    label: 'Valor energético *',
+    type: 'number',
     col: '6',
     model: computed({
-      get: () => restaurantForm.value.email,
-      set: (val) => restaurantForm.value.email = val
+      get: () => recipeForm.value.valorEnergetico,
+      set: (val) => recipeForm.value.valorEnergetico = val
     }),
-    rules: validationRules.email
+    rules: validationRules.required
+  }
+]);
+
+const selectInputs = computed(() => [
+  {
+    label: 'Dificultad *',
+    model: computed({
+      get: () => recipeForm.value.dificultad,
+      set: (val) => recipeForm.value.dificultad = val
+    }),
+    items: level
   },
   {
-    label: 'Página web *',
-    type: 'text',
-    col: '6',
+    label: 'Tipo de comida *',
     model: computed({
-      get: () => restaurantForm.value.urlWeb,
-      set: (val) => restaurantForm.value.urlWeb = val
+      get: () => recipeForm.value.tipoComida,
+      set: (val) => recipeForm.value.tipoComida = val
     }),
-    rules: validationRules.text
-  },
+    items: foodTypes
+  }
 ]);
 
 
@@ -306,18 +287,20 @@ const formRef = ref();
 // Update recipe
 const updateRecipe = async () => {
   try {
-    // const url = API.RECIPES.UPDATE + `?idReceta=${props.recipe?.idReceta}`;
-    const response = await useApiFetch(url, {
+    const response = await useApiFetch(API.RECIPES.UPDATE, {
       method: 'PUT',
-      body: restaurantForm.value
+      body: {
+        idReceta: props.recipe?.idReceta,
+        ...recipeForm.value
+      }
     });
     
     if (response) {
-      showSuccess(`Restaurante ${restaurantForm.value.nombre} editado correctamente`);
+      showSuccess(`Receta ${recipeForm.value.titulo} editada correctamente`);
       emit('get:recipes');
     }
   } catch (error: any) {
-    showError(`Error al editar el restaurante: ${error.message || error}`);
+    showError(`Error al editar la receta: ${error.message || error}`);
   }
 };
 
@@ -326,15 +309,15 @@ const addRecipe = async () => {
   try {
     const response = await useApiFetch(API.RECIPES.ADD, {
       method: 'POST',
-      body: restaurantForm.value
+      body: recipeForm.value
     });
     
     if (response) {
-      showSuccess(`Restaurante ${restaurantForm.value.nombre} agregado correctamente`);
+      showSuccess(`Receta ${recipeForm.value.titulo} agregada correctamente`);
       emit('get:recipes');
     }
   } catch (error: any) {
-    showError(`Error al agregar el restaurante: ${error.message || error}`);
+    showError(`Error al agregar la receta: ${error.message || error}`);
   }
 };
 
