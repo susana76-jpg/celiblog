@@ -1,0 +1,62 @@
+services:
+  celiblog_db:
+    image: mysql:8.3
+    container_name: celiblog_db
+    hostname: db
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: celiblog
+    volumes:
+      - ./celiblog-api/initdb:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    hostname: phpmyadmin
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      PMA_HOST: celiblog_db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: 1234
+    depends_on:
+      - celiblog_db
+  webserver:
+    build: ./celiblog-nginx
+    container_name: nginx
+    hostname: nginx
+    ports:
+      - 8080:8080
+      - 443:443
+    restart: always
+    depends_on:
+      - app_celi
+    volumes:
+      - /etc/nginx/conf.d/
+  app_celi:
+    build: ./celiblog-api
+    container_name: celiblog_app
+    hostname: app
+    mem_limit: 512m
+    ports:
+      - "8081:8081"
+    environment:
+      DB_URL: jdbc:mysql://celiblog_db:3306/celiblog?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+      DB_USER_NAME: root
+      DB_PASSWORD: 1234
+      SECRET_KEY:  f5g4sdfg1sfd21gvf2d313sfd2g1fds32g1sfd32g1sfd23g1vsfd231fsd32v1s
+      OPENCAGE_API_KEY:  73ff22d176684a9696a24fec7269c216
+    restart: always
+    depends_on:
+      celiblog_db:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
