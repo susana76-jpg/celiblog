@@ -18,81 +18,14 @@
           {{ tab.label }}
         </v-btn>
       </div>
-
-      <v-btn
-        color="primary"
-        variant="flat"
-        prepend-icon="mdi-plus"
-        @click="showDialog = true"
-      >
-        {{ textOpenDialog }}
-      </v-btn>
     </div>
     <!--------------------------------------->
 
     <!-- TAB CONTENT ------------------------>
-    <component 
-      :ref="setTabRef"
-      :is="currentTabComponent" 
-      @edit-restaurant="editRestaurant"
-    />
+    <KeepAlive>
+      <component :is="currentTabComponent" />
+    </KeepAlive>
     <!------------------------------------->
-
-    <!-- ADD DIALOG ------------------------->
-    <v-dialog
-      v-model="showDialog"
-      max-width="65%"
-      opacity="60%"
-      class="comment-form"
-    >
-      <v-card class="px-10 py-6">
-        <v-card-title class="text-h5 text-primary pa-0 pb-3">
-          {{ textOpenDialog }}
-        </v-card-title>
-        <v-divider></v-divider>
-
-        <v-card-text>
-          <AdminUserForm 
-            v-if="activeTab === 'users'"
-            id="users-form"
-            v-model="userForm"
-            @submit="saveItem"
-            @update:model-value="(value) => userForm = value"  
-          />
-          <AdminRestaurantForm 
-            v-if="activeTab === 'restaurants'" 
-            id="restaurants-form"
-            v-model="restaurantForm" 
-            @submit="saveItem"
-            @update:model-value="(value) => restaurantForm = value"
-          />
-          <!-- <AdminRecipeForm 
-              v-if="activeTab === 'recipes'" 
-              v-model="recipeForm" 
-            />
-            <AdminTipForm 
-              v-if="activeTab === 'tips'" 
-              v-model="tipForm" 
-            /> -->
-        </v-card-text>
-
-        <v-divider></v-divider>
-        <v-card-actions class="pt-4">
-          <v-spacer />
-          <v-btn color="grey" variant="text" @click="closeDialog">
-            Cancelar
-          </v-btn>
-          <v-btn 
-            color="primary" 
-            variant="flat" 
-            type="submit"
-            :form="`${activeTab}-form`"
-          >
-            Guardar
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
 
   </div>
 </template>
@@ -105,8 +38,27 @@ definePageMeta({
 /**************************************/
 /* TABS */
 /**************************************/
-const activeTab = ref('users');
-const usersTableRef = ref<{ addUser: (userData: any) => Promise<void> } | null>(null);
+const route = useRoute();
+const router = useRouter();
+
+// Initialize activeTab from URL query parameter or default to 'users'
+const activeTab = ref((route.query.tab as string) || 'users');
+
+// Watch for route changes to update activeTab
+watch(() => route.query.tab, (newTab) => {
+  if (newTab && typeof newTab === 'string') {
+    activeTab.value = newTab;
+  }
+});
+
+// Watch activeTab to update URL
+watch(activeTab, (newTab) => {
+  if (route.query.tab !== newTab) {
+    router.push({ query: { ...route.query, tab: newTab } });
+  }
+});
+
+// List of available tabs
 const tabs = [
   { label: 'Usuarios', value: 'users' },
   { label: 'Restaurantes', value: 'restaurants' },
@@ -114,13 +66,6 @@ const tabs = [
   { label: 'Consejos', value: 'tips' },
   { label: 'Comentarios', value: 'comments' }
 ]
-
-// Function to handle tab component ref
-const setTabRef = (el: any) => {
-  if (activeTab.value === 'users' && el) {
-    usersTableRef.value = el;
-  }
-}
 
 // Tab components mapping
 const tabComponents: Record<string, any> = {
@@ -135,129 +80,6 @@ const tabComponents: Record<string, any> = {
 const currentTabComponent = computed(() => {
   return tabComponents[activeTab.value] || tabComponents.users
 });
-
-
-/**************************************/
-/* OPEN DIALOG BUTTON */
-/**************************************/
-const showDialog = ref(false);
-
-// Tab dialog text mapping
-const tabDialogText: Record<string, string> = {
-  users: 'Agregar Usuario',
-  restaurants: 'Agregar Restaurante',
-  recipes: 'Agregar Receta',
-  tips: 'Agregar Consejo',
-  comments: 'Agregar Comentario'
-}
-
-// Computed property for dynamic dialog text
-const textOpenDialog = computed(() => {
-  return tabDialogText[activeTab.value] || 'Agregar'
-})
-
-
-/**************************************/
-/* DYNAMIC FORMS */
-/**************************************/
-// User Form
-const userForm = ref({
-  nombre: '',
-  email: '',
-  idRol: 3,
-  password: ''
-});
-
-// Restaurant Form
-const restaurantForm = ref({
-  titulo: '',
-  subtitulo: '',
-  descripcion: '',
-  direccion: '',
-  imagenUrl: '',
-  nombre: '',
-  ubicacion: '',
-  codigoPostal: 0,
-  urlWeb: '',
-  telefono: '',
-  email: '',
-  valoracion: 0,
-  tipoRestaurante: ''
-});
-
-// Reset forms
-const resetForms = () => {
-  userForm.value = {
-    nombre: '',
-    email: '',
-    idRol: 3,
-    password: ''
-  };
-
-  restaurantForm.value = {
-    titulo: '',
-    subtitulo: '',
-    descripcion: '',
-    direccion: '',
-    imagenUrl: '',
-    nombre: '',
-    ubicacion: '',
-    codigoPostal: 0,
-    urlWeb: '',
-    telefono: '',
-    email: '',
-    valoracion: 0,
-    tipoRestaurante: ''
-  };
-};
-
-// Close dialog and reset forms
-const closeDialog = () => {
-  showDialog.value = false;
-  nextTick(() => {
-    resetForms();
-  });
-};
-
-const saveItem = async (isValid: boolean) => {
-  if (!isValid) return;
-
-  // Handle saving based on active tab
-  switch (activeTab.value) {
-    case 'users':
-      addNewUser(userForm.value);
-      break;
-    // case 'restaurants':
-    //   console.log('Saving restaurant:', restaurantForm.value);
-    //   // Add your API call here
-    //   break;
-    // case 'recipes':
-    //   console.log('Saving recipe:', recipeForm.value);
-    //   // Add your API call here
-    //   break;
-    // case 'tips':
-    //   console.log('Saving tip:', tipForm.value);
-    //   // Add your API call here
-    //   break;
-  }
-  
-  closeDialog();
-};
-
-const addNewUser = async (userData: any) => {
-  if (usersTableRef.value) {
-    await usersTableRef.value.addUser(userData);
-  } else {
-    console.error('UsersTable ref not available');
-  }
-};  
-
-const editRestaurant = (restaurantData: Restaurante) => {
-  showDialog.value = true;
-  restaurantForm.value = { ...restaurantForm.value, ...restaurantData };
-  console.log('Editing restaurant:', restaurantForm.value)
-};
-
 </script>
 
 <style lang="scss" scoped>
@@ -362,10 +184,6 @@ const editRestaurant = (restaurantData: Restaurante) => {
 
   .tabs-navigation {
     flex-wrap: wrap;
-  }
-
-  .add-user-button {
-    width: 100%;
   }
 
   .keyfacts-container {

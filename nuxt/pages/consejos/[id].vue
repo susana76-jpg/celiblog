@@ -44,10 +44,12 @@
         
         <!-- COMMENTS CONTENT -->
         <CommentsMainContent 
+          v-if="showComments"
           class="mt-15" 
-          itemType="POST" 
-          :comentarios="comentarios"
+          :itemType="TYPE.POST as ObjectType" 
+          :comentarios="comments"
           :itemId="id"
+          @update:comentarios="getComments"
         />
       </div>
     </div>
@@ -57,10 +59,14 @@
 </template>
 
 <script setup lang="ts">
+const { getCommentsByObjectId } = useComments();
+const { showError } = useNotification();
+const { isAuthenticated } = useAuthStore();
+
 const route = useRoute();
 const id = parseInt(route.params.id as string);
 const post = ref<Post | null>(null);
-const comentarios = ref<any[]>([]);
+const comments = ref<Comentario[]>([]);
 const loading = ref(true);
 
 // Get receta by ID from API
@@ -74,15 +80,24 @@ const getConsejoById = async () => {
     post.value = data as Post; 
     post.value.urlPost = '/img/consejos/consejo' + id + '.jpg';
   } catch (error) {
-    console.error('Error fetching consejo:', error);
+    showError('Error fetching consejo');
   } finally {
     loading.value = false;
   }
 };
 
+// Get comments for the restaurant with the given ID
+const getComments = async () => {
+  comments.value = await getCommentsByObjectId(TYPE.POST, id) ?? [];
+};
+
+// Determine if comments section should be hidden
+const showComments = computed(() => comments.value.length > 0 || isAuthenticated.value); 
+
 // Fetch the receipe data when the component is mounted
 onMounted(async () => {  
   await getConsejoById();
+  getComments();
 });
 </script>
 

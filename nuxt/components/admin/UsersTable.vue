@@ -1,15 +1,27 @@
 <template>
-  <div class="users-table">
-    <v-text-field
-      single-line
-      hide-details
-      v-model="search"
-      class="mb-3"
-      density="compact"
-      variant="outlined"
-      label="Buscar usuarios"
-      prepend-inner-icon="mdi-magnify"
-    ></v-text-field>
+  <div class="admin-table users-table">
+    <div class="d-flex">
+      <v-text-field
+        clearable
+        single-line
+        hide-details
+        v-model="search"
+        class="mb-3 flex-grow-1 mr-2"
+        density="compact"
+        variant="outlined"
+        label="Buscar usuarios"
+        prepend-inner-icon="mdi-magnify"
+      ></v-text-field>
+      <v-btn
+        height="40"
+        color="primary"
+        variant="flat"
+        prepend-icon="mdi-plus"
+        @click="showDialog = true"
+      >
+        Agregar Usuario
+      </v-btn>
+    </div>
     <v-data-table
       hide-default-footer
       density="compact"
@@ -49,15 +61,24 @@
       </template>
     </v-data-table>
   </div>
+
+  <!-- ADD DIALOG ------------------------->
+  <AdminUserForm 
+    :show="showDialog" 
+    @update:show="showDialog = false"
+    @get:users="getUsers"
+  />
+  <!--------------------------------------->
+
 </template>
 
 <script setup lang="ts">
+const showDialog = ref<boolean>(false);
 const search = ref<string>('');
 const loading = ref<boolean>(false);
 
 // Use global notification composable
 const { showSuccess, showError } = useNotification();
-const store = useAdminStore();
 
 /*************************************/
 /* USERS DATA TABLE */
@@ -128,11 +149,12 @@ const updateUserRole = async (user: AdminUsuario, newRoleId: number) => {
 
 // Fetch users from API on component mount
 const getUsers = async () => {
+  if (showDialog.value) showDialog.value = false;
+
   loading.value = true;
   try {
     const response = await useApiFetch(API.USERS.BASE);
     users.value = response as AdminUsuario[];
-    store.keyfacts.totalUsers = users.value.length;
   } catch (error: any) {
     console.error('Login error:', error);
   } finally {
@@ -140,50 +162,8 @@ const getUsers = async () => {
   }
 };
 
-// Add new user
-const addUser = async (userData: any) => {
-  try {
-    const response = await useApiFetch(API.USERS.ADD, {
-      method: 'POST',
-      body: userData
-    });
-    
-    if (response) {
-      showSuccess('Usuario agregado correctamente');
-      await getUsers();
-    }
-  } catch (error: any) {
-    showError(`Error al agregar el usuario: ${error.message || error}`);
-  }
-};
-
-// Expose methods to parent component
-defineExpose({
-  addUser
-});
-
 // Load data on mount
 onMounted(() => {
   getUsers();
 })
 </script>
-
-<style lang="scss">
-.users-table {
-  .v-table__wrapper {
-    border-radius: 4px 4px 0 0;
-  }
-
-  // Table header style
-  thead {
-    color: #FFF;
-    background-color: #836A02;
-  }
-
-  // Select role chips style
-  span.v-chip.v-chip--variant-tonal {
-    background-color: #836A02;
-    color: #FFF;
-  }
-}
-</style>

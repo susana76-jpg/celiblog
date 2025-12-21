@@ -30,6 +30,9 @@ export interface Restaurante {
   email: string;
   valoracion: number;
   estado: string;
+  titulo?: string;
+  subtitulo?: string;
+  tipoRestaurante?: string;
   fechaValidacion: string | null;
 }
 
@@ -39,3 +42,5 @@ export interface RestauranteTag {
   restaurante: Restaurante | null;
   idRestaurante: number;
 }
+
+export type TipoRestaurante = 'SIN_GLUTEN' | 'MEDITERRANEA' | 'ASIATICA' | 'VEGANO' | 'MEXICANA'

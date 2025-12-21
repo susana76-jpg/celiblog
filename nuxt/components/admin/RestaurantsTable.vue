@@ -1,15 +1,41 @@
 <template>
-  <div class="restaurants-table">
-    <v-text-field
-      single-line
-      hide-details
-      v-model="search"
-      class="mb-3"
-      density="compact"
-      variant="outlined"
-      label="Buscar restaurantes"
-      prepend-inner-icon="mdi-magnify"
-    ></v-text-field>
+  <div class="admin-table restaurants-table">
+    <div class="d-flex">
+      <v-text-field
+        clearable
+        single-line
+        hide-details
+        v-model="search"
+        class="mb-3 flex-grow-1 mr-2"
+        density="compact"
+        variant="outlined"
+        label="Buscar restaurantes"
+        prepend-inner-icon="mdi-magnify"
+      ></v-text-field>
+      <v-select
+        chips
+        multiple
+        single-line
+        hide-details
+        width="350"
+        max-width="350"
+        class="status-filter"
+        variant="outlined"
+        density="compact"
+        :items="Object.values(POST_STATUS)"
+        v-model="statusFilter"
+        @update:modelValue="getRestaurants"
+      />
+      <v-btn
+        height="40"
+        color="primary"
+        variant="flat"
+        prepend-icon="mdi-plus"
+        @click="showDialog = true"
+      >
+        Agregar Restaurante
+      </v-btn>
+    </div>
     <v-data-table
       hide-default-footer
       density="compact"
@@ -22,27 +48,25 @@
       :items-per-page="-1"
       item-value="name"
     >
-      <!-- <template v-slot:item.rol="{ item }">
+      <template v-slot:item.estado="{ item }">
         <v-select
           chips
           single-line
           hide-details
           variant="outlined"
           density="compact"
-          item-title="nombre"
-          item-value="idRol"
-          :items="USER_ROLES"
-          v-model="item.rol"
-          @update:modelValue="($event) => updateUserRole(item, $event)"
+          :items="Object.values(POST_STATUS)"
+          v-model="item.estado"
+          @update:modelValue="($event) => updateStatus(item, $event)"
         ></v-select>
-      </template> -->
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-btn 
           icon 
           width="32"
           variant="text"
           color="lightgray"
-          @click="emit('edit-restaurant', item)"
+          @click="editRestaurant(item)"
         >
           <v-icon>mdi-pencil-outline</v-icon>
         </v-btn>
@@ -58,19 +82,30 @@
       </template>
     </v-data-table>
   </div>
+
+  <!-- ADD DIALOG ------------------------->
+  <AdminRestaurantForm 
+    :show="showDialog" 
+    :is-edit="isEdit"
+    :restaurant="restaurant"
+    @update:show="closeDialog"
+    @get:restaurants="getRestaurants"
+  />
+  <!--------------------------------------->
+
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits<{
-  (e: 'edit-restaurant', restaurantData: Restaurante): void;
-}>();
-
+const showDialog = ref<boolean>(false);
 const search = ref<string>('');
 const loading = ref<boolean>(false);
+const restaurant = ref<Restaurante | null>(null);
+const isEdit = computed(() => restaurant.value !== null);
+const statusFilter = ref<string[]>(Object.values(POST_STATUS));
 
 // Use global notification composable
 const { showSuccess, showError } = useNotification();
-const store = useAdminStore();
+
 
 /*************************************/
 /* RESTAURANTS DATA TABLE */
@@ -85,9 +120,10 @@ const headers = [
   { title: 'Ciudad', key: 'ubicacion', align: 'start' as const },
   { title: 'Teléfono', key: 'telefono', align: 'start' as const },
   { title: 'Email', key: 'email', align: 'start' as const },
-  { title: 'Estado', key: 'estado', align: 'start' as const, sortable: false },
-  { title: '', key: 'actions', align: 'end' as const, sortable: false },
+  { title: 'Estado', key: 'estado', align: 'start' as const, sortable: false, minWidth: 200 },
+  { title: '', key: 'actions', align: 'end' as const, sortable: false, minWidth: 100 },
 ];
+
 
 /*************************************/
 /* CONFIRM DIALOG USAGE */
@@ -100,6 +136,12 @@ const handleDelete = (itemName: string, itemId: number) => {
   const text = `Si eliminas a ${itemName} de la base de datos, desaparecerá del sistema. ¿Deseas continuar?`;
   showConfirmDialog(text, () => deleteRestaurant(itemId));
 }
+
+// Close dialog and reset restaurant
+const closeDialog = () => {
+  showDialog.value = false;
+  restaurant.value = null;
+};
 
 
 /*************************************/
@@ -122,62 +164,55 @@ const deleteRestaurant = async (id: number) => {
 
 // Fetch restaurants from API on component mount
 const getRestaurants = async () => {
+  if (showDialog.value) showDialog.value = false;
+
   loading.value = true;
   try {
-    const response = await useApiFetch(API.RESTAURANTS.BASE);
+    const response = await useApiFetch(API.STATUS.LIST, {
+      method: 'GET',
+      params: {
+        objeto: TYPE.RESTAURANT,
+        estado: statusFilter.value.length === 3 ? ['TODOS'] : statusFilter.value
+      }
+    });
     restaurants.value = response as Restaurante[];
-    store.keyfacts.totalRestaurants = restaurants.value.length;
   } catch (error: any) {
-    console.error('Error al obtener restaurantes:', error);
+    showError(`Error al cargar los restaurantes: ${error.message || error}`);
   } finally {
     loading.value = false;
+    restaurant.value = null;
   }
 };
 
 // Add new restaurant
-const addRestaurant = async (restaurantData: any) => {
-  // try {
-  //   const response = await useApiFetch(API.USERS.ADD, {
-  //     method: 'POST',
-  //     body: userData
-  //   });
-    
-  //   if (response) {
-  //     showSuccess('Usuario agregado correctamente');
-  //     await getUsers();
-  //   }
-  // } catch (error: any) {
-  //   showError(`Error al agregar el usuario: ${error.message || error}`);
-  // }
+const editRestaurant = async (restaurantData: any) => {
+  showDialog.value = true;
+  restaurant.value = restaurantData;
 };
 
-// Expose methods to parent component
-defineExpose({
-  addRestaurant
-});
+// Update restaurant status
+const updateStatus = async (restaurant: Restaurante, newStatus: string) => {
+  try {
+    const response = await useApiFetch(API.STATUS.UPDATE, {
+      method: 'PUT',
+      params: {
+        idObjeto: restaurant.idRestaurante,
+        objeto: TYPE.RESTAURANT,
+        estado: newStatus
+      }
+    });
+
+    if (response) {
+      showSuccess(`Estado del restaurante actualizado a ${newStatus}`);
+      getRestaurants();
+    }
+  } catch (error: any) {
+    showError('Error al actualizar el estado del restaurante');
+  }
+};
 
 // Load data on mount
 onMounted(() => {
   getRestaurants();
 })
 </script>
-
-<style lang="scss">
-.restaurants-table {
-  .v-table__wrapper {
-    border-radius: 4px 4px 0 0;
-  }
-
-  // Table header style
-  thead {
-    color: #FFF;
-    background-color: #836A02;
-  }
-
-  // Select role chips style
-  span.v-chip.v-chip--variant-tonal {
-    background-color: #836A02;
-    color: #FFF;
-  }
-}
-</style>

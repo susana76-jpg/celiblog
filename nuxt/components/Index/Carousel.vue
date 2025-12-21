@@ -17,19 +17,19 @@
         <v-row>
           <v-col
             v-for="(item, i) in items.slice((n-1)*4, n*4)"
-            :key="item.idReceta"
+            :key="i"
             cols="12"
             md="3"
           >
             <v-card
-              :to="setItemLink(item.idReceta, type)"
+              :to="setItemLink(item, type)"
               class="mx-2 pa-2"
               variant="text"
             >
               <v-img  
                 cover
                 height="400"
-                :src="item.imagenUrl"
+                :src="type === 'recetas' ? (item as Receta).imagenUrl : (item as Post).urlPost"
               ></v-img>
               <v-card-title class="px-0">
                 {{ item.titulo }}
@@ -56,14 +56,14 @@
 const props = defineProps<{
   title: string;
   subtitle: string;
-  items: Receta[];
+  items: Receta[] | Post[];
   type: 'recetas' | 'consejos';
 }>();
 
 // Set link for each item based on its type
-const setItemLink = (id: number, type: 'recetas' | 'consejos') => {
-  if (type === 'recetas') return `/recetas/${id}`;
-  else if (type === 'consejos') return `/consejos/${id}`;
+const setItemLink = (item: Receta | Post, type: 'recetas' | 'consejos') => {
+  if (type === 'recetas') return `/recetas/${(item as Receta).idReceta}`;
+  else if (type === 'consejos') return `/consejos/${(item as Post).idPost}`;
   return '/';
 };
 </script>

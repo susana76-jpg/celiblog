@@ -9,6 +9,7 @@ export const API = {
   RECIPES: {
     BASE: '/api/receta/public/all',
     BY_ID: '/api/receta/public/byId',
+    DELETE: '/api/receta/deleteById',
     STEPS: '/api/paso-receta/public/pasos',
     INGREDIENTS: '/api/receta/public/ingredientes',
     SEARCH: '/api/receta/public/buscar'
@@ -18,6 +19,8 @@ export const API = {
     BY_ID: '/api/restaurante/public/byId',
     TAGS: '/api/tag-restaurante/public/tags',
     DELETE: '/api/restaurante/deleteById',
+    UPDATE: '/api/restaurante/update',
+    ADD: '/api/restaurante/add',
     SEARCH: '/api/restaurante/public/ubicacion'
   },
   POSTS: {
@@ -40,5 +43,12 @@ export const API = {
     ADD: '/api/comentario/add',
     DELETE: '/api/comentario/delete',
     UPDATE: '/api/comentario/update',
+  },
+  STATUS: {
+    UPDATE: '/api/publicacion/update',
+    LIST: '/api/publicacion/list'
+  },
+  STATS: {
+    ALL: '/api/estadistica/all'
   }
 };

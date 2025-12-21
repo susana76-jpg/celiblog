@@ -35,7 +35,7 @@ const { isAuthenticated } = useAuthStore();
 
 const props = defineProps<{
   comentarios: Comentario[];
-  itemType: 'RECETA' | 'RESTAURANTE' | 'POST';
+  itemType: ObjectType;
   itemId: number;
 }>();
 
