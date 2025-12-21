@@ -1,26 +1,28 @@
 <template>
   <AdminTable
     :headers="headers"
-    search-label="Buscar comentarios"
+    search-label="Buscar consejos"
+    add-button-label="Agregar Consejo"
     :show-status-filter="true"
-    :show-add-button="false"
-    :show-edit-button="false"
     :fetch-endpoint="API.STATUS.LIST"
     :fetch-params="getFetchParams"
-    :data-transformer="dataTransformer"
-    :delete-endpoint="API.COMMENTS.DELETE"
+    :data-transformer="transformPostData"
+    :delete-endpoint="API.RECIPES.DELETE"
     :delete-params="getDeleteParams"
     selector-column="estado"
     :selector-config="selectorConfig"
     :selector-update-endpoint="API.STATUS.UPDATE"
     :selector-update-params="getSelectorUpdateParams"
+    :form-component="AdminPostForm"
+    form-prop-name="post"
+    form-update-event="get:posts"
   />
 </template>
 
 <script setup lang="ts">
-/*************************************/
-/* TABLE HEADERS CONFIGURATION */
-/*************************************/
+import AdminPostForm from '@/components/admin/PostForm.vue';
+
+// Table headers
 const headers = [
   { title: 'Título', key: 'titulo', align: 'start' as const },
   { title: 'Fecha publicación', key: 'fechaPublicacion', align: 'start' as const },
@@ -29,43 +31,41 @@ const headers = [
   { title: '', key: 'actions', align: 'end' as const, sortable: false, minWidth: 100 },
 ];
 
-
-/*************************************/
-/* FETCH CONFIGURATION */
-/*************************************/
-// Fetch configuration function
+/********************************************/
+/* FETCH PARAMS AND DATA TRANSFORMER */
+/********************************************/
 const getFetchParams = (statusFilter: string[]) => ({
-  objeto: TYPE.COMMENT,
+  objeto: TYPE.POST,
   estado: statusFilter.length === 3 ? ['TODOS'] : statusFilter
 });
 
 // Data transformer function
-const dataTransformer = (data: Comentario[]) => data.map((comment: Comentario) => ({
-  ...comment,
-  fechaPublicacion: formatDateTime(comment.fechaPublicacion)
-}));
+const transformPostData = (data: Post[]) => 
+  data.map((post: Post) => ({
+    ...post,
+    fechaPublicacion: formatDateTime(post.fechaPublicacion)
+  }));
 
 
-/*************************************/
+/********************************************/
 /* DELETE CONFIGURATION */
-/*************************************/
-// Delete configuration functions
-const getDeleteParams = (item: any) => ({ idComentario: item.idComentario });
+/********************************************/
+const getDeleteParams = (item: Post) => ({ id: item.idPost });
 
 
-/*************************************/
+/********************************************/
 /* STATUS SELECTOR CONFIGURATION */
-/*************************************/
+/********************************************/
 // Selector configuration
 const selectorConfig = {
   items: Object.values(POST_STATUS),
-  getValueFn: (item: any) => item.estado
+  getValueFn: (item: Post) => item.estado
 };
 
-// Selector update functions
-const getSelectorUpdateParams = (item: any, newStatus: string) => ({
-  idObjeto: item.idComentario,
-  objeto: TYPE.COMMENT,
+// Selector update params function
+const getSelectorUpdateParams = (item: Post, newStatus: string) => ({
+  idObjeto: item.idPost,
+  objeto: TYPE.POST,
   estado: newStatus
 });
 </script>

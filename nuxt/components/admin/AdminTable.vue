@@ -22,6 +22,8 @@
         hide-details
         width="350"
         max-width="350"
+        color="grey"
+        base-color="grey"
         class="status-filter"
         :class="{ 'mr-2': showAddButton, 'mr-0': !showAddButton }"
         variant="outlined"
@@ -134,7 +136,6 @@ interface Props {
   // Delete configuration
   deleteEndpoint: string;
   deleteParams: (item: any) => any;
-  deleteItemNameGetter: (item: any) => string;
   deleteSuccessMessage?: string;
   
   // Status/Role selector configuration
@@ -142,7 +143,6 @@ interface Props {
   selectorConfig?: SelectorConfig;
   selectorUpdateEndpoint?: string;
   selectorUpdateParams?: (item: any, newValue: any) => any;
-  selectorSuccessMessage?: (item: any, newValue: any) => string;
   
   // Form configuration
   formComponent?: Component | null;
@@ -181,9 +181,7 @@ const { showConfirmDialog } = useConfirmDialog();
 // Computed form props
 const formProps = computed(() => {
   if (!props.formPropName || !editItem.value) return {};
-  return {
-    [props.formPropName]: editItem.value
-  };
+  return { [props.formPropName]: editItem.value };
 });
 
 // Get update event name - use provided event or generate from search label
@@ -233,7 +231,7 @@ const handleEdit = (item: any) => {
 
 // Handle delete action
 const handleDelete = (item: any) => {
-  const itemName = props.deleteItemNameGetter(item);
+  const itemName = item.titulo || item.nombre || 'este elemento';
   const text = `Si eliminas a ${itemName} de la base de datos, desaparecerá del sistema. ¿Deseas continuar?`;
   showConfirmDialog(text, () => deleteItem(item));
 };
@@ -247,7 +245,7 @@ const deleteItem = async (item: any) => {
       params
     });
 
-    if (response) showSuccess(props.deleteSuccessMessage);
+    if (response) showSuccess('Elemento eliminado correctamente');
     loadData();
   } catch (error: any) {
     showError('Error al eliminar el elemento');
@@ -265,8 +263,8 @@ const handleSelectorUpdate = async (item: any, newValue: any) => {
       params
     });
 
-    if (response && props.selectorSuccessMessage) {
-      showSuccess(props.selectorSuccessMessage(item, newValue));
+    if (response) {
+      showSuccess(`Elemento actualizado correctamente a ${newValue}`);
     }
     loadData();
   } catch (error: any) {

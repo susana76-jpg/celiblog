@@ -5,25 +5,11 @@
     add-button-label="Agregar Usuario"
     :fetch-endpoint="API.USERS.BASE"
     :delete-endpoint="API.USERS.DELETE"
-    :delete-params="(item) => ({ idUsuario: item.idUsuario })"
-    :delete-item-name-getter="(item) => item.nombre"
-    delete-success-message="Usuario eliminado correctamente"
+    :delete-params="getDeleteParams"
     selector-column="rol"
-    :selector-config="{
-      items: USER_ROLES,
-      itemTitle: 'nombre',
-      itemValue: 'idRol',
-      getValueFn: (item) => item.rol.idRol
-    }"
+    :selector-config="selectorConfig"
     :selector-update-endpoint="API.USERS.UPDATE_ROLE"
-    :selector-update-params="(item, newRoleId) => ({
-      idUsuario: item.idUsuario,
-      idNuevoRol: newRoleId
-    })"
-    :selector-success-message="(item, newRoleId) => {
-      const roleName = USER_ROLES.find(r => r.idRol === newRoleId)?.nombre || 'nuevo rol';
-      return `Rol actualizado correctamente a ${roleName}`;
-    }"
+    :selector-update-params="getSelectorUpdateParams"
     :show-edit-button="false"
     :form-component="AdminUserForm"
     form-prop-name="user"
@@ -42,4 +28,25 @@ const headers = [
   { title: 'Rol', key: 'rol', align: 'start' as const, sortable: false },
   { title: '', key: 'actions', align: 'end' as const, sortable: false },
 ];
+
+// Delete configuration functions
+const getDeleteParams = (item: any) => ({ idUsuario: item.idUsuario });
+
+
+/*************************************/
+/* ROLE SELECTOR CONFIGURATION */
+/*************************************/
+// Selector configuration
+const selectorConfig = {
+  items: USER_ROLES,
+  itemTitle: 'nombre',
+  itemValue: 'idRol',
+  getValueFn: (item: any) => item.rol.idRol
+};
+
+// Selector update function
+const getSelectorUpdateParams = (item: any, newRoleId: number) => ({
+  idUsuario: item.idUsuario,
+  idNuevoRol: newRoleId
+});
 </script>

@@ -72,7 +72,7 @@ const tabComponents: Record<string, any> = {
   users: resolveComponent('AdminUsersTable'),
   restaurants: resolveComponent('AdminRestaurantsTable'),
   recipes: resolveComponent('AdminRecipesTable'),
-  tips: resolveComponent('AdminTipsTable'),
+  tips: resolveComponent('AdminPostsTable'),
   comments: resolveComponent('AdminCommentsTable')
 }
 
