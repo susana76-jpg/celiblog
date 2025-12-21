@@ -12,7 +12,11 @@
       <v-divider></v-divider>
 
       <v-card-text>
-        <v-form ref="formRef">
+        <v-form 
+          id="userForm"
+          ref="formRef" 
+          validate-on="submit"
+        >
           <v-text-field
             v-for="(field, index) in textFields"
             :key="index"
@@ -53,10 +57,16 @@
       <v-divider></v-divider>
       <v-card-actions class="pt-4">
         <v-spacer />
-        <v-btn color="grey" variant="text" @click="showDialog = false">
+        <v-btn 
+          color="grey" 
+          variant="text" 
+          @click="showDialog = false"
+        >
           Cancelar
         </v-btn>
         <v-btn 
+          for="userForm"
+          type="submit"
           color="primary" 
           variant="flat" 
           @click="addUser"
@@ -78,15 +88,36 @@ const props = defineProps({
   },
 });
 
-const showDialog = computed({
-  get: () => props.show,
-  set: (value) => emit('update:show', value)
-});
-
 const emit = defineEmits<{
   (e: 'update:show', value: boolean): void;
   (e: 'get:users'): void;
 }>();
+
+
+/*************************************/
+/* CONSTANTS */
+/*************************************/
+// Dialog visibility computed property + reset form on close
+const showDialog = computed({
+  get: () => props.show,
+  set: (value) => {
+    if (!value) {
+      resetForm();
+      emit('update:show', false);
+    }
+  }
+});
+
+// Reset form fields
+const resetForm = () => {
+  userForm.value = {
+    nombre: '',
+    email: '',
+    idRol: 3,
+    password: ''
+  };
+};
+
 
 /*************************************/
 /* FORM DATA BINDING + INPUTS */
@@ -174,5 +205,4 @@ const addUser = async () => {
     showError(`Error al agregar el usuario: ${error.message || error}`);
   }
 };
-
 </script>
