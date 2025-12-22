@@ -63,7 +63,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://46.183.113.124:3000", "https://46.183.113.124/", "https://celiblog.es", "https://www.celiblog.es"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://46.183.113.124:8080", "http://46.183.113.124:3000", "https://46.183.113.124/", "http://celiblog.es:8080", "https://celiblog.es", "http://www.celiblog.es:8080", "https://www.celiblog.es"));
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         configuration.setAllowedHeaders(List.of("Content-Type","Authorization"));
         configuration.setAllowCredentials(true);
