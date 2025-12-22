@@ -470,6 +470,8 @@ $primary-color: #836A02;
 $secondary-color: #333333; 
 
 .user-profile-page {
+  background-color: #E1DCC4;
+  padding: 32px;
   padding-top: $spacing-xl;
   padding-bottom: $spacing-xl;
 }
@@ -482,11 +484,13 @@ $secondary-color: #333333;
 }
 
 .profile-image-container {
-  position: relative;
-  width: 150px;
-  height: 150px;
+   position: relative;
+  border: 4px solid #8B7B44;
   border-radius: 50%;
   overflow: hidden;
+  width: 140px;
+  height: 140px;
+  background-color: #DCD5B2;
   
   box-shadow: 0 0 0 5px rgba($primary-color, 0.4), 0 0 0 7px rgba($primary-color, 0.2);
   margin-bottom: $spacing-sm;
@@ -538,41 +542,33 @@ $secondary-color: #333333;
 
 
 .stat-card {
+  border: 2px solid #8B7B44;
+  border-radius: 6px;
   text-align: center;
-  border: 1px solid rgba($primary-color, 0.3); // Borde delgado
-  border-radius: 4px;
-  height: 100%; 
+  padding: 16px;
+  height: 160px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: $spacing-md 0; // Padding interno
+  align-items: center;
+}
 
-  .stat-content {
-    padding: $spacing-sm;
-  }
+.stat-icon {
+  color: #8B7B44;
+}
 
-  .stat-icon {
-    color: $primary-color;
-    margin-bottom: $spacing-xs;
-  }
+.stat-number {
+  font-size: 32px;
+  font-weight: bold;
+}
 
-  .stat-number {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: $primary-color;
-    line-height: 1.1;
-  }
-
-  .stat-text {
-    font-size: 0.9rem;
-    color: $secondary-color;
-    margin-top: $spacing-xs;
-  }
+.stat-text {
+  font-size: 14px;
 }
 
 
 .content-toolbar {
-    background-color: transparent !important;
+    background: white;
+    border-bottom: 2px solid #8B7B44;
     padding: 0;
     
     .v-btn-toggle {
