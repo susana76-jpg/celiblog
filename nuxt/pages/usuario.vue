@@ -5,7 +5,7 @@
         <v-card class="profile-card d-flex flex-column align-center" flat>
           <div class="profile-image-container">
             <v-img
-              :src="'/img/img1.png'"
+              :src="'/img/avatar_vera.png'"
               alt="Imagen de Perfil"
               class="profile-image"
             ></v-img>
@@ -28,55 +28,17 @@
               variant="solo"
               flat
               class="field-input"
+              readonly
             ></v-text-field>
-
-            <v-btn 
-              variant="text" 
-              color="#8B7B44" 
-              class="mt-2 mb-4"
-              @click="mostrarPassword = !mostrarPassword"
+            <v-btn
+              color="error"
+              variant="outlined"
+              class="mt-4 mb-4"
               block
-              size="small"
+              @click="handleDeleteAccount"
             >
-              <v-icon :icon="mostrarPassword ? 'mdi-lock-open-outline' : 'mdi-lock-outline'" start></v-icon>
-              {{ mostrarPassword ? 'Cancelar cambio de contraseña' : 'Cambiar contraseña' }}
+              Eliminar Cuenta
             </v-btn>
-
-            <div v-if="mostrarPassword">
-              <v-divider class="my-4"></v-divider>
-              
-              <p class="text-subtitle-2 text-medium-emphasis mb-2">Introduce las contraseñas</p>
-              
-              <v-text-field
-                v-model="formData.currentPassword"
-                prepend-inner-icon="mdi-lock-open-check-outline"
-                label="Contraseña Actual"
-                variant="solo"
-                flat
-                type="password"
-                class="field-input"
-              ></v-text-field>
-              
-              <v-text-field
-                v-model="formData.newPassword"
-                prepend-inner-icon="mdi-lock-plus-outline"
-                label="Nueva Contraseña"
-                variant="solo"
-                flat
-                type="password"
-                class="field-input"
-              ></v-text-field>
-              
-              <v-text-field
-                v-model="formData.confirmNewPassword"
-                prepend-inner-icon="mdi-lock-check-outline"
-                label="Confirmar Nueva Contraseña"
-                variant="solo"
-                flat
-                type="password"
-                class="field-input"
-              ></v-text-field>
-            </div>
             
           </div>
 
@@ -143,11 +105,12 @@
 
     <v-row v-else-if="contentItems.length > 0">
         <v-col v-for="item in contentItems" :key="item.id" cols="12" sm="6" md="3">
-            <v-card class="content-item-card" flat>
+            <v-card class="content-item-card" flat hover @click="goToDetail(item)" style="cursor: pointer">
                 <v-img 
-                    :src="item.imagenUrl" 
-                    cover
+                    :src="item.imagenUrl"
+                    @error="item.imagenUrl= '/img/consejos/default.jpg'"
                     height="200"
+                    cover 
                 ></v-img>
                 <v-card-text>
                     <div class="font-weight-bold">{{ item.titulo }}</div>
@@ -176,10 +139,10 @@ import { ref, onMounted } from 'vue';
 // Asumo que useApiFetch y useAuthStore se mantienen
 import { useApiFetch } from '../composables/useApiFetch'; 
 import { useAuthStore } from '../composables/useAuthStore'; 
-
+import { useRouter } from 'vue-router';
 // Inicialización del Store de Autenticación
 const authStore = useAuthStore();
-
+const router = useRouter();
 
 //barra de navegacion de los contenidos
 const barraContenido = ref('restaurantes');
@@ -192,6 +155,8 @@ const contadores = ref([
     { icon: 'mdi-lightbulb-on-outline', number: '0', text: 'Post' },
     { icon: 'mdi-star-outline', number: '0.0', text: 'Valoración' },
 ]);
+
+
 /**
  * Interface para los campos del formulario de Perfil.
  * Solo necesitamos los campos que el usuario puede editar.
@@ -199,10 +164,6 @@ const contadores = ref([
 interface UserProfileForm {
   nombre: string;
   email: string;
-  // Campos para cambiar la contraseña
-  currentPassword?: string;
-  newPassword?: string;
-  confirmNewPassword?: string;
 }
 interface UserDataResponse {
   nombre: string;
@@ -216,11 +177,12 @@ interface ContentItem {
 }
 // interfaz para obtener el contador de favoritos
 interface UsuariocontFav{
-    receta: number;
-    restaurante: number;
-    post: number;
-    valoracionMedia: number;
-}
+    numRestaurantes: number;
+    numRecetas: number;
+    numPost: number;
+    numComentarios: number;
+    numUsuarios: number;
+  }
 // iNTERFAZ PARA FAVORITOS
 interface FavoritoItem {
     id: number;
@@ -233,9 +195,6 @@ interface FavoritoItem {
 const formData = ref<UserProfileForm>({
   nombre: '',
   email: '',
-  currentPassword: '',
-  newPassword: '',
-  confirmNewPassword: '',
 });
 
 const contentItems = ref<ContentItem[]>([]);
@@ -257,28 +216,22 @@ const mapActiveContentToApiReference = (content: string): string | null => {
 //funcion para obtener la media del usuario
 const fetchUserStats = async () => {
     
-    const API_URL = '/api/usuario/stats'; //pendiente camiar cuando esté creada
+    const API_URL = '/api/favoritos/estadistica'; 
 
     try {
         const data = await useApiFetch(API_URL); 
         const userFav = data as UsuariocontFav;
 
-        // 
         contadores.value = [
-            { icon: 'mdi-food-variant', number: String(userFav.receta || 0), text: 'Recetas' },
-            { icon: 'mdi-silverware-fork-knife', number: String(userFav.restaurante| 0), text: 'Restaurantes' },
-            { icon: 'mdi-lightbulb-on-outline', number: String(userFav.post || 0), text: 'Post' },
-            { icon: 'mdi-star-outline', number: (userFav .valoracionMedia || 0).toFixed(1), text: 'Valoración' },
-        ];
-
+        { icon: 'mdi-silverware-fork-knife', number: String(userFav.numRestaurantes || 0), text: 'Restaurantes favoritos' },
+        { icon: 'mdi-lightbulb-on-outline', number: String(userFav.numPost || 0), text: 'Consejos favoritos' },
+        { icon: 'mdi-food-variant', number: String(userFav.numRecetas || 0), text: 'Recetas favoritas' },
+      ];
     } catch (error) {
         console.error('Error al cargar las estadísticas del usuario:', error);
         // Dejar los valores simulados o ponerlos a cero en caso de error
     }
 };
-
-
-
 
 onMounted(async () => {
   
@@ -291,7 +244,8 @@ onMounted(async () => {
     }
     await fetchUserStats();
     
-    const initialRef = mapActiveContentToApiReference(activeContent.value);
+    const initialRef = mapActiveContentToApiReference(barraContenido.value);
+
     await fetchContent(initialRef);
 });
 watch(barraContenido, (newContent) => {
@@ -320,7 +274,6 @@ const fetchUserData = async () => {
 
 
 // Estados de la UI
-const activeContent = ref('restaurantes'); 
 const statusMessage = ref('');
 const isSubmitting = ref(false);
 const isContentLoading = ref(false);
@@ -330,52 +283,68 @@ const mostrarPassword = ref(false);
 
 
 const fetchContent = async (reference: string | null) => {
-    if (!reference) {
-        contentItems.value = [];
-        return;
-    }
-    
-    isContentLoading.value = true;
-    
-    // El endpoint necesita saber qué referencia buscar
-    const API_URL = `/api/favoritos/byReferencia?tipoReferencia=${reference}`; 
+  if (!reference) {
+    contentItems.value = [];
+    return;
+  }
 
-      try {
-        const data = await useApiFetch(API_URL);
-        
-        const processedItems = (data as ContentItem[]).map(item => {
-            let ruta = '';
-            
-            
-            if (reference === 'recetas') {
-                ruta = '/img/recetas/'; 
-            } else if (reference === 'restaurantes') {
-                ruta = '/img/restaurantes/'; 
-            } else if (reference === 'consejos') {
-                ruta = '/img/consejos/'; 
-            }
-            
-            const url = ruta + item.imagenUrl;
+  isContentLoading.value = true;
 
-            return {
-                ...item,//operador de propagacion
-                imagenUrl: item.imagenUrl.startsWith('/') || item.imagenUrl.startsWith('http') 
-                           ? item.imagenUrl 
-                           : url
-            };
-        });
-        // ----------------------------------------------------
+  const API_URL = `/api/favoritos/byReferencia?tipoReferencia=${reference}`;
 
-        contentItems.value = processedItems; 
-        console.log(`Contenido de ${reference} cargado y rutas corregidas:`, contentItems.value);
+  try {
+    const data = await useApiFetch(API_URL);
+    console.log('RAW favoritos:', data);
+    const processedItems = (data as any[]).map(item => {
 
-    } catch (error) {
-        console.error(`Error al cargar el contenido de ${reference}:`, error);
-        contentItems.value = [];
-    } finally {
-        isContentLoading.value = false;
-    }
+      // RECETA
+      if (reference === 'RECETA') {
+        return {
+          id: item.idReceta,
+          titulo: item.titulo || `Receta ${item.idReceta}`,
+          imagenUrl: `/img/recetas/${item.imagenUrl}`
+        };
+      }
+
+      //RESTAURANTE
+      if (reference === 'RESTAURANTE') {
+        return {
+          id: item.idRestaurante,
+          titulo: item.titulo || `Restaurante ${item.idRestaurante}`,
+          imagenUrl: `/img/restaurantes/${item.imagenUrl}`
+        };
+      }
+
+      // POST (consejos) 
+      if (reference === 'POST') { 
+        return {
+          id: item.idPost,
+          titulo: item.titulo || `Consejos ${item.idPost}`,
+          imagenUrl: `/img/consejos/consejo${item.idPost}.jpg`
+        };
+      };
+
+      
+      return {
+        id: item.id_referencia,
+        titulo: 'Favorito',
+        imagenUrl: `https://source.unsplash.com/400x300/?restaurant`
+      };
+
+    });
+
+    contentItems.value = processedItems;
+
+    console.log(`Contenido de ${reference} cargado:`, contentItems.value);
+
+  } catch (error) {
+    console.error(`Error al cargar ${reference}:`, error);
+    contentItems.value = [];
+  } finally {
+    isContentLoading.value = false;
+  }
 };
+
 /**
  * Maneja la actualización del perfil de usuario.
  */
@@ -383,79 +352,50 @@ const handleSubmit = async () => {
   isSubmitting.value = true;
   statusMessage.value = '';
 
-  
-  if (formData.value.nombre.trim() === '' || formData.value.email.trim() === '') {
-    statusMessage.value = 'El nombre y el email son obligatorios.';
+  if (!formData.value.nombre.trim()) {
+    statusMessage.value = 'El nombre es obligatorio.';
     isSubmitting.value = false;
     return;
   }
-  
-  
-  let dataToSend: any = {
-    nombre: formData.value.nombre,
-    email: formData.value.email,
-  };
-  
-  // Lógica de validación de cambio de contraseña
-  const isPasswordChangeAttempt = formData.value.newPassword || formData.value.currentPassword || formData.value.confirmNewPassword;
 
-  if (isPasswordChangeAttempt) {
-    if (!formData.value.currentPassword) {
-      statusMessage.value = 'Debes introducir tu contraseña actual para cambiarla.';
-      isSubmitting.value = false;
-      return;
-    }
-    if (formData.value.newPassword !== formData.value.confirmNewPassword) {
-      statusMessage.value = 'La nueva contraseña y la confirmación no coinciden.';
-      isSubmitting.value = false;
-      return;
-    }
-    if (formData.value.newPassword && formData.value.newPassword.length < 6) {
-      statusMessage.value = 'La nueva contraseña debe tener al menos 6 caracteres.';
-      isSubmitting.value = false;
-      return;
-    }
-    
-   
-    dataToSend.currentPassword = formData.value.currentPassword;
-    dataToSend.newPassword = formData.value.newPassword;
-  }
-  
-  // Endpoint de Actualización de Perfilge
-  const endpoint = '/api/usuario/update'; // Asumo este endpoint para la actualización
-  
   try {
-    const responseData = await useApiFetch(endpoint, {
-      method: 'PUT', 
-      body: dataToSend, 
+    const response = await useApiFetch('/api/usuario/update', {
+      method: 'PUT',
+      body: { nombre: formData.value.nombre }
     });
 
-    
-    console.log('Respuesta de actualización:', responseData);
-    statusMessage.value = '¡Tu perfil ha sido actualizado con éxito!';
-    
-    
-    
-    // Limpiar campos de contraseña tras un cambio exitoso
-    formData.value.currentPassword = '';
-    formData.value.newPassword = '';
-    formData.value.confirmNewPassword = '';
-
-  } catch (error) {
-    // CAPTURA DE ERRORES 
-    console.error('Error al actualizar el perfil:', error);
-    
-    const errorDetail = (error as any)?.data?.message || (error as any)?.message || 'Error desconocido del servidor.';
-    
-    // Detalle de errores específicos, por ejemplo, si la contraseña actual es incorrecta
-    if ((error as any)?.response?.status === 400 && errorDetail.includes('contraseña actual')) {
-         statusMessage.value = 'Error: La contraseña actual es incorrecta.';
-    } else {
-         statusMessage.value = `Error al actualizar tu perfil. Detalle: ${errorDetail}`;
-    }
-
+    statusMessage.value = '¡Nombre actualizado con éxito!';
+  } catch (err) {
+    statusMessage.value = 'Error al actualizar el nombre.';
   } finally {
     isSubmitting.value = false;
+  }
+};
+//funcion eliminar cuenta
+const handleDeleteAccount = async () => {
+  const confirmDelete = confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.');
+
+  if (!confirmDelete) return;
+
+  try {
+    await useApiFetch('/api/usuario/delete', { method: 'DELETE' });
+
+    authStore.logout(); 
+    window.location.href = '/'; 
+  } catch (err) {
+    statusMessage.value = 'Error al eliminar la cuenta.';
+  }
+};
+// links para redirigir a los objetos favoritos
+const goToDetail = (item: any) => {
+  if (barraContenido.value === 'recetas') {
+    router.push(`/recetas/${item.id}`);
+  }
+  if (barraContenido.value === 'restaurantes') {
+    router.push(`/restaurantes/${item.id}`);
+  }
+  if (barraContenido.value === 'consejos') {
+    router.push(`/consejos/${item.id}`);
   }
 };
 </script>
@@ -484,7 +424,7 @@ $secondary-color: #333333;
 }
 
 .profile-image-container {
-   position: relative;
+  position: relative;
   border: 4px solid #8B7B44;
   border-radius: 50%;
   overflow: hidden;
@@ -494,7 +434,7 @@ $secondary-color: #333333;
   
   box-shadow: 0 0 0 5px rgba($primary-color, 0.4), 0 0 0 7px rgba($primary-color, 0.2);
   margin-bottom: $spacing-sm;
-
+   margin-top: 24px;
   .profile-image {
     width: 100%;
     height: 100%;
