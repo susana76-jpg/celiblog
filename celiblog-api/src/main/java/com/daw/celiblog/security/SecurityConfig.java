@@ -46,6 +46,7 @@ public class SecurityConfig {
                                 "/api/paso-receta/public/**",
                                 "/api/tag-receta/public/**",
                                 "/api/tag-restaurante/public/**",
+                                "/api/tag-post/public/**",
                                 "/api/comentario/public/**",
                                 "/api/post/public/**"
                         ).permitAll()

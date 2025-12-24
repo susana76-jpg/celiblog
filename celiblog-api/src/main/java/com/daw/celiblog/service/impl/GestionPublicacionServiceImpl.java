@@ -1,9 +1,6 @@
 package com.daw.celiblog.service.impl;
 
-import com.daw.celiblog.db.entity.Comentario;
-import com.daw.celiblog.db.entity.Post;
-import com.daw.celiblog.db.entity.Receta;
-import com.daw.celiblog.db.entity.Restaurante;
+import com.daw.celiblog.db.entity.*;
 import com.daw.celiblog.db.repository.*;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
@@ -125,6 +122,26 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
         estadisticaDTO.setNumUsuarios(this.usuarioRepository.countAll());
 
         return estadisticaDTO;
+    }
+
+    @Override
+    public List<?> getObjetoByIdUsuario(Authentication authentication, ObjetoEnum objeto) {
+
+        Optional<Usuario> usuario = this.usuarioRepository.findByEmail(authentication.getName());
+        if(usuario.isPresent()){
+            Long id = usuario.get().getIdUsuario();
+            switch (objeto.toString()){
+                case "RESTAURANTE":
+                    return RestauranteMapper.entityToDtoList(this.restauranteRepository.getByIdUsuario(id));
+                case "RECETA":
+                    return RecetaMapper.entityToDtoList(this.recetaRepository.getByIdUsuario(id));
+                case "POST":
+                        return PostMapper.entityToDtoList(this.postRepository.getByIdUsuario(id));
+                case "COMENTARIO":
+                        return ComentarioMapper.entityToDtoList(this.comentarioRepository.getByIdUsuario(id));
+            }
+        }
+        return null;
     }
 
 }

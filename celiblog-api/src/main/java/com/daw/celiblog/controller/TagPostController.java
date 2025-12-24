@@ -1,5 +1,6 @@
 package com.daw.celiblog.controller;
 
+import com.daw.celiblog.dto.PostDTO;
 import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.TagRecetaDTO;
 import com.daw.celiblog.dto.TagRecetaView;
@@ -27,8 +28,9 @@ public class TagPostController {
 
     @Operation(summary = "PÚBLICO: Obtiene un listado de los nombres de todos los tags de post existentes.")
     @GetMapping("public/all")
-    public ResponseEntity<List<String>> getAll() {
-        return ResponseEntity.ok(tagPostService.obtenerTodosNombresTags());
+    public ResponseEntity<List<String>> getAll(Authentication authentication) {
+
+        return ResponseEntity.ok(tagPostService.obtenerTodosNombresTags(authentication));
     }
 
    /* @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
@@ -62,14 +64,14 @@ public class TagPostController {
 
     @Operation(summary = "PÚBLICO: Obtiene la lista de post por nombre de un tag.")
     @GetMapping("public/postByTag")
-    public ResponseEntity<List<RecetaDTO>> obtenerPostPorNombreTag(Authentication authentication,  @RequestParam(name="nombreTag") String nombreTag) {
-        return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTag(authentication, nombreTag));
+    public ResponseEntity<List<PostDTO>> obtenerPostPorNombreTag(Authentication authentication,  @RequestParam(name="nombreTag") String nombreTag) {
+        return ResponseEntity.ok(this.tagPostService.buscarPostsPorNombreDeTag(authentication, nombreTag));
     }
 
     @Operation(summary = "PÚBLICO: Obtiene la lista de post por varios nombres de tag.")
     @GetMapping("public/postByTags")
-    public ResponseEntity<List<RecetaDTO>> buscarPostPorNombreDeTags(Authentication authentication, @RequestParam(name="tag") List<String> tags) {
-        return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTags(authentication, tags));
+    public ResponseEntity<List<PostDTO>> buscarPostPorNombreDeTags(Authentication authentication, @RequestParam(name="tag") List<String> tags) {
+        return ResponseEntity.ok(this.tagPostService.buscarPostsPorNombreDeTags(authentication, tags));
     }
 
 }

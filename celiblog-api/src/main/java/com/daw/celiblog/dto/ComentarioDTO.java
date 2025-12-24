@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 
 import java.util.Date;
 
-public class ComentarioDTO {
+public class    ComentarioDTO {
     private Long idComentario;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaPublicacion;
