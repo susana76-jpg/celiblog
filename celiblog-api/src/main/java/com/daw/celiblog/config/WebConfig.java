@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("*")   // Permitir todos los orígenes
                 .allowedMethods("*")   // Permitir todos los métodos (GET, POST, PUT, DELETE, etc.)
                 .allowedHeaders("*")    // Permitir todos los headers
-                .allowedOrigins("http://localhost:3000", "http://46.183.113.124:3000", "https://46.183.113.124/", "https://celiblog.es", "https://www.celiblog.es")
+                .allowedOrigins("http://localhost", "http://localhost:3000", "http://46.183.113.124:8080", "http://46.183.113.124:3000", "http://46.183.113.124:80", "https://46.183.113.124/", "http://celiblog.es:80", "http://www.celiblog.es:80", "https://www.celiblog.es")
                 .allowedMethods("GET","POST","PUT","DELETE")
                 .allowCredentials(true)
                 .exposedHeaders("Authorization");
