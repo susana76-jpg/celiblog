@@ -18,7 +18,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 // HTTPS new Server().url("http://46.183.113.124") // opcional: servidor local ))
-                .servers(List.of( new Server().url("https://celiblog.es"),
+                .servers(List.of( new Server().url("https:////46.183.113.124"),
                                 new Server().url("http://46.183.113.124")
                 ))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
