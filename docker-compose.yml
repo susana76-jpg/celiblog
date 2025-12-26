@@ -83,6 +83,9 @@ services:
       - type: bind
         source: ./celiblog-nginx/cert
         target: /etc/letsencrypt/live/celiblog.es/
+      - type: bind
+        source: ./celiblog-nginx/conf
+        target: /etc/nginx/conf.d/
 volumes:
   vol_certs:
     driver: local
