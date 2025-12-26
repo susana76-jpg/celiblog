@@ -1,5 +1,6 @@
 package com.daw.celiblog.controller;
 
+import com.daw.celiblog.dto.EstadisticaDTO;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.FavoritoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,6 +31,14 @@ public class FavoritoController {
     }
 
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
+    @Operation(summary = "PROTEGIDO: Obtiene las estadísticas de favoritos del usuario logado.")
+    @GetMapping("/estadistica")
+    public ResponseEntity<EstadisticaDTO> obtenerEstadisticaFavoritos(
+            Authentication authentication) {
+        return ResponseEntity.ok(this.favoritoService.getFavoritosEstadistica(authentication));
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
     @Operation(summary = "PROTEGIDO: Añade un favorito.")
     @GetMapping("/add")
     public ResponseEntity<?> creaFavorito(Authentication authentication,
@@ -43,7 +52,7 @@ public class FavoritoController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR','EDITOR','VISITOR')")
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
     @Operation(summary = "PROTEGIDO: Elimina un favorito por su id.")
     @DeleteMapping("/deleteById")
     public ResponseEntity<String> deleteFavorito(Authentication authentication, @RequestParam(name="idFavorito") Long idFavorito){

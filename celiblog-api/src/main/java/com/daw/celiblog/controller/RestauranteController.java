@@ -2,6 +2,8 @@ package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.RestauranteDTO;
 import com.daw.celiblog.dto.RestauranteView;
+import com.daw.celiblog.enums.TipoComidaEnum;
+import com.daw.celiblog.enums.TipoRestauranteEnum;
 import com.daw.celiblog.service.RestauranteService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +24,7 @@ public class RestauranteController {
     @Autowired
     private RestauranteService restauranteService;
 
-    @Operation(summary = "PÚBLICO: Obtiene todos los restaurantes.")
+    @Operation(summary = "PÚBLICO: Obtiene todos los restaurantes, en estado aprobado por el administrador.")
     @GetMapping("public/all")
     public ResponseEntity<List<RestauranteDTO>> all(Authentication authentication) {
         return ResponseEntity.ok(restauranteService.all(authentication));
@@ -36,10 +38,13 @@ public class RestauranteController {
             return ResponseEntity.badRequest().body("No existe objeto.");
         }
     }
-    @Operation(summary = "PÚBLICO: Obtiene restaurantes por su ubicación.")
+    @Operation(summary = "PÚBLICO: Obtiene restaurantes por su ubicación y por el tipo de restaurante, en estado aprobado por el administrador.")
     @GetMapping("public/ubicacion")
-    public ResponseEntity<List<RestauranteDTO>> getRestauranteByUbicacion(Authentication authentication, @RequestParam(name="ubicacion") String ubicacion) {
-        return ResponseEntity.ok(restauranteService.byUbicacion(authentication, ubicacion));
+    public ResponseEntity<List<RestauranteDTO>> getRestauranteByUbicacion(
+            Authentication authentication,
+            @RequestParam(required = false, name="ubicacion") String ubicacion,
+            @RequestParam(required = false, name="tiposRestaurante") List<TipoRestauranteEnum> tiposRestaurante) {
+        return ResponseEntity.ok(restauranteService.byUbicacionAndTipo(authentication, ubicacion, tiposRestaurante));
     }
 
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")

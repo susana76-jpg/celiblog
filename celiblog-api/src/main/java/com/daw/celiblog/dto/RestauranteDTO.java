@@ -56,11 +56,12 @@ public class RestauranteDTO {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaValidacion;
     private boolean esFavoritoUsuario;
+    private int valoracionMedia;
 
     public RestauranteDTO() {
     }
 
-    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioSummaryDTO usuario, String descripcion, TipoRestauranteEnum tipoRestaurante, String titulo,String subtitulo, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacionEnum estado, Date fechaValidacion) {
+    public RestauranteDTO(Long idRestaurante, Date fechaPublicacion, UsuarioSummaryDTO usuario, String descripcion, TipoRestauranteEnum tipoRestaurante, String titulo,String subtitulo, String direccion, String imagenUrl, String nombre, String ubicacion, int codigoPostal, Double latitud, Double longitud, String urlWeb, String telefono, String email, int valoracion, EstadoValidacionEnum estado, Date fechaValidacion, int valoracionMedia) {
         this.idRestaurante = idRestaurante;
         this.fechaPublicacion = fechaPublicacion;
         this.usuario = usuario;
@@ -81,6 +82,7 @@ public class RestauranteDTO {
         this.valoracion = valoracion;
         this.estado = estado;
         this.fechaValidacion = fechaValidacion;
+        this.valoracionMedia = valoracionMedia;
     }
 
     public Long getIdRestaurante() {
@@ -109,6 +111,14 @@ public class RestauranteDTO {
 
     public UsuarioSummaryDTO getUsuario() {
         return usuario;
+    }
+
+    public int getValoracionMedia() {
+        return valoracionMedia;
+    }
+
+    public void setValoracionMedia(int valoracionMedia) {
+        this.valoracionMedia = valoracionMedia;
     }
 
     public void setUsuario(UsuarioSummaryDTO usuario) {

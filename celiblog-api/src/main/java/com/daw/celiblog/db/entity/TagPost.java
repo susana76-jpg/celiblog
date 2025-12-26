@@ -17,7 +17,7 @@ public class TagPost implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_tag_post")
-	private int idTagPost;
+	private Long idTagPost;
 	private String nombre;
 	@ManyToOne
 	@JoinColumn(name="id_post")
@@ -25,11 +25,11 @@ public class TagPost implements Serializable {
 	public TagPost() {
 	}
 
-	public int getIdTagPost() {
+	public long getIdTagPost() {
 		return this.idTagPost;
 	}
 
-	public void setIdTagPost(int idTagPost) {
+	public void setIdTagPost(long idTagPost) {
 		this.idTagPost = idTagPost;
 	}
 

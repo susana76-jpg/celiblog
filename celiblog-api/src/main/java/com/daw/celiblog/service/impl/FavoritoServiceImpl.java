@@ -85,12 +85,12 @@ public class FavoritoServiceImpl implements FavoritoService {
     public List<?> getFavoritosByReferencia(Authentication authentication, ObjetoEnum objetoEnum) {
         Optional<Usuario> usuario = this.usuarioRepository.findByEmail(authentication.getName());
 
-       if(usuario.isPresent()){
+        if(usuario.isPresent()){
+           List<Long> ids = this.favoritoRepository.getIdFavoritosByTipoReferencia(usuario.get().getIdUsuario(), objetoEnum.toString());
            switch (objetoEnum.toString()){
                case "RESTAURANTE":
-                   List<Long> idRestaurantes = this.favoritoRepository.getIdFavoritosByTipoReferencia(usuario.get().getIdUsuario(), ObjetoEnum.RESTAURANTE.toString());
                    List<RestauranteDTO> listRestaurantes = new ArrayList<>();
-                   for(Long id: idRestaurantes){
+                   for(Long id: ids){
                        RestauranteDTO restauranteDTO = this.restauranteService.getById(authentication, id);
                        if(restauranteDTO != null)
                             listRestaurantes.add(restauranteDTO);
@@ -98,9 +98,8 @@ public class FavoritoServiceImpl implements FavoritoService {
                    return listRestaurantes;
 
                case "RECETA":
-                   List<Long> idRecetas = this.favoritoRepository.getIdFavoritosByTipoReferencia(usuario.get().getIdUsuario(), ObjetoEnum.RECETA.toString());
                    List<RecetaDTO> lisRecetas = new ArrayList<>();
-                   for(Long id: idRecetas){
+                   for(Long id: ids){
                        RecetaDTO recetaDTO = this.recetaService.getById(authentication, id);
                        if(recetaDTO != null)
                             lisRecetas.add(recetaDTO);
@@ -108,9 +107,8 @@ public class FavoritoServiceImpl implements FavoritoService {
                    return lisRecetas;
 
                case "POST":
-                   List<Long> idPost = this.favoritoRepository.getIdFavoritosByTipoReferencia(usuario.get().getIdUsuario(), ObjetoEnum.POST.toString());
                    List<PostDTO> lispost = new ArrayList<>();
-                   for(Long id: idPost){
+                   for(Long id: ids){
                        PostDTO postDTO = this.postService.getById(authentication, id);
                        if(postDTO != null)
                             lispost.add(postDTO);
@@ -118,9 +116,8 @@ public class FavoritoServiceImpl implements FavoritoService {
                    return lispost;
 
                case "COMENTARIO":
-                   List<Long> idComentarios = this.favoritoRepository.getIdFavoritosByTipoReferencia(usuario.get().getIdUsuario(), ObjetoEnum.POST.toString());
                    List<ComentarioDTO> listComentario = new ArrayList<>();
-                   for(Long id: idComentarios){
+                   for(Long id: ids){
                        ComentarioDTO comentarioDTO = this.comentarioService.getComentarioById(authentication, id);
                        if(comentarioDTO != null)
                             listComentario.add(comentarioDTO);
@@ -128,6 +125,21 @@ public class FavoritoServiceImpl implements FavoritoService {
                    return listComentario;
            }
        }
+        return null;
+    }
+
+    @Override
+    public EstadisticaDTO getFavoritosEstadistica(Authentication authentication) {
+        Optional<Usuario> usuario = this.usuarioRepository.findByEmail(authentication.getName());
+        if(usuario.isPresent()){
+            Long idUsuario = usuario.get().getIdUsuario();
+            EstadisticaDTO estadistica = new EstadisticaDTO();
+            estadistica.setNumPost(this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.POST.toString()).size());
+            estadistica.setNumRecetas(favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.RECETA.toString()).size());
+            estadistica.setNumRestaurantes(favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.RESTAURANTE.toString()).size());
+            estadistica.setNumComentarios(favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.COMENTARIO.toString()).size());
+            return estadistica;
+        }
         return null;
     }
 }

@@ -2,6 +2,7 @@ package com.daw.celiblog.service;
 
 import com.daw.celiblog.dto.UsuarioView;
 import com.daw.celiblog.dto.UsuarioDTO;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
     UsuarioDTO obtenerPorId(Long id);
     UsuarioDTO crear(UsuarioView dto);
     UsuarioDTO actualizarRol(Long idUsuario, Long idRol);
+    UsuarioDTO actualizarNombre(Authentication authentication, String nombre);
     boolean eliminar(Long id);
     Long getIdUsuarioLogado(String email);
 

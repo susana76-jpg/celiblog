@@ -31,7 +31,9 @@ public class PostMapper {
                 source.getUrlPost(),
                 source.getEstado(),
                 source.getFechaValidacion(),
-                source.getValoracion());
+                source.getValoracion(),
+                0
+        );
     }
     public static Post dtoToEntity(PostDTO source){
         return new Post(

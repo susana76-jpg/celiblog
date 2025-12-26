@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,13 +23,15 @@ public class ComentarioController {
     @Autowired
     private ComentarioService comentarioService;
 
-    @Operation(summary = "PÚBLICO: Obtiene todos los comentarios referidos a un objeto (RESTAURANTE, RECETAS,POST), ordenados por fecha de publicación, por el id de objeto comentado.")
+    @Operation(summary = "PÚBLICO: Obtiene todos los comentarios referidos a un objeto (RESTAURANTE, RECETAS,POST), " +
+            "ordenados por fecha de publicación, por el id de objeto comentado, en estado aprobado por el administrador.")
     @GetMapping("public/all")
     public ResponseEntity<List<ComentarioDTO>> allComentariosByObject(
             Authentication authentication,
             @RequestParam(value="objetoComentado")ObjetoEnum objetoComentado,
             @RequestParam(value="idObjetoComentado")Long idObjetoComentado) {
-        return ResponseEntity.ok(this.comentarioService.allComentariosByObject(authentication,objetoComentado,idObjetoComentado));
+
+            return ResponseEntity.ok(this.comentarioService.allComentariosByObject(authentication,objetoComentado,idObjetoComentado));
     }
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
     @Operation(summary = "PROTEGIDO: Añade un comentario. Solo los usuarios logados podrán hacer comentarios sobre RESTAURANTE, RECETAS,POST")

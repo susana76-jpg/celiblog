@@ -8,6 +8,7 @@ import com.daw.celiblog.db.repository.PostRepository;
 import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.PostDTO;
 import com.daw.celiblog.dto.PostView;
+import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.PostService;
@@ -15,6 +16,7 @@ import com.daw.celiblog.service.UsuarioService;
 import com.daw.celiblog.service.mapper.PostMapper;
 import com.daw.celiblog.service.mapper.RestauranteMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +42,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDTO> all(Authentication authentication) {
-        List<PostDTO> post =  this.postRepository.findAll().stream()
+        List<PostDTO> post =  this.postRepository.getByEstadoPublicacion(EstadoValidacionEnum.APROBADO.toString())
+                .stream()
                 .map(PostMapper::entityToDto)
                 .toList();
         if(authentication == null){
@@ -112,6 +115,15 @@ public class PostServiceImpl implements PostService {
         }else{
             return false;
         }
+    }
+
+    @Override
+    public List<PostDTO> buscar(Authentication authentication, String keyword) {
+        List<Long> posts = this.postRepository.buscar(keyword);
+        return posts.stream()
+            .map(idPost -> {
+                return getById(authentication, idPost);
+            }).toList();
     }
 
 

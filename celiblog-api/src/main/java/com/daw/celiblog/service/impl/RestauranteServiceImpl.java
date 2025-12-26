@@ -9,6 +9,7 @@ import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
+import com.daw.celiblog.enums.TipoRestauranteEnum;
 import com.daw.celiblog.service.GeolocalizacionService;
 import com.daw.celiblog.service.RestauranteService;
 import com.daw.celiblog.service.UsuarioService;
@@ -45,7 +46,7 @@ public class RestauranteServiceImpl implements RestauranteService {
 
     @Override
     public List<RestauranteDTO> all(Authentication authentication) {
-        List<RestauranteDTO> restaurantes =  restauranteRepository.findAll().stream()
+        List<RestauranteDTO> restaurantes =  restauranteRepository.getByEstadoPublicacion(EstadoValidacionEnum.APROBADO.toString()).stream()
                 .map(RestauranteMapper::entityToDto)
                 .toList();
         if(authentication == null){
@@ -150,14 +151,22 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
     @Override
-    public List<RestauranteDTO> byUbicacion(Authentication authentication, String ubicacion) {
-        List<RestauranteDTO> restaurantes =  RestauranteMapper.entityToDtoList(this.restauranteRepository.findByUbicacion(ubicacion)) ;
-        if(authentication == null){
-            return restaurantes;
-        }else{
-            return getFavorits(restaurantes, authentication.getName());
-        }
+    public List<RestauranteDTO> byUbicacionAndTipo(Authentication authentication, String ubicacion, List<TipoRestauranteEnum> tiposRestaurante) {
+        List<Long> restaurantes =  this.restauranteRepository.findByUbicacion(ubicacion);
+        List<RestauranteDTO> restaurantesDTO =
+                restaurantes.stream()
+                    .map(idRestaurante -> {
+                        return getById(authentication, idRestaurante);
+                    }).toList();
 
+        if(tiposRestaurante != null){
+            return restaurantesDTO
+                .stream()
+                .filter(restaurante -> tiposRestaurante.contains(restaurante.getTipoRestaurante()))
+                .toList();
+        }else{
+            return restaurantesDTO;
+        }
     }
 
     @Override

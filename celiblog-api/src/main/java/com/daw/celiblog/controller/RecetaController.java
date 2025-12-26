@@ -1,6 +1,7 @@
 package com.daw.celiblog.controller;
 
 import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
+import com.daw.celiblog.dto.RecetaCompletaView;
 import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.RecetaView;
 import com.daw.celiblog.enums.TipoComidaEnum;
@@ -31,7 +32,7 @@ public class RecetaController {
     @Autowired
     RecetaService recetaService;
 
-    @Operation(summary = "PÚBLICO: Obtiene todas las recetas registradas.")
+    @Operation(summary = "PÚBLICO: Obtiene todas las recetas registradas, en estado aprobado por el administrador.")
     @GetMapping("public/all")
     public ResponseEntity<List<RecetaDTO>> all(Authentication authentication) {
         return ResponseEntity.ok(recetaService.getAll(authentication));
@@ -67,7 +68,8 @@ public class RecetaController {
         return ResponseEntity.ok(this.recetaService.getIngredientesByIdReceta(idReceta));
     }
 
-    @Operation(summary = "PÚBLICO: Obtiene las recetas filtradas por título, subtítulo, descripción, nombre de ingrediente o tipo de comida")
+    @Operation(summary = "PÚBLICO: Obtiene las recetas filtradas por título, subtítulo, descripción, nombre de ingrediente o tipo de comida, " +
+            "en estado aprobado por el administrador.")
     @GetMapping("public/buscar")
     public ResponseEntity<List<RecetaDTO>> buscar(
             Authentication authentication,
@@ -109,6 +111,18 @@ public class RecetaController {
             return ResponseEntity.ok(nuevaReceta);
         }else{
             return ResponseEntity.badRequest().body("No se actualizó el objeto.");
+        }
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
+    @Operation(summary = "PROTEGIDO: Actualiza una receta con sus listados de ingredientes y pasos.")
+    @PutMapping("/updateAll")
+    public ResponseEntity<?> updateAll(Authentication authentication, @RequestBody RecetaCompletaView receta){
+        RecetaCompletaView nuevaReceta = this.recetaService.updateAll(authentication, receta);
+        if(nuevaReceta != null){
+            return ResponseEntity.ok(nuevaReceta);
+        }else{
+            return ResponseEntity.badRequest().body("No se actualizó el objeto receta.");
         }
     }
 

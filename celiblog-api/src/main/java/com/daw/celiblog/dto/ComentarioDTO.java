@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 
 import java.util.Date;
 
-public class ComentarioDTO {
+public class    ComentarioDTO {
     private Long idComentario;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaPublicacion;
@@ -29,9 +29,10 @@ public class ComentarioDTO {
     private int  valoracion;
     private EstadoValidacionEnum estado = EstadoValidacionEnum.APROBADO;
     private boolean esFavoritoUsuario;
+    private int valoracionMedia;
     public ComentarioDTO() {
     }
-    public ComentarioDTO(Long idComentario, Date fechaPublicacion, String contenido, String titulo,String subtitulo, String comentarioUrl, UsuarioSummaryDTO usuarioSummaryDTO, Long idObjetoComentado, ObjetoEnum objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacionEnum estado) {
+    public ComentarioDTO(Long idComentario, Date fechaPublicacion, String contenido, String titulo,String subtitulo, String comentarioUrl, UsuarioSummaryDTO usuarioSummaryDTO, Long idObjetoComentado, ObjetoEnum objetoComentado, Date fechaValidacion, int valoracion, EstadoValidacionEnum estado, int valoracionMedia) {
         this.idComentario = idComentario;
         this.fechaPublicacion = fechaPublicacion;
         this.contenido = contenido;
@@ -44,6 +45,15 @@ public class ComentarioDTO {
         this.fechaValidacion = fechaValidacion;
         this.valoracion = valoracion;
         this.estado = estado;
+        this.valoracionMedia = valoracionMedia;
+    }
+
+    public int getValoracionMedia() {
+        return valoracionMedia;
+    }
+
+    public void setValoracionMedia(int valoracionMedia) {
+        this.valoracionMedia = valoracionMedia;
     }
 
     public Long getIdComentario() {

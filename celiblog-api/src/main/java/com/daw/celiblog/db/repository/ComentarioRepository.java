@@ -1,6 +1,7 @@
 package com.daw.celiblog.db.repository;
 
 import com.daw.celiblog.db.entity.Comentario;
+import com.daw.celiblog.db.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,12 +17,19 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
     FROM comentario
     WHERE id_objeto_comentado = :idObjetoComentado
     AND objeto_comentado =:objetoComentado
+    AND estado = "APROBADO"
     ORDER BY fecha_publicacion ASC
     """, nativeQuery = true)
     List<Comentario> allComentariosByObject(@Param("objetoComentado")String objetoComentado, @Param("idObjetoComentado")Long idObjetoComentado);
 
     @Query(value = "SELECT * FROM comentario WHERE estado =:estadoPublicacion", nativeQuery = true)
     List<Comentario> getByEstadoPublicacion(@Param("estadoPublicacion") String estadoPublicacion);
+
+    @Query(value = "SELECT count(*) FROM comentario", nativeQuery = true)
+    int countAll();
+
+    @Query(value = "SELECT * FROM comentario WHERE id_usuario =:idUsuario AND estado = 'APROBADO'", nativeQuery = true)
+    List<Comentario> getByIdUsuario(@Param("idUsuario")Long idUsuario);
 
 
 

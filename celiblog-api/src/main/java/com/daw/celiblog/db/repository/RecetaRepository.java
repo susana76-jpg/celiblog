@@ -16,11 +16,15 @@ public interface RecetaRepository extends JpaRepository<Receta, Long> {
     @Query(value = "SELECT * FROM receta", nativeQuery = true)
     List<Receta> findAll();
 
+    @Query(value = "SELECT count(*) FROM receta", nativeQuery = true)
+    int countAll();
+
     @Query(value = """
     SELECT DISTINCT r.*
     FROM receta r
     JOIN tag_receta t ON r.id_receta = t.id_receta
     WHERE UPPER(t.nombre) LIKE %:nombreTag%
+    AND r.estado = 'APROBADO'
     """, nativeQuery = true)
     List<Receta> buscarRecetasPorNombreDeTag(@Param("nombreTag") String nombreTag);
 
@@ -33,5 +37,8 @@ public interface RecetaRepository extends JpaRepository<Receta, Long> {
     List<Receta> getByComensales(int numComensales);
     List<Receta> getByValoracion(int valoracion);
     List<Receta> getByTipoComida(TipoComidaEnum tipoComida);
+
+    @Query(value = "SELECT * FROM receta WHERE id_usuario =:idUsuario AND estado = 'APROBADO'", nativeQuery = true)
+    List<Receta> getByIdUsuario(@Param("idUsuario")Long idUsuario);
 
 }

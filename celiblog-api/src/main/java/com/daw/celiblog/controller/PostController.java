@@ -22,7 +22,7 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @Operation(summary = "PÚBLICO: Obtiene todos los post.")
+    @Operation(summary = "PÚBLICO: Obtiene todos los post, en estado aprobado por el administrador.")
     @GetMapping("public/all")
     public ResponseEntity<List<PostDTO>> all(Authentication authentication) {
         return ResponseEntity.ok(this.postService.all(authentication));
@@ -68,6 +68,15 @@ public class PostController {
         }else{
             return ResponseEntity.badRequest().body("No se actualizó el objeto.");
         }
+    }
+
+    @Operation(summary = "PÚBLICO: Obtiene los post por palabra contenida en su título, subtítulo o contenido, en estado aprobado por el administrador.")
+    @GetMapping("public/buscar")
+    public ResponseEntity<List<PostDTO>> buscar(
+            Authentication authentication,
+            @RequestParam(required = false, name="keyword") String keyword
+    ) {
+        return ResponseEntity.ok(this.postService.buscar(authentication, keyword));
     }
 
 

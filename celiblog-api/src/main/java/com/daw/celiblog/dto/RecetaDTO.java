@@ -37,12 +37,13 @@ public class RecetaDTO {
     private int valorEnergetico;
     private TipoComidaEnum tipoComida;
     private boolean esFavoritoUsuario;
+    private int valoracionMedia;
 
 
     public RecetaDTO() {
     }
 
-    public RecetaDTO(Long idReceta, UsuarioSummaryDTO usuarioSummaryDTO, String descripcion, Date fechaCreacion, String imagenUrl, String titulo, String subtitulo, String dificultad, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion, int comensales, int tiempoPreparacion, int valorEnergetico, TipoComidaEnum tipoComida) {
+    public RecetaDTO(Long idReceta, UsuarioSummaryDTO usuarioSummaryDTO, String descripcion, Date fechaCreacion, String imagenUrl, String titulo, String subtitulo, String dificultad, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion, int comensales, int tiempoPreparacion, int valorEnergetico, TipoComidaEnum tipoComida, int valoracionMedia) {
         this.idReceta = idReceta;
         this.usuario = usuarioSummaryDTO;
         this.descripcion = descripcion;
@@ -58,6 +59,7 @@ public class RecetaDTO {
         this.tiempoPreparacion = tiempoPreparacion;
         this.valorEnergetico = valorEnergetico;
         this.tipoComida = tipoComida;
+        this.valoracionMedia = valoracionMedia;
     }
 
     public Long getIdReceta() {
@@ -154,6 +156,14 @@ public class RecetaDTO {
 
     public void setComensales(int comensales) {
         this.comensales = comensales;
+    }
+
+    public int getValoracionMedia() {
+        return valoracionMedia;
+    }
+
+    public void setValoracionMedia(int valoracionMedia) {
+        this.valoracionMedia = valoracionMedia;
     }
 
     public int getTiempoPreparacion() {

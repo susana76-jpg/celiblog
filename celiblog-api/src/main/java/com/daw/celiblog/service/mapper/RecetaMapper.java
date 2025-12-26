@@ -31,7 +31,8 @@ public class RecetaMapper {
             source.getComensales(),
             source.getTiempoPreparacion(),
             source.getValorEnergetico(),
-            source.getTipoComida());
+            source.getTipoComida(),
+                0);
     }
     public static Receta dtoToEntity(RecetaDTO source){
         return new Receta(source.getIdReceta(),

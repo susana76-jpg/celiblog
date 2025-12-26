@@ -29,11 +29,12 @@ public class PostDTO {
 	private Date fechaValidacion;
 	private int valoracion;
 	private boolean esFavoritoUsuario;
+	private int valoracionMedia;
 
 	public PostDTO() {
 	}
 
-	public PostDTO(Long idPost, Date fechaPublicacion, String titulo, String subtitulo, String contenido, UsuarioSummaryDTO usuario, UsuarioDTO usuarioDTO, String urlPost, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion) {
+	public PostDTO(Long idPost, Date fechaPublicacion, String titulo, String subtitulo, String contenido, UsuarioSummaryDTO usuario, UsuarioDTO usuarioDTO, String urlPost, EstadoValidacionEnum estado, Date fechaValidacion, int valoracion, int valoracionMedia) {
 		this.idPost = idPost;
 		this.fechaPublicacion = fechaPublicacion;
 		this.titulo = titulo;
@@ -45,6 +46,7 @@ public class PostDTO {
 		this.estado = estado;
 		this.fechaValidacion = fechaValidacion;
 		this.valoracion = valoracion;
+		this.valoracionMedia = valoracionMedia;
 	}
 
 	public Long getIdPost() {
@@ -141,5 +143,13 @@ public class PostDTO {
 
 	public void setEsFavoritoUsuario(boolean esFavoritoUsuario) {
 		this.esFavoritoUsuario = esFavoritoUsuario;
+	}
+
+	public int getValoracionMedia() {
+		return valoracionMedia;
+	}
+
+	public void setValoracionMedia(int valoracionMedia) {
+		this.valoracionMedia = valoracionMedia;
 	}
 }

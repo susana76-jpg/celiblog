@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class TagRecetaController {
 
     @Operation(summary = "PÚBLICO: Obtiene un listado de los nombres de todos los tags de recetas existentes.")
     @GetMapping("public/all")
-    public ResponseEntity<List<String>> obtenerPorId() {
-        return ResponseEntity.ok(tagRecetaService.obtenerTodosNombresTags());
+    public ResponseEntity<List<String>> obtenerPorId(Authentication authentication) {
+        return ResponseEntity.ok(tagRecetaService.obtenerTodosNombresTags(authentication));
     }
 
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
@@ -58,16 +59,16 @@ public class TagRecetaController {
         }
     }
 
-    @Operation(summary = "PÚBLICO: Obtiene la lista de recetas por nombre de un tag.")
+    @Operation(summary = "PÚBLICO: Obtiene la lista de recetas por nombre de un tag, en estado aprobado por el administrador.")
     @GetMapping("public/recetasByTag")
-    public ResponseEntity<List<RecetaDTO>> obtenerRecetasPorNombreTag(@RequestParam(name="nombreTag") String nombreTag) {
-        return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTag(nombreTag));
+    public ResponseEntity<List<RecetaDTO>> obtenerRecetasPorNombreTag(Authentication authentication, @RequestParam(name="nombreTag") String nombreTag) {
+        return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTag(authentication, nombreTag));
     }
 
-    @Operation(summary = "PÚBLICO: Obtiene la lista de recetas por varios nombres de tag.")
+    @Operation(summary = "PÚBLICO: Obtiene la lista de recetas por varios nombres de tag, en estado aprobado por el administrador.")
     @GetMapping("public/recetasByTags")
-    public ResponseEntity<List<RecetaDTO>> buscarRecetasPorNombreDeTags(@RequestParam(name="tag") List<String> tags) {
-        return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTags(tags));
+    public ResponseEntity<List<RecetaDTO>> buscarRecetasPorNombreDeTags(Authentication authentication, @RequestParam(name="tag") List<String> tags) {
+        return ResponseEntity.ok(this.recetaService.buscarRecetasPorNombreDeTags(authentication, tags));
     }
 
 }

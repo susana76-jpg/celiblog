@@ -2,7 +2,6 @@ package com.daw.celiblog.service;
 
 import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
 import com.daw.celiblog.dto.*;
-import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.TipoComidaEnum;
 import org.springframework.security.core.Authentication;
 
@@ -17,13 +16,14 @@ public interface RecetaService {
     List<RecetaDTO> getByValoracion(Authentication authentication, int valoracion);
     List<RecetaDTO> getByTipoComida(Authentication authentication, TipoComidaEnum tipoComida);
     List<VistaRecetaIngredientes> getIngredientesByIdReceta(Long idReceta);
-    List<RecetaDTO> buscarRecetasPorNombreDeTag(String nombreTag);
-    List<RecetaDTO> buscarRecetasPorNombreDeTags(List<String> tags);
+    List<RecetaDTO> buscarRecetasPorNombreDeTag(Authentication authentication, String nombreTag);
+    List<RecetaDTO> buscarRecetasPorNombreDeTags(Authentication authentication, List<String> tags);
     List<RecetaDTO> buscarVista(Authentication authentication, String keyword, List<TipoComidaEnum> tipoComida);
 
 
     //PRIVADO
     RecetaDTO update(Authentication authentication, RecetaView view);
+    RecetaCompletaView updateAll(Authentication authentication, RecetaCompletaView view);
     boolean deleteById(Authentication authentication, Long id);
 
 

@@ -2,6 +2,7 @@ package com.daw.celiblog.service;
 
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.enums.TipoRestauranteEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.security.core.Authentication;
 
@@ -12,7 +13,7 @@ public interface RestauranteService {
     RestauranteDTO getById(Authentication authentication, Long id);
     RestauranteDTO add(Authentication authentication, RestauranteView restauranteView) throws JsonProcessingException;
     RestauranteDTO update(Long id, RestauranteView restauranteView) throws JsonProcessingException;
-    List<RestauranteDTO> byUbicacion(Authentication authentication, String ubicacion);
+    List<RestauranteDTO> byUbicacionAndTipo(Authentication authentication, String ubicacion, List<TipoRestauranteEnum> tiposRestaurante);
 
     void actualizarGeolocalizacion() throws JsonProcessingException;
     boolean deleteById(Long id);

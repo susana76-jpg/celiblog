@@ -14,10 +14,14 @@ public interface VistaRecetaRepository extends JpaRepository<VistaReceta, Long> 
     @Query(value = """
             SELECT DISTINCT v.id_receta
             FROM vista_recetas v
-            WHERE (:keyword IS NULL OR UPPER(v.titulo) LIKE CONCAT('%', UPPER(:keyword), '%'))
-            OR (:keyword IS NULL OR UPPER(v.subtitulo) LIKE CONCAT('%', UPPER(:keyword), '%'))
-            OR (:keyword IS NULL OR UPPER(v.descripcion) LIKE CONCAT('%', UPPER(:keyword), '%'))
-            OR (:keyword IS NULL OR UPPER(v.nombre) LIKE CONCAT('%', UPPER(:keyword), '%'))
+            WHERE estado = 'APROBADO'
+            AND(
+              :keyword IS NULL
+              OR UPPER(v.titulo)     LIKE CONCAT('%', UPPER(:keyword), '%')
+              OR UPPER(v.subtitulo)  LIKE CONCAT('%', UPPER(:keyword), '%')
+              OR UPPER(v.descripcion)LIKE CONCAT('%', UPPER(:keyword), '%')
+              OR UPPER(v.nombre)     LIKE CONCAT('%', UPPER(:keyword), '%')
+            )
             """, nativeQuery = true)
     List<Long> buscarVista(
             @Param("keyword") String keyword

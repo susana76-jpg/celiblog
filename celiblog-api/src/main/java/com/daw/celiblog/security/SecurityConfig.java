@@ -46,6 +46,7 @@ public class SecurityConfig {
                                 "/api/paso-receta/public/**",
                                 "/api/tag-receta/public/**",
                                 "/api/tag-restaurante/public/**",
+                                "/api/tag-post/public/**",
                                 "/api/comentario/public/**",
                                 "/api/post/public/**"
                         ).permitAll()
@@ -63,7 +64,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://46.183.113.124:3000"));
+        configuration.setAllowedOrigins(List.of("http://localhost", "http://localhost:3000", "http://46.183.113.124", "http://46.183.113.124:8081", "http://46.183.113.124:3000", "http://celiblog.es", "http://www.celiblog.es"));
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         configuration.setAllowedHeaders(List.of("Content-Type","Authorization"));
         configuration.setAllowCredentials(true);

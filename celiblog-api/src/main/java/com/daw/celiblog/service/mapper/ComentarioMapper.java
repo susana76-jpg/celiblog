@@ -29,7 +29,8 @@ public class ComentarioMapper {
                 source.getObjeto_comentado(),
                 source.getFechaValidacion(),
                 source.getValoracion(),
-                source.getEstado());
+                source.getEstado(),
+                0);
     }
 
     public static Comentario dtoToEntity(ComentarioDTO source){

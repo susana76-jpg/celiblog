@@ -4,8 +4,8 @@ public enum ObjetoEnum {
     RECETA,
     POST,
     RESTAURANTE,
-    COMENTARIO,
-    PENDIENTE;
+    COMENTARIO;
+
 
 
     @Override
