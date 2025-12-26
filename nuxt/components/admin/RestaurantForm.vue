@@ -15,7 +15,7 @@
         <v-form 
           id="restaurantForm"
           ref="formRef"
-          validation-on="submit"
+          validate-on="submit"
         >
           <v-row class="pt-5">
             <v-col
@@ -49,8 +49,6 @@
                 color="primary"
                 base-color="primary"
                 variant="outlined"
-                item-title="nombre"
-                item-value="idRol"
                 density="comfortable"
                 label="Tipo de restaurante *"
                 :items="restaurantTypes"
@@ -73,7 +71,7 @@
           Cancelar
         </v-btn>
         <v-btn 
-          form="restaurantForm"
+          for="restaurantForm"
           type="submit"
           color="primary" 
           variant="flat" 
@@ -157,7 +155,7 @@ watch(() => props.show, (newValue) => {
         telefono: props.restaurant.telefono || '',
         email: props.restaurant.email || '',
         valoracion: props.restaurant.valoracion || 0,
-        tipoRestaurante: props.restaurant.tipoRestaurante || ''
+        tipoRestaurante: props.restaurant.tipoRestaurante || 'SIN_GLUTEN'
       };
     } else {
       // Reset form for new restaurant
@@ -174,7 +172,7 @@ watch(() => props.show, (newValue) => {
         telefono: '',
         email: '',
         valoracion: 0,
-        tipoRestaurante: ''
+        tipoRestaurante: 'SIN_GLUTEN'
       };
     }
   }
@@ -182,6 +180,9 @@ watch(() => props.show, (newValue) => {
 
 // Validation rules
 const validationRules = {
+  required: [
+    (v: any) => !!v || 'Este campo es obligatorio'
+  ],
   name: [
     (v: string) => !!v || 'El nombre es obligatorio',
     (v: string) => v.length >= 2 || 'El nombre debe tener al menos 2 caracteres'
@@ -244,7 +245,7 @@ const textFields = computed(() => [
       get: () => restaurantForm.value.direccion,
       set: (val) => restaurantForm.value.direccion = val
     }),
-    rules: validationRules.text
+    rules: validationRules.required
   },
   {
     label: 'Ubicación *',
@@ -254,7 +255,7 @@ const textFields = computed(() => [
       get: () => restaurantForm.value.ubicacion,
       set: (val) => restaurantForm.value.ubicacion = val
     }),
-    rules: validationRules.text
+    rules: validationRules.required
   },
   {
     label: 'Código Postal *',
@@ -262,7 +263,7 @@ const textFields = computed(() => [
     col: '6',
     model: computed({
       get: () => restaurantForm.value.codigoPostal,
-      set: (val) => restaurantForm.value.codigoPostal = val
+      set: (val) => restaurantForm.value.codigoPostal = +val
     }),
     rules: validationRules.postalCode
   },
@@ -274,7 +275,7 @@ const textFields = computed(() => [
       get: () => restaurantForm.value.imagenUrl,
       set: (val) => restaurantForm.value.imagenUrl = val
     }),
-    rules: validationRules.text
+    rules: validationRules.required
   },
   {
     label: 'Teléfono *',
@@ -304,7 +305,7 @@ const textFields = computed(() => [
       get: () => restaurantForm.value.urlWeb,
       set: (val) => restaurantForm.value.urlWeb = val
     }),
-    rules: validationRules.text
+    rules: validationRules.required
   },
 ]);
 

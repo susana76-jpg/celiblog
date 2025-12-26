@@ -10,8 +10,12 @@ export const API = {
     BASE: '/api/receta/public/all',
     BY_ID: '/api/receta/public/byId',
     ADD: '/api/receta/add',
+    ADD_STEP: '/api/paso-receta/add',
+    ADD_INGREDIENT: '/api/ingrediente/add',
     UPDATE: '/api/receta/update',
     DELETE: '/api/receta/deleteById',
+    DELETE_INGREDIENT: '/api/ingrediente/delete',
+    DELETE_STEP: '/api/paso-receta/delete-paso',
     STEPS: '/api/paso-receta/public/pasos',
     INGREDIENTS: '/api/receta/public/ingredientes',
     SEARCH: '/api/receta/public/buscar'
