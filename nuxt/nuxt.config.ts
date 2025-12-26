@@ -47,7 +47,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://46.183.113.124:8081'
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://46.183.113.124:8081'
     }
   },
 
@@ -66,7 +66,7 @@ export default defineNuxtConfig({
     server: {
       proxy: {
         '/api': {
-          target: 'http://46.183.113.124:8081',
+          target: 'https://46.183.113.124:8081',
           changeOrigin: true,
         },
       },
