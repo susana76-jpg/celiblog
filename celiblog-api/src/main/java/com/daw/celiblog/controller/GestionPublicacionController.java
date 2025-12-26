@@ -47,4 +47,15 @@ public class GestionPublicacionController {
         }
 
     }
+
+
+
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
+    @Operation(summary = "PROTEGIDO : Obtiene todos los objetos publicados por los usuarios por su tipo de referencia y en estado APROBADO.")
+    @GetMapping("/byUsuario")
+    public ResponseEntity<List<?>>getPublicacionesByUsuario(
+            Authentication authentication,
+            @RequestParam(name="objetos", required=true)ObjetoEnum objetos) {
+        return ResponseEntity.ok(this.gestionPublicacionService.getObjetoByIdUsuario(authentication, objetos));
+    }
 }

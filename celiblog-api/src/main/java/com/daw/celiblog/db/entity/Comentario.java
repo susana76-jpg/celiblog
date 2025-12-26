@@ -35,7 +35,7 @@ public class Comentario implements Serializable {
 	private Long idObjetoComentado;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "objeto_comentado", nullable = false)
-	private ObjetoEnum objeto_comentado = ObjetoEnum.PENDIENTE;
+	private ObjetoEnum objeto_comentado;
 	@Column(name = "fecha_validacion")
 	private Date fechaValidacion;
 	private int  valoracion;

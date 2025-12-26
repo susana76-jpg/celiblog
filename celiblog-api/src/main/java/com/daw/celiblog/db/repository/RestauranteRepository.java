@@ -39,4 +39,7 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     @Query(value = "SELECT * FROM restaurante WHERE estado =:estadoPublicacion", nativeQuery = true)
     List<Restaurante> getByEstadoPublicacion(@Param("estadoPublicacion") String estadoPublicacion);
 
+    @Query(value = "SELECT * FROM restaurante WHERE id_usuario =:idUsuario AND estado = 'APROBADO'", nativeQuery = true)
+    List<Restaurante> getByIdUsuario(@Param("idUsuario")Long idUsuario);
+
 }

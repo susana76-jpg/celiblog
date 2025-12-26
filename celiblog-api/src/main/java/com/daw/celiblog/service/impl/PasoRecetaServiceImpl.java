@@ -53,6 +53,27 @@ public class PasoRecetaServiceImpl implements PasoRecetaService {
     }
 
     @Override
+    public List<PasoRecetaView> updatePasoRecetaAll(List<PasoRecetaView> pasosRecetaView, Receta receta) {
+        List<PasoReceta> pasosRecetaAntiguos = this.pasoRecetaRepository.findByIdReceta(receta.getIdReceta());
+        //se eliminan todos los pasos antiguos, si los hubiese
+        if(!pasosRecetaAntiguos.isEmpty()){
+            pasosRecetaAntiguos.forEach(paso-> this.pasoRecetaRepository.deleteById(paso.getIdPaso()));
+        }
+        //dar de alta los nuevos pasos
+        if(!pasosRecetaView.isEmpty()){
+            return pasosRecetaView.stream().map(paso -> {
+                PasoReceta newPasoReceta = new PasoReceta();
+                newPasoReceta.setOrden(paso.getOrden());
+                newPasoReceta.setReceta(receta);
+                newPasoReceta.setDescripcion(paso.getDescripcion());
+                PasoReceta pasoReceta = this.pasoRecetaRepository.save(newPasoReceta);
+                return new PasoRecetaView(receta.getIdReceta(), pasoReceta.getDescripcion(), pasoReceta.getOrden());
+            }).toList();
+        }
+        return null;
+    }
+
+    @Override
     public boolean deletePasoReceta(PasoRecetaView pasoRecetaView) {
         PasoReceta pasoReceta = this.pasoRecetaRepository.findPasoByIdRecetaAndOrden(pasoRecetaView.getIdReceta(), pasoRecetaView.getOrden());
         if(pasoReceta != null){

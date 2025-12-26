@@ -8,6 +8,8 @@ import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.enums.TipoComidaEnum;
+import com.daw.celiblog.service.IngredienteService;
+import com.daw.celiblog.service.PasoRecetaService;
 import com.daw.celiblog.service.RecetaService;
 import com.daw.celiblog.service.UsuarioService;
 import com.daw.celiblog.service.mapper.RecetaMapper;
@@ -23,14 +25,18 @@ public class RecetaServiceImpl implements RecetaService {
     private final UsuarioRepository usuarioRepository;
     private final FavoritoRepository favoritoRepository;
     private final VistaRecetaRepository vistaRecetaRepository;
+    private final PasoRecetaService pasoRecetaService;
+    private final IngredienteService ingredienteService;
 
 
-    public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository1, FavoritoRepository favoritoRepository, VistaRecetaRepository vistaRecetaRepository) {
+    public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository1, FavoritoRepository favoritoRepository, VistaRecetaRepository vistaRecetaRepository, PasoRecetaService pasoRecetaService, IngredienteService ingredienteService) {
         this.recetaRepository = recetaRepository;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository1;
         this.favoritoRepository = favoritoRepository;
         this.vistaRecetaRepository = vistaRecetaRepository;
+        this.pasoRecetaService = pasoRecetaService;
+        this.ingredienteService = ingredienteService;
     }
 
     @Override
@@ -181,6 +187,34 @@ public class RecetaServiceImpl implements RecetaService {
         }
         return null;
     }
+
+    @Override
+    public RecetaCompletaView updateAll(Authentication authentication, RecetaCompletaView recetaCompletaView) {
+
+        Optional<Receta> rec = this.recetaRepository.findById(recetaCompletaView.getRecetaView().getIdReceta());
+        RecetaDTO recetaDTO = this.update(authentication, recetaCompletaView.getRecetaView());
+
+        if( recetaDTO != null){
+            RecetaCompletaView nuevaReceta = new RecetaCompletaView();
+            RecetaView recetaView = new RecetaView(recetaDTO.getIdReceta(),
+                    recetaDTO.getDescripcion(),
+                    recetaDTO.getImagenUrl(),
+                    recetaDTO.getDificultad(),
+                    recetaDTO.getTitulo(),
+                    recetaDTO.getSubtitulo(),
+                    recetaDTO.getValoracion(),
+                    recetaDTO.getComensales(),
+                    recetaDTO.getTiempoPreparacion(),
+                    recetaDTO.getValorEnergetico(),
+                    recetaDTO.getTipoComida());
+            List<IngredienteView> ingredientes = this.ingredienteService.updateAll(authentication, recetaCompletaView.getIngredientes(), rec.get());
+            List<PasoRecetaView> pasos = this.pasoRecetaService.updatePasoRecetaAll(recetaCompletaView.getPasos(), rec.get());
+            return new RecetaCompletaView(recetaView, ingredientes, pasos);
+        }
+
+        return null;
+    }
+
     @Override
     public boolean deleteById(Authentication authentication, Long id) {
         Optional<Receta> receta = this.recetaRepository.findById(id);

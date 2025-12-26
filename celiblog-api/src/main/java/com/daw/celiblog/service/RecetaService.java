@@ -23,6 +23,7 @@ public interface RecetaService {
 
     //PRIVADO
     RecetaDTO update(Authentication authentication, RecetaView view);
+    RecetaCompletaView updateAll(Authentication authentication, RecetaCompletaView view);
     boolean deleteById(Authentication authentication, Long id);
 
 

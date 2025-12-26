@@ -2,6 +2,7 @@ package com.daw.celiblog.db.repository;
 
 import com.daw.celiblog.db.entity.Post;
 import com.daw.celiblog.db.entity.Receta;
+import com.daw.celiblog.db.entity.Restaurante;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,5 +33,17 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Long> buscar(
             @Param("keyword") String keyword
     );
+
+    @Query(value = """
+    SELECT DISTINCT p.*
+    FROM post p
+    JOIN tag_post t ON p.id_post = p.id_post
+    WHERE UPPER(t.nombre) LIKE %:nombreTag%
+    AND p.estado = 'APROBADO'
+    """, nativeQuery = true)
+    List<Post> buscarPostsPorNombreDeTag(@Param("nombreTag") String nombreTag);
+
+    @Query(value = "SELECT * FROM post WHERE id_usuario =:idUsuario AND estado = 'APROBADO'", nativeQuery = true)
+    List<Post> getByIdUsuario(@Param("idUsuario")Long idUsuario);
 
 }
