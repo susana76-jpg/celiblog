@@ -5,7 +5,7 @@
       :key="card.tab"
       class="keyfact-card" 
     >
-      <v-icon class="keyfact-icon" color="#836a02" size="60">{{ card.icon }}</v-icon>
+      <v-icon class="keyfact-icon" color="#836a02" size="76">{{ card.icon }}</v-icon>
       <div class="keyfact-content">
         <div class="keyfact-number">{{ stats[card.statsKey as keyof typeof stats] }}</div>
         <div class="keyfact-label">{{ card.label }}</div>
@@ -15,59 +15,72 @@
 </template>
 
 <script setup lang="ts">
-import { useAdminStore } from '@/stores/admin';
-
-const store = useAdminStore();
+// Use global notification composable
+const { showError } = useNotification();
 
 type StatsType = {
-  restaurants: number;
-  posts: number;
-  recipes: number;
-  comments: number;
-  users: number;
+  numRestaurantes: number;
+  numPost: number;
+  numRecetas: number;
+  numComentarios: number;
+  numUsuarios: number;
 };
 
-const stats = computed<StatsType>(() => ({
-  restaurants: store.keyfacts.totalRestaurants,
-  posts: store.keyfacts.totalPosts,
-  recipes: store.keyfacts.totalRecipes,
-  comments: store.keyfacts.totalComments,
-  users: store.keyfacts.totalUsers
-}));
+const stats = ref<StatsType>({
+  numRestaurantes: 0,
+  numPost: 0,
+  numRecetas: 0,
+  numComentarios: 0,
+  numUsuarios: 0
+});
 
 // Array defining the keyfact cards
 const keyfactCards = [
   {
     tab: 'restaurants',
     icon: 'mdi-silverware-fork-knife',
-    statsKey: 'restaurants' as keyof StatsType,
+    statsKey: 'numRestaurantes' as keyof StatsType,
     label: 'Restaurantes'
   },
   {
     tab: 'tips',
     icon: 'mdi-lightbulb-outline',
-    statsKey: 'posts' as keyof StatsType,
+    statsKey: 'numPost' as keyof StatsType,
     label: 'Consejos'
   },
   {
     tab: 'recipes',
     icon: 'mdi-food-outline',
-    statsKey: 'recipes' as keyof StatsType,
+    statsKey: 'numRecetas' as keyof StatsType,
     label: 'Recetas'
   },
   {
     tab: 'comments',
     icon: 'mdi-comment-outline',
-    statsKey: 'comments' as keyof StatsType,
+    statsKey: 'numComentarios' as keyof StatsType,
     label: 'Comentarios'
   },
   {
     tab: 'users',
     icon: 'mdi-account-outline',
-    statsKey: 'users' as keyof StatsType,
+    statsKey: 'numUsuarios' as keyof StatsType,
     label: 'Usuarios'
   }
 ]
+
+// Fetch statistics from API
+const fetchStats = async () => {
+  try {
+    const response = await useApiFetch(API.STATS.ALL);
+    stats.value = response as StatsType;
+  } catch (error) {
+    showError(`Error fetching stats: ${error}`);
+  }
+};
+
+onMounted(() => {
+  fetchStats();
+});
 </script>
 
 <style scoped lang="scss">
@@ -97,7 +110,7 @@ const keyfactCards = [
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: end;
   gap: 4px;
 }
 
