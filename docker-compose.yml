@@ -20,7 +20,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE:-celiblog}
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./initdb:/docker-entrypoint-initdb.d
+      - ./celiblog-database/initdb:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s
