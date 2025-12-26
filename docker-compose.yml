@@ -35,9 +35,9 @@ services:
     ports:
       - "9000:80"
     environment:
-      PMA_HOST: database
-      PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: 1234
+      PMA_HOST: ${PMA_HOST:-database}
+      PMA_PORT: ${PMA_PORT:-3306}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-1234}
     depends_on:
       - database
   app_celi:
@@ -48,11 +48,11 @@ services:
     ports:
       - "8081:8081"
     environment:
-      DB_URL: jdbc:mysql://database:3306/celiblog?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
-      DB_USER_NAME: root
-      DB_PASSWORD: 1234
-      SECRET_KEY:  f5g4sdfg1sfd21gvf2d313sfd2g1fds32g1sfd32g1sfd23g1vsfd231fsd32v1s
-      OPENCAGE_API_KEY:  73ff22d176684a9696a24fec7269c216
+      DB_URL: ${MYSQL_ROOT_PASSWORD:-jdbc:mysql://database:3306/celiblog?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC}
+      DB_USER_NAME: ${MYSQL_USERNAME:-root}
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-1234}
+      SECRET_KEY:  ${SECRET_KEY:-f5g4sdfg1sfd21gvf2d313sfd2g1fds32g1sfd32g1sfd23g1vsfd231fsd32v1s}
+      OPENCAGE_API_KEY:  ${OPENCAGE_API_KEY:-73ff22d176684a9696a24fec7269c216}
     restart: always
     depends_on:
       database:
