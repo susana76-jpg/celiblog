@@ -1,7 +1,6 @@
 FROM nginx:latest
 
-RUN mkdir /etc/nginx/sites-available
-RUN mkdir /etc/nginx/sites-enabled
+RUN apt install nginx-common
 
 COPY html/index.html /etc/nginx/html/index.html
 #COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
