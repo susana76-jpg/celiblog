@@ -81,7 +81,7 @@ services:
       - app_front
     volumes:
       - type: bind
-        source: ./celiblog-nginx/cert
+        source: /etc/letsencrypt/live/celiblog.es/
         target: /etc/letsencrypt/live/celiblog.es/
 volumes:
   vol_certs:
