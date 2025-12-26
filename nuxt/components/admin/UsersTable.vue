@@ -1,69 +1,24 @@
 <template>
-  <div class="users-table">
-    <v-text-field
-      single-line
-      hide-details
-      v-model="search"
-      class="mb-3"
-      density="compact"
-      variant="outlined"
-      label="Buscar usuarios"
-      prepend-inner-icon="mdi-magnify"
-    ></v-text-field>
-    <v-data-table
-      hide-default-footer
-      density="compact"
-      class="mb-10"
-      :headers="headers"
-      :items="users"
-      :items-length="users.length"
-      :loading="loading"
-      :search="search"
-      :items-per-page="-1"
-      item-value="name"
-    >
-      <template v-slot:item.rol="{ item }">
-        <v-select
-          chips
-          single-line
-          hide-details
-          variant="outlined"
-          density="compact"
-          item-title="nombre"
-          item-value="idRol"
-          :items="USER_ROLES"
-          v-model="item.rol"
-          @update:modelValue="($event) => updateUserRole(item, $event)"
-        ></v-select>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-btn 
-          icon 
-          width="32"
-          variant="text"
-          color="lightgray"
-          @click="handleDelete(item.nombre, item.idUsuario)"
-        >
-          <v-icon>mdi-delete-outline</v-icon>
-        </v-btn>
-      </template>
-    </v-data-table>
-  </div>
+  <AdminTable
+    :headers="headers"
+    search-label="Buscar usuarios"
+    add-button-label="Agregar Usuario"
+    :fetch-endpoint="API.USERS.BASE"
+    :delete-endpoint="API.USERS.DELETE"
+    :delete-params="getDeleteParams"
+    selector-column="rol"
+    :selector-config="selectorConfig"
+    :selector-update-endpoint="API.USERS.UPDATE_ROLE"
+    :selector-update-params="getSelectorUpdateParams"
+    :show-edit-button="false"
+    :form-component="AdminUserForm"
+    form-prop-name="user"
+    form-update-event="get:users"
+  />
 </template>
 
 <script setup lang="ts">
-const search = ref<string>('');
-const loading = ref<boolean>(false);
-
-// Use global notification composable
-const { showSuccess, showError } = useNotification();
-const store = useAdminStore();
-
-/*************************************/
-/* USERS DATA TABLE */
-/*************************************/
-// List of users
-const users = ref<AdminUsuario[]>([]);
+import AdminUserForm from '@/components/admin/UserForm.vue';
 
 // Table headers
 const headers = [
@@ -74,116 +29,24 @@ const headers = [
   { title: '', key: 'actions', align: 'end' as const, sortable: false },
 ];
 
-/*************************************/
-/* CONFIRM DIALOG USAGE */
-/*************************************/
-// Import the global confirm dialog composable
-const { showConfirmDialog } = useConfirmDialog();
-
-// Example function to handle delete operations
-const handleDelete = (itemName: string, itemId: number) => {
-  const text = `Si eliminas a ${itemName} de la base de datos, no podrá acceder al sistema. ¿Deseas continuar?`;
-  showConfirmDialog(text, () => deleteUser(itemId));
-}
+// Delete configuration functions
+const getDeleteParams = (item: any) => ({ idUsuario: item.idUsuario });
 
 
 /*************************************/
-/* API CALLS */
+/* ROLE SELECTOR CONFIGURATION */
 /*************************************/
-// Delete user
-const deleteUser = async (userId: number) => {
-  try {
-    const response = await useApiFetch(API.USERS.DELETE, {
-      method: 'DELETE',
-      params: {
-        idUsuario: userId,      }
-    });
-
-    if (response) showSuccess(`Usuario eliminado correctamente`);
-    getUsers();
-  } catch (error: any) {
-    showError('Error al eliminar el usuario');
-  }
-}
-
-// Update user role
-const updateUserRole = async (user: AdminUsuario, newRoleId: number) => {
-  try {
-    const response = await useApiFetch(API.USERS.UPDATE_ROLE, {
-      method: 'PUT',
-      params: {
-        idUsuario: user.idUsuario,
-        idNuevoRol: newRoleId
-      }
-    });
-
-    if (response) {
-      const roleName = USER_ROLES.find(r => r.idRol === newRoleId)?.nombre || 'nuevo rol';
-      showSuccess(`Rol actualizado correctamente a "${roleName}"`);
-    }
-  } catch (error: any) {
-    showError('Error al actualizar el rol del usuario');
-  }
-}
-
-// Fetch users from API on component mount
-const getUsers = async () => {
-  loading.value = true;
-  try {
-    const response = await useApiFetch(API.USERS.BASE);
-    users.value = response as AdminUsuario[];
-    store.keyfacts.totalUsers = users.value.length;
-  } catch (error: any) {
-    console.error('Login error:', error);
-  } finally {
-    loading.value = false;
-  }
+// Selector configuration
+const selectorConfig = {
+  items: USER_ROLES,
+  itemTitle: 'nombre',
+  itemValue: 'idRol',
+  getValueFn: (item: any) => item.rol.idRol
 };
 
-// Add new user
-const addUser = async (userData: any) => {
-  try {
-    const response = await useApiFetch(API.USERS.ADD, {
-      method: 'POST',
-      body: userData
-    });
-    
-    if (response) {
-      showSuccess('Usuario agregado correctamente');
-      await getUsers();
-    }
-  } catch (error: any) {
-    showError(`Error al agregar el usuario: ${error.message || error}`);
-  }
-};
-
-// Expose methods to parent component
-defineExpose({
-  addUser
+// Selector update function
+const getSelectorUpdateParams = (item: any, newRoleId: number) => ({
+  idUsuario: item.idUsuario,
+  idNuevoRol: newRoleId
 });
-
-// Load data on mount
-onMounted(() => {
-  getUsers();
-})
 </script>
-
-<style lang="scss">
-.users-table {
-  .v-table__wrapper {
-    border-radius: 4px 4px 0 0;
-  }
-
-  // Table header style
-  thead {
-    color: #FFF;
-    background-color: #836A02;
-  }
-
-  // Select role chips style
-  span.v-chip.v-chip--variant-tonal {
-    background-color: #836A02;
-    color: #FFF;
-  }
-}
-</style>

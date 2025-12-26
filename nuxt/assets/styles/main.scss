@@ -194,3 +194,29 @@ li {
   }
 }
 
+
+/***********************************/
+/* Admin Table Styles */
+/***********************************/
+.admin-table {
+  .status-filter {
+    align-self: start;
+    margin-right: 8px;
+  }
+
+  .v-table__wrapper {
+    border-radius: 4px 4px 0 0 !important;
+  }
+
+  // Table header style
+  thead {
+    color: #FFF;
+    background-color: #836A02;
+  }
+
+  // Select role chips style
+  span.v-chip.v-chip--variant-tonal {
+    background-color: #836A02;
+    color: #FFF;
+  }
+}

@@ -42,8 +42,9 @@
 
         <!-- COMMENTS CONTENT ----------------------->
         <CommentsMainContent 
+          v-if="showComments"
           class="mt-15" 
-          itemType="RECETA" 
+          :itemType="TYPE.RECIPE as ObjectType" 
           :comentarios="comentarios"
           :itemId="id"
           @update:comentarios="getComments"
@@ -59,6 +60,8 @@
 
 <script setup lang="ts">
 const { getCommentsByObjectId } = useComments();
+const { showError } = useNotification();
+const { isAuthenticated } = useAuthStore();
 
 const route = useRoute();
 const id = parseInt(route.params.id as string);
@@ -79,7 +82,7 @@ const getRecipeById = async () => {
     receta.value = data as Receta; 
     receta.value.imagenUrl = '/img/recetas/' + receta.value.imagenUrl;
   } catch (error) {
-    console.error('Error fetching receipe:', error);
+    showError('Error fetching receipe');
   } finally {
     loading.value = false;
   }
@@ -96,7 +99,7 @@ const getRecipeStepsById = async () => {
     data = data.sort((a: RecetaPaso, b: RecetaPaso) => a.orden - b.orden); 
     pasos.value = data.map((step: RecetaPaso) => step.descripcion);
   } catch (error) {
-    console.error('Error fetching steps:', error);
+    showError('Error fetching steps');
   }
 };
 
@@ -111,14 +114,17 @@ const getRecipeIngredientsById = async () => {
       `${ingrediente.cantidad} ${ingrediente.unidad} de ${ingrediente.nombre}`
     );
   } catch (error) {
-    console.error('Error fetching ingredients:', error);
+    showError('Error fetching ingredients');
   }
 };
 
 // Get comments for the recipe with the given ID
 const getComments = async () => {
-  comentarios.value = await getCommentsByObjectId('RECETA', id) ?? [];
+  comentarios.value = await getCommentsByObjectId(TYPE.RECIPE, id) ?? [];
 };  
+
+// Determine if comments section should be hidden
+const showComments = computed(() => comentarios.value.length > 0 || isAuthenticated.value);  
 
 // Fetch the receipe data when the component is mounted
 onMounted(async () => {

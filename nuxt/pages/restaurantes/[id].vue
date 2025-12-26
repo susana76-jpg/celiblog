@@ -73,10 +73,12 @@
 
         <!-- COMMENTS ---------------------------------->
         <CommentsMainContent 
+          v-if="showComments"
           class="mt-16"
-          itemType="RESTAURANTE" 
+          :itemType="TYPE.RESTAURANT as ObjectType" 
           :itemId="id"
-          :comentarios="restaurant.comentarios" 
+          :comentarios="comments" 
+          @update:comentarios="getComments"
         />
         <!---------------------------------------------->
 
@@ -86,10 +88,15 @@
 </template>
 
 <script setup lang="ts">
+const { getCommentsByObjectId } = useComments();
+const { showError } = useNotification();
+const { isAuthenticated } = useAuthStore();
+
 const route = useRoute();
 const id = parseInt(route.params.id as string);
 const restaurant = ref<Restaurante | null>(null);
 const tags = ref<RestauranteTag[]>([]);
+const comments = ref<Comentario[]>([]);
 const loading = ref(true);
 
 // Computed contact items
@@ -139,7 +146,7 @@ const getRestaurantById = async () => {
     
     restaurant.value = data as Restaurante; 
   } catch (error) {
-    console.error('Error fetching restaurant:', error);
+    showError('Error fetching restaurant');
   } finally {
     loading.value = false;
   }
@@ -154,13 +161,22 @@ const getTagsByRestaurantId = async () => {
     
     tags.value = data as RestauranteTag[];
   } catch (error) {
-    console.error('Error fetching restaurant tags:', error);
+    showError('Error fetching restaurant tags');
   }
 };
+
+// Get comments for the restaurant with the given ID
+const getComments = async () => {
+  comments.value = await getCommentsByObjectId(TYPE.RESTAURANT, id) ?? [];
+};
+
+// Determine if comments section should be hidden
+const showComments = computed(() => comments.value.length > 0 || isAuthenticated.value); 
 
 onMounted(() => {
   getRestaurantById();
   getTagsByRestaurantId();
+  getComments();
 });
 
 </script>
