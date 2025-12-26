@@ -48,7 +48,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      DB_URL: ${MYSQL_ROOT_PASSWORD:-jdbc:mysql://database:3306/celiblog?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC}
+      DB_URL: ${DB_URL:-jdbc:mysql://database:3306/celiblog?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC}
       DB_USER_NAME: ${MYSQL_USERNAME:-root}
       DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-1234}
       SECRET_KEY:  ${SECRET_KEY:-f5g4sdfg1sfd21gvf2d313sfd2g1fds32g1sfd32g1sfd23g1vsfd231fsd32v1s}
