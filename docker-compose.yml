@@ -9,7 +9,7 @@ services:
         source: ./celiblog-nginx/cert
         target: /etc/letsencrypt/live/celiblog.es/
   database:
-    image: mysql:8.3
+    build: ./celiblog-database
     container_name: database
     hostname: db
     restart: always
