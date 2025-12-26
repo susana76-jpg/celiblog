@@ -4,27 +4,28 @@ services:
     container_name: ubuntu
     hostname: ubuntu
     restart: always
-    volumes:
-      - type: bind
-        source: ./celiblog-nginx/cert
-        target: /etc/letsencrypt/live/celiblog.es/
   database:
-    image: mysql:8.3
+    build: ./celiblog-database
     container_name: database
-    hostname: db
+    hostname: database
     restart: always
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: celiblog
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-1234}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-celiblog}
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./initdb:/docker-entrypoint-initdb.d
+      - ./celiblog-database/initdb:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s
       retries: 10
+    networks:
+      celiblog_network:
+        ipv4_address: 192.168.0.10
+        aliases:
+          - db.internal
     depends_on:
       - ubuntu
   phpmyadmin:
@@ -35,25 +36,35 @@ services:
     ports:
       - "9000:80"
     environment:
-      PMA_HOST: database
-      PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: 1234
+      PMA_HOST: ${PMA_HOST:-database}
+      PMA_PORT: ${PMA_PORT:-3306}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-1234}
+    networks:
+      celiblog_network:
+        ipv4_address: 192.168.0.11
+        aliases:
+          - admin.internal
     depends_on:
       - database
   app_celi:
     build: ./celiblog-api
-    container_name: celiblog_app
-    hostname: app
+    container_name: back
+    hostname: back
     mem_limit: 512m
     ports:
       - "8081:8081"
     environment:
-      DB_URL: jdbc:mysql://database:3306/celiblog?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
-      DB_USER_NAME: root
-      DB_PASSWORD: 1234
-      SECRET_KEY:  f5g4sdfg1sfd21gvf2d313sfd2g1fds32g1sfd32g1sfd23g1vsfd231fsd32v1s
-      OPENCAGE_API_KEY:  73ff22d176684a9696a24fec7269c216
+      DB_URL: ${DB_URL:-jdbc:mysql://database:3306/celiblog?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC}
+      DB_USER_NAME: ${MYSQL_USERNAME:-root}
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-1234}
+      SECRET_KEY:  ${SECRET_KEY:-f5g4sdfg1sfd21gvf2d313sfd2g1fds32g1sfd32g1sfd23g1vsfd231fsd32v1s}
+      OPENCAGE_API_KEY:  ${OPENCAGE_API_KEY:-73ff22d176684a9696a24fec7269c216}
     restart: always
+    networks:
+      celiblog_network:
+        ipv4_address: 192.168.0.12
+        aliases:
+          - back.internal
     depends_on:
       database:
         condition: service_healthy
@@ -67,6 +78,11 @@ services:
     environment:
       API_URL: http://app_celi:8081
       NODE_ENV: production
+    networks:
+      celiblog_network:
+        ipv4_address: 192.168.0.13
+        aliases:
+          - front.internal
     depends_on:
       - app_celi
   nginx:
@@ -77,12 +93,23 @@ services:
       - 80:80
       - 443:443
     restart: always
+    networks:
+      celiblog_network:
+        ipv4_address: 192.168.0.14
+        aliases:
+          - nginx.internal
     depends_on:
       - app_front
     volumes:
       - type: bind
-        source: ./celiblog-nginx/cert
-        target: /etc/letsencrypt/live/celiblog.es/
+        source: /etc/letsencrypt/
+        target: /etc/letsencrypt/
+networks:
+  celiblog_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.0.0/24"
 volumes:
   vol_certs:
     driver: local

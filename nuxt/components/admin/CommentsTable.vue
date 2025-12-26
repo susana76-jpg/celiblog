@@ -1,40 +1,71 @@
 <template>
-  <div class="comments-table-container">
-    <div class="placeholder-content">
-      <v-icon size="80" color="#836a02">mdi-comment-outline</v-icon>
-      <h2>Gestión de Comentarios</h2>
-      <p>Esta sección está en desarrollo</p>
-    </div>
-  </div>
+  <AdminTable
+    :headers="headers"
+    search-label="Buscar comentarios"
+    :show-status-filter="true"
+    :show-add-button="false"
+    :show-edit-button="false"
+    :fetch-endpoint="API.STATUS.LIST"
+    :fetch-params="getFetchParams"
+    :data-transformer="dataTransformer"
+    :delete-endpoint="API.COMMENTS.DELETE"
+    :delete-params="getDeleteParams"
+    selector-column="estado"
+    :selector-config="selectorConfig"
+    :selector-update-endpoint="API.STATUS.UPDATE"
+    :selector-update-params="getSelectorUpdateParams"
+  />
 </template>
 
 <script setup lang="ts">
-// Component logic here
+/*************************************/
+/* TABLE HEADERS CONFIGURATION */
+/*************************************/
+const headers = [
+  { title: 'Título', key: 'titulo', align: 'start' as const },
+  { title: 'Fecha publicación', key: 'fechaPublicacion', align: 'start' as const },
+  { title: 'Autor', key: 'usuario.nombre', align: 'start' as const },
+  { title: 'Estado', key: 'estado', align: 'start' as const, sortable: false, minWidth: 200 },
+  { title: '', key: 'actions', align: 'end' as const, sortable: false, minWidth: 100 },
+];
+
+
+/*************************************/
+/* FETCH CONFIGURATION */
+/*************************************/
+// Fetch configuration function
+const getFetchParams = (statusFilter: string[]) => ({
+  objeto: TYPE.COMMENT,
+  estado: statusFilter.length === 3 ? ['TODOS'] : statusFilter
+});
+
+// Data transformer function
+const dataTransformer = (data: Comentario[]) => data.map((comment: Comentario) => ({
+  ...comment,
+  fechaPublicacion: formatDateTime(comment.fechaPublicacion)
+}));
+
+
+/*************************************/
+/* DELETE CONFIGURATION */
+/*************************************/
+// Delete configuration functions
+const getDeleteParams = (item: any) => ({ idComentario: item.idComentario });
+
+
+/*************************************/
+/* STATUS SELECTOR CONFIGURATION */
+/*************************************/
+// Selector configuration
+const selectorConfig = {
+  items: Object.values(POST_STATUS),
+  getValueFn: (item: any) => item.estado
+};
+
+// Selector update functions
+const getSelectorUpdateParams = (item: any, newStatus: string) => ({
+  idObjeto: item.idComentario,
+  objeto: TYPE.COMMENT,
+  estado: newStatus
+});
 </script>
-
-<style lang="scss" scoped>
-.comments-table-container {
-  padding: 60px 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-}
-
-.placeholder-content {
-  text-align: center;
-  color: #836a02;
-
-  h2 {
-    margin-top: 20px;
-    font-size: 32px;
-    font-weight: 600;
-  }
-
-  p {
-    margin-top: 10px;
-    font-size: 18px;
-    color: #616161;
-  }
-}
-</style>

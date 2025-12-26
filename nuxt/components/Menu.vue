@@ -203,13 +203,20 @@ const accountButtons = [
 const items = [
   { 
     title: 'Perfil Usuario',
-    event: async () => await navigateTo('/usuario') 
+    event: () => redirectToUserProfile() 
   },
   { 
     title: 'Cerrar Sesión',
     event: () => logout()
   },
 ];  
+
+// Redirect to user profile based on role
+const redirectToUserProfile = async () => {
+  const userId = user.value?.rol.idRol;
+  if (userId === 1) await navigateTo('/admin');
+  else await navigateTo('/usuario');
+};
 </script>
 
 
