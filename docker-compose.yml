@@ -11,7 +11,7 @@ services:
   database:
     build: ./celiblog-database
     container_name: database
-    hostname: db
+    hostname: database
     restart: always
     ports:
       - "3306:3306"
