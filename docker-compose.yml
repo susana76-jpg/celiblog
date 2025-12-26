@@ -4,10 +4,6 @@ services:
     container_name: ubuntu
     hostname: ubuntu
     restart: always
-    volumes:
-      - type: bind
-        source: ./celiblog-nginx/cert
-        target: /etc/letsencrypt/live/celiblog.es/
   database:
     build: ./celiblog-database
     container_name: database
@@ -81,8 +77,8 @@ services:
       - app_front
     volumes:
       - type: bind
-        source: /etc/letsencrypt/live/celiblog.es/
-        target: /etc/letsencrypt/live/celiblog.es/
+        source: /etc/letsencrypt/
+        target: /etc/letsencrypt/
 volumes:
   vol_certs:
     driver: local
