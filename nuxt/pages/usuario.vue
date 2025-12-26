@@ -5,7 +5,7 @@
         <v-card class="profile-card d-flex flex-column align-center" flat>
           <div class="profile-image-container">
             <v-img
-              :src="'/img/avatar_vera.png'"
+              :src="'/img/avatar_1.png'"
               alt="Imagen de Perfil"
               class="profile-image"
             ></v-img>
@@ -153,7 +153,7 @@ const contadores = ref([
     { icon: 'mdi-food-variant', number: '0', text: 'Recetas' },
     { icon: 'mdi-silverware-fork-knife', number: '0', text: 'Restaurantes' },
     { icon: 'mdi-lightbulb-on-outline', number: '0', text: 'Post' },
-    { icon: 'mdi-star-outline', number: '0.0', text: 'Valoración' },
+    { icon: 'mdi-star-outline', number: '0.0', text: 'Comentarios' },
 ]);
 
 
@@ -226,6 +226,7 @@ const fetchUserStats = async () => {
         { icon: 'mdi-silverware-fork-knife', number: String(userFav.numRestaurantes || 0), text: 'Restaurantes favoritos' },
         { icon: 'mdi-lightbulb-on-outline', number: String(userFav.numPost || 0), text: 'Consejos favoritos' },
         { icon: 'mdi-food-variant', number: String(userFav.numRecetas || 0), text: 'Recetas favoritas' },
+        { icon: 'mdi-comment-text-multiple-outline', number: String(userFav.numComentarios), text: 'Comentarios'}
       ];
     } catch (error) {
         console.error('Error al cargar las estadísticas del usuario:', error);
@@ -278,7 +279,7 @@ const statusMessage = ref('');
 const isSubmitting = ref(false);
 const isContentLoading = ref(false);
 
-const mostrarPassword = ref(false);
+//const mostrarPassword = ref(false);
 
 
 
@@ -289,53 +290,74 @@ const fetchContent = async (reference: string | null) => {
   }
 
   isContentLoading.value = true;
-
-  const API_URL = `/api/favoritos/byReferencia?tipoReferencia=${reference}`;
+  statusMessage.value = '';
 
   try {
+    /* ===========================
+       COMENTARIOS DEL USUARIO
+       =========================== */
+    if (reference === 'COMENTARIO') {
+      const data = await useApiFetch('/api/comentarios/byUsuario');// Comprobar con Susana si es el endpoint correcto
+      
+      const comentarios = data as any[];
+      //solo se muestran los comentarios aprobados por el administrador
+      const aprobados = comentarios.filter(
+        c => c.estado === 'APROBADO'
+      );
+
+      if (comentarios.length > 0 && aprobados.length === 0) {
+        statusMessage.value = 'Tienes comentarios pendientes de aprobación.';
+      }
+
+      contentItems.value = aprobados.map(c => ({
+        id: c.idComentario,
+        titulo: c.contenido.slice(0, 40) + '...',
+        contenidoResumen: c.contenido,
+        imagenUrl: '/img/comentarios_default.png'
+      }));
+
+      return; 
+    }
+
+    /* ===========================
+       FAVORITOS 
+       =========================== */
+    const API_URL = `/api/favoritos/byReferencia?tipoReferencia=${reference}`;
     const data = await useApiFetch(API_URL);
     console.log('RAW favoritos:', data);
-    const processedItems = (data as any[]).map(item => {
+   
+    const processedItems = (data as any[])
+      .map(item => {
+         //Recetas
+        if (reference === 'RECETA') {
+          return {
+            id: item.idReceta,
+            titulo: item.titulo || `Receta ${item.idReceta}`,
+            imagenUrl: `/img/recetas/${item.imagenUrl}`
+          };
+        }
+        //Restaurantes
+        if (reference === 'RESTAURANTE') {
+          return {
+            id: item.idRestaurante,
+            titulo: item.titulo || `Restaurante ${item.idRestaurante}`,
+            imagenUrl: `/img/restaurantes/${item.imagenUrl}`
+          };
+        }
+        //Consejos y Post
+        if (reference === 'POST') {
+          return {
+            id: item.idPost,
+            titulo: item.titulo || `Consejos ${item.idPost}`,
+            imagenUrl: `/img/consejos/consejo${item.idPost}.jpg`
+          };
+        }
 
-      // RECETA
-      if (reference === 'RECETA') {
-        return {
-          id: item.idReceta,
-          titulo: item.titulo || `Receta ${item.idReceta}`,
-          imagenUrl: `/img/recetas/${item.imagenUrl}`
-        };
-      }
-
-      //RESTAURANTE
-      if (reference === 'RESTAURANTE') {
-        return {
-          id: item.idRestaurante,
-          titulo: item.titulo || `Restaurante ${item.idRestaurante}`,
-          imagenUrl: `/img/restaurantes/${item.imagenUrl}`
-        };
-      }
-
-      // POST (consejos) 
-      if (reference === 'POST') { 
-        return {
-          id: item.idPost,
-          titulo: item.titulo || `Consejos ${item.idPost}`,
-          imagenUrl: `/img/consejos/consejo${item.idPost}.jpg`
-        };
-      };
-
-      
-      return {
-        id: item.id_referencia,
-        titulo: 'Favorito',
-        imagenUrl: `https://source.unsplash.com/400x300/?restaurant`
-      };
-
-    });
+        return null;
+      })
+      .filter((item): item is ContentItem => item !== null);
 
     contentItems.value = processedItems;
-
-    console.log(`Contenido de ${reference} cargado:`, contentItems.value);
 
   } catch (error) {
     console.error(`Error al cargar ${reference}:`, error);
@@ -344,6 +366,7 @@ const fetchContent = async (reference: string | null) => {
     isContentLoading.value = false;
   }
 };
+
 
 /**
  * Maneja la actualización del perfil de usuario.
