@@ -38,8 +38,8 @@ services:
       - database
   app_celi:
     build: ./celiblog-api
-    container_name: celiblog_app
-    hostname: app
+    container_name: back
+    hostname: back
     mem_limit: 512m
     ports:
       - "8081:8081"
