@@ -104,22 +104,41 @@
     </v-row>
 
     <v-row v-else-if="contentItems.length > 0">
-        <v-col v-for="item in contentItems" :key="item.id" cols="12" sm="6" md="3">
-            <v-card class="content-item-card" flat hover @click="goToDetail(item)" style="cursor: pointer">
-                <v-img 
-                    :src="item.imagenUrl"
-                    @error="item.imagenUrl= '/img/consejos/default.jpg'"
-                    height="200"
-                    cover 
-                ></v-img>
-                <v-card-text>
-                    <div class="font-weight-bold">{{ item.titulo }}</div>
-                    <div class="text-caption text-medium-emphasis">
-                        {{ item.contenidoResumen || `Item de ${barraContenido}` }}
-                    </div>
-                </v-card-text>
-            </v-card>
-        </v-col>
+    <v-col v-for="item in contentItems" :key="item.id" cols="12" sm="6" md="3">
+    <v-card class="content-item-card" flat hover style="cursor: pointer"  @click="goToDetail(item)">
+      <v-img :src="item.imagenUrl" height="200" cover/>
+        <v-card-text>
+          <div class="font-weight-bold">{{ item.titulo }}</div>
+          <div class="text-caption text-medium-emphasis mb-2">
+            {{ item.contenidoResumen }}
+          </div>
+          <!-- BOTÓN EDITAR COMENTARIO- SOLO PENDIENTES O RECHAZADOS -->
+          <v-btn v-if="barraContenido === 'comentarios' && item.estado !== 'APROBADO'" size="small" variant="outlined" color="#8B7B44"  @click.stop="abrirEditarComentario(item)" >
+          Editar
+          </v-btn>
+        </v-card-text>
+    </v-card>
+    </v-col>
+    <v-dialog v-model="dialogEditarComentario" max-width="600">
+      <v-card>
+        <v-card-title>Editar comentario</v-card-title>
+        <v-card-text>
+          <v-textareav-model="comentarioEditado" label="Comentario"auto-grow counter maxlength="255"/>
+          <v-alert type="info" variant="tonal" class="mt-2">
+            Al guardar, el comentario volverá a estar pendiente de aprobación.
+          </v-alert>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn variant="text" @click="dialogEditarComentario = false">
+            Cancelar
+          </v-btn>
+          <v-btn color="#8B7B44" @click="guardarComentarioEditado">
+            Guardar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </v-row>
 
     <v-row v-else class="pa-4">
@@ -135,17 +154,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-// Asumo que useApiFetch y useAuthStore se mantienen
+import { ref, onMounted, watch } from 'vue';
 import { useApiFetch } from '../composables/useApiFetch'; 
 import { useAuthStore } from '../composables/useAuthStore'; 
 import { useRouter } from 'vue-router';
+
+
 // Inicialización del Store de Autenticación
 const authStore = useAuthStore();
 const router = useRouter();
 
 //barra de navegacion de los contenidos
-const barraContenido = ref('restaurantes');
+type BarraContenido= 'restaurantes'|'recetas'|'consejos'|'comentarios';
+const barraContenido = ref<BarraContenido>('restaurantes');
+//edicion comentarios
+const dialogEditarComentario = ref(false);
+const comentarioEditando = ref<ContentItem | null>(null);
+const comentarioEditado = ref('');
+
+const abrirEditarComentario = (comentario: ContentItem) => {
+  comentarioEditando.value = comentario;
+  comentarioEditado.value = comentario.contenidoResumen || '';
+  dialogEditarComentario.value = true;
+};
 
 
 // contadores de favoritos
@@ -165,15 +196,13 @@ interface UserProfileForm {
   nombre: string;
   email: string;
 }
-interface UserDataResponse {
-  nombre: string;
-  email: string;
-}
+
 interface ContentItem {
     id: number;
     titulo: string;
     imagenUrl: string; 
     contenidoResumen?: string;
+    estado?:'APROBADO'|'PENDIENTE'|'RECHAZADO';
 }
 // interfaz para obtener el contador de favoritos
 interface UsuariocontFav{
@@ -181,16 +210,8 @@ interface UsuariocontFav{
     numRecetas: number;
     numPost: number;
     numComentarios: number;
-    numUsuarios: number;
   }
-// iNTERFAZ PARA FAVORITOS
-interface FavoritoItem {
-    id: number;
-    tipo_referencia: 'RESTAURANTE' | 'RECETA' | 'POST' | 'COMENTARIO'; 
-    id_referencia: number; 
-    titulo: string;
-    imagenUrl: string; 
-}
+
 // Estado del formulario (inicializado con valores vacíos)
 const formData = ref<UserProfileForm>({
   nombre: '',
@@ -198,7 +219,7 @@ const formData = ref<UserProfileForm>({
 });
 
 const contentItems = ref<ContentItem[]>([]);
-const mapActiveContentToApiReference = (content: string): string | null => {
+const mapActiveContentToApiReference = (content: BarraContenido): string | null => {
     switch (content) {
         case 'restaurantes':
             return 'RESTAURANTE';
@@ -233,6 +254,32 @@ const fetchUserStats = async () => {
         // Dejar los valores simulados o ponerlos a cero en caso de error
     }
 };
+// editar comentarios --  solo PENDIENTES o RECHAZADOS--pte mofificar endpoint
+const guardarComentarioEditado = async () => {
+    if (!comentarioEditando.value) return;
+
+    try {
+      await useApiFetch('/api/comentario/update', {
+        method: 'PUT',
+        body: {
+          idComentario: comentarioEditando.value.id,
+          contenido: comentarioEditado.value
+        }
+      });
+
+      dialogEditarComentario.value = false;
+      statusMessage.value =
+        'Comentario actualizado. Quedará pendiente de aprobación.';
+
+      // refrescar lista y contadores
+      await fetchContent('COMENTARIO');
+      await fetchUserStats();
+
+    } catch (error) {
+      statusMessage.value = 'Error al actualizar el comentario.';
+    }
+  };
+
 
 onMounted(async () => {
   
@@ -279,10 +326,6 @@ const statusMessage = ref('');
 const isSubmitting = ref(false);
 const isContentLoading = ref(false);
 
-//const mostrarPassword = ref(false);
-
-
-
 const fetchContent = async (reference: string | null) => {
   if (!reference) {
     contentItems.value = [];
@@ -296,36 +339,31 @@ const fetchContent = async (reference: string | null) => {
     /* ===========================
        COMENTARIOS DEL USUARIO
        =========================== */
-    if (reference === 'COMENTARIO') {
-      const data = await useApiFetch('/api/comentarios/byUsuario');// Comprobar con Susana si es el endpoint correcto
+        if (reference === 'COMENTARIO') {
+          const data = await useApiFetch('/api/publicacion/byUsuario?objetos=COMENTARIO' );// revisar el endpoint en swagger, solo devuelve los aprobados
+
+          const comentarios = data as any[];
+
+          contentItems.value = comentarios.map(c => ({
+            id: c.idComentario,
+            titulo: (c.contenido ?? '').slice(0, 40) + '...',
+            contenidoResumen: c.contenido,
+            imagenUrl: '/img/comentarios_default.png',
+            estado: c.estado 
+          }));
+          const numComentarios = comentarios.filter(c => c.estado === 'APROBADO').length;// solo los aprobados
+
+          contadores.value = contadores.value.map(stat =>
+          stat.text === 'Comentarios' ? { ...stat, number: String(numComentarios) }: stat);
       
-      const comentarios = data as any[];
-      //solo se muestran los comentarios aprobados por el administrador
-      const aprobados = comentarios.filter(
-        c => c.estado === 'APROBADO'
-      );
-
-      if (comentarios.length > 0 && aprobados.length === 0) {
-        statusMessage.value = 'Tienes comentarios pendientes de aprobación.';
-      }
-
-      contentItems.value = aprobados.map(c => ({
-        id: c.idComentario,
-        titulo: c.contenido.slice(0, 40) + '...',
-        contenidoResumen: c.contenido,
-        imagenUrl: '/img/comentarios_default.png'
-      }));
-
-      return; 
-    }
-
+          return;
+        }
     /* ===========================
        FAVORITOS 
        =========================== */
     const API_URL = `/api/favoritos/byReferencia?tipoReferencia=${reference}`;
     const data = await useApiFetch(API_URL);
-    console.log('RAW favoritos:', data);
-   
+    
     const processedItems = (data as any[])
       .map(item => {
          //Recetas
@@ -338,11 +376,13 @@ const fetchContent = async (reference: string | null) => {
         }
         //Restaurantes
         if (reference === 'RESTAURANTE') {
-          return {
-            id: item.idRestaurante,
-            titulo: item.titulo || `Restaurante ${item.idRestaurante}`,
-            imagenUrl: `/img/restaurantes/${item.imagenUrl}`
-          };
+        return {
+          id: item.idRestaurante,
+          titulo: item.titulo || `Restaurante ${item.idRestaurante}`,
+          imagenUrl: item.imagenUrl
+            ? `/img/restaurantes/${item.imagenUrl}`
+            : '/img/restaurantes/default.png'
+        };
         }
         //Consejos y Post
         if (reference === 'POST') {
@@ -358,6 +398,7 @@ const fetchContent = async (reference: string | null) => {
       .filter((item): item is ContentItem => item !== null);
 
     contentItems.value = processedItems;
+    
 
   } catch (error) {
     console.error(`Error al cargar ${reference}:`, error);
@@ -410,7 +451,7 @@ const handleDeleteAccount = async () => {
   }
 };
 // links para redirigir a los objetos favoritos
-const goToDetail = (item: any) => {
+const goToDetail = (item: ContentItem) => {
   if (barraContenido.value === 'recetas') {
     router.push(`/recetas/${item.id}`);
   }
