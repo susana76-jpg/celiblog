@@ -11,9 +11,10 @@
       <!-- HERO IMAGE -->
       <DetailsHeroImage 
         v-if="post" 
-        type="consejo"
+        type="post"
         :item="post" 
         :imageUrl="post.urlPost"
+        @update:favorite="post.esFavoritoUsuario = $event"
       >
         <template #chip>
           <v-chip

@@ -35,7 +35,7 @@
       {{ item.titulo }}
     </v-card-title>
     <v-card-text class="px-0">
-      {{ item.subtitulo }}
+      {{ truncatedDescription }}
     </v-card-text>
     <v-rating
       readonly
@@ -54,7 +54,15 @@ const props = defineProps<{
   item: Receta;
 }>();
 
+// Truncate description to 130 characters
+const truncatedDescription = computed(() => {
+  const maxLength = 130;
+  return props.item.subtitulo.length > maxLength 
+    ? props.item.subtitulo.slice(0, maxLength) + '...' 
+    : props.item.subtitulo;
+});
 
+// Set chip class based on difficulty level
 const setChipClass = (difficulty: Receta['dificultad'] | undefined) => {
   switch (difficulty) {
     case 'fácil':
