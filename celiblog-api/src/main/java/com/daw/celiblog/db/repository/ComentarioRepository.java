@@ -28,7 +28,7 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
     @Query(value = "SELECT count(*) FROM comentario", nativeQuery = true)
     int countAll();
 
-    @Query(value = "SELECT * FROM comentario WHERE id_usuario =:idUsuario AND estado = 'APROBADO'", nativeQuery = true)
+    @Query(value = "SELECT * FROM comentario WHERE id_usuario =:idUsuario", nativeQuery = true)
     List<Comentario> getByIdUsuario(@Param("idUsuario")Long idUsuario);
 
 

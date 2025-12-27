@@ -63,11 +63,20 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost", "http://localhost:3000", "http://46.183.113.124",  "https://46.183.113.124",  "http://46.183.113.124:8081", "https://46.183.113.124:8081", "http://46.183.113.124:3000", "https://46.183.113.124:3000", "http://celiblog.es", "https://celiblog.es", "http://www.celiblog.es", "https://www.celiblog.es", "http://api.celiblog.es", "https://api.celiblog.es"));
+        /*CorsConfiguration configuration = new CorsConfiguration();
+        //configuration.setAllowedOrigins(List.of("http://localhost", "http://localhost:3000", "http://46.183.113.124",  "https://46.183.113.124",  "http://46.183.113.124:8081", "https://46.183.113.124:8081", "http://46.183.113.124:3000", "https://46.183.113.124:3000", "http://celiblog.es", "https://celiblog.es", "http://www.celiblog.es", "https://www.celiblog.es", "http://api.celiblog.es", "https://api.celiblog.es"));
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         configuration.setAllowedHeaders(List.of("Content-Type","Authorization"));
         configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;*/
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOriginPattern("*"); // OJO: solo funciona con Spring 5.3+
+        configuration.setAllowedMethods(List.of("*"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(false); // obligatorio si usas "*"
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
