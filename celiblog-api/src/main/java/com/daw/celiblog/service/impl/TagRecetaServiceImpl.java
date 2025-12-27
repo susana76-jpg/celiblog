@@ -4,7 +4,6 @@ import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.db.entity.TagReceta;
 import com.daw.celiblog.db.repository.RecetaRepository;
 import com.daw.celiblog.db.repository.TagRecetaRepository;
-import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.TagRecetaDTO;
 import com.daw.celiblog.dto.TagRecetaView;
 import com.daw.celiblog.service.TagRecetaService;

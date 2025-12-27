@@ -1,8 +1,6 @@
 package com.daw.celiblog.service;
 
 import com.daw.celiblog.dto.PostDTO;
-import com.daw.celiblog.dto.RecetaDTO;
-import com.daw.celiblog.dto.TagRecetaDTO;
 import com.daw.celiblog.dto.TagRecetaView;
 import org.springframework.security.core.Authentication;
 

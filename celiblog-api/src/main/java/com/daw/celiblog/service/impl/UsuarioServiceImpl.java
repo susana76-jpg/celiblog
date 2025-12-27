@@ -7,8 +7,6 @@ import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.UsuarioDTO;
 import com.daw.celiblog.dto.UsuarioView;
 import com.daw.celiblog.service.UsuarioService;
-import com.daw.celiblog.service.mapper.RestauranteMapper;
-import com.daw.celiblog.service.mapper.RolMapper;
 import com.daw.celiblog.service.mapper.UsuarioMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

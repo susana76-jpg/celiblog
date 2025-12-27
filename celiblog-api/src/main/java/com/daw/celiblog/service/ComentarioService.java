@@ -15,4 +15,6 @@ public interface ComentarioService {
     ComentarioDTO update(Authentication authentication, ComentarioView comentarioView, Long idComentario);
     boolean  deleteById(Long idComentario);
     ComentarioDTO getComentarioById(Authentication authentication, Long idComentario);
+    int getValoracionMedia(Long id, ObjetoEnum objeto);
+
 }

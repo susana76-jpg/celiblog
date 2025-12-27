@@ -1,7 +1,7 @@
 package com.daw.celiblog.service;
 
-import com.daw.celiblog.dto.UsuarioView;
 import com.daw.celiblog.dto.UsuarioDTO;
+import com.daw.celiblog.dto.UsuarioView;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;

@@ -1,7 +1,5 @@
 package com.daw.celiblog.dto;
 
-import com.daw.celiblog.enums.TipoComidaEnum;
-
 import java.util.List;
 
 public class RecetaCompletaView {
