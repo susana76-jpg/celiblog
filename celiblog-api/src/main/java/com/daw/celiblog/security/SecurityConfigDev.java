@@ -25,6 +25,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@Profile("!prod")
 public class SecurityConfigDev {
 
     @Autowired
