@@ -1,8 +1,6 @@
 package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.EstadisticaDTO;
-import com.daw.celiblog.enums.EstadoValidacionEnum;
-import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.GestionPublicacionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Tag(name = "Estadísticas", description = "Operaciones relacionadas los totales de objetos en base de datos")
