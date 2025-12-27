@@ -20,13 +20,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
-@Profile("dev")
+@EnableMethodSecurity
 public class SecurityConfigDev {
 
     @Autowired
@@ -49,6 +47,7 @@ public class SecurityConfigDev {
                                 "/api/paso-receta/public/**",
                                 "/api/tag-receta/public/**",
                                 "/api/tag-restaurante/public/**",
+                                "/api/tag-post/public/**",
                                 "/api/comentario/public/**",
                                 "/api/post/public/**"
                         ).permitAll()
@@ -66,10 +65,10 @@ public class SecurityConfigDev {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("*"));
+        configuration.setAllowedOrigins(List.of("http://localhost", "http://localhost:8081"));
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         configuration.setAllowedHeaders(List.of("Content-Type","Authorization"));
-        configuration.setAllowCredentials(false);
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

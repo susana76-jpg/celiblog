@@ -12,14 +12,12 @@ import org.springframework.context.annotation.Profile;
 import java.util.List;
 
 @Configuration
-@Profile("prod")
-public class SwaggerConfig {
+public class SwaggerConfigDev {
 
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                // HTTPS new Server().url("http://46.183.113.124") // opcional: servidor local ))
-                .servers(List.of( new Server().url("https://api.celiblog.es")))
+                .servers(List.of( new Server().url("http://localhost:8081")))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth",
