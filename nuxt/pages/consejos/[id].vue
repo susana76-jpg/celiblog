@@ -14,6 +14,7 @@
         type="post"
         :item="post" 
         :imageUrl="post.urlPost"
+        @update:favorite="post.esFavoritoUsuario = $event"
       >
         <template #chip>
           <v-chip

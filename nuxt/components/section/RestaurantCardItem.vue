@@ -18,7 +18,7 @@
         Información
       </v-chip>
       <v-btn
-        :color="true ? 'error' : 'darkgray'"
+        :color="item.esFavoritoUsuario ? 'error' : 'darkgray'"
         variant="outlined"
         icon="mdi-heart"
         class="card-image__favourite"
