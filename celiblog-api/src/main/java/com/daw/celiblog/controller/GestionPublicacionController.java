@@ -51,7 +51,7 @@ public class GestionPublicacionController {
 
 
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
-    @Operation(summary = "PROTEGIDO : Obtiene todos los objetos publicados por los usuarios por su tipo de referencia y en estado APROBADO (menos en comentarios que salen todos los estados de las publicaciones).")
+    @Operation(summary = "PROTEGIDO : Obtiene todos los objetos publicados por los usuarios por su tipo de referencia y en estado APROBADO (menos en comentarios que salen todos los estados de las publicaciones)  .")
     @GetMapping("/byUsuario")
     public ResponseEntity<List<?>>getPublicacionesByUsuario(
             Authentication authentication,
