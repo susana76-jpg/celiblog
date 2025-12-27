@@ -11,7 +11,7 @@
       <!-- HERO IMAGE -->
       <DetailsHeroImage 
         v-if="post" 
-        type="consejo"
+        type="post"
         :item="post" 
         :imageUrl="post.urlPost"
       >

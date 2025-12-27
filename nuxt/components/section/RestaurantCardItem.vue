@@ -29,7 +29,7 @@
       {{ item.nombre }}
     </v-card-title>
     <v-card-text class="px-0">
-      {{ item.descripcion }}
+      {{ truncatedDescription }}
     </v-card-text>
     <v-rating
       readonly
@@ -46,8 +46,16 @@ const props = defineProps<{
   item: Restaurante;
 }>();
 
-
+// Compute link to restaurant details page
 const setLink = computed(() => `/restaurantes/${props.item.idRestaurante}`);
+
+// Truncate description to 130 characters
+const truncatedDescription = computed(() => {
+  const maxLength = 130;
+  return props.item.descripcion.length > maxLength 
+    ? props.item.descripcion.slice(0, maxLength) + '...' 
+    : props.item.descripcion;
+});
 </script>
 
 <style lang="scss">

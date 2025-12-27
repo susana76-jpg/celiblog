@@ -114,7 +114,7 @@ const getAllRestaurants = async () => {
     });
   
     restaurants.value = data as Restaurante[];
-    restaurants.value.forEach((restaurant, index) => restaurant.imagenUrl = `/img/restaurantes/restaurante${index + 1}.jpg`);
+    restaurants.value.forEach((restaurant) => restaurant.imagenUrl = `/img/restaurantes/${restaurant.imagenUrl}`);
   } catch (error) {
     console.error('Error fetching receipe:', error);
   } finally {
