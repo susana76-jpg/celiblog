@@ -1,6 +1,5 @@
 package com.daw.celiblog.db.entity;
 
-import com.daw.celiblog.enums.RolEnum;
 import jakarta.persistence.*;
 
 import java.io.Serializable;

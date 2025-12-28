@@ -2,7 +2,6 @@ package com.daw.celiblog.service.impl;
 
 import com.daw.celiblog.db.entity.Usuario;
 import com.daw.celiblog.db.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

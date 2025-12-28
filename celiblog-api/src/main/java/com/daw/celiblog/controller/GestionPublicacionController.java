@@ -1,9 +1,7 @@
 package com.daw.celiblog.controller;
 
-import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
-import com.daw.celiblog.enums.TipoComidaEnum;
 import com.daw.celiblog.service.GestionPublicacionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -51,7 +49,7 @@ public class GestionPublicacionController {
 
 
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
-    @Operation(summary = "PROTEGIDO : Obtiene todos los objetos publicados por los usuarios por su tipo de referencia y en estado APROBADO.")
+    @Operation(summary = "PROTEGIDO : Obtiene todos los objetos publicados por los usuarios por su tipo de referencia y en estado APROBADO (menos en comentarios que salen todos los estados de las publicaciones)  .")
     @GetMapping("/byUsuario")
     public ResponseEntity<List<?>>getPublicacionesByUsuario(
             Authentication authentication,

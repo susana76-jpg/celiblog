@@ -1,12 +1,8 @@
 package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.PostDTO;
-import com.daw.celiblog.dto.RecetaDTO;
-import com.daw.celiblog.dto.TagRecetaDTO;
-import com.daw.celiblog.dto.TagRecetaView;
 import com.daw.celiblog.service.RecetaService;
 import com.daw.celiblog.service.TagPostService;
-import com.daw.celiblog.service.TagRecetaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -9,7 +9,7 @@
         <version>0.0.1</version>
     </parent>
 
-    <groupId>org.example</groupId>
+    <groupId>com.daw</groupId>
     <artifactId>celiblog-api</artifactId>
 
     <properties>

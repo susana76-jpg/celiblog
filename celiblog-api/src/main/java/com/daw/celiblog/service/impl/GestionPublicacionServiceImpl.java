@@ -2,7 +2,7 @@ package com.daw.celiblog.service.impl;
 
 import com.daw.celiblog.db.entity.*;
 import com.daw.celiblog.db.repository.*;
-import com.daw.celiblog.dto.*;
+import com.daw.celiblog.dto.EstadisticaDTO;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.*;
@@ -13,7 +13,6 @@ import com.daw.celiblog.service.mapper.RestauranteMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

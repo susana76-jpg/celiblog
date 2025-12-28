@@ -1,25 +1,20 @@
 package com.daw.celiblog.service.impl;
 
 import com.daw.celiblog.db.entity.Post;
-import com.daw.celiblog.db.entity.Restaurante;
 import com.daw.celiblog.db.entity.Usuario;
+import com.daw.celiblog.db.repository.ComentarioRepository;
 import com.daw.celiblog.db.repository.FavoritoRepository;
 import com.daw.celiblog.db.repository.PostRepository;
 import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.PostDTO;
 import com.daw.celiblog.dto.PostView;
-import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.PostService;
 import com.daw.celiblog.service.UsuarioService;
 import com.daw.celiblog.service.mapper.PostMapper;
-import com.daw.celiblog.service.mapper.RestauranteMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Date;
 import java.util.List;
@@ -32,12 +27,14 @@ public class PostServiceImpl implements PostService {
     private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
     private final FavoritoRepository favoritoRepository;
+    private final ComentarioRepository comentarioRepository;
 
-    public PostServiceImpl(PostRepository postRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository, FavoritoRepository favoritoRepository) {
+    public PostServiceImpl(PostRepository postRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository, FavoritoRepository favoritoRepository, ComentarioRepository comentarioRepository) {
         this.postRepository = postRepository;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
         this.favoritoRepository = favoritoRepository;
+        this.comentarioRepository = comentarioRepository;
     }
 
     @Override
@@ -45,7 +42,7 @@ public class PostServiceImpl implements PostService {
         List<PostDTO> post =  this.postRepository.getByEstadoPublicacion(EstadoValidacionEnum.APROBADO.toString())
                 .stream()
                 .map(PostMapper::entityToDto)
-                .toList();
+                .peek(this::setValoracionMedia).toList();
         if(authentication == null){
             return post;
         }else{
@@ -59,6 +56,10 @@ public class PostServiceImpl implements PostService {
         PostDTO post =  this.postRepository
                 .findById(id)
                 .map(PostMapper::entityToDto)
+                .map(postDto -> {
+                   this.setValoracionMedia(postDto);
+                    return postDto;
+                })
                 .orElse(null);
         if(authentication == null){
             return post;
@@ -147,8 +148,12 @@ public class PostServiceImpl implements PostService {
         return post;
     }
 
-    private boolean isFavorit(Long id, String emailUsuarioLogin){
-        Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuarioLogin);
-        return (this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.POST.toString())).contains(id);
+
+
+    private void setValoracionMedia(PostDTO post){
+        int media = comentarioRepository .getValoracionObjeto(post.getIdPost(), ObjetoEnum.POST.toString());
+        post.setValoracionMedia(
+            media
+        );
     }
 }

@@ -27,9 +27,10 @@ public class RecetaServiceImpl implements RecetaService {
     private final VistaRecetaRepository vistaRecetaRepository;
     private final PasoRecetaService pasoRecetaService;
     private final IngredienteService ingredienteService;
+    private final ComentarioRepository comentarioRepository;
 
 
-    public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository1, FavoritoRepository favoritoRepository, VistaRecetaRepository vistaRecetaRepository, PasoRecetaService pasoRecetaService, IngredienteService ingredienteService) {
+    public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository1, FavoritoRepository favoritoRepository, VistaRecetaRepository vistaRecetaRepository, PasoRecetaService pasoRecetaService, IngredienteService ingredienteService, ComentarioRepository comentarioRepository) {
         this.recetaRepository = recetaRepository;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository1;
@@ -37,11 +38,19 @@ public class RecetaServiceImpl implements RecetaService {
         this.vistaRecetaRepository = vistaRecetaRepository;
         this.pasoRecetaService = pasoRecetaService;
         this.ingredienteService = ingredienteService;
+        this.comentarioRepository = comentarioRepository;
     }
 
     @Override
     public List<RecetaDTO> getAll(Authentication authentication) {
-        List<RecetaDTO> recetas = RecetaMapper.entityToDtoList(recetaRepository.getByEstadoPublicacion(EstadoValidacionEnum.APROBADO.toString()));
+        List<RecetaDTO> recetas = RecetaMapper
+                .entityToDtoList(recetaRepository.getByEstadoPublicacion(EstadoValidacionEnum.APROBADO.toString()))
+                .stream()
+                .map(receta -> {
+                    setValoracionMedia(receta);
+                    return receta;
+                })
+                .toList();
         if(authentication == null){
             return recetas;
         }else{
@@ -54,6 +63,10 @@ public class RecetaServiceImpl implements RecetaService {
         RecetaDTO receta =  recetaRepository
                 .findById(id)
                 .map(RecetaMapper::entityToDto)
+            .map(rec -> {
+                setValoracionMedia(rec);
+                return rec;
+            })
                 .orElse(null);
 
         if (authentication != null) {
@@ -64,7 +77,8 @@ public class RecetaServiceImpl implements RecetaService {
     }
     @Override
     public List<RecetaDTO> getByNumComensales(Authentication authentication, int numComensales) {
-        List<RecetaDTO> recetas = RecetaMapper.entityToDtoList(this.recetaRepository.getByComensales(numComensales));
+        List<RecetaDTO> recetas = RecetaMapper.entityToDtoList(this.recetaRepository.getByComensales(numComensales))
+                .stream().peek(this::setValoracionMedia).toList();
         if(authentication == null){
             return recetas;
         }else{
@@ -73,7 +87,8 @@ public class RecetaServiceImpl implements RecetaService {
     }
     @Override
     public List<RecetaDTO> getByValoracion(Authentication authentication, int valoracion) {
-        List<RecetaDTO> recetas = RecetaMapper.entityToDtoList(this.recetaRepository.getByValoracion(valoracion));
+        List<RecetaDTO> recetas = RecetaMapper.entityToDtoList(this.recetaRepository.getByValoracion(valoracion))
+                .stream().peek(this::setValoracionMedia).toList();
         if(authentication == null){
             return recetas;
         }else{
@@ -82,7 +97,8 @@ public class RecetaServiceImpl implements RecetaService {
     }
     @Override
     public List<RecetaDTO> getByTipoComida(Authentication authentication, TipoComidaEnum tipoComida) {
-        List<RecetaDTO> recetas = RecetaMapper.entityToDtoList(this.recetaRepository.getByTipoComida(tipoComida));
+        List<RecetaDTO> recetas = RecetaMapper.entityToDtoList(this.recetaRepository.getByTipoComida(tipoComida))
+                .stream().peek(this::setValoracionMedia).toList();
         if(authentication == null){
             return recetas;
         }else{
@@ -97,7 +113,8 @@ public class RecetaServiceImpl implements RecetaService {
 
     @Override
     public List<RecetaDTO> buscarRecetasPorNombreDeTag(Authentication authentication, String nombreTag) {
-        List<RecetaDTO> recetas =  RecetaMapper.entityToDtoList(this.recetaRepository.buscarRecetasPorNombreDeTag(nombreTag.toUpperCase())) ;
+        List<RecetaDTO> recetas =  RecetaMapper.entityToDtoList(this.recetaRepository.buscarRecetasPorNombreDeTag(nombreTag.toUpperCase()))
+                .stream().peek(this::setValoracionMedia).toList();
         if(authentication == null){
             return recetas;
         }else{
@@ -111,7 +128,8 @@ public class RecetaServiceImpl implements RecetaService {
         for(String tag:tags){
             recetas.addAll(new HashSet<>(this.buscarRecetasPorNombreDeTag(authentication, tag)));
         }
-        return recetas.stream().toList();
+        return recetas.stream().toList()
+                .stream().peek(this::setValoracionMedia).toList();
     }
 
     @Override
@@ -243,6 +261,12 @@ public class RecetaServiceImpl implements RecetaService {
         return (this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RECETA.toString())).contains(idReceta);
     }
 
+    private void setValoracionMedia(RecetaDTO receta){
+        int valor = this.comentarioRepository.getValoracionObjeto(receta.getIdReceta(), ObjetoEnum.RECETA.toString());
 
+        receta.setValoracionMedia(
+            valor
+        );
+    }
 
 }

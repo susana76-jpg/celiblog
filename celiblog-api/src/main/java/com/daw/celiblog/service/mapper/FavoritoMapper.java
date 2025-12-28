@@ -1,13 +1,9 @@
 package com.daw.celiblog.service.mapper;
 
 import com.daw.celiblog.db.entity.Favorito;
-import com.daw.celiblog.db.entity.Favorito;
-import com.daw.celiblog.db.entity.Usuario;
-import com.daw.celiblog.dto.FavoritoDTO;
 import com.daw.celiblog.dto.FavoritoDTO;
 import com.daw.celiblog.dto.UsuarioSummaryDTO;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

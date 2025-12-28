@@ -85,25 +85,25 @@ services:
           - front.internal
     depends_on:
       - app_celi
-  nginx:
-    build: ./celiblog-nginx
-    container_name: nginx
-    hostname: nginx
-    ports:
-      - 80:80
-      - 443:443
-    restart: always
-    networks:
-      celiblog_network:
-        ipv4_address: 192.168.0.14
-        aliases:
-          - nginx.internal
-    depends_on:
-      - app_front
-    volumes:
-      - type: bind
-        source: /etc/letsencrypt/
-        target: /etc/letsencrypt/
+  #nginx:
+    #  build: ./celiblog-nginx
+    #container_name: nginx
+    #hostname: nginx
+      #ports:
+      #- 80:80
+      #- 443:443
+    #restart: always
+      #networks:
+        #celiblog_network:
+        #ipv4_address: 192.168.0.14
+        #aliases:
+      #  - nginx.internal
+      #depends_on:
+      #- app_front
+      #volumes:
+        #- type: bind
+        #source: /etc/letsencrypt/
+      #target: /etc/letsencrypt/
 networks:
   celiblog_network:
     ipam:

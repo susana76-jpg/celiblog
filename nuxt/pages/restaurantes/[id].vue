@@ -12,6 +12,7 @@
         type="restaurante"
         :item="restaurant" 
         :imageUrl="restaurant.imagenUrl"
+        @update:favorite="restaurant.esFavoritoUsuario = $event"
       />
 
       <div 
@@ -145,6 +146,7 @@ const getRestaurantById = async () => {
     });
     
     restaurant.value = data as Restaurante; 
+    restaurant.value.imagenUrl = `/img/restaurantes/${restaurant.value.imagenUrl}`;
   } catch (error) {
     showError('Error fetching restaurant');
   } finally {

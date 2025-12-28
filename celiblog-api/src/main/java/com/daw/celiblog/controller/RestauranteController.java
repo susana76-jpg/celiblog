@@ -2,7 +2,6 @@ package com.daw.celiblog.controller;
 
 import com.daw.celiblog.dto.RestauranteDTO;
 import com.daw.celiblog.dto.RestauranteView;
-import com.daw.celiblog.enums.TipoComidaEnum;
 import com.daw.celiblog.enums.TipoRestauranteEnum;
 import com.daw.celiblog.service.RestauranteService;
 import com.fasterxml.jackson.core.JsonProcessingException;

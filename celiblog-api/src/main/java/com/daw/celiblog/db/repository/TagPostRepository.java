@@ -1,11 +1,8 @@
 package com.daw.celiblog.db.repository;
 
-import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.db.entity.TagPost;
-import com.daw.celiblog.db.entity.TagReceta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

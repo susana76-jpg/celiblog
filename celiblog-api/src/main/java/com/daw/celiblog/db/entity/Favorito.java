@@ -1,7 +1,6 @@
 package com.daw.celiblog.db.entity;
 
 
-import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
 import jakarta.persistence.*;
 

@@ -3,6 +3,7 @@ package com.daw.celiblog.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -24,6 +25,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@Profile("prod")
 public class SecurityConfig {
 
     @Autowired
@@ -64,7 +66,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost", "http://localhost:3000", "http://46.183.113.124", "http://46.183.113.124:8081", "http://46.183.113.124:3000", "http://celiblog.es", "http://www.celiblog.es"));
+        configuration.setAllowedOrigins(List.of("http://celiblog.es", "https://celiblog.es",
+                "http://www.celiblog.es", "https://www.celiblog.es",
+                "http://api.celiblog.es", "https://api.celiblog.es",
+                "http://api.celiblog.es:8081", "https://api.celiblog.es:8081"));
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         configuration.setAllowedHeaders(List.of("Content-Type","Authorization"));
         configuration.setAllowCredentials(true);

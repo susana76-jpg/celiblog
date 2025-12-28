@@ -30,6 +30,7 @@ export interface Restaurante {
   email: string;
   valoracion: number;
   estado: string;
+  esFavoritoUsuario?: boolean;
   titulo?: string;
   subtitulo?: string;
   tipoRestaurante?: string;

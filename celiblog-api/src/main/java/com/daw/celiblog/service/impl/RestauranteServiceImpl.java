@@ -2,11 +2,11 @@ package com.daw.celiblog.service.impl;
 
 import com.daw.celiblog.db.entity.Restaurante;
 import com.daw.celiblog.db.entity.Usuario;
-import com.daw.celiblog.db.repository.FavoritoRepository;
-import com.daw.celiblog.db.repository.RestauranteRepository;
-import com.daw.celiblog.db.repository.TagRestauranteRepository;
-import com.daw.celiblog.db.repository.UsuarioRepository;
-import com.daw.celiblog.dto.*;
+import com.daw.celiblog.db.repository.*;
+import com.daw.celiblog.dto.RecetaDTO;
+import com.daw.celiblog.dto.RestauranteDTO;
+import com.daw.celiblog.dto.RestauranteView;
+import com.daw.celiblog.dto.TagRestauranteDTO;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.enums.TipoRestauranteEnum;
@@ -20,7 +20,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class RestauranteServiceImpl implements RestauranteService {
@@ -31,16 +30,18 @@ public class RestauranteServiceImpl implements RestauranteService {
     private final GeolocalizacionService geolocalizacionService;
     private final UsuarioService usuarioService;
     private final FavoritoRepository favoritoRepository;
+    private final ComentarioRepository comentarioRepository;
 
 
 
-    public RestauranteServiceImpl(RestauranteRepository restauranteRepository, TagRestauranteRepository tagRestauranteRepository, UsuarioRepository usuarioRepository, GeolocalizacionService geolocalizacionService, UsuarioService usuarioService, FavoritoRepository favoritoRepository) {
+    public RestauranteServiceImpl(RestauranteRepository restauranteRepository, TagRestauranteRepository tagRestauranteRepository, UsuarioRepository usuarioRepository, GeolocalizacionService geolocalizacionService, UsuarioService usuarioService, FavoritoRepository favoritoRepository, ComentarioRepository comentarioRepository) {
         this.restauranteRepository = restauranteRepository;
         this.tagRestauranteRepository = tagRestauranteRepository;
         this.usuarioRepository = usuarioRepository;
         this.geolocalizacionService = geolocalizacionService;
         this.usuarioService = usuarioService;
         this.favoritoRepository = favoritoRepository;
+        this.comentarioRepository = comentarioRepository;
     }
 
 
@@ -48,6 +49,7 @@ public class RestauranteServiceImpl implements RestauranteService {
     public List<RestauranteDTO> all(Authentication authentication) {
         List<RestauranteDTO> restaurantes =  restauranteRepository.getByEstadoPublicacion(EstadoValidacionEnum.APROBADO.toString()).stream()
                 .map(RestauranteMapper::entityToDto)
+                .peek(this::setValoracionMedia)
                 .toList();
         if(authentication == null){
             return restaurantes;
@@ -62,6 +64,10 @@ public class RestauranteServiceImpl implements RestauranteService {
         RestauranteDTO restaurante =  restauranteRepository
                 .findById(id)
                 .map(RestauranteMapper::entityToDto)
+                .map(res -> {
+                    setValoracionMedia(res);
+                    return res;
+                })
                 .orElse(null);
         if(authentication == null){
             return restaurante;
@@ -199,7 +205,9 @@ public class RestauranteServiceImpl implements RestauranteService {
 
     @Override
     public List<RestauranteDTO> buscarRestaurantesPorNombreDeTag(String nombreTag) {
-        return RestauranteMapper.entityToDtoList(this.restauranteRepository.buscarRestaurantesPorNombreDeTag(nombreTag.toUpperCase()));
+        return RestauranteMapper.entityToDtoList(this.restauranteRepository.buscarRestaurantesPorNombreDeTag(nombreTag.toUpperCase()))
+                .stream()
+                .peek(this::setValoracionMedia).toList();
     }
 
     @Override
@@ -208,16 +216,10 @@ public class RestauranteServiceImpl implements RestauranteService {
        for(String tag:tags){
            restaurantes.addAll(new HashSet<>(this.buscarRestaurantesPorNombreDeTag(tag)));
        }
-       return restaurantes.stream().toList();
+       return restaurantes.stream().toList()
+               .stream()
+               .peek(this::setValoracionMedia).toList();
     }
-
-    @Override
-    public RestauranteDTO crearRestaurante(RestauranteView restauranteView) throws JsonProcessingException {
-        return null;
-    }
-
-
-
 
     @Override
     public RestauranteDTO update(RestauranteView restauranteView, Long idRestaurante) throws JsonProcessingException {
@@ -263,9 +265,12 @@ public class RestauranteServiceImpl implements RestauranteService {
         return restaurante;
     }
 
-    private boolean isFavorit(Long id, String emailUsuarioLogin){
-        Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuarioLogin);
-        return (this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.RECETA.toString())).contains(id);
+    private void setValoracionMedia(RestauranteDTO restaurante){
+        int valor = this.comentarioRepository.getValoracionObjeto(restaurante.getIdRestaurante(), ObjetoEnum.RESTAURANTE.toString());
+
+        restaurante.setValoracionMedia(
+                valor
+        );
     }
 
 

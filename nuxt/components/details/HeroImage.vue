@@ -59,7 +59,7 @@ const { addToFavorites, removeFromFavorites } = useUserActions();
 
 const props = withDefaults(defineProps<{
   item: any;
-  type: 'receta' | 'restaurante' | 'consejo';
+  type: 'receta' | 'restaurante' | 'post';
   imageUrl?: string;
   showRating?: boolean;
   showFavorite?: boolean;
@@ -74,6 +74,7 @@ const emit = defineEmits<{
   'update:favorite': [isFavorite: boolean]
 }>();
 
+// Set chip color and rating based on difficulty
 const setLevelChip = (difficulty: string | undefined) => {
   switch (difficulty?.toLowerCase()) {
     case 'fácil':
@@ -90,18 +91,27 @@ const setLevelChip = (difficulty: string | undefined) => {
   }
 };
 
+// Get title based on type
 const title = computed(() => {
   if (props.type === 'restaurante') return props.item.nombre || 'Nombre no disponible';
   return props.item.titulo || 'Título no disponible';
 });
 
+// Get item ID based on type
+const id = computed(() => {
+  if (props.type === 'restaurante') return props.item.idRestaurante;
+  if (props.type === 'post') return props.item.idPost;
+  return props.item.idReceta;
+});
+
 // Toggle favorite status
 const toggleFavorite = async (item: Receta) => {
   if (item.esFavoritoUsuario) {
-    const response = await removeFromFavorites(item.idReceta);
+    const response = await removeFromFavorites(id.value);
     if (response.success) emit('update:favorite', false);
   } else {
-    const response = await addToFavorites(item.idReceta, 'RECETA');
+    const objectType = props.type.toUpperCase() as ObjectType;
+    const response = await addToFavorites(id.value, objectType);
     if (response.success) emit('update:favorite', true);
   }
 };

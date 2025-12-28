@@ -1,10 +1,6 @@
 package com.daw.celiblog.controller;
 
-import com.daw.celiblog.dto.ComentarioDTO;
-import com.daw.celiblog.dto.ComentarioView;
 import com.daw.celiblog.dto.IngredienteView;
-import com.daw.celiblog.enums.ObjetoEnum;
-import com.daw.celiblog.service.ComentarioService;
 import com.daw.celiblog.service.IngredienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,6 +1,5 @@
 package com.daw.celiblog.config;
 
-
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
@@ -8,19 +7,19 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import java.util.List;
 
 @Configuration
+@Profile("prod")
 public class SwaggerConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 // HTTPS new Server().url("http://46.183.113.124") // opcional: servidor local ))
-                .servers(List.of( new Server().url("https://46.183.113.124"),
-                                new Server().url("http://46.183.113.124")
-                ))
+                .servers(List.of( new Server().url("https://api.celiblog.es")))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth",
@@ -32,5 +31,6 @@ public class SwaggerConfig {
                         )
                 );
     }
+
 }
 

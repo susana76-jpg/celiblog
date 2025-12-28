@@ -18,7 +18,7 @@
         Información
       </v-chip>
       <v-btn
-        :color="true ? 'error' : 'darkgray'"
+        :color="item.esFavoritoUsuario ? 'error' : 'darkgray'"
         variant="outlined"
         icon="mdi-heart"
         class="card-image__favourite"
@@ -29,7 +29,7 @@
       {{ item.titulo }}
     </v-card-title>
     <v-card-text class="px-0">
-      {{ item.subtitulo }}
+      {{ truncatedDescription }}
     </v-card-text>
     <v-rating
       readonly
@@ -48,6 +48,14 @@ const props = defineProps<{
 
 
 const setLink = computed(() => `/consejos/${props.item.idPost}`);
+
+// Truncate description to 130 characters
+const truncatedDescription = computed(() => {
+  const maxLength = 130;
+  return props.item.subtitulo.length > maxLength 
+    ? props.item.subtitulo.slice(0, maxLength) + '...' 
+    : props.item.subtitulo;
+});
 </script>
 
 <style lang="scss">

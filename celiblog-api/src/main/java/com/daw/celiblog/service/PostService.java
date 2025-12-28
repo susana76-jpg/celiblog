@@ -1,8 +1,7 @@
 package com.daw.celiblog.service;
 
-import com.daw.celiblog.dto.*;
-import com.daw.celiblog.enums.EstadoValidacionEnum;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.daw.celiblog.dto.PostDTO;
+import com.daw.celiblog.dto.PostView;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;

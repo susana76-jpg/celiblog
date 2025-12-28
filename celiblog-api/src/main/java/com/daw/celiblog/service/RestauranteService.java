@@ -1,7 +1,8 @@
 package com.daw.celiblog.service;
 
-import com.daw.celiblog.dto.*;
-import com.daw.celiblog.enums.EstadoValidacionEnum;
+import com.daw.celiblog.dto.RestauranteDTO;
+import com.daw.celiblog.dto.RestauranteView;
+import com.daw.celiblog.dto.TagRestauranteDTO;
 import com.daw.celiblog.enums.TipoRestauranteEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.security.core.Authentication;
@@ -21,7 +22,6 @@ public interface RestauranteService {
     List<TagRestauranteDTO> obtenerTagsRestaurantePorId(Long idRestaurante);
     List<RestauranteDTO> buscarRestaurantesPorNombreDeTag(String nombreTag);
     List<RestauranteDTO> buscarRestaurantesPorNombresDeTag(List<String> tags);
-    RestauranteDTO crearRestaurante(RestauranteView restauranteView) throws JsonProcessingException;
     RestauranteDTO update(RestauranteView restauranteView, Long idRestaurante) throws JsonProcessingException;
 
 
