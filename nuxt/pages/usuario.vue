@@ -11,7 +11,7 @@
             ></v-img>
             <v-icon class="edit-icon" color="#8B7B44">mdi-pencil</v-icon>
           </div>
-
+          <!--Datos Personales-->
           <div class="profile-fields mt-6">
             <v-text-field
               v-model="formData.nombre"
@@ -41,28 +41,16 @@
             </v-btn>
             
           </div>
-
-          <v-btn
-            color="#8B7B44"
-            class="mt-4"
-            @click="handleSubmit"
-            :loading="isSubmitting"
-            block
-          >
+          <!--boton guardar cambios-->
+          <v-btn color="#8B7B44" class="mt-4" @click="handleSubmit" :loading="isSubmitting" block>
             Guardar Cambios
           </v-btn>
-          <v-alert
-            v-if="statusMessage"
-            :type="statusMessage.includes('Error') ? 'error' : 'success'"
-            class="mt-4 w-100 text-center"
-            dense
-            prominent
-          >
+          <v-alert v-if="statusMessage" :type="statusMessage.includes('Error') ? 'error' : 'success'" class="mt-4 w-100 text-center" dense prominent>
             {{ statusMessage }}
           </v-alert>
         </v-card>
       </v-col>
-
+      <!--Fichas contadores favoritos y comentario-->
       <v-col cols="12" md="8">
         <v-row dense>
           <v-col v-for="(stat, index) in contadores" :key="index" cols="6" sm="3">
@@ -81,12 +69,7 @@
     <v-row>
       <v-col cols="12">
         <v-toolbar flat class="content-toolbar">
-          <v-btn-toggle
-            v-model="barraContenido"
-            color="#8B7B44"
-            mandatory
-            group
-          >
+          <v-btn-toggle v-model="barraContenido" color="#8B7B44" mandatory group>
             <v-btn value="restaurantes" class="content-btn"><v-icon start>mdi-silverware-fork-knife</v-icon>Restaurantes</v-btn>
             <v-btn value="recetas" class="content-btn"><v-icon start>mdi-food-variant</v-icon>Recetas</v-btn>
             <v-btn value="consejos" class="content-btn"><v-icon start>mdi-lightbulb-on-outline</v-icon>Consejos</v-btn>
@@ -102,45 +85,69 @@
             <p class="mt-2">Cargando {{ barraContenido}}...</p>
         </v-col>
     </v-row>
-
+    <!--Nueva ficha comentarios-->
     <v-row v-else-if="contentItems.length > 0">
-    <v-col v-for="item in contentItems" :key="item.id" cols="12" sm="6" md="3">
-    <v-card class="content-item-card" flat hover style="cursor: pointer"  @click="goToDetail(item)">
-      <v-img :src="item.imagenUrl" height="200" cover/>
-        <v-card-text>
-          <div class="font-weight-bold">{{ item.titulo }}</div>
-          <div class="text-caption text-medium-emphasis mb-2">
-            {{ item.contenidoResumen }}
-          </div>
-          <!-- BOTÓN EDITAR COMENTARIO- SOLO PENDIENTES O RECHAZADOS -->
-          <v-btn v-if="barraContenido === 'comentarios' && item.estado !== 'APROBADO'" size="small" variant="outlined" color="#8B7B44"  @click.stop="abrirEditarComentario(item)" >
-          Editar
-          </v-btn>
-        </v-card-text>
-    </v-card>
-    </v-col>
-    <v-dialog v-model="dialogEditarComentario" max-width="600">
-      <v-card>
-        <v-card-title>Editar comentario</v-card-title>
-        <v-card-text>
-          <v-textareav-model="comentarioEditado" label="Comentario"auto-grow counter maxlength="255"/>
-          <v-alert type="info" variant="tonal" class="mt-2">
-            Al guardar, el comentario volverá a estar pendiente de aprobación.
-          </v-alert>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn variant="text" @click="dialogEditarComentario = false">
-            Cancelar
-          </v-btn>
-          <v-btn color="#8B7B44" @click="guardarComentarioEditado">
-            Guardar
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      <!-- =============== COMENTARIOS ================= -->
+     <template v-if="barraContenido === 'comentarios'">
+        <v-col cols="12" v-for="item in contentItems" :key="item.id">
+          <v-card flat class="comment-card pa-4 mb-4">
+            <div class="d-flex justify-space-between align-center mb-2">
+              <div>
+                    <h4 class="font-weight-bold">{{ item.titulo }}</h4>
+                    <div class="text-caption text-medium-emphasis">
+                      {{ item.fecha }}
+                    </div>
+              </div>
+              <div class="d-flex align-center">
+                <v-rating
+                      :model-value="item.valoracion"
+                      readonly
+                      dense
+                      size="18"
+                      color="#8B7B44"
+              />
+
+              <v-btn
+                      v-if="item.estado !== 'APROBADO'"
+                      icon
+                      variant="text"
+                      @click.stop="abrirEditarComentario(item)"
+                    >
+              <v-icon>mdi-pencil</v-icon>
+              </v-btn>
+              </div>
+            </div>
+            <p class="mb-0">{{ item.contenidoResumen }}</p>
+          </v-card>
+        </v-col>
+      </template>
+
+        <!-- =============== RESTO DE CONTENIDOS ================= -->
+        <template v-else>
+          <v-col
+            v-for="item in contentItems"
+            :key="item.id"
+            cols="12"
+            sm="6"
+            md="3"
+          >
+            <v-card
+              class="content-item-card"
+              flat
+              hover
+              style="cursor: pointer"
+              @click="goToDetail(item)"
+            >
+              <v-img :src="item.imagenUrl" height="200" cover />
+              <v-card-text>
+                <div class="font-weight-bold">{{ item.titulo }}</div>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </template>
     </v-row>
 
+    <!--Mensaje no hay favoritos-->
     <v-row v-else class="pa-4">
         <v-col cols="12">
             <v-alert type="info" variant="tonal">
@@ -150,6 +157,33 @@
     </v-row>
 </v-col>
     </v-row>
+      <!--Cuadro dialogo editar comentarios-->
+    <v-dialog v-model="dialogEditarComentario" max-width="600">
+        <v-card>
+          <v-card-title>Editar comentario</v-card-title>
+          <v-card-text>
+            <v-textarea
+              v-model="comentarioEditado"
+              label="Comentario"
+              auto-grow
+              counter
+              maxlength="255"
+            />
+            <v-alert type="info" variant="tonal" class="mt-2">
+              Al guardar, el comentario volverá a estar pendiente de aprobación.
+            </v-alert>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn variant="text" @click="dialogEditarComentario = false">
+              Cancelar
+            </v-btn>
+            <v-btn color="#8B7B44" @click="guardarComentarioEditado">
+              Guardar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+  </v-dialog>
   </v-container>
 </template>
 
@@ -198,11 +232,13 @@ interface UserProfileForm {
 }
 
 interface ContentItem {
-    id: number;
-    titulo: string;
-    imagenUrl: string; 
-    contenidoResumen?: string;
-    estado?:'APROBADO'|'PENDIENTE'|'RECHAZADO';
+  id: number;
+  titulo: string;
+  contenidoResumen?: string;
+  imagenUrl?: string;
+  fecha?: string;
+  valoracion?: number;
+  estado?: 'APROBADO' | 'PENDIENTE' | 'RECHAZADO';
 }
 // interfaz para obtener el contador de favoritos
 interface UsuariocontFav{
@@ -256,29 +292,37 @@ const fetchUserStats = async () => {
 };
 // editar comentarios --  solo PENDIENTES o RECHAZADOS--pte mofificar endpoint
 const guardarComentarioEditado = async () => {
-    if (!comentarioEditando.value) return;
+  const comentario = comentarioEditando.value;
+  if (!comentario) return;
 
-    try {
-      await useApiFetch('/api/comentario/update', {
-        method: 'PUT',
-        body: {
-          idComentario: comentarioEditando.value.id,
-          contenido: comentarioEditado.value
-        }
-      });
+  if (!comentarioEditado.value.trim()) {
+    statusMessage.value = 'El comentario no puede estar vacío.';
+    return;
+  }
 
-      dialogEditarComentario.value = false;
-      statusMessage.value =
-        'Comentario actualizado. Quedará pendiente de aprobación.';
+  try {
+    await useApiFetch('/api/comentario/update', {
+      method: 'PUT',
+      body: {
+        idComentario: comentario.id,
+        contenido: comentarioEditado.value
+      }
+    });
 
-      // refrescar lista y contadores
-      await fetchContent('COMENTARIO');
-      await fetchUserStats();
+    dialogEditarComentario.value = false;
+    comentarioEditando.value = null;
+    comentarioEditado.value = '';
 
-    } catch (error) {
-      statusMessage.value = 'Error al actualizar el comentario.';
-    }
-  };
+    statusMessage.value =
+      'Comentario actualizado. Quedará pendiente de aprobación.';
+
+    await fetchContent('COMENTARIO');
+    await fetchUserStats();
+
+  } catch (error) {
+    statusMessage.value = 'Error al actualizar el comentario.';
+  }
+};
 
 
 onMounted(async () => {
@@ -346,10 +390,11 @@ const fetchContent = async (reference: string | null) => {
 
           contentItems.value = comentarios.map(c => ({
             id: c.idComentario,
-            titulo: (c.contenido ?? '').slice(0, 40) + '...',
+            titulo: c.titulo || 'Comentario',
             contenidoResumen: c.contenido,
-            imagenUrl: '/img/comentarios_default.png',
-            estado: c.estado 
+            fecha: c.fechaCreacion,
+            valoracion: c.valoracion,
+            estado: c.estado
           }));
           const numComentarios = comentarios.filter(c => c.estado === 'APROBADO').length;// solo los aprobados
 
@@ -395,7 +440,7 @@ const fetchContent = async (reference: string | null) => {
 
         return null;
       })
-      .filter((item): item is ContentItem => item !== null);
+      .filter(item => item !== null) as ContentItem[];
 
     contentItems.value = processedItems;
     
@@ -622,5 +667,12 @@ $secondary-color: #333333;
     .stat-card {
         margin-bottom: $spacing-sm;
     }
+}
+.comment-card {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.comment-card h4 {
+  margin: 0;
 }
 </style>
