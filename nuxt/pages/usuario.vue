@@ -98,23 +98,17 @@
                       {{ item.fecha }}
                     </div>
               </div>
+              <!-- Todos los comentarios. Los Pendientes o Rechazados se pueden editar o eliminar -->
               <div class="d-flex align-center">
-                <v-rating
-                      :model-value="item.valoracion"
-                      readonly
-                      dense
-                      size="18"
-                      color="#8B7B44"
-              />
-
-              <v-btn
-                      v-if="item.estado !== 'APROBADO'"
-                      icon
-                      variant="text"
-                      @click.stop="abrirEditarComentario(item)"
-                    >
-              <v-icon>mdi-pencil</v-icon>
-              </v-btn>
+                <v-rating :model-value="item.valoracion" readonly dense size="18" color="#8B7B44" />
+                <!--Boton Editar-->
+                <v-btn v-if="item.estado !== 'APROBADO'"icon variant="text" @click.stop="abrirEditarComentario(item)">
+                <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+                <!--Boton Eliminar-->
+                <v-btn v-if="item.estado !== 'APROBADO'" icon variant="text"  color="error" @click.stop="abrirEliminarComentario(item)">
+                <v-icon>mdi-delete</v-icon>
+                 </v-btn>
               </div>
             </div>
             <p class="mb-0">{{ item.contenidoResumen }}</p>
@@ -124,20 +118,8 @@
 
         <!-- =============== RESTO DE CONTENIDOS ================= -->
         <template v-else>
-          <v-col
-            v-for="item in contentItems"
-            :key="item.id"
-            cols="12"
-            sm="6"
-            md="3"
-          >
-            <v-card
-              class="content-item-card"
-              flat
-              hover
-              style="cursor: pointer"
-              @click="goToDetail(item)"
-            >
+          <v-col v-for="item in contentItems":key="item.id" cols="12" sm="6" md="3">
+            <v-card class="content-item-card" flat hover style="cursor: pointer"  @click="goToDetail(item)">
               <v-img :src="item.imagenUrl" height="200" cover />
               <v-card-text>
                 <div class="font-weight-bold">{{ item.titulo }}</div>
@@ -162,13 +144,7 @@
         <v-card>
           <v-card-title>Editar comentario</v-card-title>
           <v-card-text>
-            <v-textarea
-              v-model="comentarioEditado"
-              label="Comentario"
-              auto-grow
-              counter
-              maxlength="255"
-            />
+            <v-textarea v-model="comentarioEditado" label="Comentario" auto-grow counter maxlength="255"/>
             <v-alert type="info" variant="tonal" class="mt-2">
               Al guardar, el comentario volverá a estar pendiente de aprobación.
             </v-alert>
@@ -184,10 +160,39 @@
           </v-card-actions>
         </v-card>
   </v-dialog>
+  <!--Cuadro dialogo eliminar comentarios-->
+  <v-dialog v-model="dialogEliminarComentario" max-width="500">
+        <v-card>
+          <v-card-title class="text-h6">
+      Eliminar comentario
+          </v-card-title>
+          <v-card-text>
+          ¿Estás seguro de que deseas eliminar este comentario?
+          <v-alert type="warning" variant="tonal" class="mt-2">
+            Esta acción no se puede deshacer.
+          </v-alert>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn variant="text" @click="dialogEliminarComentario = false">
+              Cancelar
+            </v-btn>
+            <v-btn color="error" @click="confirmarEliminarComentario">
+              Eliminar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+  </v-dialog>
   </v-container>
 </template>
 
 <script setup lang="ts">
+  /*Vista del perfil de usuario
+  Funcionalidades: -Editar Nombre
+                   -VEr su contenido favorito
+                   -Ver comentarios
+                   -Editar/Borrar comentarios pendientes o rechazados
+                   -Eliminar Cuenta*/
 import { ref, onMounted, watch } from 'vue';
 import { useApiFetch } from '../composables/useApiFetch'; 
 import { useAuthStore } from '../composables/useAuthStore'; 
@@ -205,6 +210,9 @@ const barraContenido = ref<BarraContenido>('restaurantes');
 const dialogEditarComentario = ref(false);
 const comentarioEditando = ref<ContentItem | null>(null);
 const comentarioEditado = ref('');
+//eliminar comentarios
+const dialogEliminarComentario = ref(false);
+const comentarioAEliminar = ref<ContentItem | null>(null);
 
 const abrirEditarComentario = (comentario: ContentItem) => {
   comentarioEditando.value = comentario;
@@ -220,7 +228,10 @@ const contadores = ref([
     { icon: 'mdi-lightbulb-on-outline', number: '0', text: 'Post' },
     { icon: 'mdi-star-outline', number: '0.0', text: 'Comentarios' },
 ]);
-
+const abrirEliminarComentario = (comentario: ContentItem) => {
+  comentarioAEliminar.value = comentario;
+  dialogEliminarComentario.value = true;
+};
 
 /**
  * Interface para los campos del formulario de Perfil.
@@ -290,7 +301,7 @@ const fetchUserStats = async () => {
         // Dejar los valores simulados o ponerlos a cero en caso de error
     }
 };
-// editar comentarios --  solo PENDIENTES o RECHAZADOS--pte mofificar endpoint
+// editar comentarios --  solo PENDIENTES o RECHAZADOS--al guardarlo vuelve a pendiente
 const guardarComentarioEditado = async () => {
   const comentario = comentarioEditando.value;
   if (!comentario) return;
@@ -303,7 +314,7 @@ const guardarComentarioEditado = async () => {
   try {
     await useApiFetch('/api/comentario/update', {
       method: 'PUT',
-      body: {
+      params: {
         idComentario: comentario.id,
         contenido: comentarioEditado.value
       }
@@ -321,6 +332,33 @@ const guardarComentarioEditado = async () => {
 
   } catch (error) {
     statusMessage.value = 'Error al actualizar el comentario.';
+  }
+};
+//eliminar comentario -- el usuario no puede eliminarlo una vez aprobado
+const confirmarEliminarComentario = async () => {
+  const comentario = comentarioAEliminar.value;
+  if (!comentario) return;
+
+  try {
+    await useApiFetch('/api/comentario/delete', {
+      method: 'PUT',
+      params: {
+        idObjeto: comentario.id,
+        objeto: 'COMENTARIO',
+        estado: 'ELIMINADO'
+      }
+    });
+
+    dialogEliminarComentario.value = false;
+    comentarioAEliminar.value = null;
+
+    statusMessage.value = 'Comentario eliminado correctamente.';
+
+    await fetchContent('COMENTARIO');
+    await fetchUserStats();
+
+  } catch (error) {
+    statusMessage.value = 'Error al eliminar el comentario.';
   }
 };
 
@@ -354,7 +392,7 @@ const fetchUserData = async () => {
     
     const data = await useApiFetch<UserProfileForm>(API_URL); 
     
-    // Asumimos que la API devuelve un objeto con nombre y email
+    
     formData.value.nombre = data.nombre || '';
     formData.value.email = data.email || '';
     
@@ -369,7 +407,9 @@ const fetchUserData = async () => {
 const statusMessage = ref('');
 const isSubmitting = ref(false);
 const isContentLoading = ref(false);
-
+/*Carga el contenido a la pestaña seleccionada
+  -comentarios realizados por el usuario
+  -Favoritos(post,restaurantes,recetas)*/
 const fetchContent = async (reference: string | null) => {
   if (!reference) {
     contentItems.value = [];
@@ -480,7 +520,7 @@ const handleSubmit = async () => {
     isSubmitting.value = false;
   }
 };
-//funcion eliminar cuenta
+//Elimina la cuenta del usuario
 const handleDeleteAccount = async () => {
   const confirmDelete = confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.');
 
