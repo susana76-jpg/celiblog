@@ -69,7 +69,8 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of("http://celiblog.es", "https://celiblog.es",
                 "http://www.celiblog.es", "https://www.celiblog.es",
                 "http://api.celiblog.es", "https://api.celiblog.es",
-                "http://api.celiblog.es:8081", "https://api.celiblog.es:8081"));
+                "http://api.celiblog.es:8081", "https://api.celiblog.es:8081",
+                "http://localhost:8081", "http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         configuration.setAllowedHeaders(List.of("Content-Type","Authorization"));
         configuration.setAllowCredentials(true);
