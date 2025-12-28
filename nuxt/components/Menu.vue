@@ -154,7 +154,13 @@
 </template>
 
 <script setup lang="ts">
-const { user, isAuthenticated, logout } = useAuthStore();
+import { ref,computed} from 'vue';
+import { useAuthStore } from '@/composables/useAuthStore';
+import { navigateTo } from '#app';
+import { useRoute } from 'vue-router';
+//import type { Variant } from 'vuetify/components';
+
+const { user, isAuthenticated, logout, isAdmin } = useAuthStore();
 const route = useRoute();
 const drawer = ref<boolean>(false);
 
@@ -199,7 +205,7 @@ const accountButtons = [
   }
 ];
 
-// User menu items
+/*User menu items
 const items = [
   { 
     title: 'Perfil Usuario',
@@ -209,13 +215,42 @@ const items = [
     title: 'Cerrar Sesión',
     event: () => logout()
   },
-];  
+]; */
+type MenuItem = {
+  title: string;
+  event: () => unknown;
+};
+//añadimos redireccion a Panel de Administrador
+const items = computed(() => {
+   const baseItems: MenuItem[] = [
+    {
+      title: 'Perfil Usuario',
+      event: () => navigateTo('/usuario')
+    }
+  ];
+
+  // SOLO ADMIN
+  if (isAdmin.value) {
+    baseItems.push({
+      title: 'Panel Administrador',
+      event: () => navigateTo('/admin')
+      
+      
+    });
+  }
+
+  baseItems.push({
+    title: 'Cerrar Sesión',
+     event: () => logout()
+  });
+
+  return baseItems;
+}); 
 
 // Redirect to user profile based on role
 const redirectToUserProfile = async () => {
-  const userId = user.value?.rol.idRol;
-  if (userId === 1) await navigateTo('/admin');
-  else await navigateTo('/usuario');
+   if (isAdmin.value) await navigateTo('/admin');
+    else await navigateTo('/usuario');
 };
 </script>
 

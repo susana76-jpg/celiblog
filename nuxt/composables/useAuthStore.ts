@@ -2,6 +2,7 @@ export const useAuthStore = () => {
   const token = useState<string | null>('auth-token', () => null);
   const user = useState<UsuarioLogin | null>('auth-user', () => null);
   const isAuthenticated = computed(() => !!token.value);
+  const isAdmin = computed(() => user.value?.rol?.idRol === 1);
 
   // Initialize from sessionStorage on client side
   if (import.meta.client) {
@@ -122,6 +123,7 @@ export const useAuthStore = () => {
     token: readonly(token),
     user: readonly(user),
     isAuthenticated,
+    isAdmin,
     login,
     register,
     logout,
