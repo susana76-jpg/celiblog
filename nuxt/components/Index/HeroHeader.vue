@@ -78,6 +78,7 @@ const infoButtons = [
     bottom: 0;
     z-index: 2;
     padding: 80px;
+    padding-left: 100px;
     color: white;
     max-width: 900px;
 

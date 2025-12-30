@@ -11,7 +11,7 @@
     <IndexCarousel 
       v-if="posts.length > 0"
       title="Consejos para una Vida Sin Gluten"
-      subtitle="Accede a las recomendaciones más recientes para vivir con celiaquía de forma segura Descubre trucos, guías y hábitos que te ayudarán a disfrutar cada día."
+      subtitle="Accede a las recomendaciones más recientes para vivir con celiaquía de forma segura. Descubre trucos, guías y hábitos que te ayudarán a disfrutar cada día."
       :items="posts" 
       type="consejos"
     />

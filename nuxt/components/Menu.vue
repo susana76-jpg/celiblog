@@ -171,11 +171,11 @@ const isActiveRoute = (path: string) => {
 // List of menu items
 const menuItems = [
   { path: '/', icon: 'mdi-home-outline', variant: 'flat' as Variant },
-  { path: '/recetas', text: 'recetas' },
-  { path: '/restaurantes', text: 'restaurantes' },
-  { path: '/consejos', text: 'consejos' },
-  { path: '/equipo', text: 'equipo' },
-  { path: '/contacto', text: 'contacto' }
+  { path: '/recetas', text: 'Recetas' },
+  { path: '/restaurantes', text: 'Restaurantes' },
+  { path: '/consejos', text: 'Consejos' },
+  { path: '/equipo', text: 'Equipo' },
+  { path: '/contacto', text: 'Contacto' }
 ]
 
 // List of account buttons
@@ -222,7 +222,7 @@ const redirectToUserProfile = async () => {
 
 <style lang="scss">
 .v-app-bar.main-menu {
-  padding: 18px 120px;
+  padding: 18px 100px;
 
   // Adjust toolbar content alignment
   .v-toolbar__content {
@@ -246,6 +246,7 @@ const redirectToUserProfile = async () => {
     }
   }
 
+  // Set styles for account buttons
   .account-buttons {
     .user-button {
       p {
@@ -261,12 +262,7 @@ const redirectToUserProfile = async () => {
     display: none;
   }
 
-  // Responsive styles
-  @media (max-width: 1024px) {
-    padding: 18px 40px;
-  }
-
-  @media (max-width: 1200px) {
+  @media (max-width: 1420px) {
     padding: 18px 20px;
 
     // Hide desktop navigation
