@@ -2,11 +2,8 @@ package com.daw.celiblog.service.mapper;
 
 import com.daw.celiblog.db.entity.Post;
 import com.daw.celiblog.dto.PostDTO;
-import com.daw.celiblog.dto.UsuarioDTO;
 import com.daw.celiblog.dto.UsuarioSummaryDTO;
-import com.daw.celiblog.enums.EstadoValidacionEnum;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

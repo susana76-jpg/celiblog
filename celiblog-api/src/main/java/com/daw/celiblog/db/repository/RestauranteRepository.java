@@ -1,8 +1,6 @@
 package com.daw.celiblog.db.repository;
 
-import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.db.entity.Restaurante;
-import com.daw.celiblog.enums.TipoRestauranteEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

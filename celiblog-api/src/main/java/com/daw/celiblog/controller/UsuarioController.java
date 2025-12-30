@@ -1,6 +1,5 @@
 package com.daw.celiblog.controller;
 
-import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.UsuarioDTO;
 import com.daw.celiblog.dto.UsuarioView;
 import com.daw.celiblog.service.UsuarioService;

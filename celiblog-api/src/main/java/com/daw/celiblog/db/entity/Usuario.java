@@ -1,11 +1,9 @@
 package com.daw.celiblog.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 

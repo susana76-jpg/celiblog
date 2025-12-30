@@ -104,6 +104,8 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     }
 
+
+
     private List<ComentarioDTO> getFavorits(List<ComentarioDTO> listado, String emailUsuarioLogin){
         Long idUsuarioLogado = this.usuarioService.getIdUsuarioLogado(emailUsuarioLogin);
         List<Long> ids = this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuarioLogado, ObjetoEnum.COMENTARIO.toString());
@@ -124,5 +126,9 @@ public class ComentarioServiceImpl implements ComentarioService {
         return comentario;
     }
 
+    @Override
+    public int getValoracionMedia(Long idObjeto, ObjetoEnum objetoEnum) {
+        return this.comentarioRepository.getValoracionObjeto(idObjeto, objetoEnum.toString());
+    }
 
 }

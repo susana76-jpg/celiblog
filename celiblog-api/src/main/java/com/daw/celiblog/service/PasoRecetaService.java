@@ -1,6 +1,5 @@
 package com.daw.celiblog.service;
 
-import com.daw.celiblog.db.entity.PasoReceta;
 import com.daw.celiblog.db.entity.Receta;
 import com.daw.celiblog.dto.PasoRecetaDTO;
 import com.daw.celiblog.dto.PasoRecetaView;

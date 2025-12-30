@@ -6,7 +6,6 @@ import com.daw.celiblog.db.repository.PostRepository;
 import com.daw.celiblog.db.repository.TagPostRepository;
 import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.PostDTO;
-import com.daw.celiblog.dto.RecetaDTO;
 import com.daw.celiblog.dto.TagRecetaView;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.TagPostService;

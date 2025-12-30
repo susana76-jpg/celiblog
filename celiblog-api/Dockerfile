@@ -7,4 +7,4 @@ COPY ${JAR_FILE} app_celiblog.jar
 
 EXPOSE 8081
 
-ENTRYPOINT ["java", "-jar", "app_celiblog.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "app_celiblog.jar"]

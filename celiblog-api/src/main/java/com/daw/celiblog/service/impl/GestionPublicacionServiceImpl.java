@@ -13,7 +13,6 @@ import com.daw.celiblog.service.mapper.RestauranteMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +38,7 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
     public List<?> getObjetosByEstado(Authentication authentication, ObjetoEnum tipoReferencia, List<EstadoValidacionEnum> estadoValidacionEnum) {
         switch (tipoReferencia.toString()){
             case "RESTAURANTE":
-                List<Restaurante> restaurantes = this.restauranteRepository.findAll();
+                List<RestauranteDTO> restaurantes = RestauranteMapper.entityToDtoList(this.restauranteRepository.findAll());
                 if(estadoValidacionEnum != null   && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
                    return restaurantes
                            .stream()
@@ -48,21 +47,21 @@ public class GestionPublicacionServiceImpl implements GestionPublicacionService 
                     return restaurantes;
                 }
             case "RECETA":
-                List<Receta> recetas = this.recetaRepository.findAll();
+                List<RecetaDTO> recetas = RecetaMapper.entityToDtoList(this.recetaRepository.findAll());
                 if(estadoValidacionEnum != null && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
                    return recetas.stream().filter(receta -> estadoValidacionEnum.contains(receta.getEstado())).toList();
                 }else{
                     return recetas;
                 }
             case "POST":
-                List<Post> posts = this.postRepository.findAll();
+                List<PostDTO> posts = PostMapper.entityToDtoList(this.postRepository.findAll());
                 if(estadoValidacionEnum != null   && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
                     return posts.stream().filter(post -> estadoValidacionEnum.contains(post.getEstado())).toList();
                 }else{
                     return posts;
                 }
             case "COMENTARIO":
-                List<Comentario> comentarios = this.comentarioRepository.findAll();
+                List<ComentarioDTO> comentarios = ComentarioMapper.entityToDtoList(this.comentarioRepository.findAll());
                 if(estadoValidacionEnum != null  && !estadoValidacionEnum.contains(EstadoValidacionEnum.TODOS)){
                     return comentarios.stream().filter(coment -> estadoValidacionEnum.contains(coment.getEstado())).toList();
                 }else{
