@@ -10,6 +10,7 @@
     />
     <!------------------------------------------->
     
+    <!-- MAIN SECTION --------------------------->
     <div class="section-main">
       <div class="section-main__title">
         <h2>Quienes hacen Celiblog posible</h2>
@@ -71,6 +72,8 @@
         </p>
       </div>
     </div>
+    <!------------------------------------------->
+    
   </div>
 </template>
 

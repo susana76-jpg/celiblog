@@ -1,0 +1,3 @@
+<template>
+  Restaurant form
+</template>

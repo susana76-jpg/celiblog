@@ -22,3 +22,17 @@ export const POST_STATUS = {
   APPROVED: 'APROBADO',
   REJECTED: 'RECHAZADO'
 }
+
+// Different food types for categorization
+export const FOOD_TYPES = [
+  'DESAYUNO',
+  'BRUNCH',
+  'ALMUERZO',
+  'MERIENDA',
+  'CENA',
+  'POSTRE',
+  'SALADO',
+  'DULCE',
+];
+
+export const DIFFICULTY_LEVELS = ['BAJA', 'MEDIA', 'ALTA'];

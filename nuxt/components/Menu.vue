@@ -241,7 +241,7 @@ const items = computed(() => {
 
   baseItems.push({
     title: 'Cerrar Sesión',
-     event: () => logout()
+    event: () => logout()
   });
 
   return baseItems;
@@ -249,8 +249,8 @@ const items = computed(() => {
 
 // Redirect to user profile based on role
 const redirectToUserProfile = async () => {
-   if (isAdmin.value) await navigateTo('/admin');
-    else await navigateTo('/usuario');
+  if (isAdmin.value) await navigateTo('/admin');
+  else await navigateTo('/usuario');
 };
 </script>
 

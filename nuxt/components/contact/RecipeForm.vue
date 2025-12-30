@@ -1,0 +1,3 @@
+<template>
+  Receta form
+</template>
