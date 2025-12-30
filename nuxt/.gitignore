@@ -3,3 +3,10 @@ node_modules/
 .output/
 dist/
 .env
+# Java / Maven
+target/
+*.class
+
+
+# VS Code
+.vscode/
