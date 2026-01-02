@@ -60,14 +60,14 @@ public class ComentarioController {
         }
     }
 
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    @Operation(summary = "PRIVADO: Elimina un comentario por su id.")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
+    @Operation(summary = "PROTEGIDO: Elimina un comentario por su id, si el comentario no está en estado APROBADO (en PENDIENTE o RECHAZADO)")
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteById(@RequestParam(name="idComentario") Long idComentario){
         if(this.comentarioService.deleteById(idComentario)){
             return ResponseEntity.status(200).body("Se ha eliminado el comentario con id "+idComentario);
         }else{
-            return ResponseEntity.status(300).body("No existe la comentario a eliminar con id "+idComentario);
+            return ResponseEntity.status(300).body("No existe, o no está en estado APROBADO, el comentario a eliminar con id "+idComentario);
         }
     }
 
