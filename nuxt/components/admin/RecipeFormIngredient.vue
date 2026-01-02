@@ -1,46 +1,49 @@
 <template>
-  <v-col cols="12" class="d-flex align-start">
-    <v-text-field
-      v-bind="commonFieldProps"
-      hide-details
-      type="number"
-      class="mr-2 flex-grow-0"
-      label="Cantidad *"
-      v-model="ingredientData.cantidad"
-    />
-    <v-text-field
-      v-bind="commonFieldProps"
-      clearable
-      hide-details="auto"
-      :label="`Ingrediente ${index + 1} *`"
-      v-model="ingredientData.nombre"
-    />
-    <v-text-field
-      v-bind="commonFieldProps"
-      clearable
-      hide-details="auto"
-      class="ml-2 flex-grow-0"
-      label="Unidad *"
-      v-model="ingredientData.unidad"
-    />
-    <v-tooltip location="top" text="Eliminar paso">
-      <template v-slot:activator="{ props }">
-        <v-btn
-          v-bind="props"
-          variant="text"
-          color="primary"
-          icon="mdi-delete-outline"
-          height="48"
-          width="48"
-          @click="deleteIngredient"
-        />
-      </template>
-    </v-tooltip>
-  </v-col>
+  <v-form ref="formRef" class="w-100" validate-on="submit">
+    <v-col cols="12" class="d-flex align-start">
+      <v-text-field
+        v-bind="commonFieldProps"
+        hide-details="auto"
+        type="number"
+        class="mr-2 flex-grow-0"
+        label="Cantidad *"
+        :rules="[(v) => !!v || 'Campo obligatorio', (v) => v > 0 || 'Debe ser mayor que 0']"
+        v-model="ingredientData.cantidad"
+      />
+      <v-text-field
+        v-bind="commonFieldProps"
+        clearable
+        hide-details="auto"
+        :label="`Ingrediente ${index + 1} *`"
+        :rules="[(v) => !!v || 'Campo obligatorio', (v) => v.length >= 3 || 'Mínimo 3 caracteres']"
+        v-model="ingredientData.nombre"
+      />
+      <v-text-field
+        v-bind="commonFieldProps"
+        clearable
+        hide-details="auto"
+        class="ml-2 flex-grow-0"
+        label="Unidad *"
+        :rules="[(v) => !!v || 'Campo obligatorio']"
+        v-model="ingredientData.unidad"
+      />
+      <v-tooltip location="top" text="Eliminar paso">
+        <template v-slot:activator="{ props }">
+          <v-btn
+            v-bind="props"
+            variant="text"
+            color="primary"
+            icon="mdi-delete-outline"
+            height="48"
+            width="48"
+            @click="deleteIngredient"
+          />
+        </template>
+      </v-tooltip>
+    </v-col>
+  </v-form>
 </template>
 <script setup lang="ts">
-import { id } from 'vuetify/locale';
-
 const { showError } = useNotification();
 
 const props = defineProps<{
@@ -94,4 +97,10 @@ const deleteIngredientFromDB = async () => {
     showError(`Error al borrar ingrediente ${props.ingredient.nombre}: ${error.message || error}`);
   }
 };
+
+// Expose validate method to parent component
+const formRef = ref<{ validate: () => Promise<any> } | null>(null);
+defineExpose({
+  validate: () => formRef.value?.validate()
+});
 </script>

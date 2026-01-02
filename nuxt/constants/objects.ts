@@ -35,4 +35,4 @@ export const FOOD_TYPES = [
   'DULCE',
 ];
 
-export const DIFFICULTY_LEVELS = ['BAJA', 'MEDIA', 'ALTA'];
+export const DIFFICULTY_LEVELS = ['FACIL', 'MEDIO', 'DIFICIL'];

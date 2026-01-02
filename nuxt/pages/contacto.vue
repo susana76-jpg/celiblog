@@ -24,7 +24,7 @@
           density="comfortable"
           type="error" 
         >
-          Debes iniciar sesión o registrarte para enviar una publicación.
+          Debes iniciar sesión o registrarte para enviar un formulario.
         </v-alert>
         <v-select
           required
@@ -39,7 +39,10 @@
           :items="opcionesPublicacion"
           v-model="tipoPublicacion"
         ></v-select>
-        <component :is="currentFormComponent" :disabled="!isAuthenticated" />
+        <component 
+          :is="currentFormComponent" 
+          :disabled="!isAuthenticated" 
+        />
       </div>
     </div>
   </div>
@@ -150,134 +153,6 @@
               </v-row>
             </template>
 
-            <template v-else-if="tipoPublicacion === 'Receta'">
-              <v-card-title class="pa-0 mt-4 mb-4 text-left text-h6 font-weight-bold text-gold">
-                Detalles de la publicación (Receta)
-              </v-card-title>
-              
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="formData.recetaNombre"
-                    label="Título de la Receta *"
-                    :rules="[(v: any) => !!v || 'El nombre es obligatorio']"
-                    prepend-inner-icon="mdi-chef-hat"
-                    variant="outlined"
-                    color="#836a02" required clearable
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="formData.recetaSubtitulo"
-                    label="Subtítulo"
-                    prepend-inner-icon="mdi-subtitles-outline"
-                    variant="outlined"
-                    color="#836a02" clearable
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-
-              <v-row>
-                <v-col cols="12" md="4">
-                  <v-select
-                    v-model="formData.recetaDificultad"
-                    :items="['BAJA', 'MEDIA', 'ALTA']"
-                    label="Dificultad *"
-                    :rules="[(v: any) => !!v || 'La dificultad es obligatoria']"
-                    prepend-inner-icon="mdi-stairs"
-                    variant="outlined"
-                    color="#836a02" required
-                  ></v-select>
-                </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field
-                    v-model.number="formData.recetaTiempoPreparacion"
-                    label="Tiempo Preparación (minutos) *"
-                    :rules="[(v: any) => !!v || 'El tiempo es obligatorio']"
-                    prepend-inner-icon="mdi-timer-sand"
-                    variant="outlined"
-                    color="#836a02" type="number" required
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field
-                    v-model.number="formData.recetaComensales"
-                    label="Comensales *"
-                    :rules="[(v: any) => !!v || 'Comensales es obligatorio']"
-                    prepend-inner-icon="mdi-account-group"
-                    variant="outlined"
-                    color="#836a02" type="number" required
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              
-              <v-row>
-                <v-col cols="12" md="6">
-                  <v-select
-                    v-model="formData.recetaTipoComida"
-                    :items="opcionesTipoComida"
-                    label="Tipo de Comida *"
-                    :rules="[(v: any) => !!v || 'El tipo de comida es obligatorio']"
-                    prepend-inner-icon="mdi-food-variant"
-                    variant="outlined"
-                    color="#836a02" required
-                  ></v-select>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    v-model.number="formData.recetaValorEnergetico"
-                    label="Valor Energético (kcal) *"
-                    :rules="[(v: any) => !!v || 'El valor energético es obligatorio']"
-                    prepend-inner-icon="mdi-fire"
-                    variant="outlined"
-                    color="#836a02" type="number" required
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <v-textarea
-                    v-model="formData.recetaIngredientes"
-                    label="Ingredientes *"
-                    :rules="[(v: any) => !!v || 'Los ingredientes son obligatorios']"
-                    prepend-inner-icon="mdi-receipt-text"
-                    variant="outlined"
-                    color="#836a02" rows="8" required clearable
-                    placeholder="Ejemplo:
-                    Harina = 200
-                    Azúcar = 50
-                    Huevos = 2"
-                    hint="Formato: Ingrediente = cantidad • ejemplo: Harina = 200"
-                    persistent-hint
-                  ></v-textarea>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <v-textarea
-                    v-model="formData.recetaPasos"
-                    label="Pasos de la Receta *"
-                    :rules="[(v: any) => !!v || 'Los pasos de la recetas son obligatorios']"
-                    prepend-inner-icon="mdi-receipt-text"
-                    variant="outlined"
-                    color="#836a02" rows="8" required clearable
-                  ></v-textarea>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <v-textarea
-                    v-model="formData.recetaDescripcion"
-                    label="Descripción de la Receta*"
-                    :rules="[(v: any) => !!v || 'La descripción es obligatoria']"
-                    prepend-inner-icon="mdi-receipt-text"
-                    variant="outlined"
-                    color="#836a02" rows="8" required clearable
-                  ></v-textarea>
-                </v-col>
-              </v-row>
-            </template>
-
           </v-form>
 </template>
   
@@ -309,12 +184,6 @@ const currentFormComponent = computed(() => {
 /* FORM SUBMISSION */
 /*********************************/
 // const statusMessage = ref('');
-
-
-// const opcionesTipoComida = FOOD_TYPES;
-// const opcionesDificultad = DIFFICULTY_LEVELS; 
-
-// //pop up nueva publicacion
 
 // interface ContactForm {   
 //   // Campos Restaurante 
@@ -358,21 +227,8 @@ const currentFormComponent = computed(() => {
 //   restauranteDescripcion: '',
   
 
-//   // Receta
-//   recetaNombre: '',
-//   recetaSubtitulo: '',
-//   recetaTipoComida: '',
-//   recetaDescripcion: '',
-//   recetaIngredientes: '',
-//   recetaPasos:'',
-//   recetaDificultad: '',
-//   recetaTiempoPreparacion: null,
-//   recetaValorEnergetico: null,
-//   recetaComensales: null,
-
-//   tipoPublicacion: '',
 // });
- 
+
 //  //preparación de los campos de receta - ingredientes y pasos_receta -
 //  const ingredientes = formData.value.recetaIngredientes;
 //  const pasos_receta = formData.value.recetaPasos; 

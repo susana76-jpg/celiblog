@@ -18,6 +18,7 @@
         :rules="field.rules"
         :rows="field.rows"
         :required="field.required"
+        :disabled="disabled"
       ></v-textarea>
       <v-text-field
         v-else
@@ -32,6 +33,7 @@
         :label="field.label"
         :rules="field.rules"
         :required="field.required"
+        :disabled="disabled"
         v-model="formData[field.model]"
       ></v-text-field>
     </template>
@@ -45,13 +47,13 @@
       {{ message.text }}
     </v-alert>
     <v-btn
-      block
       height="40" 
-      class="mt-8"
+      class="mt-8 ml-auto d-block"
       rounded="xl"
       variant="flat"
       color="primary"
       text="Enviar publicación"
+      :disabled="disabled"
       :loading="isSubmitting"
       @click="handleSubmit"
     />
@@ -59,6 +61,10 @@
 </template>
 
 <script setup lang="ts">
+const props = defineProps<{
+  disabled?: boolean;
+}>();
+
 /********************************/
 /* FORM DATA */
 /********************************/
@@ -127,6 +133,7 @@ const message = ref<{ show: boolean; type?: 'error' | 'info' | 'success' | 'warn
   text: ''
 });
 
+// Handle form submission
 const handleSubmit = async () => {
   isSubmitting.value = true;
   
