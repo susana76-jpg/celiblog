@@ -164,7 +164,7 @@
   <v-dialog v-model="dialogEliminarComentario" max-width="500">
         <v-card>
           <v-card-title class="text-h6">
-      Eliminar comentario
+          Eliminar comentario
           </v-card-title>
           <v-card-text>
           ¿Estás seguro de que deseas eliminar este comentario?
@@ -182,6 +182,27 @@
             </v-btn>
           </v-card-actions>
         </v-card>
+  </v-dialog>
+  <!-- Popup comentario eliminado -->
+  <v-dialog v-model="dialogComentarioEliminado" max-width="450">
+      <v-card class="pa-2">
+        <v-card-title class="text-h6 text-center">
+          Comentario eliminado
+        </v-card-title>
+        <v-card-text class="text-center">
+          <v-icon color="success" size="48" class="mb-2">
+            mdi-check-circle
+          </v-icon>
+          <p>
+            El comentario se ha eliminado correctamente.
+          </p>
+        </v-card-text>
+        <v-card-actions class="justify-center">
+          <v-btn color="#8B7B44"  @click="dialogComentarioEliminado = false">
+            Aceptar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
   </v-dialog>
   </v-container>
 </template>
@@ -213,6 +234,8 @@ const comentarioEditado = ref('');
 //eliminar comentarios
 const dialogEliminarComentario = ref(false);
 const comentarioAEliminar = ref<ContentItem | null>(null);
+const dialogComentarioEliminado=ref(false);
+
 
 const abrirEditarComentario = (comentario: ContentItem) => {
   comentarioEditando.value = comentario;
@@ -304,38 +327,6 @@ const fetchUserStats = async () => {
     }
 };
 // editar comentarios --  solo PENDIENTES o RECHAZADOS--al guardarlo vuelve a pendiente
-/*const guardarComentarioEditado = async () => {
-  const comentario = comentarioEditando.value;
-  if (!comentario) return;
-
-  if (!comentarioEditado.value.trim()) {
-    statusMessage.value = 'El comentario no puede estar vacío.';
-    return;
-  }
-
-  try {
-    await useApiFetch('/api/comentario/update', {
-      method: 'PUT',
-      body: {
-        idComentario: comentario.id,
-        contenido: comentarioEditado.value
-      }
-    });
-
-    dialogEditarComentario.value = false;
-    comentarioEditando.value = null;
-    comentarioEditado.value = '';
-
-    statusMessage.value =
-      'Comentario actualizado. Quedará pendiente de aprobación.';
-
-    await fetchContent('COMENTARIO');
-    await fetchUserStats();
-
-  } catch (error) {
-    statusMessage.value = 'Error al actualizar el comentario.';
-  }
-};*/
 const guardarComentarioEditado = async () => {
   const comentario = comentarioEditando.value;
   if (!comentario) return;
@@ -379,21 +370,21 @@ const confirmarEliminarComentario = async () => {
 
   try {
     await useApiFetch('/api/comentario/delete', {
-      method: 'PUT',
+      method: 'DELETE',
       params: {
-        idObjeto: comentario.id,
-        objeto: 'COMENTARIO',
-        estado: 'ELIMINADO'
+        idComentario: comentario.id,
       }
     });
 
     dialogEliminarComentario.value = false;
     comentarioAEliminar.value = null;
 
-    statusMessage.value = 'Comentario eliminado correctamente.';
+    //statusMessage.value = 'Comentario eliminado correctamente.';
+    
 
     await fetchContent('COMENTARIO');
     await fetchUserStats();
+    dialogComentarioEliminado.value= true;
 
   } catch (error) {
     statusMessage.value = 'Error al eliminar el comentario.';
