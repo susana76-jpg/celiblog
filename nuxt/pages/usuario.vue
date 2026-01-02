@@ -245,11 +245,13 @@ interface UserProfileForm {
 interface ContentItem {
   id: number;
   titulo: string;
+  subtitulo: string;
   contenidoResumen?: string;
   imagenUrl?: string;
   fecha?: string;
   valoracion?: number;
   estado?: 'APROBADO' | 'PENDIENTE' | 'RECHAZADO';
+  idObjetoComentado: number;
 }
 // interfaz para obtener el contador de favoritos
 interface UsuariocontFav{
@@ -302,7 +304,7 @@ const fetchUserStats = async () => {
     }
 };
 // editar comentarios --  solo PENDIENTES o RECHAZADOS--al guardarlo vuelve a pendiente
-const guardarComentarioEditado = async () => {
+/*const guardarComentarioEditado = async () => {
   const comentario = comentarioEditando.value;
   if (!comentario) return;
 
@@ -314,7 +316,7 @@ const guardarComentarioEditado = async () => {
   try {
     await useApiFetch('/api/comentario/update', {
       method: 'PUT',
-      params: {
+      body: {
         idComentario: comentario.id,
         contenido: comentarioEditado.value
       }
@@ -333,7 +335,43 @@ const guardarComentarioEditado = async () => {
   } catch (error) {
     statusMessage.value = 'Error al actualizar el comentario.';
   }
+};*/
+const guardarComentarioEditado = async () => {
+  const comentario = comentarioEditando.value;
+  if (!comentario) return;
+
+  try {
+    await useApiFetch('/api/comentario/update', {
+      method: 'PUT',
+      params: {
+        idComentario: comentario.id
+      },
+      body: {
+        titulo: comentario.titulo ?? '',
+        subtitulo: comentario.subtitulo ?? '',
+        contenido: comentarioEditado.value,
+        comentarioUrl: null,
+        idObjetoComentado: comentario.idObjetoComentado,
+        valoracion: comentario.valoracion ?? 0
+      }
+    });
+
+    dialogEditarComentario.value = false;
+    comentarioEditando.value = null;
+    comentarioEditado.value = '';
+
+    statusMessage.value =
+      'Comentario actualizado. Quedará pendiente de aprobación.';
+
+    await fetchContent('COMENTARIO');
+    await fetchUserStats();
+
+  } catch (error) {
+    statusMessage.value = 'Error al actualizar el comentario.';
+    console.error(error);
+  }
 };
+
 //eliminar comentario -- el usuario no puede eliminarlo una vez aprobado
 const confirmarEliminarComentario = async () => {
   const comentario = comentarioAEliminar.value;
@@ -431,8 +469,10 @@ const fetchContent = async (reference: string | null) => {
           contentItems.value = comentarios.map(c => ({
             id: c.idComentario,
             titulo: c.titulo || 'Comentario',
+            subtitulo: c.subtitulo ?? '',
             contenidoResumen: c.contenido,
             fecha: c.fechaCreacion,
+            idObjetoComentado: c.idObjetoComentado,
             valoracion: c.valoracion,
             estado: c.estado
           }));
