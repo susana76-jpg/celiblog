@@ -35,4 +35,7 @@ export const FOOD_TYPES = [
   'DULCE',
 ];
 
+// Difficulty levels for recipes
 export const DIFFICULTY_LEVELS = ['FACIL', 'MEDIO', 'DIFICIL'];
+
+export const RESTAURANT_TYPES = ['SIN_GLUTEN', 'MEDITERRANEA', 'ASIATICA', 'VEGANO', 'MEXICANA'];
