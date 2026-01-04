@@ -7,6 +7,7 @@ import com.daw.celiblog.db.repository.FavoritoRepository;
 import com.daw.celiblog.db.repository.UsuarioRepository;
 import com.daw.celiblog.dto.ComentarioDTO;
 import com.daw.celiblog.dto.ComentarioView;
+import com.daw.celiblog.enums.EstadoValidacionEnum;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.ComentarioService;
 import com.daw.celiblog.service.UsuarioService;
@@ -80,7 +81,7 @@ public class ComentarioServiceImpl implements ComentarioService {
     @Override
     public boolean deleteById(Long idComentario) {
         Optional<Comentario> comentario = this.comentarioRepository.findById(idComentario);
-        if(comentario.isPresent()){
+        if(comentario.isPresent() && !comentario.get().getEstado().equals(EstadoValidacionEnum.APROBADO)){
             this.comentarioRepository.deleteById(idComentario);
             return true;
         }else{
