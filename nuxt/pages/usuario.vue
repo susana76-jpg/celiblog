@@ -35,7 +35,7 @@
               variant="outlined"
               class="mt-4 mb-4"
               block
-              @click="handleDeleteAccount"
+              @click="confirmDeleteAccount"
             >
               Eliminar Cuenta
             </v-btn>
@@ -218,6 +218,8 @@ import { ref, onMounted, watch } from 'vue';
 import { useApiFetch } from '../composables/useApiFetch'; 
 import { useAuthStore } from '../composables/useAuthStore'; 
 import { useRouter } from 'vue-router';
+import { useConfirmDialog } from '../composables/useConfirmDialog';
+
 
 
 // Inicialización del Store de Autenticación
@@ -235,7 +237,8 @@ const comentarioEditado = ref('');
 const dialogEliminarComentario = ref(false);
 const comentarioAEliminar = ref<ContentItem | null>(null);
 const dialogComentarioEliminado=ref(false);
-
+//confirmDialog
+const {showConfirmDialog} = useConfirmDialog();
 
 const abrirEditarComentario = (comentario: ContentItem) => {
   comentarioEditando.value = comentario;
@@ -551,12 +554,19 @@ const handleSubmit = async () => {
     isSubmitting.value = false;
   }
 };
+/**
+ * Muestra el diálogo de confirmación antes de eliminar la cuenta
+ */
+const confirmDeleteAccount = () => {
+  showConfirmDialog(
+    'Si eliminas tu cuenta, todos tus datos desaparecerán del sistema. Esta acción es irreversible.',
+    async () => {
+      await handleDeleteAccount();
+    }
+  );
+};
 //Elimina la cuenta del usuario
 const handleDeleteAccount = async () => {
-  const confirmDelete = confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.');
-
-  if (!confirmDelete) return;
-
   try {
     await useApiFetch('/api/usuario/delete', { method: 'DELETE' });
 
