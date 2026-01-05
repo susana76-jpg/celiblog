@@ -14,7 +14,7 @@ import java.util.List;
     UsuarioDTO crear(UsuarioView dto);
     UsuarioDTO actualizarRol(Long idUsuario, Long idRol);
     UsuarioDTO actualizarNombre(Authentication authentication, String nombre);
-    boolean eliminar(Long id);
+    boolean eliminar(Authentication authentication, Long id);
     Long getIdUsuarioLogado(String email);
 
 }

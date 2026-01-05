@@ -84,7 +84,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public boolean eliminar(Long id) {
+    public boolean eliminar(Authentication authentication, Long id) {
+        Optional<Usuario> usuario = this.usuarioRepository.findByEmail(authentication.getName());
         if(this.usuarioRepository.findById(id).isPresent()){
             this.usuarioRepository.deleteById(id);
             return true;
