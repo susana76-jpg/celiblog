@@ -6,7 +6,6 @@
     :show-status-filter="true"
     :fetch-endpoint="API.STATUS.LIST"
     :fetch-params="getFetchParams"
-    :data-transformer="transformPostData"
     :delete-endpoint="API.RECIPES.DELETE"
     :delete-params="getDeleteParams"
     selector-column="estado"
@@ -38,13 +37,6 @@ const getFetchParams = (statusFilter: string[]) => ({
   objeto: TYPE.POST,
   estado: statusFilter.length === 3 ? ['TODOS'] : statusFilter
 });
-
-// Data transformer function
-const transformPostData = (data: Post[]) => 
-  data.map((post: Post) => ({
-    ...post,
-    fechaPublicacion: formatDateTime(post.fechaPublicacion)
-  }));
 
 
 /********************************************/

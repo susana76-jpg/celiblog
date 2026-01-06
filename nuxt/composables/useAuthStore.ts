@@ -39,6 +39,19 @@ export const useAuthStore = () => {
 
 
   /**
+   * Updates the user data in both state and sessionStorage.
+   * @param {UsuarioLogin} newUser - The updated user data to store
+   */
+  const updateUser = (newUser: UsuarioLogin) => {
+    user.value = newUser;
+    
+    if (import.meta.client) {
+      sessionStorage.setItem('auth-user', JSON.stringify(newUser))
+    }
+  };
+
+
+  /**
    * Clears the authentication token and user data from both state and sessionStorage.
    */
   const clearAuth = () => {
@@ -75,7 +88,7 @@ export const useAuthStore = () => {
     } catch (error: any) {
       return { 
         success: false, 
-        error: error?.data?.message || error?.message || 'Error al iniciar sesión' 
+        error: error?.data || 'Error al iniciar sesión' 
       }
     }
   }
@@ -105,7 +118,7 @@ export const useAuthStore = () => {
     } catch (error: any) {
       return { 
         success: false, 
-        error: error?.data?.message || error?.message || 'Error al registrarse' 
+        error: error?.data || 'Error al registrarse' 
       }
     }
   }
@@ -121,11 +134,12 @@ export const useAuthStore = () => {
 
   return {
     token: readonly(token),
-    user: readonly(user),
+    user,
     isAuthenticated,
     isAdmin,
     login,
     register,
     logout,
+    updateUser,
   }
 }

@@ -41,9 +41,7 @@
           md="4"
           xl="3"
         >
-          <SectionTipCardItem 
-            :item="item" 
-          />
+          <SectionPostCardItem :item="item" />
         </v-col>
       </v-row>
 
@@ -68,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-const img = '/img/consejos/hero-image.jpg';
+const img = '/img/blog/hero-image.jpg';
 const tips = ref<any[]>([]);
 const keyword = ref<string>('');
 const loading = ref<boolean>(true);

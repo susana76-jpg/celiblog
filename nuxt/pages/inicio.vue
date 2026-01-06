@@ -7,7 +7,11 @@
         <h2>Inicia sesión en tu cuenta</h2>
         <p>Accede a tus recetas guardadas, comenta en el blog y disfruta de todo nuestro contenido sin gluten.</p>
       </div>
-      <v-form ref="formRef" @submit.prevent="handleLogin">
+      <v-form 
+        ref="formRef" 
+        validate-on="submit"
+        @submit.prevent="handleLogin"
+      >
         <v-text-field
           v-for="(field, index) in textFields"
           :key="index"
@@ -127,7 +131,7 @@ const handleLogin = async () => {
     if (user.value?.rol.idRol === 1) await navigateTo('/admin');
     else await navigateTo('/usuario');
   }
-  else errorMessage.value = result.error || 'Error al registrarse';
+  else errorMessage.value = result.error || 'Error al iniciar sesión';
   
   loading.value = false;
 }

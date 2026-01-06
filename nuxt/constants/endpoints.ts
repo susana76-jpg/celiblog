@@ -4,7 +4,8 @@ export const API = {
     ID: '/api/usuario/byId',  
     DELETE: '/api/usuario/delete',
     ADD: '/api/usuario/add',
-    UPDATE_ROLE: '/api/usuario/update-rol-usuario'
+    UPDATE_ROLE: '/api/usuario/update-rol-usuario',
+    UPDATE_NAME: '/api/usuario/update-nombre-usuario'
   },
   RECIPES: {
     BASE: '/api/receta/public/all',
@@ -13,6 +14,7 @@ export const API = {
     ADD_STEP: '/api/paso-receta/add',
     ADD_INGREDIENT: '/api/ingrediente/add',
     UPDATE: '/api/receta/update',
+    UPDATE_ALL: '/api/receta/updateAll',
     DELETE: '/api/receta/deleteById',
     DELETE_INGREDIENT: '/api/ingrediente/delete',
     DELETE_STEP: '/api/paso-receta/delete-paso',
@@ -41,7 +43,9 @@ export const API = {
   USER: {
     REGISTER: '/api/auth/register',
     LOGIN: '/api/auth/login',
-    PROFILE: '/api/usuario/profile'
+    PROFILE: '/api/usuario/profile',
+    FAVORITES: '/api/favoritos/byReferencia',
+    COMMENTS: '/api/publicacion/byUsuario'
   },
   FAVORITES: {
     ADD: '/api/favoritos/add',
@@ -55,9 +59,10 @@ export const API = {
   },
   STATUS: {
     UPDATE: '/api/publicacion/update',
-    LIST: '/api/publicacion/list'
+    LIST: '/api/publicacion/list',
   },
   STATS: {
-    ALL: '/api/estadistica/all'
+    ALL: '/api/estadistica/all',
+    USER: '/api/favoritos/estadistica'
   }
 };

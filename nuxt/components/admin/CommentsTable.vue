@@ -7,7 +7,6 @@
     :show-edit-button="false"
     :fetch-endpoint="API.STATUS.LIST"
     :fetch-params="getFetchParams"
-    :data-transformer="dataTransformer"
     :delete-endpoint="API.COMMENTS.DELETE"
     :delete-params="getDeleteParams"
     selector-column="estado"
@@ -38,12 +37,6 @@ const getFetchParams = (statusFilter: string[]) => ({
   objeto: TYPE.COMMENT,
   estado: statusFilter.length === 3 ? ['TODOS'] : statusFilter
 });
-
-// Data transformer function
-const dataTransformer = (data: Comentario[]) => data.map((comment: Comentario) => ({
-  ...comment,
-  fechaPublicacion: formatDateTime(comment.fechaPublicacion)
-}));
 
 
 /*************************************/

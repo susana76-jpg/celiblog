@@ -3,15 +3,6 @@
     flat
     class="comment"
   >
-    <v-card-title class="comment__header">
-      <!-- <v-avatar size="48" class="mr-2">
-        <v-img :src="comentario.img || '/img/default-user.png'" alt="User Avatar" />
-      </v-avatar> -->
-      <div>
-        <h3 class="comment__username">{{ comentario.usuarioPublicacion.nombre }}</h3>
-        <p class="comment__date">{{ comentario.fechaPublicacion }}</p>
-      </div>
-    </v-card-title>
     <v-card-subtitle class="comment__title">
       <span>{{ comentario.titulo }}</span>
       <v-rating
@@ -23,6 +14,12 @@
         :model-value="comentario.valoracion"
       ></v-rating>
     </v-card-subtitle>
+    <v-card-title class="comment__header">
+      <div class="d-flex">
+        <p class="comment__date mr-1">{{ comentario.fechaPublicacion }} - </p>
+        <h3 class="comment__username">{{ comentario.usuarioPublicacion.nombre }}</h3>
+      </div>
+    </v-card-title>
     <v-card-text class="comment__body">
       {{ comentario.contenido }}
     </v-card-text>
@@ -44,14 +41,14 @@ const props = defineProps<{
   &__header {
     display: flex;
     align-items: flex-end;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     padding: 0;
 
     h3 {
       font-size: 1rem;
       line-height: 1rem;
       font-weight: 600;
-      color: #5D4037;
+      color: #836A02;
     }
 
     p {
@@ -62,9 +59,9 @@ const props = defineProps<{
 
   &__title {
     padding: 0;
-    padding-top: 6px;
+    margin-bottom: 6px;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     line-height: 1.1rem;
     color: #242424;
     opacity: 1;

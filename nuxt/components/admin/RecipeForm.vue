@@ -423,9 +423,22 @@ const formRef = ref();
 // Update recipe
 const updateRecipe = async () => {
   try {
-    const response = await useApiFetch(API.RECIPES.UPDATE, {
+    const response = await useApiFetch(API.RECIPES.UPDATE_ALL, {
       method: 'PUT',
-      body: recipeForm.value
+      body: {
+        recetaView: recipeForm.value,
+        ingredientes: recipeIngredients.value.map((ingredient) => ({
+          idReceta: recipeForm.value.idReceta,
+          nombre: ingredient.nombre,
+          cantidad: +ingredient.cantidad,
+          unidad: ingredient.unidad
+        })),
+        pasos: recipeSteps.value.map((step, index) => ({
+          idReceta: recipeForm.value.idReceta,
+          descripcion: step.descripcion,
+          orden: step.orden
+        }))
+      }
     });
     
     if (response) {

@@ -131,7 +131,7 @@ onMounted(async () => {
   await getRecipeById();
   await getRecipeStepsById();
   await getRecipeIngredientsById();
-  getComments();
+  await getComments();
 });
 </script>
 

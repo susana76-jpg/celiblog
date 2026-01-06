@@ -25,6 +25,7 @@
         @update:search="updateSearch"
         @update:tag="updateTags"
       />
+
       <RestaurantesMapaIndex
         class="mb-16"
         :restaurants="paginatedRestaurants" 
@@ -52,19 +53,19 @@
       </v-row>
 
       <!-- PAGINATION -->
-        <div 
-          v-if="!loading && totalPages > 1"
-          class="pagination-container mt-6 mb-10"
-        >
-          <v-pagination
-            active-color="primary"
-            variant="flat"
-            v-model="currentPage"
-            :length="totalPages"
-            :total-visible="7"
-            @update:model-value="onPageChange"
-          ></v-pagination>
-        </div>
+      <div 
+        v-if="!loading && totalPages > 1"
+        class="pagination-container mt-6 mb-10"
+      >
+        <v-pagination
+          active-color="primary"
+          variant="flat"
+          v-model="currentPage"
+          :length="totalPages"
+          :total-visible="7"
+          @update:model-value="onPageChange"
+        />
+      </div>
     </div>
     <!------------------------------------------->
 
@@ -114,7 +115,6 @@ const getAllRestaurants = async () => {
     });
   
     restaurants.value = data as Restaurante[];
-    restaurants.value.forEach((restaurant) => restaurant.imagenUrl = `/img/restaurantes/${restaurant.imagenUrl}`);
   } catch (error) {
     console.error('Error fetching receipe:', error);
   } finally {
@@ -145,11 +145,9 @@ const onPageChange = (page: number) => {
   // Scroll to top of results
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
-
 </script>
 
 <style lang="scss" scoped>
-
 :deep(.custom-marker) {
   background: none;
   border: none;

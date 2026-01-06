@@ -45,6 +45,11 @@
         />
       </div>
     </div>
+
+    <!-- LOCATION MAP --------------------------->
+    <ContactLocationMap />
+    <!------------------------------------------->
+
   </div>
 </template>
   
@@ -75,7 +80,7 @@ const currentFormComponent = computed(() => {
 <style lang="scss" scoped>
 .contact-page {
   &__form {
-    margin: 30px auto 100px;
+    margin: 30px auto 60px;
     width: 80%;
 
     @media (max-width: 1100px) {

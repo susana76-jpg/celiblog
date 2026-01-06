@@ -56,7 +56,7 @@
       rounded="xl"
       variant="flat"
       color="primary"
-      text="Enviar publicación"
+      text="Enviar restaurante"
       :disabled="disabled"
       :loading="isSubmitting"
       @click="handleSubmit"

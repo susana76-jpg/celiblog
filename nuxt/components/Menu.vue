@@ -66,7 +66,7 @@
           >
             <v-img
               alt="John"
-              src="/img/avatar.png"
+              src="/img/avator.png"
             ></v-img>
           </v-avatar>
           <v-menu activator="parent">

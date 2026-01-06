@@ -13,7 +13,18 @@
         :item="restaurant" 
         :imageUrl="restaurant.imagenUrl"
         @update:favorite="restaurant.esFavoritoUsuario = $event"
-      />
+      >
+        <template #chip="{ item }">
+          <v-chip
+            size="x-large"
+            elevation="7"
+            variant="outlined"
+            class="card-image__chip bg-success"
+          >
+            <span>{{ item.tipoRestaurante || 'Restaurante' }}</span>
+          </v-chip>
+        </template>
+      </DetailsHeroImage>
 
       <div 
         v-if="restaurant"
@@ -184,6 +195,12 @@ onMounted(() => {
 </script>
 
 <style lang="scss"> 
+.restaurant-page {
+  .v-chip__content {
+    justify-content: center !important;
+  }
+}
+
 .contact-section {
   display: grid;
   grid-template-columns: 3fr 1fr;

@@ -87,12 +87,13 @@ onMounted(() => {
 // Statistics Cards
 .keyfacts-container {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
 .keyfact-card {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 300px;
   display: flex;
   align-items: center;
   gap: 20px;
