@@ -568,7 +568,17 @@ const confirmDeleteAccount = () => {
 //Elimina la cuenta del usuario
 const handleDeleteAccount = async () => {
   try {
-    await useApiFetch('/api/usuario/delete', { method: 'DELETE' });
+    const user = authStore.user.value;
+
+    if (!user?.idUsuario) {
+      throw new Error('Usuario no autenticado');
+    }
+
+    const idUsuario = user.idUsuario;
+    console.log('Usuario:', authStore.user.value);
+    console.log('ID:', authStore.user.value?.idUsuario);
+    await useApiFetch(`/api/usuario/delete?idUsuario=${idUsuario}`, 
+                      { method: 'DELETE' });
 
     authStore.logout(); 
     window.location.href = '/'; 
