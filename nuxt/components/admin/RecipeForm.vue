@@ -94,7 +94,7 @@
                   :step="step"
                   :isEdit="props.isEdit"
                   :idReceta="props.recipe?.idReceta || null"
-                  @delete:step="(idx: number) => recipeSteps.splice(idx, 1)"
+                  @delete:step="recipeSteps = recipeSteps.filter(step => step.orden !== $event)"
                   @update:step="(value: string) => step.descripcion = value"
                 />
               </v-row>
@@ -210,11 +210,9 @@ type Ingredient = {
 type Step = {
   orden: number;
   descripcion: string;
-};
+}
 
-const level = ['FACIL', 'MEDIO', 'DIFICIL'];
 const ingredient: Ingredient = { nombre: '', cantidad: 0, unidad: 'g' };
-const foodTypes = ['DESAYUNO', 'BRUNCH', 'ALMUERZO', 'MERIENDA', 'CENA', 'TAPAS', 'RACIONES', 'POSTRE', 'SALADO', 'DULCE'];
 
 // Recipe Form
 const recipeForm = ref({
@@ -373,7 +371,7 @@ const selectInputs = computed(() => [
       get: () => recipeForm.value.dificultad,
       set: (val) => recipeForm.value.dificultad = val
     }),
-    items: level
+    items: DIFFICULTY_LEVELS
   },
   {
     label: 'Tipo de comida *',
@@ -381,7 +379,7 @@ const selectInputs = computed(() => [
       get: () => recipeForm.value.tipoComida,
       set: (val) => recipeForm.value.tipoComida = val
     }),
-    items: foodTypes
+    items: FOOD_TYPES
   }
 ]);
 
@@ -408,7 +406,7 @@ const getRecipeIngredientsById = async (idReceta: number) => {
   try {
     const data = await useApiFetch(API.RECIPES.INGREDIENTS, {
       params: { idReceta },
-    }) as RecetaIngrediente[];
+    }) as Ingredient[];
 
     recipeIngredients.value = data;
   } catch (error) {
@@ -425,9 +423,22 @@ const formRef = ref();
 // Update recipe
 const updateRecipe = async () => {
   try {
-    const response = await useApiFetch(API.RECIPES.UPDATE, {
+    const response = await useApiFetch(API.RECIPES.UPDATE_ALL, {
       method: 'PUT',
-      body: recipeForm.value
+      body: {
+        recetaView: recipeForm.value,
+        ingredientes: recipeIngredients.value.map((ingredient) => ({
+          idReceta: recipeForm.value.idReceta,
+          nombre: ingredient.nombre,
+          cantidad: +ingredient.cantidad,
+          unidad: ingredient.unidad
+        })),
+        pasos: recipeSteps.value.map((step, index) => ({
+          idReceta: recipeForm.value.idReceta,
+          descripcion: step.descripcion,
+          orden: step.orden
+        }))
+      }
     });
     
     if (response) {
@@ -445,9 +456,9 @@ const addRecipe = async () => {
     const response = await useApiFetch(API.RECIPES.ADD, {
       method: 'POST',
       body: recipeForm.value
-    });
+    }) as Receta;
     
-    if (response) {
+    if (response && response.idReceta) {
       if (recipeSteps.value.length) await addSteps(response.idReceta);
       if (recipeIngredients.value.length) await addIngredients(response.idReceta);
       showSuccess(`Receta ${recipeForm.value.titulo} agregada correctamente`);

@@ -23,7 +23,7 @@ export const useUserActions = () => {
       showError('No se ha podido añadir a favoritos');
       return { 
         success: false,   
-        error: error?.data?.message || error?.message || 'Error al añadir a favoritos'
+        error: error?.data || 'Error al añadir a favoritos'
       }
 
     }
@@ -50,7 +50,7 @@ export const useUserActions = () => {
       showError('No se ha podido eliminar de favoritos');
       return {
         success: false,
-        error: error?.data?.message || error?.message || 'Error al eliminar de favoritos'
+        error: error?.data || 'Error al eliminar de favoritos'
       }
     }
   };
@@ -78,7 +78,7 @@ export const useUserActions = () => {
       showError('No se ha podido añadir el comentario');
       return {
         success: false,
-        error: error?.data?.message || error?.message || 'Error al añadir el comentario'
+        error: error?.data || 'Error al añadir el comentario'
       }
     }
   };

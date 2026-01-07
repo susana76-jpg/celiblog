@@ -1,45 +1,45 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12">
-        <v-card>
-          <v-card-title class="text-h5">
-            Perfil de Usuario
-          </v-card-title>
-          
-          <v-card-text v-if="user">
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>Nombre</v-list-item-title>
-                <v-list-item-subtitle>{{ user.nombre }}</v-list-item-subtitle>
-              </v-list-item>
-              
-              <v-list-item>
-                <v-list-item-title>Email</v-list-item-title>
-                <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
-              </v-list-item>
-              
-              <v-list-item>
-                <v-list-item-title>Rol</v-list-item-title>
-                <v-list-item-subtitle>{{ user.rol.nombre }}{{ user.rol.idRol }}</v-list-item-subtitle>
-              </v-list-item>
-              
-              <v-list-item>
-                <v-list-item-title>Fecha de Alta</v-list-item-title>
-                <v-list-item-subtitle>{{ formatDate(user.fechaAlta) }}</v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
-          </v-card-text>
-          
-          <v-card-actions>
-            <v-spacer />
-            <v-btn color="error" @click="handleLogout">
-              Cerrar Sesión
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+  <v-container fluid class="user-page">
+
+    <!-- USER INFORMATION ------------------------------------>    
+    <v-row class="ma-0" no-gutters>
+      <v-col cols="12" lg="5" class="align-self-stretch pr-lg-4 py-0 pl-0 mb-4 mb-lg-0">
+        <UserPersonalData class="h-100" />
+      </v-col>
+      <v-col cols="12" lg="7" class="py-0 pr-0">
+        <v-row no-gutters class="h-100">
+          <UserFavoritesKeyfacts 
+            @update:tab="activeTab = $event"
+          />
+        </v-row>
       </v-col>
     </v-row>
+    <!--------------------------------------------------------->
+
+    <!-- TABS ------------------------------------------------->
+    <div class="tabs-header">
+      <div class="tabs-navigation">
+        <v-btn
+          v-for="tab in tabs"
+          :key="tab.value"
+          variant="flat"
+          :class="['tab-button', { 'tab-active': activeTab === tab.value }]"
+          @click="activeTab = tab.value"
+        >
+          {{ tab.label }}
+        </v-btn>
+      </div>
+    </div>
+    <!--------------------------------------------------------->
+    
+    
+    <!-- TAB CONTENT ------------------------------------------>
+    <KeepAlive>
+      <component :is="currentTabComponent" />
+    </KeepAlive>
+    <!--------------------------------------------------------->
+
+
   </v-container>
 </template>
 
@@ -48,17 +48,98 @@ definePageMeta({
   middleware: 'auth'
 })
 
-const { user, logout } = useAuthStore()
 
-const formatDate = (dateString: string) => {
-  try {
-    return new Date(dateString).toLocaleDateString('es-ES')
-  } catch {
-    return dateString
+/**************************************/
+/* TABS */
+/**************************************/
+const route = useRoute();
+const router = useRouter();
+
+// Initialize activeTab from URL query parameter or default to 'restaurantes'
+const activeTab = ref((route.query.tab as string) || 'restaurantes');
+
+// Tabs configuration
+const tabs = [
+  { label: 'Restaurantes', value: 'restaurantes' },
+  { label: 'Recetas', value: 'recetas' },
+  { label: 'Consejos', value: 'consejos' },
+  { label: 'Comentarios', value: 'comentarios' }
+];
+
+// Watch for route changes to update activeTab
+watch(() => route.query.tab, (newTab) => {
+  if (newTab && typeof newTab === 'string') {
+    activeTab.value = newTab;
+  }
+});
+
+// Watch activeTab to update URL
+watch(activeTab, (newTab) => {
+  if (route.query.tab !== newTab) {
+    router.push({ query: { ...route.query, tab: newTab } });
+  }
+});
+
+// Tab components mapping
+const tabComponents: Record<string, any> = {
+  restaurantes: resolveComponent('UserRestaurantsFavorites'),
+  recetas: resolveComponent('UserRecipesFavorites'),
+  consejos: resolveComponent('UserPostsFavorites'),
+  comentarios: resolveComponent('UserCommentsFavorites')
+}
+
+// Computed property for dynamic component
+const currentTabComponent = computed(() => {
+  return tabComponents[activeTab.value] || tabComponents.restaurantes
+});
+</script>
+
+<style lang="scss" scoped>
+.user-page {
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding: 60px 100px;
+}
+
+// Tabs
+.tabs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 60px;
+  margin-bottom: 20px;
+
+  .tabs-navigation {
+    display: flex;
+    gap: 12px;
+  }
+
+  .tab-button {
+    min-width: 184px;
+    height: 40px;
+    padding: 0 24px;
+    background-color: rgba(160, 160, 160, 0.52);
+    color: #616161;
+    letter-spacing: -1px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(131, 106, 2, 0.2);
+    }
+
+    &.tab-active {
+      background-color: #616161;
+      color: #ffffff;
+
+      &:hover {
+        background-color: #4a4a4a;
+      }
+    }
   }
 }
 
-const handleLogout = () => {
-  logout()
+// Tab Content
+.tab-content {
+  padding: 40px 100px;
 }
-</script>
+</style>

@@ -22,3 +22,20 @@ export const POST_STATUS = {
   APPROVED: 'APROBADO',
   REJECTED: 'RECHAZADO'
 }
+
+// Different food types for categorization
+export const FOOD_TYPES = [
+  'DESAYUNO',
+  'BRUNCH',
+  'ALMUERZO',
+  'MERIENDA',
+  'CENA',
+  'POSTRE',
+  'SALADO',
+  'DULCE',
+];
+
+// Difficulty levels for recipes
+export const DIFFICULTY_LEVELS = ['FACIL', 'MEDIO', 'DIFICIL'];
+
+export const RESTAURANT_TYPES = ['SIN_GLUTEN', 'MEDITERRANEA', 'ASIATICA', 'VEGANO', 'MEXICANA'];

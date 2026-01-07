@@ -26,7 +26,11 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .hero-image-section {
   position: relative;
-  height: 320px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 320px;
+  padding: 40px 20px;
   overflow: hidden; 
 
     .hero-image {
@@ -34,18 +38,18 @@ const props = defineProps<{
       top: 0;
       left: 0;
       width: 100%;
+      height: 100%;
       z-index: 1; 
     }
 
     .hero-text {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
+      position: relative;
       width: 65%;
+      max-width: 100%;
       text-align: center;
       z-index: 2;
       color: white;
+      margin-bottom: 0;
 
       h1 {
         font-family: 'arial', sans-serif;

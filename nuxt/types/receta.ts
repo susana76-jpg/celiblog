@@ -1,3 +1,6 @@
+/*******************************/
+/* TYPES FOR EXISTING DATA */
+/*******************************/
 export interface RecetaUsuario {
   email: string;
   nombre: string;
@@ -38,3 +41,18 @@ export interface RecetaIngrediente {
   cantidad: string;
   unidad: string;
 }
+
+
+/*******************************/
+/* TYPES FOR RECIPE FORM */
+/*******************************/
+export type Ingredient = {
+  nombre: string;
+  cantidad: number;
+  unidad: string;
+};
+
+export type Step = {
+  orden: number;
+  descripcion: string;
+};

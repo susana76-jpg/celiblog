@@ -35,7 +35,7 @@
                 {{ item.titulo }}
               </v-card-title>
               <v-card-text class="px-0">
-                {{ item.subtitulo }}
+                {{ truncatedDescription }}
               </v-card-text>
               <v-rating
                 readonly
@@ -66,11 +66,19 @@ const setItemLink = (item: Receta | Post, type: 'recetas' | 'consejos') => {
   else if (type === 'consejos') return `/consejos/${(item as Post).idPost}`;
   return '/';
 };
+
+// Truncate description to 130 characters
+const truncatedDescription = computed(() => {
+  const maxLength = 130;
+  return props.subtitle.length > maxLength 
+    ? props.subtitle.slice(0, maxLength) + '...' 
+    : props.subtitle;
+});
 </script>
 
 <style lang="scss" scoped>
 .carousel-section {
-  padding: 4rem 80px;
+  padding: 4rem 90px;
   background-color: #FFF;
 
   .carousel-title {

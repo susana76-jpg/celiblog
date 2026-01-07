@@ -2,6 +2,7 @@ export const useAuthStore = () => {
   const token = useState<string | null>('auth-token', () => null);
   const user = useState<UsuarioLogin | null>('auth-user', () => null);
   const isAuthenticated = computed(() => !!token.value);
+  const isAdmin = computed(() => user.value?.rol?.idRol === 1);
 
   // Initialize from sessionStorage on client side
   if (import.meta.client) {
@@ -32,6 +33,19 @@ export const useAuthStore = () => {
     
     if (import.meta.client) {
       sessionStorage.setItem('auth-token', newToken)
+      sessionStorage.setItem('auth-user', JSON.stringify(newUser))
+    }
+  };
+
+
+  /**
+   * Updates the user data in both state and sessionStorage.
+   * @param {UsuarioLogin} newUser - The updated user data to store
+   */
+  const updateUser = (newUser: UsuarioLogin) => {
+    user.value = newUser;
+    
+    if (import.meta.client) {
       sessionStorage.setItem('auth-user', JSON.stringify(newUser))
     }
   };
@@ -74,7 +88,7 @@ export const useAuthStore = () => {
     } catch (error: any) {
       return { 
         success: false, 
-        error: error?.data?.message || error?.message || 'Error al iniciar sesión' 
+        error: error?.data || 'Error al iniciar sesión' 
       }
     }
   }
@@ -104,7 +118,7 @@ export const useAuthStore = () => {
     } catch (error: any) {
       return { 
         success: false, 
-        error: error?.data?.message || error?.message || 'Error al registrarse' 
+        error: error?.data || 'Error al registrarse' 
       }
     }
   }
@@ -120,10 +134,12 @@ export const useAuthStore = () => {
 
   return {
     token: readonly(token),
-    user: readonly(user),
+    user,
     isAuthenticated,
+    isAdmin,
     login,
     register,
     logout,
+    updateUser,
   }
 }

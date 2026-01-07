@@ -28,17 +28,6 @@
 
       <!-- MAIN CONTENT -->
       <div v-if="post" class="details-page__main post-description">
-        <!-- <v-chip-group column  class="tags-list" >
-          <v-chip 
-            v-for="tag in consejo.tags" 
-            :key="tag"
-            size="large"
-            class="bg-primary"
-          >
-            {{ tag }}
-          </v-chip>
-        </v-chip-group> -->
-
         <h2 class="mt-10">{{ setDate(post.fechaPublicacion) }}</h2>
         <h3 class="mb-4">{{ post.usuarioPublicacion.nombre }}</h3>
         <p class="mb-10" v-html="formatHtmlText(post.contenido)"></p>
@@ -79,7 +68,7 @@ const getConsejoById = async () => {
       params: { id },
     });
     post.value = data as Post; 
-    post.value.urlPost = '/img/consejos/consejo' + id + '.jpg';
+    post.value.urlPost = '/img/' + post.value.urlPost;
   } catch (error) {
     showError('Error fetching consejo');
   } finally {

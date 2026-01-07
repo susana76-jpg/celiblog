@@ -23,7 +23,11 @@
         <h2>Rellena nuestro formulario de registro</h2>
         <p>Así tendrás acceso a todo nuestro contenido, pudiendo guardarlo como favorito y hacer comentarios.</p>
       </div>
-      <v-form ref="formRef" @submit.prevent="handleRegister">
+      <v-form 
+        ref="formRef" 
+        validate-on="submit"
+        @submit.prevent="handleRegister"
+      >
         <v-text-field
           v-for="(field, index) in textFields"
           :key="index"

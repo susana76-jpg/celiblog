@@ -51,7 +51,7 @@
                 variant="outlined"
                 density="comfortable"
                 label="Tipo de restaurante *"
-                :items="restaurantTypes"
+                :items="RESTAURANT_TYPES"
                 v-model="restaurantForm.tipoRestaurante"
                 @update:modelValue="($event) => restaurantForm.tipoRestaurante = $event"
               ></v-select>
@@ -118,8 +118,6 @@ const showDialog = computed({
 /*************************************/
 /* FORM DATA BINDING + INPUTS */
 /*************************************/
-const restaurantTypes = ['SIN_GLUTEN', 'MEDITERRANEA', 'ASIATICA', 'VEGANO', 'MEXICANA'];
-
 // Restaurant Form
 const restaurantForm = ref({
   titulo: '',
