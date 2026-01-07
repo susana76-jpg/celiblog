@@ -38,7 +38,7 @@ public interface RecetaRepository extends JpaRepository<Receta, Long> {
     List<Receta> getByValoracion(int valoracion);
     List<Receta> getByTipoComida(TipoComidaEnum tipoComida);
 
-    @Query(value = "SELECT * FROM receta WHERE id_usuario =:idUsuario AND estado = 'APROBADO'", nativeQuery = true)
+    @Query(value = "SELECT * FROM receta WHERE id_usuario =:idUsuario", nativeQuery = true)
     List<Receta> getByIdUsuario(@Param("idUsuario")Long idUsuario);
 
 }

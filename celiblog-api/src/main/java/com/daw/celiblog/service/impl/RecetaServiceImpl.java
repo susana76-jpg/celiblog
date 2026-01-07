@@ -1,8 +1,6 @@
 package com.daw.celiblog.service.impl;
 
-import com.daw.celiblog.db.entity.Receta;
-import com.daw.celiblog.db.entity.Usuario;
-import com.daw.celiblog.db.entity.VistaRecetaIngredientes;
+import com.daw.celiblog.db.entity.*;
 import com.daw.celiblog.db.repository.*;
 import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.EstadoValidacionEnum;
@@ -26,18 +24,22 @@ public class RecetaServiceImpl implements RecetaService {
     private final FavoritoRepository favoritoRepository;
     private final VistaRecetaRepository vistaRecetaRepository;
     private final PasoRecetaService pasoRecetaService;
+    private final PasoRecetaRepository pasoRecetaRepository;
     private final IngredienteService ingredienteService;
+    private final IngredienteRepository ingredienteRepository;
     private final ComentarioRepository comentarioRepository;
 
 
-    public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository1, FavoritoRepository favoritoRepository, VistaRecetaRepository vistaRecetaRepository, PasoRecetaService pasoRecetaService, IngredienteService ingredienteService, ComentarioRepository comentarioRepository) {
+    public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository1, FavoritoRepository favoritoRepository, VistaRecetaRepository vistaRecetaRepository, PasoRecetaService pasoRecetaService, PasoRecetaRepository pasoRecetaRepository1, IngredienteService ingredienteService, IngredienteRepository ingredienteRepository, ComentarioRepository comentarioRepository) {
         this.recetaRepository = recetaRepository;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository1;
         this.favoritoRepository = favoritoRepository;
         this.vistaRecetaRepository = vistaRecetaRepository;
         this.pasoRecetaService = pasoRecetaService;
+        this.pasoRecetaRepository = pasoRecetaRepository1;
         this.ingredienteService = ingredienteService;
+        this.ingredienteRepository = ingredienteRepository;
         this.comentarioRepository = comentarioRepository;
     }
 
@@ -237,6 +239,14 @@ public class RecetaServiceImpl implements RecetaService {
     public boolean deleteById(Authentication authentication, Long id) {
         Optional<Receta> receta = this.recetaRepository.findById(id);
         if( receta.isPresent()){
+            List<VistaRecetaIngredientes> ingredientes = getIngredientesByIdReceta(receta.get().getIdReceta());
+            List<PasoRecetaDTO> pasos = this.pasoRecetaService.obtenerPasosRecetaPorId(receta.get().getIdReceta());
+            for(VistaRecetaIngredientes ingrediente : ingredientes){
+                this.ingredienteRepository.deleteById(ingrediente.getIdIngrediente());
+            }
+            for(PasoRecetaDTO paso: pasos){
+                this.pasoRecetaRepository.deleteById(paso.getIdPaso());
+            }
             this.recetaRepository.deleteById(id);
             return true;
         }else{

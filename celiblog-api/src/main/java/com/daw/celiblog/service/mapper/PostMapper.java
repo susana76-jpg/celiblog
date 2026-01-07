@@ -23,7 +23,7 @@ public class PostMapper {
                 source.getTitulo(),
                 source.getSubtitulo(),
                 source.getContenido(),
-                new UsuarioSummaryDTO(source.getUsuario().getNombre(), source.getUsuario().getEmail()),
+                new UsuarioSummaryDTO(source.getUsuario().getEmail(), source.getUsuario().getNombre()),
                 UsuarioMapper.entityToDto(source.getUsuario()),
                 source.getUrlPost(),
                 source.getEstado(),

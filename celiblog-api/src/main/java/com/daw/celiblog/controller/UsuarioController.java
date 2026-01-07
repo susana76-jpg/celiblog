@@ -63,8 +63,8 @@ public class UsuarioController {
         return ResponseEntity.ok(this.usuarioService.crear(usuarioView));
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
-    @Operation(summary = "PROTEGIDO: Elimina el usuario por su id. * IMPORTANTE: Este end-point hará que todos los comentarios hechos por el usuario se eliminen también.")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @Operation(summary = "PRIVADO: Elimina el usuario por su id. * IMPORTANTE: Este end-point hará que todos los comentarios hechos por el usuario se eliminen también.")
     @DeleteMapping("/delete")
     public ResponseEntity<String> eliminarById(Authentication authentication, @RequestParam(value="idUsuario")Long idUsuario) {
         if(this.usuarioService.eliminar(authentication, idUsuario)){

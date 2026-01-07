@@ -70,9 +70,11 @@ public class ComentarioServiceImpl implements ComentarioService {
         if(comentario.isPresent()){
             Comentario coment = comentario.get();
             coment.setContenido(comentarioView.getContenido());
+            coment.setTitulo(comentarioView.getTitulo());
             coment.setSubtitulo(comentarioView.getSubtitulo());
             coment.setComentarioUrl(comentarioView.getComentarioUrl());
             coment.setValoracion(comentarioView.getValoracion());
+            coment.setEstado(EstadoValidacionEnum.PENDIENTE);
             return ComentarioMapper.entityToDto(this.comentarioRepository.save(coment));
         }
         return null;
@@ -81,7 +83,7 @@ public class ComentarioServiceImpl implements ComentarioService {
     @Override
     public boolean deleteById(Long idComentario) {
         Optional<Comentario> comentario = this.comentarioRepository.findById(idComentario);
-        if(comentario.isPresent() && !comentario.get().getEstado().equals(EstadoValidacionEnum.APROBADO)){
+        if(comentario.isPresent()){
             this.comentarioRepository.deleteById(idComentario);
             return true;
         }else{

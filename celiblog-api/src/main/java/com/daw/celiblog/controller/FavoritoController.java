@@ -53,11 +53,13 @@ public class FavoritoController {
     }
 
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
-    @Operation(summary = "PROTEGIDO: Elimina un favorito por su id.")
+    @Operation(summary = "PROTEGIDO: Elimina un favorito por su id de objeto referencia.")
     @DeleteMapping("/deleteById")
-    public ResponseEntity<String> deleteFavorito(Authentication authentication, @RequestParam(name="idFavorito") Long idFavorito){
-        if(this.favoritoService.deleteFavorito(idFavorito)){
-            return ResponseEntity.status(200).body("Se ha eliminado el favorito con id "+idFavorito);
+    public ResponseEntity<String> deleteFavorito(Authentication authentication,
+                                                 @RequestParam(name="idReferencia")Long idReferencia,
+                                                 @RequestParam(name="tipoReferencia") ObjetoEnum tipoReferencia){
+        if(this.favoritoService.deleteFavorito(authentication, idReferencia, tipoReferencia)){
+            return ResponseEntity.status(200).body("Se ha eliminado el favorito");
         }else{
             return ResponseEntity.status(300).body("No existe el favorito a eliminar.");
         }

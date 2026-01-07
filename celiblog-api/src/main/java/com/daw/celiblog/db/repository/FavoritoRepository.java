@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FavoritoRepository extends JpaRepository<Favorito, Long> {
@@ -26,6 +27,15 @@ public interface FavoritoRepository extends JpaRepository<Favorito, Long> {
     AND tipo_referencia =:tipoReferencia
     """, nativeQuery = true)
     List<Long> getIdFavoritosByTipoReferencia(@Param("idUsuario") Long idUsuario, @Param("tipoReferencia") String tipoReferencia);
+
+    @Query(value = """
+    SELECT *
+    FROM favoritos
+    WHERE id_usuario = :idUsuario
+    AND id_referencia =:idReferencia
+    AND tipo_referencia =:tipoReferencia
+    """, nativeQuery = true)
+    Optional<Favorito> getIdFavoritosByIdReferenciaAndTipoReferencia(@Param("idUsuario") Long idUsuario, @Param("tipoReferencia") String tipoReferencia, @Param("idReferencia")Long idReferencia);
 
 
 }

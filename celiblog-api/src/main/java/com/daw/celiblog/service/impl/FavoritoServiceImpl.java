@@ -7,6 +7,7 @@ import com.daw.celiblog.dto.*;
 import com.daw.celiblog.enums.ObjetoEnum;
 import com.daw.celiblog.service.*;
 import com.daw.celiblog.service.mapper.FavoritoMapper;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -72,13 +73,18 @@ public class FavoritoServiceImpl implements FavoritoService {
     }
 
     @Override
-    public boolean deleteFavorito(Long idFavorito) {
-        if(this.favoritoRepository.findById(idFavorito).isPresent()){
-            this.favoritoRepository.deleteById(idFavorito);
-            return true;
-        }else{
-            return false;
+    public boolean deleteFavorito(Authentication authentication, Long idReferencia, ObjetoEnum objetoEnum) {
+        Optional<Usuario> usuario = this.usuarioRepository.findByEmail(authentication.getName());
+        if(usuario.isPresent()){
+            Optional<Favorito> favorito = this.favoritoRepository.getIdFavoritosByIdReferenciaAndTipoReferencia(usuario.get().getIdUsuario(), objetoEnum.toString(), idReferencia);
+            if(favorito.isPresent()){
+                this.favoritoRepository.deleteById(favorito.get().getIdFavorito());
+                return true;
+            }else{
+                return false;
+            }
         }
+        return false;
     }
 
     @Override

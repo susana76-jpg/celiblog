@@ -41,7 +41,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     """, nativeQuery = true)
     List<Post> buscarPostsPorNombreDeTag(@Param("nombreTag") String nombreTag);
 
-    @Query(value = "SELECT * FROM post WHERE id_usuario =:idUsuario AND estado = 'APROBADO'", nativeQuery = true)
+    @Query(value = "SELECT * FROM post WHERE id_usuario =:idUsuario", nativeQuery = true)
     List<Post> getByIdUsuario(@Param("idUsuario")Long idUsuario);
 
 }

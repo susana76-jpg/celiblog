@@ -61,7 +61,7 @@ public class ComentarioController {
     }
 
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR','EDITOR','VISITOR')")
-    @Operation(summary = "PROTEGIDO: Elimina un comentario por su id, si el comentario no está en estado APROBADO (en PENDIENTE o RECHAZADO)")
+    @Operation(summary = "PROTEGIDO: Elimina un comentario por su id.")
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteById(@RequestParam(name="idComentario") Long idComentario){
         if(this.comentarioService.deleteById(idComentario)){

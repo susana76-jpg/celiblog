@@ -10,7 +10,7 @@ import java.util.List;
 public interface FavoritoService {
 
     FavoritoDTO addFavorito(Authentication authentication, Long idReferencia, ObjetoEnum objetoEnum);
-    boolean deleteFavorito(Long idFavorito);
+    boolean deleteFavorito(Authentication authentication, Long idReferencia, ObjetoEnum objetoEnum);
 
     List<?> getFavoritosByReferencia(Authentication authentication, ObjetoEnum objetoEnum);
     EstadisticaDTO getFavoritosEstadistica(Authentication authentication);
