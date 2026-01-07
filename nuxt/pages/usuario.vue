@@ -3,10 +3,10 @@
 
     <!-- USER INFORMATION ------------------------------------>    
     <v-row class="ma-0" no-gutters>
-      <v-col cols="12" xl="5" class="align-self-stretch pr-xl-4 py-0 pl-0 mb-4 mb-xl-0">
+      <v-col cols="12" lg="5" class="align-self-stretch pr-lg-4 py-0 pl-0 mb-4 mb-lg-0">
         <UserPersonalData class="h-100" />
       </v-col>
-      <v-col cols="12" xl="7" class="py-0 pr-0">
+      <v-col cols="12" lg="7" class="py-0 pr-0">
         <v-row no-gutters class="h-100">
           <UserFavoritesKeyfacts 
             @update:tab="activeTab = $event"

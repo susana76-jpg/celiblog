@@ -60,7 +60,7 @@ defineEmits<{
 </script>
 
 <style scoped lang="scss">
-@import '~/assets/styles/variables';
+@import '@/assets/styles/variables';
 
 .user-comment-card {
   background-color: #afafaf40;

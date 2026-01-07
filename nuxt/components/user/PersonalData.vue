@@ -30,16 +30,17 @@
         :rules="field.rules"
         v-model="formData[field.model]"
       />
-      <div class="d-flex justify-space-between">
+      <div class="d-flex justify-end">
         <v-btn
-          v-for="btn in buttons"
-          :key="btn.text"
+          v-for="(btn, index) in buttons"
+          :key="index"
           height="40" 
           rounded="xl"
           variant="outlined"
           color="white"
           :class="btn.class"
           :text="btn.text"
+          :icon="btn.icon"
           :type="btn.type"
           :loading="btn.loading"
           :disabled="btn.disabled"
@@ -87,8 +88,9 @@ const textFields = [
 const isSubmitting = ref(false);
 const buttons = computed(() => [
   {
-    text: 'Eliminar cuenta',
-    class: 'mr-2 flex-grow-1',
+    text: undefined,
+    icon: 'mdi-trash-can-outline',
+    class: 'mr-2',
     type: undefined,
     loading: undefined,
     disabled: undefined,
@@ -99,7 +101,6 @@ const buttons = computed(() => [
   },
   {
     text: 'Guardar cambios',
-    class: 'flex-grow-1',
     type: 'submit',
     loading: isSubmitting.value,
     disabled: formData.value.nombre === user.value?.nombre,

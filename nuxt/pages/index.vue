@@ -41,7 +41,7 @@ const getAllPosts = async () => {
   try {
     const data = await useApiFetch(API.POSTS.BASE);
     posts.value = data as Post[];
-    posts.value.forEach((post, i) => post.urlPost = '/img/consejos/consejo' + (i + 1) + '.jpg');
+    posts.value.forEach((post, i) => post.urlPost = '/img/' + post.urlPost);
     posts.value = posts.value.slice(0, 8); 
   } catch (error) {
     showError(`Error al cargar los consejos: ${error}`);
