@@ -293,7 +293,7 @@ const textFields = computed(() => [
       get: () => restaurantForm.value.email,
       set: (val) => restaurantForm.value.email = val
     }),
-    rules: validationRules.email
+    rules: []
   },
   {
     label: 'Página web *',

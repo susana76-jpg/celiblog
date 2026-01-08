@@ -4,6 +4,8 @@
     :key="card.tab"
     class="user-keyfacts py-0"
     :class="card.class"
+    cols="6"
+    lg="3"
   >
     <v-card
       class="keyfact-card text-center"
@@ -40,28 +42,28 @@ const keyfactCards = [
     icon: 'mdi-silverware-fork-knife',
     statsKey: 'numRestaurantes' as keyof typeof stats,
     label: 'Restaurantes favoritos',
-    class: 'pr-2'
+    class: 'pr-3 pr-lg-2 mb-6 mb-lg-0'
   },
   {
     tab: 'recetas',
     icon: 'mdi-food-outline',
     statsKey: 'numRecetas' as keyof typeof stats,
     label: 'Recetas favoritas',
-    class: 'px-2'
+    class: 'px-lg-2 pl-3 pr-0 mb-lg-0 mb-6'
   },
   {
     tab: 'consejos',
     icon: 'mdi-lightbulb-outline',
     statsKey: 'numPost' as keyof typeof stats,
     label: 'Consejos favoritos',
-    class: 'px-2'
+    class: 'px-lg-2 pl-0 pr-3'
   },
   {
     tab: 'comentarios',
     icon: 'mdi-comment-outline',
     statsKey: 'numComentarios' as keyof typeof stats,
     label: 'Comentarios',
-    class: 'pl-2'
+    class: 'pl-3 pl-lg-2'
   }
 ]
 

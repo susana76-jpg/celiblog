@@ -163,6 +163,8 @@ const addPost = async () => {
         text: `Publicación ${formData.value.titulo} agregada correctamente` 
       };
     }
+
+    resetFormData();
   } catch (error: any) {
     message.value = { 
       show: true, 
@@ -170,5 +172,15 @@ const addPost = async () => {
       text: `Error al agregar la publicación: ${error.message || 'Error desconocido'}` 
     };
   }
+};
+
+// Reset form data
+const resetFormData = () => {
+  formData.value = {
+    titulo: "",
+    subtitulo: "",
+    contenido: "",
+    urlPost: "",
+  };
 };
 </script>

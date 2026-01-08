@@ -6,7 +6,7 @@
     :show-status-filter="true"
     :fetch-endpoint="API.STATUS.LIST"
     :fetch-params="getFetchParams"
-    :delete-endpoint="API.RECIPES.DELETE"
+    :delete-endpoint="API.POSTS.DELETE"
     :delete-params="getDeleteParams"
     selector-column="estado"
     :selector-config="selectorConfig"
