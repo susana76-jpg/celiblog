@@ -1,14 +1,15 @@
 <template>
 
-  <!-- LOADER -->
+  <!-- LOADER ---------------------------------------->
   <div v-if="loading" class="loader-container-index">
     <div class="loader">
       <div class="loader__spinner"></div>
       <p class="loader__text">Cargando restaurantes...</p>
     </div>
   </div>
+  <!-------------------------------------------------->
 
-  <!-- NO FAVORITES MESSAGE -->
+  <!-- NO FAVORITES MESSAGE -------------------------->
   <div v-else-if="!loading && filteredRestaurants.length === 0" class="no-favorites-container">
     <div class="no-favorites-content">
       <v-icon size="100" color="primary">mdi-heart-outline</v-icon>
@@ -16,8 +17,9 @@
       <p class="text-body-1">Empieza a guardar tus restaurantes favoritos para verlos aquí</p>
     </div>
   </div>
+  <!-------------------------------------------------->
 
-  <!-- RESTAURANTS GRID -->
+  <!-- RESTAURANTS GRID ------------------------------>
   <v-row v-else no-gutters class="section-main__content ml-n4 mr-n4">
     <v-col
       v-for="(item, index) in paginatedRestaurants"
@@ -32,8 +34,9 @@
       />
     </v-col>
   </v-row>
+  <!-------------------------------------------------->
 
-  <!-- PAGINATION -->
+  <!-- PAGINATION ------------------------------------>
   <div 
     v-if="!loading && totalPages > 1"
     class="pagination-container mt-6 mb-10"
@@ -47,12 +50,11 @@
       @update:model-value="onPageChange"
     ></v-pagination>
   </div>
+  <!-------------------------------------------------->
 
 </template>
 
 <script setup lang="ts">
-import { fi } from 'vuetify/locale';
-
 const { showError } = useNotification();
 
 const loading = ref<boolean>(false);
@@ -78,31 +80,16 @@ const getFavoriteRestaurants = async () => {
   }
 };
 
-/*******************************/
-/* PAGINATION LOGIC */
-/*******************************/
-const currentPage = ref<number>(1);
-const itemsPerPage = ref<number>(12);
-const totalPages = computed(() => Math.ceil(filteredRestaurants.value.length / itemsPerPage.value));
-
-const paginatedRestaurants = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value;
-  const end = start + itemsPerPage.value;
-  return filteredRestaurants.value.slice(start, end);
-});
-
-const onPageChange = (page: number) => {
-  currentPage.value = page;
-
-  // Scroll to top of results
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
+// Update restaurant after favorite toggle
 const updateRestaurant = (index: number, updatedRestaurant: Restaurante) => {
   const restaurantIndex = restaurants.value.findIndex(r => r.idRestaurante === updatedRestaurant.idRestaurante);
   if (restaurantIndex !== -1) restaurants.value[restaurantIndex] = updatedRestaurant;
 };
 
+// Pagination logic
+const { currentPage, totalPages, paginatedItems: paginatedRestaurants, onPageChange } = usePagination(filteredRestaurants);
+
+// Fetch favorites on mount
 onMounted(() => {
   getFavoriteRestaurants();
 });

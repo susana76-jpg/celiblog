@@ -80,22 +80,7 @@ const getFavoritePosts = async () => {
 /*******************************/
 /* PAGINATION LOGIC */
 /*******************************/
-const currentPage = ref<number>(1);
-const itemsPerPage = ref<number>(12);
-const totalPages = computed(() => Math.ceil(filteredPosts.value.length / itemsPerPage.value));
-
-const paginatedPosts = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value;
-  const end = start + itemsPerPage.value;
-  return filteredPosts.value.slice(start, end);
-});
-
-const onPageChange = (page: number) => {
-  currentPage.value = page;
-
-  // Scroll to top of results
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+const { currentPage, totalPages, paginatedItems: paginatedPosts, onPageChange } = usePagination(filteredPosts);
 
 const updatePost = (index: number, updatedPost: Post) => {
   const postIndex = posts.value.findIndex(p => p.idPost === updatedPost.idPost);

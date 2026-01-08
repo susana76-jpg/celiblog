@@ -127,7 +127,7 @@ const toggleFavorite = async () => {
 
   try {
     if (isFavorite.value) {
-      await removeFromFavorites(itemId.value);
+      await removeFromFavorites(itemId.value, props.favoriteType);
       emit('update:item', { ...props.item, esFavoritoUsuario: false });
       showSuccess(props.removeMessage);
     } else {

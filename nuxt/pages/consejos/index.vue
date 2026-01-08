@@ -5,21 +5,25 @@
     <SectionHeroImage
       title="Consejos"
       image-alt="consejos para vivir sin gluten"
-      subtitle="Te ofrecemos orientación sencilla y útil para vivir sin gluten sin complicaciones. Aprende trucos, buenas prácticas y sugerencias para cocinar, comprar y comer fuera con total confianza."
+      subtitle="Te ofrecemos orientación sencilla y útil para vivir sin gluten sin complicaciones. Aprende trucos, buenas prácticas y sugerencias para cocinar, comprar y comer fuera con total confianza"
       :image-src="img"
     />
     <!------------------------------------------->
 
     <!-- MAIN CONTENT --------------------------->
     <div class="section-main">
+
+      <!-- TITLE -->
       <div class="section-main__title">
         <h2>Para cuidarte mejor</h2>
-        <p>Descubre sugerencias simples y efectivas para evitar el gluten en tu día a día. Pequeños cambios que pueden marcar una gran diferencia en tu bienestar.</p>
+        <p>Descubre sugerencias simples y efectivas para evitar el gluten en tu día a día. Pequeños cambios que pueden marcar una gran diferencia en tu bienestar</p>
       </div>
+
+      <!-- FILTER BAR -->
       <SectionFilterBar 
         label="Busca entre todos nuestros consejos"
         :search="keyword"
-        :total="tips.length"
+        :total="posts.length"
         :show-tags="false"
         @update:search="updateSearch"
       />
@@ -35,13 +39,17 @@
       <!-- TIPS GRID -->
       <v-row no-gutters class="section-main__content">
         <v-col
-          v-for="item in paginatedTips"
-          :key="item.id"
+          v-for="(item, index) in paginatedPosts"
+          :key="item.idPost"
           cols="12"
-          md="4"
+          md="6"
+          lg="4"
           xl="3"
         >
-          <SectionPostCardItem :item="item" />
+          <SectionPostCardItem 
+            :item="item" 
+            @update:item="($event) => updatePost(index, $event)"
+          />
         </v-col>
       </v-row>
 
@@ -59,6 +67,7 @@
           @update:model-value="onPageChange"
         ></v-pagination>
       </div>
+
     </div>
     <!------------------------------------------->
 
@@ -66,8 +75,10 @@
 </template>
 
 <script setup lang="ts">
+const { showError } = useNotification();
+
 const img = '/img/blog/hero-image.jpg';
-const tips = ref<any[]>([]);
+const posts = ref<Post[]>([]);
 const keyword = ref<string>('');
 const loading = ref<boolean>(true);
 let searchTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -96,37 +107,25 @@ const getAllPosts = async () => {
       }
     });
 
-    tips.value = data as Post[];
+    posts.value = data as Post[];
   } catch (error) {
-    console.error('Error fetching tips:', error);
-  } finally {
+      showError('No se han podido cargar los consejos');
+    } finally {
     loading.value = false;
   }
 };
 
+// Update post in the list
+const updatePost = (index: number, updatedPost: Post) => {
+  const postIndex = posts.value.findIndex(p => p.idPost === updatedPost.idPost);
+  if (postIndex !== -1) posts.value[postIndex] = updatedPost;
+};
+
+// Pagination logic
+const { currentPage, totalPages, paginatedItems: paginatedPosts, onPageChange } = usePagination(posts);
+
+// Fetch posts on mount
 onMounted(() => {
   getAllPosts();
 });
-
-/*******************************/
-/* PAGINATION LOGIC */
-/*******************************/
-const currentPage = ref<number>(1);
-const itemsPerPage = ref<number>(12);
-const totalPages = computed(() => Math.ceil(tips.value.length / itemsPerPage.value));
-
-// Compute paginated tips
-const paginatedTips = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value;
-  const end = start + itemsPerPage.value;
-  return tips.value.slice(start, end);
-});
-
-// Handle page change
-const onPageChange = (page: number) => {
-  currentPage.value = page;
-
-  // Scroll to top of results
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
 </script>
