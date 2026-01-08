@@ -1,9 +1,9 @@
 <template>
   <div class="details-page__hero-header d-flex">
-    <div class="details-page__hero-info">
 
+    <!-- CHIP + TITLE + RATING --------------------------->
+    <div class="details-page__hero-info">
       <slot name="chip" :item="item" :setLevelChip="setLevelChip">
-        <!-- Default chip content for recetas -->
         <v-chip
           size="x-large"
           elevation="7"
@@ -33,13 +33,19 @@
         <h1>{{ title }}</h1>
         <p>{{ item.subtitulo }}</p>
       </div>
+      <!-------------------------------------------------->
+
     </div>
+    <!---------------------------------------------------->
+
+    <!-- HERO IMAGE -------------------------------------->
     <div class="details-page__hero-image">
       <v-img 
         cover
         height="500"
-        :src="imageUrl || '/img/receipe-hero-image.png'" 
-        :alt="item.titulo || 'Hero Image'" 
+        :src="currentImageUrl" 
+        :alt="item.titulo || 'Hero Image'"
+        @error="handleImageError"
       />
       <v-btn
         v-if="isAuthenticated && props.showFavorite"
@@ -50,21 +56,24 @@
         @click.stop="toggleFavorite(item)"
       />
     </div>
+    <!---------------------------------------------------->    
+
   </div>
 </template>
 <script setup lang="ts">
 const { isAuthenticated } = useAuthStore();
 const { addToFavorites, removeFromFavorites } = useUserActions();
 
-
 const props = withDefaults(defineProps<{
   item: any;
   type: 'receta' | 'restaurante' | 'post';
   imageUrl?: string;
+  defaultImage?: string;
   showRating?: boolean;
   showFavorite?: boolean;
   isFavorite?: boolean;
 }>(), {
+  defaultImage: '/img/recetas/hero-image.png',
   showRating: true,
   showFavorite: true,
   isFavorite: false
@@ -74,17 +83,27 @@ const emit = defineEmits<{
   'update:favorite': [isFavorite: boolean]
 }>();
 
+// Handle image error
+const currentImageUrl = ref(props.imageUrl || props.defaultImage);
+const handleImageError = () => {
+  currentImageUrl.value = props.defaultImage;
+};
+
+// Watch for imageUrl prop changes
+watch(() => props.imageUrl, (newUrl) => {
+  if (newUrl) {
+    currentImageUrl.value = newUrl;
+  }
+});
+
 // Set chip color and rating based on difficulty
 const setLevelChip = (difficulty: string | undefined) => {
   switch (difficulty?.toLowerCase()) {
     case 'fácil':
-    case 'facil':
       return { color: 'bg-success', rating: 1 };
     case 'media':
-    case 'medium':
       return { color: 'bg-warning', rating: 2 };
     case 'difícil':
-    case 'dificil':
       return { color: 'bg-error', rating: 3 };
     default:
       return { color: 'bg-success', rating: 1 };
@@ -106,20 +125,22 @@ const id = computed(() => {
 
 // Toggle favorite status
 const toggleFavorite = async (item: Receta) => {
+  const objectType = props.type.toUpperCase() as ObjectType;
+
   if (item.esFavoritoUsuario) {
-    const response = await removeFromFavorites(id.value);
+    const response = await removeFromFavorites(id.value, objectType);
     if (response.success) emit('update:favorite', false);
   } else {
-    const objectType = props.type.toUpperCase() as ObjectType;
     const response = await addToFavorites(id.value, objectType);
     if (response.success) emit('update:favorite', true);
   }
 };
+
 </script>
 <style lang="scss">
 .details-page {
   &__hero-header {
-    height: 480px;
+    min-height: 480px;
     width: 100%;
     border-top: 3px solid #836A02;
     border-bottom: 3px solid #836A02;
@@ -127,7 +148,7 @@ const toggleFavorite = async (item: Receta) => {
 
   &__hero-info {
     width: 50%;
-    padding: 50px 50px 50px 120px;
+    padding: 50px 50px 50px 100px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -203,15 +224,30 @@ const toggleFavorite = async (item: Receta) => {
     &__favourite {
       position: absolute;
       top: 2rem;
-      right: 120px;
+      right: 100px;
       height: 80px !important;
       width: 80px !important;
-      background-color: #ffffffd3;
+      background-color: #ffffffe5;
 
       .v-icon {
         --v-icon-size-multiplier: 2 !important;
       }
     }
+  }
+}
+
+@media (max-width: 1200px) {
+  .details-page__hero-image{
+    width: 35%;
+
+    &__favourite {
+      right: 20px;
+    }
+  }
+
+  .details-page__hero-info {
+    width: 65%;
+    padding: 2rem 20px;
   }
 }
 </style>

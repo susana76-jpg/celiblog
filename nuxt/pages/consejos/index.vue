@@ -109,8 +109,8 @@ const getAllPosts = async () => {
 
     posts.value = data as Post[];
   } catch (error) {
-      showError('No se han podido cargar los consejos');
-    } finally {
+    showError('No se han podido cargar los consejos');
+  } finally {
     loading.value = false;
   }
 };
