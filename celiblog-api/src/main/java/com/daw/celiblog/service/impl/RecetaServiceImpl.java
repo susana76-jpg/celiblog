@@ -30,7 +30,7 @@ public class RecetaServiceImpl implements RecetaService {
     private final ComentarioRepository comentarioRepository;
 
 
-    public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository1, FavoritoRepository favoritoRepository, VistaRecetaRepository vistaRecetaRepository, PasoRecetaService pasoRecetaService, PasoRecetaRepository pasoRecetaRepository1, IngredienteService ingredienteService, IngredienteRepository ingredienteRepository, ComentarioRepository comentarioRepository) {
+    public RecetaServiceImpl(RecetaRepository recetaRepository, TagRecetaRepository tagRecetaRepository, PasoRecetaRepository pasoRecetaRepository, UsuarioRepository usuarioRepository, RecetaIngredienteRepository recetaIngredienteRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository1, FavoritoRepository favoritoRepository, VistaRecetaRepository vistaRecetaRepository, PasoRecetaService pasoRecetaService, PasoRecetaRepository pasoRecetaRepository1, IngredienteService ingredienteService, IngredienteRepository ingredienteRepository, ComentarioRepository comentarioRepository) {
         this.recetaRepository = recetaRepository;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository1;
@@ -239,14 +239,12 @@ public class RecetaServiceImpl implements RecetaService {
     public boolean deleteById(Authentication authentication, Long id) {
         Optional<Receta> receta = this.recetaRepository.findById(id);
         if( receta.isPresent()){
-            List<VistaRecetaIngredientes> ingredientes = getIngredientesByIdReceta(receta.get().getIdReceta());
+            List<Long> idIngredientes = this.ingredienteRepository.getByIdReceta(id);
             List<PasoRecetaDTO> pasos = this.pasoRecetaService.obtenerPasosRecetaPorId(receta.get().getIdReceta());
-            for(VistaRecetaIngredientes ingrediente : ingredientes){
-                this.ingredienteRepository.deleteById(ingrediente.getIdIngrediente());
-            }
-            for(PasoRecetaDTO paso: pasos){
-                this.pasoRecetaRepository.deleteById(paso.getIdPaso());
-            }
+
+            idIngredientes.forEach(this.ingredienteRepository::deleteById);
+            pasos.forEach(paso -> this.pasoRecetaRepository.deleteById(paso.getIdPaso()));
+
             this.recetaRepository.deleteById(id);
             return true;
         }else{

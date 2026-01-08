@@ -6,6 +6,7 @@ import com.daw.celiblog.db.entity.RecetaIngrediente;
 import com.daw.celiblog.db.repository.IngredienteRepository;
 import com.daw.celiblog.db.repository.RecetaIngredienteRepository;
 import com.daw.celiblog.db.repository.RecetaRepository;
+import com.daw.celiblog.db.repository.VistaRecetaRepository;
 import com.daw.celiblog.dto.IngredienteView;
 import com.daw.celiblog.service.IngredienteService;
 import org.springframework.security.core.Authentication;
@@ -17,11 +18,13 @@ import java.util.Optional;
 @Service
 public class IngredienteServiceImpl implements IngredienteService {
     private final IngredienteRepository ingredienteRepository;
+    private final VistaRecetaRepository vistaRecetaRepository;
     private final RecetaIngredienteRepository recetaIngredienteRepository;
     private final RecetaRepository recetaRepository;
 
-    public IngredienteServiceImpl(IngredienteRepository ingredienteRepository, RecetaIngredienteRepository recetaIngredienteRepository, RecetaRepository recetaRepository) {
+    public IngredienteServiceImpl(IngredienteRepository ingredienteRepository, VistaRecetaRepository vistaRecetaRepository, RecetaIngredienteRepository recetaIngredienteRepository, RecetaRepository recetaRepository) {
         this.ingredienteRepository = ingredienteRepository;
+        this.vistaRecetaRepository = vistaRecetaRepository;
         this.recetaIngredienteRepository = recetaIngredienteRepository;
         this.recetaRepository = recetaRepository;
     }
@@ -85,12 +88,12 @@ public class IngredienteServiceImpl implements IngredienteService {
 
     @Override
     public List<IngredienteView> updateAll(Authentication authentication, List<IngredienteView> ingredientes, Receta receta) {
-        List<Ingrediente> ingredientesAntiguos = this.ingredienteRepository.findByIdReceta(receta.getIdReceta());
+        List<Long> idIngredientesAntiguos = this.vistaRecetaRepository.findByIdReceta(receta.getIdReceta());
 
             //se eliminan los ingredientes antiguos de la receta, si los tuviese
-            if(ingredientesAntiguos.isEmpty()){
-                ingredientesAntiguos.forEach(ingrediente -> {
-                    Optional<RecetaIngrediente> recetaIngrediente = this.recetaIngredienteRepository.getByIdRecetaAndIdIngrediente(receta.getIdReceta(), ingrediente.getId_Ingrediente());
+            if(!idIngredientesAntiguos.isEmpty()){
+                idIngredientesAntiguos.forEach(idIngrediente -> {
+                    Optional<RecetaIngrediente> recetaIngrediente = this.recetaIngredienteRepository.getByIdRecetaAndIdIngrediente(receta.getIdReceta(), idIngrediente);
                     recetaIngrediente.ifPresent(value -> this.deleteById(receta.getIdReceta(), value.getIngrediente().getId_Ingrediente()));
                 });
             }

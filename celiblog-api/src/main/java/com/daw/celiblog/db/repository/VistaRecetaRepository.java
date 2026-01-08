@@ -1,5 +1,6 @@
 package com.daw.celiblog.db.repository;
 
+import com.daw.celiblog.db.entity.Ingrediente;
 import com.daw.celiblog.db.entity.VistaReceta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,5 +27,8 @@ public interface VistaRecetaRepository extends JpaRepository<VistaReceta, Long> 
     List<Long> buscarVista(
             @Param("keyword") String keyword
     );
+
+    @Query(value = "SELECT id_ingrediente FROM vista_recetas where id_receta = :idReceta ", nativeQuery = true)
+    List<Long> findByIdReceta(@Param("idReceta") Long idReceta);
 
 }
