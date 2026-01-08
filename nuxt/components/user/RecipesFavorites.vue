@@ -80,22 +80,7 @@ const getFavoriteRecipes = async () => {
 /*******************************/
 /* PAGINATION LOGIC */
 /*******************************/
-const currentPage = ref<number>(1);
-const itemsPerPage = ref<number>(12);
-const totalPages = computed(() => Math.ceil(filteredRecipes.value.length / itemsPerPage.value));
-
-const paginatedRecipes = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value;
-  const end = start + itemsPerPage.value;
-  return filteredRecipes.value.slice(start, end);
-});
-
-const onPageChange = (page: number) => {
-  currentPage.value = page;
-
-  // Scroll to top of results
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+const { currentPage, totalPages, paginatedItems: paginatedRecipes, onPageChange } = usePagination(filteredRecipes);
 
 const updateRecipe = (index: number, updatedRecipe: Receta) => {
   const recipeIndex = recipes.value.findIndex(r => r.idReceta === updatedRecipe.idReceta);

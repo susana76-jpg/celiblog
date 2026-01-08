@@ -1,16 +1,24 @@
 <template>
   <div class="loader-container-details">
     <div class="loader-content">
-      <!-- Hero Image Skeleton -->
-      <v-skeleton-loader type="image" class="loader-hero-skeleton" height="360" />
 
-      <!-- Main Content Skeleton -->
+      <!-- HERO IMAGE SKELETON ---------------------------------->
+      <v-skeleton-loader 
+        type="image" 
+        class="loader-hero-skeleton" 
+        height="360" 
+      />
+      <!-------------------------------------------------------->
+
+      <!-- MAIN CONTENT SKELETON -------------------------------->
       <div class="loader-main">
         <v-skeleton-loader type="chip@3" class="d-flex justify-end mb-8" />
         <v-skeleton-loader type="heading, subtitle" class="mb-6" />
         <v-skeleton-loader type="paragraph@3" class="mb-10" />
         <v-skeleton-loader type="article" />
       </div>
+      <!-------------------------------------------------------->
+      
     </div>
   </div>
 </template>

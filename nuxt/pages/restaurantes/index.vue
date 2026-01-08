@@ -5,18 +5,21 @@
     <SectionHeroImage
       title="Restaurantes"
       image-alt="Agradable restaurante"
-      subtitle="Te presentamos una guía de restaurantes que cuidan cada detalle para ofrecer platos libres de gluten. Descubre nuevos sabores y disfruta de una experiencia gastronómica segura y de calidad."
+      subtitle="Te presentamos una guía de restaurantes que cuidan cada detalle para ofrecer platos libres de gluten. Descubre nuevos sabores y disfruta de una experiencia gastronómica segura y de calidad"
       :image-src="img"
     />
     <!------------------------------------------->
 
     <!-- MAIN CONTENT --------------------------->
     <div class="section-main">
+
+      <!-- TITLE -->
       <div class="section-main__title">
         <h2>Dónde comer sin gluten</h2>
-        <p>Te presentamos una selección de restaurantes comprometidos con la calidad y la seguridad alimentaria para personas con intolerancia al gluten.</p>
+        <p>Te presentamos una selección de restaurantes comprometidos con la calidad y la seguridad alimentaria para personas con intolerancia al gluten</p>
       </div>
       
+      <!-- FILTER BAR -->
       <SectionFilterBar 
         label="Busca por ciudad entre todos nuestros restaurantes"
         :tags="tags"
@@ -26,6 +29,7 @@
         @update:tag="updateTags"
       />
 
+      <!-- MAP DISPLAY -->
       <RestaurantesMapaIndex
         class="mb-16"
         :restaurants="paginatedRestaurants" 
@@ -42,13 +46,17 @@
       <!-- RESTAURANTS GRID -->
       <v-row v-else no-gutters class="section-main__content">
         <v-col
-          v-for="item in paginatedRestaurants"
+          v-for="(item, index) in paginatedRestaurants"
           :key="item.idRestaurante"
           cols="12"
-          md="4"
+          md="6"
+          lg="4"
           xl="3"
         >
-          <SectionRestaurantCardItem :item="item" />
+          <SectionRestaurantCardItem 
+            :item="item" 
+            @update:item="($event) => updateRestaurant(index, $event)"
+          />
         </v-col>
       </v-row>
 
@@ -66,6 +74,7 @@
           @update:model-value="onPageChange"
         />
       </div>
+
     </div>
     <!------------------------------------------->
 
@@ -78,8 +87,8 @@ const restaurants = ref<Restaurante[]>([]);
 const loading = ref<boolean>(true);
 const type = ref<string[]>([]);
 const search = ref<string>('');
+const tags = RESTAURANT_TYPES;
 let searchTimeout: ReturnType<typeof setTimeout> | null = null;
-const tags = [ 'SIN_GLUTEN', 'MEDITERRANEA', 'ASIATICA', 'VEGANO', 'MEXICANA' ];
 
 // Search handlers
 const updateSearch = (value: string) => {
@@ -122,29 +131,20 @@ const getAllRestaurants = async () => {
   }
 };
 
+// Update restaurant in the list
+const updateRestaurant = (index: number, updatedRestaurant: Restaurante) => {
+  const id = updatedRestaurant.idRestaurante;
+  const restaurantIndex = restaurants.value.findIndex(r => r.idRestaurante === id);
+  if (restaurantIndex !== -1) restaurants.value[restaurantIndex] = updatedRestaurant;
+};
+
+// Pagination logic
+const { currentPage, totalPages, paginatedItems: paginatedRestaurants, onPageChange } = usePagination(restaurants);
+
+// Fetch restaurants on mount
 onMounted(() => {
   getAllRestaurants();
 });
-
-/*******************************/
-/* PAGINATION LOGIC */
-/*******************************/
-const currentPage = ref<number>(1);
-const itemsPerPage = ref<number>(12);
-const totalPages = computed(() => Math.ceil(restaurants.value.length / itemsPerPage.value));
-
-const paginatedRestaurants = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value;
-  const end = start + itemsPerPage.value;
-  return restaurants.value.slice(start, end);
-});
-
-const onPageChange = (page: number) => {
-  currentPage.value = page;
-
-  // Scroll to top of results
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
 </script>
 
 <style lang="scss" scoped>

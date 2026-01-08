@@ -4,12 +4,15 @@
     variant="text"
     class="card-item mx-2 pa-2" 
   >
+
+    <!-- IMAGE CONTAINER ------------------------------->
     <div class="card-image">
       <v-img 
         cover 
         height="400" 
         :src="imageSource"
       />
+
       <v-chip
         v-if="chipType === 'difficulty'"
         class="card-image__chip"
@@ -32,6 +35,7 @@
         <v-icon left>mdi-plus</v-icon>
         Información
       </v-chip>
+
       <v-btn
         v-if="isAuthenticated"
         :color="isFavorite ? 'error' : 'darkgray'"
@@ -41,6 +45,9 @@
         @click.stop.prevent="toggleFavorite"
       />
     </div>
+    <!-------------------------------------------------->
+
+    <!-- CARD CONTENT ---------------------------------->
     <v-card-title class="px-0">
       {{ itemTitle }}
     </v-card-title>
@@ -54,6 +61,8 @@
       density="compact"
       :model-value="itemRating"
     ></v-rating>
+    <!-------------------------------------------------->
+    
   </v-card>
 </template>
 
@@ -127,7 +136,7 @@ const toggleFavorite = async () => {
 
   try {
     if (isFavorite.value) {
-      await removeFromFavorites(itemId.value);
+      await removeFromFavorites(itemId.value, props.favoriteType);
       emit('update:item', { ...props.item, esFavoritoUsuario: false });
       showSuccess(props.removeMessage);
     } else {

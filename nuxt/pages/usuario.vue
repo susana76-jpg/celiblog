@@ -142,4 +142,10 @@ const currentTabComponent = computed(() => {
 .tab-content {
   padding: 40px 100px;
 }
+
+@media (max-width: 1200px) {
+  .user-page {
+    padding: 60px 40px;
+  }
+}
 </style>

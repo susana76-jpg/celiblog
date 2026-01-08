@@ -124,22 +124,7 @@ const deleteItem = async (comment: Comentario) => {
 /*******************************/
 /* PAGINATION LOGIC */
 /*******************************/
-const currentPage = ref<number>(1);
-const itemsPerPage = ref<number>(12);
-const totalPages = computed(() => Math.ceil(comments.value.length / itemsPerPage.value));
-
-// Compute paginated comments based on current page
-const paginatedComments = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value;
-  const end = start + itemsPerPage.value;
-  return comments.value.slice(start, end);
-});
-
-// Set correct page and scroll to top on page change
-const onPageChange = (page: number) => {
-  currentPage.value = page;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+const { currentPage, totalPages, paginatedItems: paginatedComments, onPageChange } = usePagination(comments);
 
 onMounted(() => {
   getComments();

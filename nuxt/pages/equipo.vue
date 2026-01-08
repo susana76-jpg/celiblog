@@ -14,18 +14,18 @@
     <div class="section-main">
       <div class="section-main__title">
         <h2>Quienes hacen Celiblog posible</h2>
-        <p>Conoce al equipo que impulsa este blog: personas especializadas y comprometidas con el bienestar de la comunidad celíaca. Trabajamos para ofrecer contenido fiable, apoyo cercano y una experiencia segura en tu vida sin gluten.</p>
+        <p>Conoce al equipo que impulsa este blog: personas especializadas y comprometidas con el bienestar de la comunidad celíaca. Trabajamos para ofrecer contenido fiable, apoyo cercano y una experiencia segura en tu vida sin gluten</p>
       </div>
 
       <!-- Team Members Section -->
       <div class="team-page__members">
-        <v-container>
+        <v-container fluid>
           <v-row>
             <v-col
               v-for="(member, index) in teamMembers"
               :key="index"
               cols="12"
-              md="4"
+              lg="4"
             >
               <v-card 
                 elevation="0"
@@ -65,10 +65,10 @@
       </div>
 
       <!-- Bottom Text Section -->
-      <div class="team-page__bottom-text">
+      <div class="team-page__bottom-text mt-14">
         <h2 class="team-page__bottom-title">Apasionadas. Proactivas. Expertas</h2>
         <p class="team-page__bottom-description">
-          Somos un equipo comprometido con la comunidad celíaca, formado por especialistas, nutricionistas, cocineros y colaboradores que trabajan para ofrecer información fiable, recetas seguras y apoyo práctico en la vida sin gluten. Cada miembro aporta su experiencia y entusiasmo, asegurando que cada contenido sea útil, claro y cercano. Nuestra misión es acompañarte en tu día a día, inspirar confianza y facilitar la búsqueda de soluciones seguras para disfrutar de la alimentación sin gluten. Desde la creación de recetas hasta la selección de productos y la atención a las necesidades de nuestra comunidad, cada proyecto refleja nuestra pasión por la calidad, la seguridad y el bienestar.
+          Somos un equipo comprometido con la comunidad celíaca, formado por especialistas, nutricionistas, cocineros y colaboradores que trabajan para ofrecer información fiable, recetas seguras y apoyo práctico en la vida sin gluten. Cada miembro aporta su experiencia y entusiasmo, asegurando que cada contenido sea útil, claro y cercano. Nuestra misión es acompañarte en tu día a día, inspirar confianza y facilitar la búsqueda de soluciones seguras para disfrutar de la alimentación sin gluten. Desde la creación de recetas hasta la selección de productos y la atención a las necesidades de nuestra comunidad, cada proyecto refleja nuestra pasión por la calidad, la seguridad y el bienestar
         </p>
       </div>
     </div>
@@ -93,32 +93,32 @@ const img = '/img/equipo/hero-image.jpg';
 const teamMembers = ref<TeamMember[]>([
   {
     name: 'Susana Rico Vara',
-    description: 'Apasionada por la alimentación saludable, Susana guía a la comunidad celíaca con consejos prácticos y recetas seguras. Su experiencia en nutrición garantiza información fiable, ayudando a disfrutar de comidas deliciosas sin gluten y cuidando siempre el bienestar diario..',
-    image: '/img/equipo/susana.jpg',
+    description: 'Apasionada por la alimentación saludable y desarrolladora de software, Susana combina tecnología y bienestar para guiar a la comunidad celíaca con consejos prácticos y recetas seguras. Su enfoque riguroso garantiza información fiable para disfrutar de una vida sin gluten, deliciosa y equilibrada',
+    image: '/img/equipo/susana.jpeg',
     links: [
-      { icon: 'fa:fas fa-square-envelope', url: 'mailto:member3@celiblog.com' },
-      { icon: 'fa:fab fa-square-github', url: 'https://github.com' },
-      { icon: 'fa:fab fa-linkedin', url: 'https://linkedin.com' }
+      { icon: 'fa:fas fa-square-envelope', url: 'mailto:susanaricovara@gmail.com ' },
+      { icon: 'fa:fab fa-square-github', url: 'https://github.com/susana76-jpg' },
+      { icon: 'fa:fab fa-linkedin', url: 'https://www.linkedin.com/in/susanaricovara/' }
     ]
   },
   {
     name: 'Maite Rodríguez Jurado',
-    description: 'Maite transforma ingredientes sin gluten en platos llenos de sabor y originalidad. Su pasión por la cocina se refleja en recetas innovadoras que combinan tradición y creatividad, ofreciendo opciones seguras y deliciosas para quienes viven una vida libre de gluten.',
-    image: '/img/equipo/maite.jpg',
+    description: 'Desarrolladora web centrada en la creación de aplicaciones modernas, seguras y escalables. Creadora de Celiblog, un proyecto con impacto social orientado a facilitar información fiable y accesible a personas celíacas mediante tecnología web',
+    image: '/img/equipo/maite.jpeg',
     links: [
-      { icon: 'fa:fas fa-square-envelope', url: 'mailto:member3@celiblog.com' },
-      { icon: 'fa:fab fa-square-github', url: 'https://github.com' },
-      { icon: 'fa:fab fa-linkedin', url: 'https://linkedin.com' }
+      { icon: 'fa:fas fa-square-envelope', url: 'mailto:rodriguezj.maite@gmail.com ' },
+      { icon: 'fa:fab fa-square-github', url: 'https://github.com/maiterguez' },
+      { icon: 'fa:fab fa-linkedin', url: 'https://www.linkedin.com/in/maite-rodríguez-jurado-27781a194' }
     ]
   },
   {
     name: 'Nuria Martínez Rodrigo',
-    description: 'Nuria conecta con la comunidad celíaca a través de contenidos claros y útiles. Coordina proyectos, comparte experiencias y se asegura de que cada artículo, receta y guía sea accesible, inspirando confianza y haciendo la vida sin gluten más sencilla y disfrutable.',
-    image: '/img/equipo/nuria.jpg',
+    description: 'Licenciada en Publicidad y Relaciones Públicas y desarrolladora Front End, Nuria une creatividad, diseño y tecnología para crear experiencias digitales accesibles y atractivas. Su foco es hacer de Celiblog un espacio cercano, claro y útil para la comunidad celíaca',
+    image: '/img/equipo/nuria.jpeg',
     links: [
-      { icon: 'fa:fas fa-square-envelope', url: 'mailto:member3@celiblog.com' },
-      { icon: 'fa:fab fa-square-github', url: 'https://github.com' },
-      { icon: 'fa:fab fa-linkedin', url: 'https://linkedin.com' }
+      { icon: 'fa:fas fa-square-envelope', url: 'mailto:nuria.martinezro@gmail.com' },
+      { icon: 'fa:fab fa-square-github', url: 'https://github.com/nurimartinez' },
+      { icon: 'fa:fab fa-linkedin', url: 'https://www.linkedin.com/in/nuriamartinezrodrigo/' }
     ]
   }
 ]);
@@ -128,11 +128,7 @@ const teamMembers = ref<TeamMember[]>([
 @import '@/assets/styles/variables';
 
 .team-page {
-
-  // Team Members Section
   &__members {
-    padding: 0 0 86px;
-
     .v-card {
       padding: 0 20px 0;
 
@@ -166,7 +162,7 @@ const teamMembers = ref<TeamMember[]>([
   // Bottom Text Section
   &__bottom-text {
     text-align: center;
-    padding: 0 200px 80px;
+    padding: 0 200px 50px;
     margin: 0 auto;
   }
 

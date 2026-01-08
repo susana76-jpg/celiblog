@@ -14,6 +14,7 @@
         type="post"
         :item="post" 
         :imageUrl="post.urlPost"
+        defaultImage="/img/blog/comer-fuera-seguro.jpg"
         @update:favorite="post.esFavoritoUsuario = $event"
       >
         <template #chip>
@@ -87,7 +88,7 @@ const showComments = computed(() => comments.value.length > 0 || isAuthenticated
 // Fetch the receipe data when the component is mounted
 onMounted(async () => {  
   await getConsejoById();
-  getComments();
+  await getComments();
 });
 </script>
 

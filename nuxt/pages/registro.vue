@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="registro-page">
-
+    
     <!-- IMAGE AND WELCOME TEXT -------------------------------->
     <v-row class="registro-image">
       <v-img 
@@ -83,7 +83,7 @@ const email = ref<string>('');
 const password = ref<string>('');
 const confirmPassword = ref<string>('');
 const loading = ref<boolean>(false);
-const message = ref<{ show: boolean; text: string; type: string }>({ 
+const message = ref<{ show: boolean; text: string; type: 'error' | 'info' | 'success' | 'warning' }>({ 
   show: false, 
   text: '', 
   type: 'error' 
@@ -170,7 +170,7 @@ const setSuccessMessage = () => {
     type: 'success'
   };
 
-  setTimeout(() => navigateTo('/inicio'), 3000);
+  setTimeout(() => navigateTo('/usuario'), 3000);
 };
 
 // Set error message
@@ -243,8 +243,34 @@ const setErrorMessage = (errorText: string) => {
 
 .registro-page {
   .registro-form {
-    padding-right: 120px;
+    padding-right: 100px;
     padding-left: 100px;
+  }
+}
+
+.inicio-page {
+  .inicio-form {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .registro-page, .inicio-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    .registro-image, .inicio-image {
+      display: none;
+    }
+
+    .registro-form, .inicio-form {
+      width: 100%;
+      padding: 60px 40px;
+      border-top: none;
+    }
   }
 }
 </style>

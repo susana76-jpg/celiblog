@@ -240,6 +240,9 @@ const addRestaurant = async () => {
         type: 'success' as const, 
         text: `Publicación ${formData.value.titulo} agregada correctamente` 
       };
+
+      // Reset form data
+      resetFormData();
     }
   } catch (error: any) {
     message.value = { 
@@ -248,5 +251,23 @@ const addRestaurant = async () => {
       text: `Error al agregar la publicación: ${error.message || 'Error desconocido'}` 
     };
   }
+};
+
+// Reset form data
+const resetFormData = () => {
+  formData.value = {
+    titulo: '',
+    subtitulo: '',
+    descripcion: '',
+    direccion: '',
+    imagenUrl: '',
+    nombre: '',
+    ubicacion: '',
+    codigoPostal: 0,
+    urlWeb: '',
+    telefono: 0,
+    email: '',
+    tipoRestaurante: 'VEGANO'
+  };
 };
 </script>

@@ -12,6 +12,7 @@
         type="restaurante"
         :item="restaurant" 
         :imageUrl="restaurant.imagenUrl"
+        defaultImage="/img/restaurantes/arbolvida.jpg"
         @update:favorite="restaurant.esFavoritoUsuario = $event"
       >
         <template #chip="{ item }">

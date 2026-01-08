@@ -30,6 +30,7 @@
       v-if="showTags"
       filter
       multiple
+      show-arrows
       selected-class="bg-primary text-white"
       v-model="type"
       @update:modelValue="emit('update:tag', $event)"

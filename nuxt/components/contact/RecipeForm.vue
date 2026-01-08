@@ -370,6 +370,8 @@ const addRecipe = async () => {
       if (recipeIngredients.value.length) await addIngredients(response.idReceta);
     }
 
+    resetFormData();
+
     message.value = {
       show: true,
       type: "success" as const,
@@ -423,6 +425,23 @@ const addIngredients = async (idReceta: number) => {
       text: `Error al agregar los ingredientes: ${error.message || "Error desconocido"}`,
     };
   }
+};
+
+// Reset form data
+const resetFormData = () => {
+  formData.value = {
+    titulo: "",
+    subtitulo: "",
+    descripcion: "",
+    imagenUrl: "",
+    dificultad: "FACIL",
+    comensales: 0,
+    tiempoPreparacion: 0,
+    valorEnergetico: 0,
+    tipoComida: "ALMUERZO",
+  };
+  recipeSteps.value = [];
+  recipeIngredients.value = [];
 };
 </script>
 

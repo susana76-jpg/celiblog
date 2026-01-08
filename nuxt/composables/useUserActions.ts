@@ -35,12 +35,13 @@ export const useUserActions = () => {
    * 
    * @param itemId - The unique identifier of the favorite item to remove
    */
-  const removeFromFavorites = async (itemId: number) => {
+  const removeFromFavorites = async (itemId: number, type: ObjectType) => {
     try {
       const response = await useApiFetch(API.FAVORITES.REMOVE, {
         method: 'DELETE',
         params: {
-          idFavorito: itemId
+          idReferencia: itemId,
+          tipoReferencia: type,
         }
       });    
 

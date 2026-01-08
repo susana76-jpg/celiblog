@@ -5,17 +5,21 @@
     <SectionHeroImage
       image-alt="Delicious food"
       title="Recetas"
-      subtitle="Descubre una variedad de platos sin gluten, fáciles de preparar y llenos de sabor. Aquí encontrarás ideas para cada ocasión, desde comidas rápidas hasta recetas más elaboradas, todas aptas para personas con intolerancia o sensibilidad al gluten."
+      subtitle="Descubre una variedad de platos sin gluten, fáciles de preparar y llenos de sabor. Aquí encontrarás ideas para cada ocasión, desde comidas rápidas hasta recetas más elaboradas, todas aptas para personas con intolerancia o sensibilidad al gluten"
       :image-src="img"
     />
     <!------------------------------------------->
 
     <!-- MAIN CONTENT --------------------------->
     <div class="section-main">
+
+      <!-- TITLE -->
       <div class="section-main__title">
         <h2>Un vistazo a nuestra cocina sin gluten</h2>
-        <p>Te presentamos propuestas variadas que combinan creatividad y tradición, todas libres de gluten. Perfectas para cocinar con confianza y descubrir nuevos sabores.</p>
+        <p>Te presentamos propuestas variadas que combinan creatividad y tradición, todas libres de gluten. Perfectas para cocinar con confianza y descubrir nuevos sabores</p>
       </div>
+
+      <!-- FILTER BAR -->
       <SectionFilterBar 
         label="Busca entre todas nuestras recetas"
         :search="keyword"
@@ -36,22 +40,25 @@
       <!-- RECIPES GRID -->
       <v-row v-else no-gutters class="section-main__content">
         <v-col
-          v-for="item in paginatedRecipes"
+          v-for="(item, index) in paginatedRecipes"
           :key="item.idReceta"
           cols="12"
-          md="4"
+          md="6"
+          lg="4"
           xl="3"
         >
           <SectionRecipeCardItem 
             :item="item" 
             type="recetas"
+            @update:item="($event) => updateRecipe(index, $event)"
           />
         </v-col>
       </v-row>
 
       <!-- PAGINATION -->
       <div 
-        v-if="!loading && totalPages > 1" class="pagination-container mt-6 mb-10"
+        v-if="!loading && totalPages > 1" 
+        class="pagination-container mt-6 mb-10"
       >
         <v-pagination
           active-color="primary"
@@ -116,28 +123,19 @@ const getAllRecipes = async () => {
   }
 };
 
+// Update recipe in the list
+const updateRecipe = (index: number, updatedRecipe: Receta) => {
+  const recipeIndex = recipes.value.findIndex(r => r.idReceta === updatedRecipe.idReceta);
+  if (recipeIndex !== -1) recipes.value[recipeIndex] = updatedRecipe;
+};
+
+// Pagination logic
+const { currentPage, totalPages, paginatedItems: paginatedRecipes, onPageChange } = usePagination(recipes);
+
+// Fetch recipes on mount
 onMounted(() => {
   getAllRecipes();
 });
 
 
-/*******************************/
-/* PAGINATION LOGIC */
-/*******************************/
-const currentPage = ref<number>(1);
-const itemsPerPage = ref<number>(12);
-const totalPages = computed(() => Math.ceil(recipes.value.length / itemsPerPage.value));
-
-const paginatedRecipes = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value;
-  const end = start + itemsPerPage.value;
-  return recipes.value.slice(start, end);
-});
-
-const onPageChange = (page: number) => {
-  currentPage.value = page;
-
-  // Scroll to top of results
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
 </script>
