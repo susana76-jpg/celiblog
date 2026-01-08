@@ -136,12 +136,3 @@ const handleLogin = async () => {
   loading.value = false;
 }
 </script>
-
-<style scoped lang="scss">
-.inicio-page {
-  .inicio-form {
-    padding-left: 120px;
-    padding-right: 100px;
-  }
-}
-</style>

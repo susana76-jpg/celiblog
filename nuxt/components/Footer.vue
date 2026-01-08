@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="pa-0">
+  <v-footer class="pa-0 flex-grow-0">
     <div class="footer-content">
       <p>@2025Celiblog. Todos los derechos reservados.</p>
       <v-img 
