@@ -102,7 +102,8 @@ const difficulty = computed(() => props.item.dificultad);
 // Compute image source
 const imageSource = computed(() => {
   const imagePath = props.item[props.imageField];
-  return `/img/${props.imageFolder}/${imagePath}`;
+  if (props.favoriteType === 'POST') return `/img/${imagePath}`;
+  else return `/img/${props.imageFolder}/${imagePath}`;
 });
 
 // Compute link to detail page
