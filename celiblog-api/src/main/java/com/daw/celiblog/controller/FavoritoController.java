@@ -46,7 +46,7 @@ public class FavoritoController {
         @RequestParam(name="tipoReferencia") ObjetoEnum tipoReferencia){
 
         if(this.favoritoService.addFavorito(authentication, idReferencia, tipoReferencia) != null){
-            return ResponseEntity.ok(this.favoritoService.addFavorito(authentication, idReferencia, tipoReferencia));
+            return ResponseEntity.ok(tipoReferencia.toString() + " añadido favoritos.");
         }else{
             return ResponseEntity.badRequest().body("No existe el objeto al que quieres hacer favorito.");
         }
