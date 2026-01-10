@@ -23,7 +23,7 @@
 const headers = [
   { title: 'Título', key: 'titulo', align: 'start' as const },
   { title: 'Fecha publicación', key: 'fechaPublicacion', align: 'start' as const },
-  { title: 'Autor', key: 'usuario.nombre', align: 'start' as const },
+  { title: 'Autor', key: 'usuarioPublicacion.nombre', align: 'start' as const },
   { title: 'Estado', key: 'estado', align: 'start' as const, sortable: false, minWidth: 200 },
   { title: '', key: 'actions', align: 'end' as const, sortable: false, minWidth: 100 },
 ];
