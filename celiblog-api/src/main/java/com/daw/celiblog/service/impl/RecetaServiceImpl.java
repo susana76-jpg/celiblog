@@ -202,6 +202,9 @@ public class RecetaServiceImpl implements RecetaService {
             if(recetaView.getComensales() != receta.getComensales()){
                 receta.setComensales(recetaView.getComensales());
             }
+            if(recetaView.getTiempoPreparacion()!= receta.getTiempoPreparacion()){
+                receta.setTiempoPreparacion(recetaView.getTiempoPreparacion());
+            }
 
             return RecetaMapper.entityToDto(this.recetaRepository.save(receta));
         }
