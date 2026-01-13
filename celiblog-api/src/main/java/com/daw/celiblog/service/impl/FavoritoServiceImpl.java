@@ -143,7 +143,7 @@ public class FavoritoServiceImpl implements FavoritoService {
             estadistica.setNumPost(this.favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.POST.toString()).size());
             estadistica.setNumRecetas(favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.RECETA.toString()).size());
             estadistica.setNumRestaurantes(favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.RESTAURANTE.toString()).size());
-            estadistica.setNumComentarios(favoritoRepository.getIdFavoritosByTipoReferencia(idUsuario, ObjetoEnum.COMENTARIO.toString()).size());
+            estadistica.setNumComentarios(comentarioRepository.getNumComentariosByUsuario(idUsuario));//aquí se señala el número de comentarios realizados por el usuario logado
             return estadistica;
         }
         return null;

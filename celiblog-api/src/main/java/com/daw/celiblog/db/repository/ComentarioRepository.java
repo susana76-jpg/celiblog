@@ -40,6 +40,13 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
             """, nativeQuery = true)
     int getValoracionObjeto(@Param("idObjeto")Long idObjeto, @Param("objetoComentado")String objetoComentado);
 
+    @Query(value= """
+            SELECT COUNT(*)
+            FROM comentario 
+            WHERE id_usuario =:idUsuario
+            """)
+    int getNumComentariosByUsuario(@Param("idUsuario")Long idUsuario);
+
 
 
 }
