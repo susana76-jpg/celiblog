@@ -69,12 +69,10 @@ public class RestauranteServiceImpl implements RestauranteService {
                     return res;
                 })
                 .orElse(null);
-        if(authentication == null){
-            return restaurante;
-        }else if(restaurante != null){
+        if(authentication != null && restaurante != null){
             return getFavorit(restaurante, authentication.getName());
         }
-        return null;
+        return restaurante;
     }
 
     @Override

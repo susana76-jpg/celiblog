@@ -61,12 +61,10 @@ public class PostServiceImpl implements PostService {
                     return postDto;
                 })
                 .orElse(null);
-        if(authentication == null){
-            return post;
-        }else if(post != null){
+        if(authentication != null && post != null){
             return getFavorit(post, authentication.getName());
         }
-        return null;
+        return post;
     }
 
     @Override

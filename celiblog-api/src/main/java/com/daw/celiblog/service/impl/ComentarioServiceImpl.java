@@ -98,12 +98,10 @@ public class ComentarioServiceImpl implements ComentarioService {
                 .map(ComentarioMapper::entityToDto)
                 .orElse(null);
 
-        if(authentication == null){
-            return comentario;
-        }else if(comentario != null){
+        if(authentication != null && comentario != null){
             return getFavorit(comentario, authentication.getName());
         }
-        return null;
+        return comentario;
 
     }
 
