@@ -44,7 +44,7 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
             SELECT COUNT(*)
             FROM comentario 
             WHERE id_usuario =:idUsuario
-            """)
+            """, nativeQuery = true)
     int getNumComentariosByUsuario(@Param("idUsuario")Long idUsuario);
 
 
