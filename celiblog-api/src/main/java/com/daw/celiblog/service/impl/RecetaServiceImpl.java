@@ -71,8 +71,7 @@ public class RecetaServiceImpl implements RecetaService {
             })
                 .orElse(null);
 
-        if (authentication != null) {
-            assert receta != null;
+        if (authentication != null && receta != null) {
             receta.setEsFavoritoUsuario(isFavorit(receta.getIdReceta(), authentication.getName()));
         }
         return receta;
